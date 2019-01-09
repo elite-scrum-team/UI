@@ -21,7 +21,6 @@ class Details extends Component {
         return (
             <Navigation>
                 hello
-                <label defaultValue={'aa'+this.props.params.warnID}></label>
             </Navigation>
         )
     }
