@@ -10,6 +10,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Navigation from '../../components/navigation/Navigation'
 import Button from "@material-ui/core/es/Button/Button";
 import MainDetail from "./components/mainDetail";
+import DetailDescription from "./components/DetailDescription";
 
 
 const styles = {
@@ -27,7 +28,10 @@ class Details extends Component {
         return (
             <Navigation>
                 <div className={classes.root}>
-                    <MainDetail title='wahooo' description='Her erre hull i veien gutter' date='today' status='nu kjør vi' province='Bjørgvin fristat'/>
+                    <MainDetail title='wahooo'
+                                date='today' status='nu kjør vi' province='Bjørgvin fristat'
+                                statusMessage='Vi hatj fiksa høle i vegen'/>
+                    <DetailDescription description='Her erre hull i veien gutter'/>
                 </div>
                 </Navigation>
         )
