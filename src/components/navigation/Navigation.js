@@ -40,6 +40,22 @@ const styles = {
     },
     logInButton: {
         color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    warningButton: {
+        color: 'white',
+        border: '1px solid white',
+        marginRight: 10,
+    },
+    flex: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    smallIcon: {
+        height: 16,
+        width: 16,
     }
 };
 
@@ -59,16 +75,19 @@ class Navigation extends Component {
                         <div>
 
                         </div>
-                        <div>
-                            <Button
-                                className={classes.logInButton}
-                                onClick={() => this.goTo(URLS.login)}>Ny varsel<Add /></Button>
+                        <div className={classes.flex}>
+                            <div>
+                                <Button
+                                    className={classes.warningButton}
+                                    onClick={() => this.goTo(URLS.createwarning)}><span>Ny varsel</span><Add className={classes.smallIcon} /></Button>
+                            </div>
+                            <div>
+                                <Button
+                                    className={classes.logInButton}
+                                    onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                            </div>
                         </div>
-                        <div>
-                            <Button
-                                className={classes.logInButton}
-                                onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
-                        </div>
+                        
                     </Toolbar>
                 </AppBar>
                 

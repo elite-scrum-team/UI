@@ -1,17 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
 
-// Material UI Components
-
-// Icons
-
-// Project Components
-
+// External libraries
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-
-console.log(process.env);
 
 const Map = compose(
   withProps({
@@ -22,10 +14,10 @@ const Map = compose(
   }),
   withScriptjs,
   withGoogleMap
-)((props) =>
+)((props) => 
   <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+    defaultZoom={props.zoom}
+    defaultCenter={{ lat: props.defaultCenter.lat, lng: props.defaultCenter.lng }}
     defaultOptions = {{
         streetViewControl: false,
         scaleControl: false,
@@ -34,41 +26,38 @@ const Map = compose(
         zoomControl: false,
         rotateControl: false,
         fullscreenControl: false,
-        //containerElement: <div style={{ height: props.height ? props.height : '100%' }} />,
     }}
   >
-    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} onClick={props.onMarkerClick} />}
+    {/* Render markes */}
+    {props.showMarkers && props.locations.map((location, i) => (
+      <Marker key={i.toString().concat(location.lat)} position={{ lat: location.lat, lng: location.lng }} onClick={() => location.onClick ? location.onClick(location) : null}/>
+    ))}
   </GoogleMap>
 );
 
-class MapComponent extends React.PureComponent {
-  state = {
-    isMarkerShown: false,
-  }
+const MapWrapper = (props) => {
 
-  componentDidMount() {
-    this.delayedShowMarker()
-  }
-
-  delayedShowMarker = () => {
-    setTimeout(() => {
-      this.setState({ isMarkerShown: true })
-    }, 3000)
-  }
-
-  handleMarkerClick = () => {
-    this.setState({ isMarkerShown: false })
-    this.delayedShowMarker()
-  }
-
-  render() {
     return (
       <Map
-        isMarkerShown={this.state.isMarkerShown}
-        onMarkerClick={this.handleMarkerClick}
-      />
+        defaultCenter={props.defaultCenter || {}}
+        showMarkers={props.showMarkers}
+        locations={props.locations || []}
+        zoom={props.zoom}/>
     )
-  }
 }
 
-export default (MapComponent);
+MapWrapper.propTypes = {
+  locations: PropTypes.array,
+  defaultCenter: PropTypes.object, // Object with lat and lng
+  showMarkers: PropTypes.bool,
+  zoom: PropTypes.number,
+}
+
+MapWrapper.defaultProps = {
+  locations: [],
+  defaultCenter: {lat: 63.429748, lng: 10.393916},
+  showMarkers: true,
+  zoom: 8,
+}
+
+export default (MapWrapper);

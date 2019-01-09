@@ -3,25 +3,19 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI Components
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 
 // Icons
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
-import Recover from '../../components/Recover';
-import { Hidden } from '@material-ui/core';
+
 import WarningItem from './components/WarningItem'
 
 const drawerWidth = 360;

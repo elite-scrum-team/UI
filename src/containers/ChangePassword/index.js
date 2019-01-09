@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
-import Recover from '../../components/Recover'
+import Recover from './components/Recover'
 
 const styles = {
     root:{

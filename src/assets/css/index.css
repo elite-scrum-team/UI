@@ -1,0 +1,18 @@
+* {
+  --done: rgb(119, 190, 119);
+  --rejected: rgb(247, 114, 114);
+  --progress: rgb(248, 188, 76);
+  --inactive: rgb(175, 175, 175);
+
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: whitesmoke;
+}
+

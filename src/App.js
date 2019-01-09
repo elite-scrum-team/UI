@@ -5,7 +5,6 @@ import URLS from "./URLS";
 // Theme
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
-import "./index.css";
 
 // Project components
 import LogIn from './containers/LogIn';
