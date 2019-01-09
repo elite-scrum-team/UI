@@ -32,13 +32,31 @@ const styles = {
 };
 
 class ChangePassword extends Component {
+    constructor(props){
+        super(props);
+
+        this.state={
+            email: ''
+        }
+    }
+
+    componentDidMount(){
+        //comp did mount!
+    }
+
     render() {
         const { classes } = this.props;
+        const { email } = this.state;
+
         return (
             <Navigation>
                 <div className={classes.root}>
                     <div className={classes.wrapper}>
-                        <Recover className={classes.card}/>
+
+                        <Recover className={classes.card} data={{
+                            email : email
+                        }}/>
+
                     </div>
                 </div>
             </Navigation>

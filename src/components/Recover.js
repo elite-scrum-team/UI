@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+
 // Icons
 import SendIcon from '@material-ui/icons/Send';
 
@@ -41,7 +41,7 @@ const styles = makeStyles({
      }
 });
 
-const recover = (props) => {
+const Recover = props => {
     // State
     const [data, setData] = useState({});
 
@@ -51,11 +51,14 @@ const recover = (props) => {
     return (
         <Paper className={classNames(classes.root, props.className)}>
             <div className={classes.wrapper}>
-                <Typography variant='h5' className={classes.paddings}>
+                <Typography variant='h5' color='gray' className={classes.paddings}>
                     Find Your Account
                 </Typography>
                 <Divider/>
-                <Typography variant='h6' className={classes.paddings}>Please enter your email so we can send you another password</Typography>
+                <Typography variant='h6' className={classes.paddings}>
+                    Please enter your email so we can send you another password
+                </Typography>
+
                 <TextField
                     id="outlined-full-width"
                     label="Email"
@@ -76,4 +79,4 @@ const recover = (props) => {
     )
 };
 
-export default (recover);
+export default Recover;
