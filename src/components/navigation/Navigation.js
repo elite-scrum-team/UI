@@ -1,7 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import {withRouter} from 'react-router';
 import classNames from 'classnames';
+import URLS from '../../URLS';
 
 // API and store imports
 
@@ -18,7 +20,6 @@ import Button from '@material-ui/core/Button';
 const styles = {
     appbar: {
         height: 48,
-        left: 120,
     },
     main: {
         marginTop: 48,
@@ -32,10 +33,17 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    logInButton: {
+        color: 'white',
+    }
 };
 
 
 class Navigation extends Component {
+
+    goTo = (page) => {
+        this.props.history.push(page);
+    }
 
     render() {
         const {classes} = this.props;
@@ -44,7 +52,12 @@ class Navigation extends Component {
                 <AppBar className={classes.appbar} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div>
-                            <Button>Log inn</Button>
+
+                        </div>
+                        <div>
+                            <Button
+                                className={classes.logInButton}
+                                onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
@@ -66,4 +79,4 @@ Navigation.propTypes = {
     isLoading: PropTypes.bool,
 };
 
-export default withStyles(styles)(Navigation);
+export default withStyles(styles)(withRouter(Navigation));
