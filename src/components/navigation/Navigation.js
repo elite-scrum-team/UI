@@ -14,7 +14,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 // Project Components
 
-
 const styles = {
     root: {
         boxSizing: 'border-box',
