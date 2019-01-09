@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
+import Map from '../../components/miscellaneous/Map';
 
 const styles = {
     
@@ -19,7 +20,7 @@ class Landing extends Component {
     render() {
         return (
             <Navigation>
-                
+                <Map />
             </Navigation>
         )
     }
