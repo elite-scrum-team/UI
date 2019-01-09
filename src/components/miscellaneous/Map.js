@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import classes from '*.module.sass';
 
 // Material UI Components
 
@@ -10,19 +9,14 @@ import classes from '*.module.sass';
 // Project Components
 
 const styles = {
-    root: {
-        
-    }
+    
 }
 
 class Template extends Component {
 
     render() {
-        const {classes} = this.props;
         return (
-            <div className={classes.root}>
-            
-            </div>
+            null
         )
     }
 }
