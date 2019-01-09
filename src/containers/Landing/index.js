@@ -22,7 +22,7 @@ import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 import Recover from '../../components/Recover';
 import { Hidden } from '@material-ui/core';
-import WarningItem from './Components/WarningItem'
+import WarningItem from './components/WarningItem'
 
 const drawerWidth = 360;
 
@@ -34,7 +34,7 @@ const styles = {
     height: '100vh',
   },
   drawerPaper: {
-    width: '100vw',
+    width: 320,
   },
 }
 
@@ -43,11 +43,11 @@ class Landing extends Component {
     render() {
       const {classes} = this.props;
       return (
-        <Navigation>
+        <Navigation sidebar>
           <div className={classes.root}>
             <Map/>
           </div>
-
+          <SideDrawer />
         </Navigation>
       )
     }
@@ -58,7 +58,7 @@ const SideDrawer = withStyles(styles) ((props) => {
   return (
     <Drawer
       className={classes.drawer}
-      variant="permanent"
+      variant='permanent'
       classes={{
         paper: classes.drawerPaper,
       }}

@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import Divider from "@material-ui/core/Divider/Divider";
 
 // Icons
+import Send from '@material-ui/icons/Send';
 
 // Project Components
 
@@ -23,7 +24,7 @@ const WarningItem = withStyles(styles) ((props) => {
   return (
     <div>
       <ListItem className='listItem' alignItems="flex-start" button>
-        <ListItemIcon>Green</ListItemIcon>
+        <ListItemIcon><Send /></ListItemIcon>
         <ListItemText
           className='listItemText'
           primary='Pothole at Times Square'
@@ -32,16 +33,6 @@ const WarningItem = withStyles(styles) ((props) => {
       </ListItem>
       <Divider />
     </div>
-  )
-});
-
-const WanrningList = withStyles(styles) ((props) => {
-  return (
-    <List>
-      {props.map(prop => (
-        <WarningItem prop/>
-      ))}
-    </List>
   )
 });
 

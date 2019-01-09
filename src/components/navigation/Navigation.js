@@ -14,6 +14,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 
 // Assets/Icons
+import Add from '@material-ui/icons/Add';
 
 // Project Components
 
@@ -28,7 +29,8 @@ const styles = {
         },
     },
     leftMargin: {
-      left: 360,
+      
+      right: 'auto',
     },
     navContent: {
         display: 'flex',
@@ -52,10 +54,15 @@ class Navigation extends Component {
         const {classes} = this.props;
         return (
             <Fragment>
-                <AppBar className={classes.appbar} position='fixed' color='primary'>
+                <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div>
 
+                        </div>
+                        <div>
+                            <Button
+                                className={classes.logInButton}
+                                onClick={() => this.goTo(URLS.login)}>Ny varsel<Add /></Button>
                         </div>
                         <div>
                             <Button
