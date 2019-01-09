@@ -12,13 +12,16 @@ import Navigation from '../../components/navigation/Navigation';
 import Recover from '../../components/Recover'
 
 const styles = {
-    root: {
-
-    },
+    root:{
+        height: '100vh',
+        width:'100%',
+        margin:0
+    }
+    ,
     wrapper:{
         display: 'grid',
-        gridTemplateColumns: '20% auto 20%',
-        gridTemplateRows: '20% auto 20%',
+        gridTemplateColumns: '33% auto 33%',
+        gridTemplateRows: '40% auto 20%',
     },
     card: {
         gridColumnStart:2,
@@ -34,7 +37,9 @@ class ChangePassword extends Component {
         return (
             <Navigation>
                 <div className={classes.root}>
-                    <Recover className={classes.card}/>
+                    <div className={classes.wrapper}>
+                        <Recover className={classes.card}/>
+                    </div>
                 </div>
             </Navigation>
         )
