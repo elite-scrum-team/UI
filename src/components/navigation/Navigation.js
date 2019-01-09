@@ -16,15 +16,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = {
     root: {
-        boxSizing: 'border-box',
-        backgroundColor: 'var(--tihlde-blaa)',
-        color: 'white',
-        flexGrow: 1,
-        zIndex: 10001,
+
     },
     main: {
         marginTop: 64,
-        minHeight: '101vh',
         '@media only screen and (max-width: 600px)': {
             marginTop: 56,
         },
