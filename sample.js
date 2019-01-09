@@ -11,7 +11,8 @@ import { useState } from 'react';
 
 const styles = makeStyles({
     root: {
-        
+        padding: '22px',
+        backgroundColor: 'red',
     }
 });
 
@@ -24,7 +25,8 @@ const TemplateComponent = (props) => {
 
     return (
         <div className={classes.root}>
-            
+            <input value={data.email} onChange={(e) => setData({email: e.target.value})} />
+            <p>{data.email}</p>
         </div>
     )
 }
