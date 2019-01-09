@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
+import Map from '../../components/miscellaneous/Map';
 
 const styles = {
   root: {
@@ -31,7 +32,7 @@ class Landing extends Component {
     render() {
         return (
           <Navigation>
-                <AlignItemsList />
+                <Map />
           </Navigation>
         )
     }
