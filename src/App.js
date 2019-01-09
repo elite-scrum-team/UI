@@ -10,6 +10,7 @@ import './index.css';
 // Project components
 import LogIn from './containers/LogIn';
 import Landing from './containers/Landing';
+import Details from './containers/Details'
 
 class App extends Component {
   render() {
@@ -19,8 +20,9 @@ class App extends Component {
             <MuiThemeProvider theme={theme}>
                 <Switch>
                     
-                  <Route exact path={URLS.home} component={Landing} />
-                  <Route exact path={URLS.login} component={LogIn} />
+                  <Route path={URLS.home} component={Landing} />
+                  <Route path={URLS.login} component={LogIn} />
+                  <Route exactpath={URLS.details} component={Details} />
 
                 </Switch>
             </MuiThemeProvider>
