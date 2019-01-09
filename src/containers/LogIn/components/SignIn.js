@@ -1,38 +1,3 @@
-/*import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-
-// Material UI Components
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Card from "@material-ui/core/Card";
-import SimpleCard from "./components/card";
-import "./components/SignIn";
-// Icons
-
-// Project Components
-
-const styles = {
-  paper: {
-    padding: 12,
-    backgroundColor: "red"
-  }
-};
-
-class LogIn extends Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <SignIn />
-      </div>
-    );
-  }
-}
-
-export default withStyles(styles)(LogIn);
-*/
-
 // Material UI Components
 import React from "react";
 import PropTypes from "prop-types";
