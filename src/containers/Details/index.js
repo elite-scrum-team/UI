@@ -27,7 +27,9 @@ class Details extends Component {
         return (
             <Navigation>
                 <div className={classes.root}>
-                    <MainDetail title='wahooo' description='Her erre hull i veien gutter' date='today' status='nu kjør vi' province='Bjørgvin fristat'/>
+                    <MainDetail title='wahooo' description='Her erre hull i veien gutter'
+                                date='today' status='nu kjør vi' province='Bjørgvin fristat'
+                                statusMessage='Vi hatj fiksa høle i vegen'/>
                 </div>
                 </Navigation>
         )
