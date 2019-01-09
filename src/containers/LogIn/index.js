@@ -38,6 +38,7 @@ class LogIn extends Component {
     isSignIn: true
   };
 
+<<<<<<< HEAD
   changeTab = value => {
     this.setState({ isSignIn: value });
   };
@@ -72,6 +73,13 @@ class LogIn extends Component {
       </div>
     );
   }
+=======
+    render() {
+        return (
+            <div>hello!</div>
+        )
+    }
+>>>>>>> e7c14c0930885b95840dd7598314293d5a778b03
 }
 
 export default withStyles(styles)(LogIn);
