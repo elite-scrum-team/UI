@@ -9,16 +9,16 @@ import {withStyles} from '@material-ui/core/styles';
 // Project Components
 
 const styles = {
-    
+
 }
 
-class LogIn extends Component {
+class CreateWarning extends Component {
 
     render() {
         return (
-            <div>hello!</div>
+            null
         )
     }
 }
 
-export default withStyles(styles)(LogIn);
+export default withStyles(styles)(CreateWarning);
