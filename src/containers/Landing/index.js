@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
+import Recover from '../../components/Recover';
 
 const styles = {
   root: {
@@ -32,6 +33,7 @@ class Landing extends Component {
     render() {
         return (
           <Navigation>
+                <Recover />
                 <Map />
           </Navigation>
         )
