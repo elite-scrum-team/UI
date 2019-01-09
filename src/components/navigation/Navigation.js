@@ -9,23 +9,28 @@ import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Button from '@material-ui/core/Button';
 
 // Assets/Icons
 
 // Project Components
 
 const styles = {
-    root: {
-
+    appbar: {
+        height: 48,
+        left: 120,
     },
     main: {
-        marginTop: 64,
+        marginTop: 48,
         '@media only screen and (max-width: 600px)': {
             marginTop: 56,
         },
     },
     navContent: {
-        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
 };
 
@@ -36,9 +41,10 @@ class Navigation extends Component {
         const {classes} = this.props;
         return (
             <Fragment>
-                <AppBar className={classes.root} position="fixed" color="primary">
-                    <Toolbar className={classes.navContent} disableGutters>
+                <AppBar className={classes.appbar} position='fixed' color='primary'>
+                    <Toolbar className={classes.navContent} variant='dense'>
                         <div>
+                            <Button>Log inn</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
