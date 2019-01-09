@@ -13,11 +13,11 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 
 console.log(process.env);
 
-const MyMapComponent = compose(
+const Map = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `100vh` }} />,
+    containerElement: <div style={{ height: '100%' }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,
@@ -34,13 +34,14 @@ const MyMapComponent = compose(
         zoomControl: false,
         rotateControl: false,
         fullscreenControl: false,
+        //containerElement: <div style={{ height: props.height ? props.height : '100%' }} />,
     }}
   >
     {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} onClick={props.onMarkerClick} />}
   </GoogleMap>
 );
 
-class MyFancyComponent extends React.PureComponent {
+class MapComponent extends React.PureComponent {
   state = {
     isMarkerShown: false,
   }
@@ -62,7 +63,7 @@ class MyFancyComponent extends React.PureComponent {
 
   render() {
     return (
-      <MyMapComponent
+      <Map
         isMarkerShown={this.state.isMarkerShown}
         onMarkerClick={this.handleMarkerClick}
       />
@@ -70,4 +71,4 @@ class MyFancyComponent extends React.PureComponent {
   }
 }
 
-export default (MyFancyComponent);
+export default (MapComponent);
