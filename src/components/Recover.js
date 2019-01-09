@@ -55,7 +55,7 @@ const recover = (props) => {
                     Find Your Account
                 </Typography>
                 <Divider/>
-                <Typography variant='h6:' className={classes.paddings}>Please enter your email so we can send you another password</Typography>
+                <Typography variant='h6' className={classes.paddings}>Please enter your email so we can send you another password</Typography>
                 <TextField
                     id="outlined-full-width"
                     label="Email"
