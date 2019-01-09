@@ -1,4 +1,4 @@
 export default {
-    home: '/',
-    login: '/login',
-}
+  home: "/",
+  login: "/login"
+};

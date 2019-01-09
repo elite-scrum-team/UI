@@ -16,24 +16,15 @@ const styles = theme => ({
   }
 });
 
-function SignIn(props) {
+function Register(props) {
   const { classes } = props;
 
   return (
     <div>
-      <form className={classes.form} onSubmit={props.logIn}>
+      <form className={classes.form} onSubmit={props.reg}>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input id="email" name="email" autoComplete="email" autoFocus />
-        </FormControl>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="password">Passord</InputLabel>
-          <Input
-            name="password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
         </FormControl>
         <Button
           type="submit"
@@ -42,18 +33,15 @@ function SignIn(props) {
           color="primary"
           className={classes.submit}
         >
-          Sign in
-        </Button>
-        <Button margin="theme.spacing.unit" className={classes.button}>
-          Glemt passord
+          Register deg
         </Button>
       </form>
     </div>
   );
 }
 
-SignIn.propTypes = {
+Register.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Register);

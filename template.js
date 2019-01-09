@@ -9,14 +9,19 @@ import {withStyles} from '@material-ui/core/styles';
 // Project Components
 
 const styles = {
-    
+    root: {
+        
+    }
 }
 
 class Template extends Component {
 
     render() {
+        const {classes} = this.props;
         return (
-            null
+            <div className={classes.root}>
+            
+            </div>
         )
     }
 }
