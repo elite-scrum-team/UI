@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI Components
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -18,29 +19,37 @@ import Typography from '@material-ui/core/Typography';
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
+import Map from '../../components/miscellaneous/Map';
+import Recover from '../../components/Recover';
+import { Hidden } from '@material-ui/core';
 import WarningItem from './Components/WarningItem'
 
 const drawerWidth = 360;
 
 const styles = {
-  drawer: {
-    width: drawerWidth,
+  root: {
+    width: '100vw',
+    maxWidth: '100vw',
+    overflow: 'hidden',
+    height: '100vh',
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: '100vw',
   },
 }
 
 class Landing extends Component {
 
     render() {
-        return (
-          <div>
-            <Navigation sidebar={drawerWidth}>
-              <SideDrawer />
-            </Navigation>
+      const {classes} = this.props;
+      return (
+        <Navigation>
+          <div className={classes.root}>
+            <Map/>
           </div>
-        )
+
+        </Navigation>
+      )
     }
 }
 
