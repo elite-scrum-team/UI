@@ -15,11 +15,16 @@ import Typography from '@material-ui/core/Typography';
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
+import Map from '../../components/miscellaneous/Map';
+import Recover from '../../components/Recover';
+import { Hidden } from '@material-ui/core';
 
 const styles = {
   root: {
-    width: '100%',
-    maxWidth: 360,
+    width: '100vw',
+    maxWidth: '100vw',
+    overflow: 'hidden',
+    height: '100vh',
   },
   inline: {
     display: 'inline',
@@ -29,11 +34,15 @@ const styles = {
 class Landing extends Component {
 
     render() {
-        return (
-          <Navigation>
-                <AlignItemsList />
-          </Navigation>
-        )
+      const {classes} = this.props;
+      return (
+        <Navigation>
+          <div className={classes.root}>
+            <Map/>
+          </div>
+          
+        </Navigation>
+      )
     }
 }
 const AlignItemsList = withStyles(styles)((props) => {
