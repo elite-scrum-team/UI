@@ -21,8 +21,8 @@ class App extends Component {
             <MuiThemeProvider theme={theme}>
                 <Switch>
                     
-                  <Route path={URLS.home} component={Landing} />
-                  <Route path={URLS.login} component={LogIn} />
+                  <Route exact path={URLS.home} component={Landing} />
+                  <Route exact path={URLS.login} component={LogIn} />
                     <Route exactpath={URLS.createwarning} component={CreateWarning} />
 
 
