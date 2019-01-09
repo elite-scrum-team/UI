@@ -3,26 +3,31 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI Components
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
+import Drawer from '@material-ui/core/Drawer';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 // Icons
 
 // Project Components
 import Navigation from '../../components/navigation/Navigation';
+import WarningItem from './Components/WarningItem'
+
+const drawerWidth = 360;
 
 const styles = {
-  root: {
-    width: '100%',
-    maxWidth: 360,
+  drawer: {
+    width: drawerWidth,
   },
-  inline: {
-    display: 'inline',
+  drawerPaper: {
+    width: drawerWidth,
   },
 }
 
@@ -30,33 +35,67 @@ class Landing extends Component {
 
     render() {
         return (
-          <Navigation>
-                <AlignItemsList />
-          </Navigation>
+          <div>
+            <Navigation sidebar={drawerWidth}>
+              <SideDrawer />
+            </Navigation>
+          </div>
         )
     }
 }
-const AlignItemsList = withStyles(styles)((props) => {
-  const { classes } = props;
+
+const SideDrawer = withStyles(styles) ((props) => {
+  const {classes} = props;
   return (
-    <List className={classes.root}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="aImg" src="imgSource" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Hull i veien ved Vestregate 3"
-          secondary={
-              "Det har vært der en stund og det hadde vært fint om dere kunne fikse det"
-          }
-        />
-      </ListItem>
-    </List>
-  );
+    <Drawer
+      className={classes.drawer}
+      variant="permanent"
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <SimpleTabs/>
+    </Drawer>
+  )
 });
 
-AlignItemsList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+class SimpleTabs extends Component {
+  state = {
+    value: 0,
+  };
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  render() {
+    const { value } = this.state;
+
+    return (
+      <div>
+        <AppBar position="static">
+          <Tabs value={value} onChange={this.handleChange}>
+            <Tab label="Dine varsler" />
+            <Tab label="Andre varsler" />
+          </Tabs>
+        </AppBar>
+        {value === 0 && <TabContainer>
+            <WarningItem/>
+            <WarningItem/>
+        </TabContainer>}
+        {value === 1 && <TabContainer>Andre varsler</TabContainer>}
+      </div>
+    );
+  }
+}
+
+
+function TabContainer(props) {
+  return (
+    <List component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
+    </List>
+  );
+}
 
 export default withStyles(styles)(Landing);

@@ -29,6 +29,9 @@ const styles = {
             marginTop: 56,
         },
     },
+    leftMargin: {
+      left: 360,
+    },
     navContent: {
         width: '100%',
     },
@@ -41,7 +44,7 @@ class Navigation extends Component {
         const {classes} = this.props;
         return (
             <Fragment>
-                <AppBar className={classes.root} position="fixed" color="primary">
+                <AppBar className={classNames(classes.root, this.props.sidebar ? classes.leftMargin : '')} position="fixed" color="primary">
                     <Toolbar className={classes.navContent} disableGutters>
                         <div>
                         </div>
@@ -63,6 +66,8 @@ Navigation.propTypes = {
     classes: PropTypes.object,
     children: PropTypes.node,
     isLoading: PropTypes.bool,
+
+    sidebar: PropTypes.object,
 };
 
 export default withStyles(styles)(Navigation);
