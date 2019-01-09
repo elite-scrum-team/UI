@@ -17,7 +17,7 @@ const styles = makeStyles({
 
 const TemplateComponent = (props) => {
     // State
-    const [data, setData] = useState({});
+    const [open, setData] = useState({});
 
     // Styling
     const classes = styles();
