@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+
 // Icons
 import SendIcon from '@material-ui/icons/Send';
 
@@ -41,9 +41,14 @@ const styles = makeStyles({
      }
 });
 
-const recover = (props) => {
+const handleEvent = (email) =>{
+    console.log(email);
+    // ADD LOGIC HERE!
+};
+
+const Recover = props => {
     // State
-    const [data, setData] = useState({});
+    const [value, setValue] = useState('');
 
     // Styling
     const classes = styles();
@@ -55,7 +60,10 @@ const recover = (props) => {
                     Find Your Account
                 </Typography>
                 <Divider/>
-                <Typography variant='h6' className={classes.paddings}>Please enter your email so we can send you another password</Typography>
+                <Typography variant='h6' className={classes.paddings}>
+                    Please enter your email so we can send you another password
+                </Typography>
+
                 <TextField
                     id="outlined-full-width"
                     label="Email"
@@ -64,9 +72,11 @@ const recover = (props) => {
                     fullWidth
                     margin="normal"
                     variant="outlined"
+                    value={value} onChange={(e) => setValue(e.target.value)}
                 />
+
                 <div className={classNames(classes.container, classes.paddings)}>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={() => handleEvent(value)}>
                         Send
                         <SendIcon/>
                     </Button>
@@ -76,4 +86,4 @@ const recover = (props) => {
     )
 };
 
-export default (recover);
+export default Recover;

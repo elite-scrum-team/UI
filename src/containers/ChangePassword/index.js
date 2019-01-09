@@ -22,18 +22,35 @@ const styles = {
         display: 'grid',
         gridTemplateColumns: '33% auto 33%',
         gridTemplateRows: '40% auto 20%',
+        '@media only screen and (max-width: 600px)': {
+            gridTemplateColumns: '100%',
+            justifyItems:'center',
+            padding:'5px'
+        },
     },
     card: {
         gridColumnStart:2,
         gridColumnEnd:3,
         gridRowStart:2,
         gridRowEnd:3,
+        '@media only screen and (max-width: 600px)': {
+            gridColumnStart:1,
+            gridColumnEnd:2,
+            gridRowStart:2,
+            gridRowEnd:3,
+        },
     }
 };
 
 class ChangePassword extends Component {
+
+    componentDidMount(){
+        //comp did mount!
+    }
+
     render() {
         const { classes } = this.props;
+
         return (
             <Navigation>
                 <div className={classes.root}>
