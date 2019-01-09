@@ -10,6 +10,7 @@ import './index.css';
 // Project components
 import LogIn from './containers/LogIn';
 import Landing from './containers/Landing';
+import Recover from './containers/ChangePassword'
 
 class App extends Component {
   render() {
@@ -18,9 +19,9 @@ class App extends Component {
         <BrowserRouter>
             <MuiThemeProvider theme={theme}>
                 <Switch>
-                    
-                  <Route exact path={URLS.home} component={Landing} />
-                  <Route exact path={URLS.login} component={LogIn} />
+                    <Route exact path={URLS.recover} component={Recover} />
+                    <Route exact path={URLS.home} component={Landing} />
+                    <Route exact path={URLS.login} component={LogIn} />
 
                 </Switch>
             </MuiThemeProvider>
