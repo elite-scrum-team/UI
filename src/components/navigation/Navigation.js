@@ -27,6 +27,9 @@ const styles = {
             marginTop: 56,
         },
     },
+    leftMargin: {
+      left: 360,
+    },
     navContent: {
         display: 'flex',
         flexDirection: 'row',

@@ -11,21 +11,58 @@ import withStyles from "@material-ui/core/es/styles/withStyles";
 // Icons
 
 // Project Components
+import Map from "../../../components/miscellaneous/Map";
+
 
 const styles = theme => ({
     root: {
         position: 'relative',
+        paddingLeft: 10,
     },
-    content:{
-        padding: '10px 10px 10px 20px',
+    content: {
         height: '100%',
         width: '100%',
+
+        display: 'grid',
+
+        gridGap: '12px',
+        gridTemplateColumns: '2fr 1fr',
+        gridTemplateAreas: `'details map' 'status map'`,
+
+        '@media only screen and (max-width: 800px)': {
+            gridTemplateColumns: '1fr',
+            gridTemplateAreas: `'details' 'map' 'status'`,
+        }
     },
     statusBar:{
         position: 'absolute',
         top: 0, bottom: 0, left: 0,
         width: 10,
-        backgroundColor: 'red'
+        backgroundColor: 'yellow'
+    },
+    details: {
+        padding: 14,
+        gridArea: 'details',
+    },
+    status:{
+        gridArea: 'status',
+        width: '100%',
+        display: 'inline-block',
+        textAlign: 'center'
+    },
+    statusWrapper: {
+        border: '1px solid yellow',
+        padding: '12px 12px 12px 0',
+        margin: 12,
+    },
+    mapDiv:{
+        gridArea: 'map',
+        width: '100%',
+        height: 250,
+        position: 'relative',
+    },
+    mapWrapper: {
+        height: '100%',
     }
 });
 
@@ -36,19 +73,31 @@ function MainDetail(props) {
         <div>
             <Paper className={classes.root} elevation={1} borderLeft={6} clone>
                 <div className={classes.content}>
-                <Typography variant="h5" component="h3">
-                    {props.title}
-                </Typography>
-                <Typography variant='subtitle2'>
-                    Publisert: {props.date} &nbsp;&nbsp;&nbsp;&nbsp; Status: {props.status}
-                    <br/>
-                    {props.province}
-                </Typography>
-                <Typography component="p">
-                    {props.description}
-                </Typography>
+                    <div className={classes.details}>
+                    <Typography variant="h5" component="h3">
+                        {props.title}
+                    </Typography>
+                    <Typography variant='caption'>
+                        Publisert: {props.date}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        Status: {props.status}
+                        <br/>
+                        {props.province}
+                    </Typography>
+                    </div>
+                    <div className={classes.status}>
+                        <div className={classes.statusWrapper}>
+                            {props.statusMessage}
+                        </div>
+                    </div>
                     <div className={classes.statusBar}/>
-                </div>
+                    <div className={classes.mapDiv}>
+                        <div className={classes.mapWrapper}>
+                            <Map className={classes.mapwindow}/>
+                        </div>
+                    </div>
+                    </div>
             </Paper>
         </div>
     );
