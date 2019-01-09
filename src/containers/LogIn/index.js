@@ -16,7 +16,7 @@ class LogIn extends Component {
 
     render() {
         return (
-            null
+            <div>hello!</div>
         )
     }
 }

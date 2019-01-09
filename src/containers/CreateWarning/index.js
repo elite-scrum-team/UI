@@ -7,3 +7,18 @@ import {withStyles} from '@material-ui/core/styles';
 // Icons
 
 // Project Components
+
+const styles = {
+
+}
+
+class CreateWarning extends Component {
+
+    render() {
+        return (
+            null
+        )
+    }
+}
+
+export default withStyles(styles)(CreateWarning);

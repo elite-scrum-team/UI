@@ -10,6 +10,8 @@ import './index.css';
 // Project components
 import LogIn from './containers/LogIn';
 import Landing from './containers/Landing';
+import CreateWarning from './containers/CreateWarning';
+
 
 class App extends Component {
   render() {
@@ -21,6 +23,9 @@ class App extends Component {
                     
                   <Route path={URLS.home} component={Landing} />
                   <Route path={URLS.login} component={LogIn} />
+                    <Route exactpath={URLS.createwarning} component={CreateWarning} />
+
+
 
                 </Switch>
             </MuiThemeProvider>
