@@ -41,9 +41,14 @@ const styles = makeStyles({
      }
 });
 
+const handleEvent = (email) =>{
+    console.log(email);
+    // ADD LOGIC HERE!
+};
+
 const Recover = props => {
     // State
-    const [data, setData] = useState({});
+    const [value, setValue] = useState('');
 
     // Styling
     const classes = styles();
@@ -51,7 +56,7 @@ const Recover = props => {
     return (
         <Paper className={classNames(classes.root, props.className)}>
             <div className={classes.wrapper}>
-                <Typography variant='h5' color='gray' className={classes.paddings}>
+                <Typography variant='h5' className={classes.paddings}>
                     Find Your Account
                 </Typography>
                 <Divider/>
@@ -67,9 +72,11 @@ const Recover = props => {
                     fullWidth
                     margin="normal"
                     variant="outlined"
+                    value={value} onChange={(e) => setValue(e.target.value)}
                 />
+
                 <div className={classNames(classes.container, classes.paddings)}>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={() => handleEvent(value)}>
                         Send
                         <SendIcon/>
                     </Button>
