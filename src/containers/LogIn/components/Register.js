@@ -26,6 +26,14 @@ function Register(props) {
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input id="email" name="email" autoComplete="email" autoFocus />
         </FormControl>
+        <FormControl margin="normal" required fullWidth>
+          <InputLabel htmlFor="password">Passord</InputLabel>
+          <Input id="password" name="password" autoFocus />
+        </FormControl>
+        <FormControl margin="normal" required fullWidth>
+          <InputLabel htmlFor="confirm">Gjenta passord</InputLabel>
+          <Input id="confirm" name="confirm" autoFocus />
+        </FormControl>
         <Button
           type="submit"
           fullWidth
