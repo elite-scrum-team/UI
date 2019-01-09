@@ -7,6 +7,9 @@ import {withStyles} from '@material-ui/core/styles';
 // Icons
 
 // Project Components
+import Navigation from '../../components/navigation/Navigation'
+import Button from "@material-ui/core/es/Button/Button";
+
 
 const styles = {
 
@@ -16,9 +19,10 @@ class Details extends Component {
 
     render() {
         return (
-            <div>
+            <Navigation>
                 hello
-            </div>
+                <label defaultValue={'aa'+this.props.params.warnID}></label>
+            </Navigation>
         )
     }
 }
