@@ -39,7 +39,7 @@ class Landing extends Component {
       return (
         <Navigation sidebar>
           <div className={classes.root}>
-            <Map/>
+            <Map />
           </div>
           <SideDrawer />
         </Navigation>
@@ -76,10 +76,10 @@ class SimpleTabs extends Component {
 
     return (
       <div>
-        <AppBar position="static">
+        <AppBar position='static'>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Dine varsler" />
-            <Tab label="Andre varsler" />
+            <Tab label='Dine varsler' />
+            <Tab label='Andre varsler' />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
@@ -95,7 +95,7 @@ class SimpleTabs extends Component {
 
 function TabContainer(props) {
   return (
-    <List component="div" style={{ padding: 8 * 3 }}>
+    <List component='div' style={{ padding: 8 * 3 }}>
       {props.children}
     </List>
   );
