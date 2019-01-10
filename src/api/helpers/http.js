@@ -66,18 +66,18 @@ class Token {
     this.cookies = new Cookies();
   }
 
-  set(token: string, expires_in: number = 3600): void {
+  set(token, expires_in = 3600) {
     this.cookies.set(TOKEN_COOKIE_ID, token, {
       path: "/",
       expires: new Date(Date.now() + expires_in * 1000)
     });
   }
 
-  get(): string {
+  get() {
     return this.cookies.get(TOKEN_COOKIE_ID);
   }
 
-  remove(): void {
+  remove() {
     this.cookies.remove(TOKEN_COOKIE_ID, { path: "/" });
   }
 }
