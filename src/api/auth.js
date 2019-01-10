@@ -5,10 +5,10 @@ export default {
     // Here will all the auth relatived API
 
     createUser: (email, password) => {
-        return new Fetch(METHODS.post, '/user', {email: email, password: password});
+        return new Fetch(METHODS.post, '/auth/register', {email: email, password: password});
     },
 
     token: (email, password) => {
-        return new Fetch(METHODS.post, '/token', {email: email, password: password});
+        return new Fetch(METHODS.post, '/auth/login', {email: email, password: password});
     }
 }

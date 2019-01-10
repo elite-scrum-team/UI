@@ -20,9 +20,14 @@ export default class Fetch {
       this.headers[TOKEN_HEADER_NAME] = "Bearer " + TOKEN.get();
     }
 
-    // Adds arguments to the header
-    for (const key in args) {
-      this.headers[key] = args[key];
+    response(asForm=false) {
+        if(asForm) {
+            // Sends request with data as a FormData-object
+            return new Package(reqs.formRequest(this.method, this.url, this.headers, this.data));
+        } else {
+            // Sends a normal request
+            return new Package(reqs.request(this.method, this.url, this.headers, this.data));
+        }
     }
   }
 
@@ -37,23 +42,42 @@ export default class Fetch {
   }
 }
 
+class Package {
+    constructor(response) {
+        this.response = response.then((data) => {
+            if (!data) {
+                data = {};
+            }
+
+            this.isError = !data.ok;
+            this.status = data.status;
+            
+            return (data.json)? data.json() : data;
+        }).catch((error) => console.log(error));
+    }
+
+    then(method) {
+        return this.response.then(method);
+    }
+}
+
 class Token {
   constructor() {
     this.cookies = new Cookies();
   }
 
-  set(token: string, expires_in: number = 3600): void {
+  set(token, expires_in = 3600) {
     this.cookies.set(TOKEN_COOKIE_ID, token, {
       path: "/",
       expires: new Date(Date.now() + expires_in * 1000)
     });
   }
 
-  get(): string {
+  get() {
     return this.cookies.get(TOKEN_COOKIE_ID);
   }
 
-  remove(): void {
+  remove() {
     this.cookies.remove(TOKEN_COOKIE_ID, { path: "/" });
   }
 }

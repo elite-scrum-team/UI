@@ -37,7 +37,7 @@ class Landing extends Component {
       return (
         <Navigation sidebar>
           <div className={classes.root}>
-            <Map />
+            <Map/>
           </div>
           <SideDrawer />
         </Navigation>
