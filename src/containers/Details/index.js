@@ -68,7 +68,13 @@ class Details extends Component {
                            <ActionModule />
                         </Paper>
                         <div>
-                            <FeedModule />
+                            <FeedModule
+                                province='Trondheim Kommune'
+                                status={3}
+                                date='2019-01-09T21:39:59+01:00'
+                                statustekst='Work in Progress'
+                                statusMessage='Har sagt i fra til bedrift bla bla bla'
+                            />
                         </div>
                     </div>
                 </div>
