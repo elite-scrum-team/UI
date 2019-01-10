@@ -9,8 +9,10 @@ import Tabs from "./components/Tabs";
 import Register from "./components/Register";
 import Logo from "./components/Logo";
 
-// Project Components
+// Service import
+//import AuthService from "../../api/services/AuthService";
 
+// Project Components
 const styles = theme => ({
   main: {
     width: "auto",
@@ -42,10 +44,15 @@ class LogIn extends Component {
     this.setState({ isSignIn: value });
   };
 
-  logIn = event => {
+  logIn = data => event => {
     event.preventDefault();
 
-    console.log("Hello :D");
+    const email = data.email;
+    const password = data.password;
+
+    //AuthService.token().then();
+
+    console.log("Hello :D", email, password);
   };
 
   reg = event => {
