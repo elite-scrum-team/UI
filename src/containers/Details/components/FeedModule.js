@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/styles';
 // Project components
 import CommentBox from "./CommentBox";
 import StatusBox from "./StatusBox";
+import PropTypes from "prop-types";
 
 
 const styles = makeStyles({
@@ -29,6 +30,7 @@ const FeedModule = (props) => {
             <StatusBox
                 province='Trondheim Kommune'
                 status={3}
+                date='2019-01-09T21:39:59+01:00'
                 statustekst='Work in Progress'
                 statusMessage='Har sagt i fra til bedrift bla bla bla'
             />
@@ -37,7 +39,8 @@ const FeedModule = (props) => {
 }
 
 FeedModule.propTypes = {
-    
+    date: PropTypes.string,
+
 }
 
 export default (FeedModule);

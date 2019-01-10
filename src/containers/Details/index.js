@@ -68,7 +68,9 @@ class Details extends Component {
                            <ActionModule />
                         </Paper>
                         <div>
-                            <FeedModule />
+                            <FeedModule
+                                date='2019-01-09T21:39:59+01:00'
+                            />
                         </div>
                     </div>
                 </div>
