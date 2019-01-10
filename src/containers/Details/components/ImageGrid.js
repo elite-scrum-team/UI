@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 
-// Material UI Components
+// Material UI components
 
 // Icons
 
-// Project Components
+// Project components
 import ClickableImage from '../../../components/miscellaneous/ClickableImage';
 
 const styles = makeStyles({

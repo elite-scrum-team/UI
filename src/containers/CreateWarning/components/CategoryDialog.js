@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 
 
-// Material UI Components
+// Material UI components
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "../../../../node_modules/@material-ui/core/ListItemIcon/ListItemIcon";
@@ -15,7 +15,7 @@ import Card from "@material-ui/core/Card";
 
 // Icons
 
-// Project Components
+// Project components
 
 const styles = makeStyles({
     root: {

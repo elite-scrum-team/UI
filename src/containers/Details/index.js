@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 
-// Material UI Components
+// Material UI components
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 
 // Icons
 
-// Project Components
+// Project components
 import Navigation from '../../components/navigation/Navigation'
 import WarningDetails from "./components/WarningDetails";
 import ImageGrid from './components/ImageGrid';
@@ -67,9 +67,9 @@ class Details extends Component {
                         <Paper elevation={1} className='p-30' square>
                            <ActionModule />
                         </Paper>
-                        <Paper className='p-30' square>
+                        <div>
                             <FeedModule />
-                        </Paper>
+                        </div>
                     </div>
                 </div>
                 </Navigation>

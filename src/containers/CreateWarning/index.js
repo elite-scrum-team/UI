@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {makeStyles} from '@material-ui/styles';
 
-// Material UI Components
+// Material UI components
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-// Material UI Components
+// Material UI components
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -20,7 +20,7 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 import FolderIcon from '@material-ui/icons/Folder';
 
-//Project Components
+//Project components
 import Navigation from '../../components/navigation/Navigation';
 import Step from './components/Step';
 import CategoryDialog from './components/CategoryDialog';
