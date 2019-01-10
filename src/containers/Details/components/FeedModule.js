@@ -28,11 +28,12 @@ const FeedModule = (props) => {
         <div className={classes.root}>
             <CommentBox/>
             <StatusBox
-                province='Trondheim Kommune'
-                status={3}
-                date='2019-01-09T21:39:59+01:00'
-                statustekst='Work in Progress'
-                statusMessage='Har sagt i fra til bedrift bla bla bla'
+                date={props.date}
+                province={props.province}
+                status={props.status}
+                statusMessage={props.statusMessage}
+                statustekst={props.statustekst}
+
             />
         </div>
     )
@@ -40,7 +41,10 @@ const FeedModule = (props) => {
 
 FeedModule.propTypes = {
     date: PropTypes.string,
-
+    province: PropTypes.string,
+    status: PropTypes.number,
+    statusMessage: PropTypes.string,
+    statustekst: PropTypes.string,
 }
 
 export default (FeedModule);
