@@ -1,4 +1,5 @@
 import AUTH from '../auth';
+import { TOKEN } from '../helpers/http';
 
 // The userservice will do user related things,
 // and all the methods will return a promise
@@ -8,7 +9,8 @@ export class AuthService {
         // Trim and uncapitalize email
         email = email.trim().toLowerCase();
 
-        return AUTH.createUser(email, password);
+        const response = AUTH.createUser(email, password).response();
+        return response;
     }
 
     // The log in method,
@@ -16,6 +18,11 @@ export class AuthService {
         // Trim and uncapitalize email
         email = email.trim().toLowerCase();
 
-        return AUTH.token(email, password);
+        const response = AUTH.token(email, password).response();
+        return response.then((data) => {
+            if(response.isError === false && data && data.token) {
+                TOKEN.set(data.token);
+            }
+        });
     }
 }

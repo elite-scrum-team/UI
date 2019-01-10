@@ -1,4 +1,4 @@
-export const BASE_API_URL = '35.228.234.29';
+export const BASE_API_URL = '35.228.234.29/api';
 
 export const TOKEN_HEADER_NAME: string = 'Authorization';
 export const TOKEN_COOKIE_ID: string = 'access_token';

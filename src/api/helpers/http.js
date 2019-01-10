@@ -25,11 +25,30 @@ export class Fetch {
     response(asForm=false) {
         if(asForm) {
             // Sends request with data as a FormData-object
-            return reqs.formRequest(this.method, this.url, this.headers, this.data);
+            return new Package(reqs.formRequest(this.method, this.url, this.headers, this.data));
         } else {
             // Sends a normal request
-            return reqs.request(this.method, this.url, this.headers, this.data);
+            return new Package(reqs.request(this.method, this.url, this.headers, this.data));
         }
+    }
+}
+
+class Package {
+    constructor(response) {
+        this.response = response.then((data) => {
+            if (!data) {
+                data = {};
+            }
+
+            this.isError = !data.ok;
+            this.status = data.status;
+            
+            return (data.json)? data.json() : data;
+        }).catch((error) => console.log(error));
+    }
+
+    then(method) {
+        return this.response.then(method);
     }
 }
 
