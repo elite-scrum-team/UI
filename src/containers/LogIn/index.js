@@ -51,30 +51,28 @@ class LogIn extends Component {
 
   logIn = (email, password) => event => {
     event.preventDefault();
+
     // Set isLoading to true
     this.setState({ isLoading: true });
 
     AuthService.token(email, password, (isError, data) => {
-      console.log("isError: " + isError);
       if (isError) {
         // Set error to true, and set errorMessage
         this.setState({
           errorMessage: "Feil brukernavn eller passord. Prøv igjen."
         });
       } else {
-        // Reset error message
-        this.setState({ errorMessage: "" });
         // Go to home page
         this.props.history.push(URLS.home);
       }
       this.setState({ isLoading: false });
     });
-
-    console.log("Hello :D", email, password);
   };
 
   reg = (email, password, confirm) => event => {
     event.preventDefault();
+
+    // Check if password and confirmed password matches
     if (password !== confirm) {
       this.setState({
         errorMessage: "Passordene samsvarer ikke."
@@ -82,15 +80,14 @@ class LogIn extends Component {
       return;
     }
 
+    // Register user
     this.setState({ isLoading: true });
     AuthService.createUser(email, password, (isError, data) => {
-      console.log("isError: " + isError);
       if (isError) {
         this.setState({
           errorMessage: "the email address alrealy exists"
         });
       } else {
-        this.setState({ errorMessage: "" });
         this.props.history.push(URLS.home);
       }
       this.setState({ isLoading: false });
@@ -108,7 +105,7 @@ class LogIn extends Component {
               <Progress />
             ) : (
               <div>
-                <Tabs onChange={this.changeTab} />
+                <Tabs onChange={this.changeTab} isSignIn={this.state.isSignIn}/>
                 {this.state.isSignIn ? (
                   <SignIn
                     logIn={this.logIn}

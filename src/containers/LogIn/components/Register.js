@@ -47,7 +47,7 @@ function Register(props) {
             name="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            autoFocus
+            type='password'
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
@@ -57,7 +57,7 @@ function Register(props) {
             name="confirm"
             value={confirm}
             onChange={e => SetConfirm(e.target.value)}
-            autoFocus
+            type='password'
           />
           <FormHelperText error={props.errorMessasge !== null}>
             {props.errorMessage}

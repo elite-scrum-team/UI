@@ -12,9 +12,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 
 // Assets/Icons
 import Add from '@material-ui/icons/Add';
+
 
 // Project components
 
@@ -44,9 +46,7 @@ const styles = {
         alignItems: 'center',
     },
     warningButton: {
-        color: 'white',
-        border: '1px solid white',
-        marginRight: 10,
+        marginLeft: 24,
     },
     flex: {
         display: 'flex',
@@ -78,13 +78,17 @@ class Navigation extends Component {
                         <div className={classes.flex}>
                             <div>
                                 <Button
-                                    className={classes.warningButton}
-                                    onClick={() => this.goTo(URLS.createwarning)}><span>Ny varsel</span><Add className={classes.smallIcon} /></Button>
+                                    className={classes.logInButton}
+                                    size='small'
+                                    onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
                             </div>
                             <div>
                                 <Button
-                                    className={classes.logInButton}
-                                    onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                                    className={classes.warningButton}
+                                    size='small'
+                                    variant='outlined'
+                                    color='secondary'
+                                    onClick={() => this.goTo(URLS.createwarning)}>Ny varsel <Add /></Button>
                             </div>
                         </div>
                         

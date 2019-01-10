@@ -15,7 +15,12 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
-  }
+  },
+  linkWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 12,
+  },
 });
 
 function SignIn(props) {
@@ -60,13 +65,14 @@ function SignIn(props) {
         >
           Logg inn
         </Button>
-        <Link
-          to="/"
-          style={{ color: "#007c91" }}
-          activeStyle={{ color: "red" }}
-        >
-          Glemt passord?
-        </Link>
+        <div className={classes.linkWrapper}>
+          <Link
+            to="/recover"
+            style={{ color: "#007c91" }}
+          >
+            Glemt passord?
+          </Link>
+        </div>
       </form>
     </div>
   );
