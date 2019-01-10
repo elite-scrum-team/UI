@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 
-// Material UI Components
+// Material UI components
 import Button from "@material-ui/core/Button";
 
 const styles = theme => ({

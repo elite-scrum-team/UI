@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
 
-// Material UI Components
+// Material UI components
 import List from '@material-ui/core/List';
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
@@ -12,7 +12,7 @@ import Divider from "@material-ui/core/Divider/Divider";
 // Icons
 import Send from '@material-ui/icons/Send';
 
-// Project Components
+// Project components
 
 const styles = {
   root: {
