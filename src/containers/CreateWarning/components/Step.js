@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 
-// Material UI Components
+// Material UI components
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
 // Icons
 
-// Project Components
+// Project components
 
 const styles = makeStyles({
     root: {

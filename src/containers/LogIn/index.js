@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-// Material UI Components
+// Material UI components
 import Paper from "@material-ui/core/Paper";
 import SignIn from "./components/SignIn";
 import Tabs from "./components/Tabs";

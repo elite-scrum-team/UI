@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 import classNames from 'classnames';
 
-// Material UI Components
+// Material UI components
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 // Icons
 import SendIcon from '@material-ui/icons/Send';
 
-// Project Components
+// Project components
 
 const styles = makeStyles({
     root: {

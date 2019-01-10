@@ -7,7 +7,7 @@ import URLS from '../../URLS';
 
 // API and store imports
 
-// Material UI Components
+// Material UI components
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button';
 // Assets/Icons
 import Add from '@material-ui/icons/Add';
 
-// Project Components
+// Project components
 
 const styles = {
     appbar: {

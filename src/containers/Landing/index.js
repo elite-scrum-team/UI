@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
-// Material UI Components
+// Material UI components
 import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -12,13 +12,11 @@ import Tab from '@material-ui/core/Tab';
 
 // Icons
 
-// Project Components
+// Project components
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 
-import WarningItem from './components/WarningItem'
-
-const drawerWidth = 360;
+import WarningItem from './components/WarningItem.js';
 
 const styles = {
   root: {
@@ -39,7 +37,7 @@ class Landing extends Component {
       return (
         <Navigation sidebar>
           <div className={classes.root}>
-            <Map/>
+            <Map />
           </div>
           <SideDrawer />
         </Navigation>
@@ -76,10 +74,10 @@ class SimpleTabs extends Component {
 
     return (
       <div>
-        <AppBar position="static">
+        <AppBar position='static'>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Dine varsler" />
-            <Tab label="Andre varsler" />
+            <Tab label='Dine varsler' />
+            <Tab label='Andre varsler' />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
@@ -95,7 +93,7 @@ class SimpleTabs extends Component {
 
 function TabContainer(props) {
   return (
-    <List component="div" style={{ padding: 8 * 3 }}>
+    <List component='div' style={{ padding: 8 * 3 }}>
       {props.children}
     </List>
   );
