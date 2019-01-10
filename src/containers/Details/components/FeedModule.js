@@ -6,12 +6,16 @@ import { useState } from 'react';
 // Material UI components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
 import Paper from "@material-ui/core/es/Paper/Paper";
 
+
 // Icons
+import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
+
 
 // Project components
+import FileSelector from './FileSelector'
+
 
 const styles = makeStyles({
     root: {
@@ -39,6 +43,35 @@ const FeedModule = (props) => {
     // Styling
     const classes = styles();
 
+    let onImageChange = (event) => {
+        console.log(event.target.files);
+
+        // Function for reading and adding an image
+        const readImage = (file) => {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                const images = Object.assign([], this.state.images);
+                images.push(e.target.result);
+
+                this.setState({images: images});
+                console.log(this.state.images);
+            };
+
+            reader.readAsDataURL(file);
+        };
+
+        // Read images
+        if (event.target.files && event.target.files[0]) {
+
+
+            [].forEach.call(event.target.files, readImage)
+            // for(let i = 0; i < event.target.files.length; i++) {
+            //     reader.readAsDataURL(event.target.files[i]);
+            // }
+            //event.target.files.forEach((image) => );
+
+        }
+    }
     return (
         <div className={classes.root}>
             <Paper className='p-30' square>
@@ -56,7 +89,7 @@ const FeedModule = (props) => {
                     <Button variant="contained" color="primary" className={classes.button}>
                         Kommenter
                     </Button>
-                    <AddPhotoAlternate className={classes.bookmark} color='action'/>
+                    <FileSelector/>
                 </div>
             </Paper>
         </div>
