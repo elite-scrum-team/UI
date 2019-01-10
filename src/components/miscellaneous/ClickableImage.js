@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {makeStyles} from '@material-ui/styles';
 
-// External Components
+// External components
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 

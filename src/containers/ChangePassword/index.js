@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
-// Material UI Components
+// Material UI components
 import Button from '@material-ui/core/Button';
 
 // Icons
 
-// Project Components
+// Project components
 import Navigation from '../../components/navigation/Navigation';
 import Recover from './components/Recover'
 

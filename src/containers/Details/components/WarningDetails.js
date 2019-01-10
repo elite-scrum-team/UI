@@ -5,13 +5,13 @@ import classNames from 'classnames';
 import moment from 'moment';
 import warningUtils from '../../../utils/warningUtils';
 
-// Material UI Components
+// Material UI components
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // Icons
 
-// Project Components
+// Project components
 import Map from "../../../components/miscellaneous/Map";
 
 

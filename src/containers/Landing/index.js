@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
-// Material UI Components
+// Material UI components
 import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -12,13 +12,11 @@ import Tab from '@material-ui/core/Tab';
 
 // Icons
 
-// Project Components
+// Project components
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 
-import WarningItem from './components/WarningItem'
-
-const drawerWidth = 360;
+import WarningItem from './components/WarningItem.js';
 
 const styles = {
   root: {

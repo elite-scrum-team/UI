@@ -4,11 +4,11 @@ import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 
 
-// Material UI Components
+// Material UI components
 
 // Icons
 
-// Project Components
+// Project components
 
 const styles = makeStyles({
     root: {
