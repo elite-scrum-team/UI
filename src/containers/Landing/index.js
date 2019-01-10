@@ -16,7 +16,7 @@ import Tab from '@material-ui/core/Tab';
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 
-import WarningItem from './components/WarningItem'
+import WarningItem from './Components/WarningItem.js';
 
 const drawerWidth = 360;
 
