@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 
@@ -8,10 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from "@material-ui/core/es/Paper/Paper";
 
-
 // Icons
-import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
-
 
 // Project components
 import FileSelector from './FileSelector'

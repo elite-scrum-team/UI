@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton'
@@ -20,7 +19,7 @@ const styles = makeStyles({
 
 const FileSelector = (props) => {
     // State
-    const [data, setData] = useState({});
+    const [data, setData] = useState({image: null, file: null});
 
     // Styling
     const classes = styles();
@@ -35,11 +34,11 @@ const FileSelector = (props) => {
                 const images = Object.assign([], data.images);
                 images.push(e.target.result);
 
-                data.images = images;
-                console.log(data.images);
-            };
+                data.image = images[0];
+                };
 
             reader.readAsDataURL(file);
+            data.file = URL.createObjectURL(file);
         };
 
         // Read images
@@ -67,9 +66,10 @@ const FileSelector = (props) => {
                     </IconButton>
                 </label>
                 <div>
-
+                    <img alt='' src={data.file}/>
                 </div>
             </div>
+
         </div>
     )
 };
