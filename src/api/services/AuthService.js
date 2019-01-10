@@ -27,4 +27,17 @@ export class AuthService {
             !callback || callback(response.isError, data);
         });
     }
+
+    static isAuthenticated () {
+        return typeof TOKEN.get() !== 'undefined'
+    }
+
+    static logOut() {
+        // If not logged in, return
+        if(!this.isAuthenticated()) {
+            return;
+        }
+
+        TOKEN.remove();
+    }
 }
