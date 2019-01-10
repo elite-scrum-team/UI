@@ -16,7 +16,7 @@ import Tab from '@material-ui/core/Tab';
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 
-import WarningItem from './Components/WarningItem.js';
+import WarningItem from './components/WarningItem.js';
 
 const styles = {
   root: {

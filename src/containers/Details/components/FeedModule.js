@@ -28,7 +28,7 @@ const styles = makeStyles({
     bookmark:{
         justifySelf: 'center',
         gridArea:'bookmark',
-        paddingLeft: 5,
+        padding: 10,
     }
 });
 
