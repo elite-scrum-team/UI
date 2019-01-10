@@ -1,103 +1,50 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
-
 // Material UI components
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Paper from "@material-ui/core/es/Paper/Paper";
-
 
 // Icons
-import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
-
 
 // Project components
-import FileSelector from './FileSelector'
+import CommentBox from "./CommentBox";
+import StatusBox from "./StatusBox";
+import PropTypes from "prop-types";
 
 
 const styles = makeStyles({
     root: {
         
     },
-    clickables:{
-        alignItems: 'center',
-        display: 'flex',
-        gridTemplateAreas: 'commentButton bookmark',
-    },
-    button:{
-        gridArea: 'commentButton',
-    },
-    bookmark:{
-        justifySelf: 'center',
-        gridArea:'bookmark',
-        padding: 10,
-    }
+
 });
 
 const FeedModule = (props) => {
     // State
-    const [data, setData] = useState({});
+    const [file, setFile] = useState(null);
 
     // Styling
     const classes = styles();
 
-    let onImageChange = (event) => {
-        console.log(event.target.files);
-
-        // Function for reading and adding an image
-        const readImage = (file) => {
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                const images = Object.assign([], this.state.images);
-                images.push(e.target.result);
-
-                this.setState({images: images});
-                console.log(this.state.images);
-            };
-
-            reader.readAsDataURL(file);
-        };
-
-        // Read images
-        if (event.target.files && event.target.files[0]) {
-
-
-            [].forEach.call(event.target.files, readImage)
-            // for(let i = 0; i < event.target.files.length; i++) {
-            //     reader.readAsDataURL(event.target.files[i]);
-            // }
-            //event.target.files.forEach((image) => );
-
-        }
-    }
     return (
         <div className={classes.root}>
-            <Paper className='p-30' square>
-                <TextField
-                    id="filled-multiline-static"
-                    label="Skriv en kommentar..."
-                    multiline
-                    fullWidth
-                    rows="2"
-                    className={classes.textField}
-                    margin="normal"
-                    variant="filled"
-                />
-                <div className={classes.clickables}>
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Kommenter
-                    </Button>
-                    <FileSelector/>
-                </div>
-            </Paper>
+            <CommentBox/>
+            <StatusBox
+                date={props.date}
+                province={props.province}
+                status={props.status}
+                statusMessage={props.statusMessage}
+                statustekst={props.statustekst}
+
+            />
         </div>
     )
 }
 
 FeedModule.propTypes = {
-    
+    date: PropTypes.string,
+    province: PropTypes.string,
+    status: PropTypes.number,
+    statusMessage: PropTypes.string,
+    statustekst: PropTypes.string,
 }
 
 export default (FeedModule);

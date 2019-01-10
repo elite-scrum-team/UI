@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
+
 
 // Material UI components
 
@@ -10,11 +12,12 @@ import { useState } from 'react';
 
 const styles = makeStyles({
     root: {
-        
+        padding: '22px',
+        backgroundColor: 'red',
     }
 });
 
-const ActionModule = (props) => {
+const CommentSection = (props) => {
     // State
     const [data, setData] = useState({});
 
@@ -23,13 +26,10 @@ const ActionModule = (props) => {
 
     return (
         <div className={classes.root}>
-            
+            <input value={data.email} onChange={(e) => setData({email: e.target.value})} />
+            <p>{data.email}</p>
         </div>
     )
 }
 
-ActionModule.propTypes = {
-    
-}
-
-export default (ActionModule);
+export default (CommentSection);

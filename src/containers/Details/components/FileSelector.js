@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton'
@@ -15,38 +14,34 @@ import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
 const styles = makeStyles({
     root: {
 
-    }
+    },
+
 });
 
 const FileSelector = (props) => {
     // State
-    const [data, setData] = useState({});
+
 
     // Styling
     const classes = styles();
 
     let onImageChange = (event) => {
-        console.log(event.target.files);
+        // Check if image is uploaded
+        if (!event.target.files || !event.target.files[0]) {
+            return;
+        }
+
+        const file = event.target.files[0];
 
         // Function for reading and adding an image
-        const readImage = (file) => {
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                const images = Object.assign([], data.images);
-                images.push(e.target.result);
+        let reader = new FileReader();
+        reader.onload = (e) => {
 
-                data.images = images;
-                console.log(data.images);
-            };
-
-            reader.readAsDataURL(file);
+            !props.onChange || props.onChange(e.target.result, file);
         };
 
-        // Read images
-        if (event.target.files && event.target.files[0]) {
-            [].forEach.call(event.target.files, readImage)
+        reader.readAsDataURL(file);
 
-        }
     };
 
     return (
@@ -66,9 +61,6 @@ const FileSelector = (props) => {
                         <AddPhotoAlternate className={classes.bookmark} color='action'/>
                     </IconButton>
                 </label>
-                <div>
-
-                </div>
             </div>
         </div>
     )
