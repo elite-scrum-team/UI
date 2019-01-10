@@ -41,6 +41,10 @@ const styles = makeStyles({
     },
     messageText:{
         padding: 10,
+    },
+    topright:{
+        position: 'absolute',
+        top: 4, right: 8,
     }
 });
 
@@ -66,6 +70,9 @@ const StatusBox = (props) =>  {
                             </Typography>
                             <Typography color='textSecondary' variant='caption'>
                                 {props.statusMessage}
+                            </Typography>
+                            <Typography variant={"caption"} className={classes.topright}>
+                                {time}
                             </Typography>
                         </div>
                         <div className={classNames(classes.statusBar, statusClasses.color)}/>
