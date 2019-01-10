@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
@@ -18,20 +18,31 @@ const styles = theme => ({
 
 function SignIn(props) {
   const { classes } = props;
+  const [data, setData] = useState({
+    email: "",
+    password: ""
+  });
 
   return (
     <div>
-      <form className={classes.form} onSubmit={props.logIn}>
+      <form className={classes.form} onSubmit={props.logIn(data)}>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <Input id="email" name="email" autoComplete="email" autoFocus />
+          <Input
+            id="email"
+            value={data.email}
+            onChange={e => setData({ email: e.target.value })}
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="password">Passord</InputLabel>
           <Input
+            id="password"
             name="password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
         </FormControl>
