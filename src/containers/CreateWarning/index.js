@@ -89,8 +89,7 @@ class CreateWarning extends Component {
 
                         <Divider/>
 
-                        <Step number={4} step={'Bilde'} description={'Sett en markør der det gjelder.'}/>
-
+                        <Step number={4} step={'Bildeee'} description={'Sett en markør der det gjelder.'}/>
 
 
 
