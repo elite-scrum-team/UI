@@ -30,11 +30,27 @@ export const statusBGColorStyles = [
     }
 ];
 
+export const statusTextColorStyles = [
+    {
+        color: 'var(--rejected)',
+    },
+    {
+        color: 'var(--inactive)',
+    },
+    {
+        color: 'var(--progress)',
+    },
+    {
+        color: 'var(--done)',
+    }
+];
+
 export default {
     statusNames: ['Avslått', 'Inaktiv', 'Pågående', 'Ferdig'],
 
     getStatusClasses: (statusCode) => makeStyles({
         color: statusColorStyles[statusCode],
         border: statusBGColorStyles[statusCode],
+        textColor: statusTextColorStyles[statusCode],
     }),
 }

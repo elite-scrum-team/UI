@@ -41,11 +41,14 @@ const styles = makeStyles({
     },
     messageText:{
         padding: 10,
+
+        '@media only screen and (max-width: 800px)': {
+            width: '60%'        }
     },
     topright:{
         position: 'absolute',
         top: 4, right: 8,
-    }
+    },
 });
 
 const StatusBox = (props) =>  {
@@ -65,8 +68,8 @@ const StatusBox = (props) =>  {
                 <div className={classes.content}>
                     <Paper elevation={1} square>
                         <div className={classes.messageText} >
-                            <Typography variant='caption'>
-                                {props.province} har byttet status til "{props.statustekst}"
+                            <Typography className={classes.provincemessage} variant='caption'>
+                                {props.province} har byttet status til "{<span className={statusClasses.textColor}>{props.statustekst}</span>}"
                             </Typography>
                             <Typography color='textSecondary' variant='caption'>
                                 {props.statusMessage}
