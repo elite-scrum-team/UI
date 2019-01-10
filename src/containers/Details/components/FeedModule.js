@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 
 // Project components
 import CommentBox from "./CommentBox";
+import StatusBox from "./StatusBox";
 
 
 const styles = makeStyles({
@@ -25,6 +26,12 @@ const FeedModule = (props) => {
     return (
         <div className={classes.root}>
             <CommentBox/>
+            <StatusBox
+                province='Trondheim Kommune'
+                status={3}
+                statustekst='Work in Progress'
+                statusMessage='Har sagt i fra til bedrift bla bla bla'
+            />
         </div>
     )
 }
