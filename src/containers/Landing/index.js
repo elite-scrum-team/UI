@@ -20,10 +20,10 @@ import WarningItem from './components/WarningItem.js';
 
 const styles = {
   root: {
-    width: '100vw',
-    maxWidth: '100vw',
     overflow: 'hidden',
+    boxSizing: 'border-box',
     height: '100vh',
+    marginTop: '-48px',
   },
   drawerPaper: {
     width: 320,

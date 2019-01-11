@@ -16,7 +16,7 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 
 const styles = makeStyles({
     root:{
-        paddingTop: 10,
+        marginTop: 10,
     },
     flex: {
         display: 'flex',
@@ -35,8 +35,9 @@ const styles = makeStyles({
     },
     statusBar:{
         position: 'absolute',
-        top: 0, bottom: 0, left: 0,
-        width: 10,
+        top: 4, bottom: 4, left: 4,
+        width: 4,
+        borderRadius: 10,
         backgroundColor: 'var(--inactive)'
     },
     messageText:{
@@ -63,10 +64,10 @@ const StatusBox = (props) =>  {
     const statusClasses = warningUtils.getStatusClasses(statusCode)();
 
     return (
-        <div className={classes.root}>
+        <Paper className={classes.root}  elevation={1}>
             <div className={classes.relative}>
                 <div className={classes.content}>
-                    <Paper elevation={1} square>
+                    <div>
                         <div className={classes.messageText} >
                             <Typography className={classes.provincemessage} variant='caption'>
                                 {props.province} har byttet status til "{<span className={statusClasses.textColor}>{props.statustekst}</span>}"
@@ -80,10 +81,10 @@ const StatusBox = (props) =>  {
                         </div>
                         <div className={classNames(classes.statusBar, statusClasses.color)}/>
 
-                    </Paper>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Paper>
     );
 }
 
