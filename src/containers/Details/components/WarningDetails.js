@@ -6,7 +6,6 @@ import moment from 'moment';
 import warningUtils from '../../../utils/warningUtils';
 
 // Material UI components
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // Icons

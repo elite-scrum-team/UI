@@ -6,14 +6,7 @@ import {makeStyles} from '@material-ui/styles';
 // Material UI components
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
-// Material UI components
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "../../../node_modules/@material-ui/core/ListItemIcon/ListItemIcon";
 import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
@@ -25,11 +18,12 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
-
 //Project components
 import Navigation from '../../components/navigation/Navigation';
 import Step from './components/Step';
 import CategoryDialog from './components/CategoryDialog';
+import Map from '../../components/miscellaneous/Map';
+import MapStep from './components/MapStep'
 
 
 const styles = {
@@ -37,25 +31,38 @@ const styles = {
     card: {
         maxWidth: '600px',
         margin: 'auto',
+        marginTop: '100px',
     },
     button: {
         // left: '50px',
+    },
+    mapContainer: {
+        width: 450,
+        height: 350,
+        maxWidth: '450px',
+        maxHeight: '350px',
     },
     right: {
         marginLeft: '50px',
     },
     imageDiv: {
-        paddingTop: '10px',
-        maxWidth: '80%',
-        maxHeight: '300px',
+        maxWidth: '450px',
+        maxHeight: '350px',
+        position: 'relative',
+        marginTop: '30px',
+        marginRight: '30px',
     },
     image: {
+        width: '100%',
+        height: 'auto',
+        objectFit: 'cover',
         maxWidth: '100%',
-        maxHeight: '100%',
+        maxHeight: '300px',
     },
     deleteImg: {
-        right: 0,
-        top: 0,
+        right: '-20px',
+        top: '-20px',
+        position: 'absolute',
     }
 }
 
@@ -65,12 +72,29 @@ class CreateWarning extends Component {
     state = {
         open: false,
         images: [],
+        imageFiles: [],
+        category: null,
+        location: null,
     };
 
     handleClickOpen = () => {
         this.setState({
             open: true,
         });
+    };
+
+    handleClickDelete = index => {
+        // Check if index is a valid index
+        if (index < 0 || index >= this.state.images.length) {
+            return;
+        }
+
+        const images = Object.assign([], this.state.images);
+        const imageFiles = Object.assign([], this.state.imageFiles);
+        images.splice(index, 1);
+        imageFiles.splice(index, 1);
+
+        this.setState({images: images, imageFiles: imageFiles});
     };
 
     handleClose = () => {
@@ -85,7 +109,6 @@ class CreateWarning extends Component {
 
     onImageChange = (event) => {
         console.log(event.target.files);
-
         // Function for reading and adding an image
         const readImage = (file) => {
             let reader = new FileReader();
@@ -93,7 +116,10 @@ class CreateWarning extends Component {
                 const images = Object.assign([], this.state.images);
                 images.push(e.target.result);
 
-                this.setState({images: images});
+                const imageFiles = Object.assign([], this.state.imageFiles);
+                imageFiles.push(file);
+
+                this.setState({images: images, imageFiles: imageFiles});
                 console.log(this.state.images);
             };
 
@@ -111,6 +137,11 @@ class CreateWarning extends Component {
             //event.target.files.forEach((image) => );
 
         }
+    }
+
+    mapClickCallback = (data) => {
+        console.log(data);
+        this.setState({location: data});
     }
 
     render() {
@@ -136,7 +167,9 @@ class CreateWarning extends Component {
                         <Divider/>
 
                         <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
-
+                        <div className={classes.right}>
+                            <MapStep location={this.state.location} mapMarkerCallback={(e) => this.mapClickCallback(e)}/>
+                        </div>
                         <Divider/>
 
                         <Step number={3} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
@@ -176,10 +209,12 @@ class CreateWarning extends Component {
                             </div>
                             {this.state.images.map((img, index) => (
                                 <div className={classes.imageDiv} key={index}>
-                                    <Fab className={classes.deleteImg} color="secondary" size='small' aria-label="Add" component="span" className={classes.button}>
+                                    <img className={classes.image} id="target" src={img}/>
+                                    <Fab className={classes.deleteImg} value={index}
+                                         onClick={() => this.handleClickDelete(index)} color="secondary" size='small'
+                                         aria-label="Add" component="span">
                                         <DeleteIcon/>
                                     </Fab>
-                                    <img className={classes.image} id="target" src={img}/>
                                 </div>
                             ))}
 

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -18,21 +19,49 @@ const styles = theme => ({
 
 function Register(props) {
   const { classes } = props;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, SetConfirm] = useState("");
 
   return (
     <div>
-      <form className={classes.form} onSubmit={props.reg}>
+      <form
+        className={classes.form}
+        onSubmit={props.reg(email, password, confirm)}
+      >
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <Input id="email" name="email" autoComplete="email" autoFocus />
+          <Input
+            id="email"
+            name="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            autoComplete="email"
+            autoFocus
+          />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="password">Passord</InputLabel>
-          <Input id="password" name="password" autoFocus />
+          <Input
+            id="password"
+            name="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            type='password'
+          />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="confirm">Gjenta passord</InputLabel>
-          <Input id="confirm" name="confirm" autoFocus />
+          <Input
+            id="confirm"
+            name="confirm"
+            value={confirm}
+            onChange={e => SetConfirm(e.target.value)}
+            type='password'
+          />
+          <FormHelperText error={props.errorMessasge !== null}>
+            {props.errorMessage}
+          </FormHelperText>
         </FormControl>
         <Button
           type="submit"
@@ -41,7 +70,7 @@ function Register(props) {
           color="primary"
           className={classes.submit}
         >
-          Register deg
+          Register
         </Button>
       </form>
     </div>

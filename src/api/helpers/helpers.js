@@ -12,7 +12,7 @@ export const request = (method, url, headers, data) => {
 export const formRequest = (method, url, headers, data) => {
 
     // Set data
-    let formData: FormData = new FormData();
+    let formData = new FormData();
     for (let key in data) {
         formData.append(key, data[key]);
     }

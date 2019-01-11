@@ -16,7 +16,7 @@ import Tab from '@material-ui/core/Tab';
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 
-import WarningItem from './Components/WarningItem.js';
+import WarningItem from './components/WarningItem.js';
 
 const styles = {
   root: {
@@ -74,10 +74,10 @@ class SimpleTabs extends Component {
 
     return (
       <div>
-        <AppBar position="static">
+        <AppBar position='static'>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Dine varsler" />
-            <Tab label="Andre varsler" />
+            <Tab label='Dine varsler' />
+            <Tab label='Andre varsler' />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>
@@ -93,7 +93,7 @@ class SimpleTabs extends Component {
 
 function TabContainer(props) {
   return (
-    <List component="div" style={{ padding: 8 * 3 }}>
+    <List component='div' style={{ padding: 8 * 3 }}>
       {props.children}
     </List>
   );
