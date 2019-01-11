@@ -16,5 +16,8 @@ export default {
         Fetch(METHODS.post, '/warning', data)
     },
 
+    commentOnWarning : (warningId, image , comment) =>{
+        Fetch(METHODS.post, '/comment', )
+    }
 
 }

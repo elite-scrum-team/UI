@@ -27,7 +27,21 @@ export default class WarningService {
         return response.then(data => {
             !callback || callback(response.isError, data);
         });
-    }
+    };
 
+    static commentOnWarning = (warningId, comment, image = null ,callback) =>{
+        comment = comment.trim();
+
+        // checking if comment has is a string and if comment isnt an empty string
+        if (typeof comment !== 'string' || comment === '') {
+            return;
+        }
+
+        const response = API.commentOnWarning(warningId, image, comment).response(true);
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+        });
+    }
 
 }
