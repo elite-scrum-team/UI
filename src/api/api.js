@@ -5,27 +5,27 @@ export default {
     // Here will all the API methods be
 
     getWarnings: ()=>{
-        Fetch(METHODS.get, '/warnings')
+        return new Fetch(METHODS.get, '/warnings')
     },
 
     getWarning: (id) =>{
-        Fetch(METHODS.get, '/warnings/'+id)
+        return new Fetch(METHODS.get, '/warnings/'+id)
     },
 
     createWarning: (data) =>{
-        Fetch(METHODS.post, '/warning', data)
+        return new Fetch(METHODS.post, '/warning', data)
     },
 
     commentOnWarning : (warningId, image , comment) =>{
-        Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment},null, true )
+        return new Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment},null, true )
     },
 
     createContract : (warningId, groupId, description) =>{
-        Fetch(METHODS.post, '/contract', {WarningId: warningId, GroupId: groupId, description: description}, null , true)
+        return new Fetch(METHODS.post, '/contract', {WarningId: warningId, GroupId: groupId, description: description}, null , true)
     },
 
     getContracts : () =>{
-        Fetch(METHODS.get, '/contract')
+        return new Fetch(METHODS.get, '/contract')
     }
 
 }

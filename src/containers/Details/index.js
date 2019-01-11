@@ -49,6 +49,8 @@ const styles = {
 class Details extends Component {
 
     state = {
+        isLoading: false,
+
         title: null,
         warnDate: null,
         status: 1,
@@ -64,27 +66,31 @@ class Details extends Component {
     };
 
     componentDidMount() {
-        let temp = WarningService.getWarning(1);
-        console.log(temp)
-        if(temp!=null){
-            this.setState({
-                title: 'helo',
-                warnDate: temp.warnDate,
-                status: temp.status,
-                province: temp.province,
-                statusMessage: temp.statusMessage,
-                description: temp.description,
-                location: temp.location,
-                images: temp.images,
-                items: temp.items,
-            })
-        }
+        this.setState({isLoading: true});
+
+        WarningService.getWarning(1, (isError, data) => {
+            if(isError === false){
+                this.setState({
+                    title: data.title,
+                    warnDate: data.warnDate,
+                    status: data.status,
+                    province: data.province,
+                    statusMessage: data.statusMessage,
+                    description: data.description,
+                    location: data.location,
+                    images: data.images,
+                    items: data.items,
+                })
+            }
+            this.setState({isLoading: false});
+        });
+
     }
 
     render() {
         const {classes} = this.props;
         return (
-            <Navigation>
+            <Navigation isLoading={this.state.isLoading}>
                 <div className={classes.root}>
                     <Paper elevation={1}>
                         <WarningDetails 
