@@ -45,7 +45,7 @@ const styles = makeStyles({
 const CommentSection = (props) => {
     // State
     const [data, setData] = useState({});
-    const time = props.date ? moment(props.date).fromNow() : 'Ukjent';
+    const time = props.commentDate ? moment(props.commentDate).fromNow() : 'Ukjent';
 
 
     // Styling
@@ -75,7 +75,7 @@ const CommentSection = (props) => {
 }
 
 CommentSection.propTypes = {
-    date: PropTypes.string,
+    commentDate: PropTypes.string,
     breadtext: PropTypes.string,
     username: PropTypes.string,
 };
