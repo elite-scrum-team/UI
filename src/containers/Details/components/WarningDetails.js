@@ -22,7 +22,7 @@ const styles = makeStyles({
     },
     relative: {
         position: 'relative',
-        paddingLeft: 10,
+        paddingLeft: 16,
     },
     mr: {marginRight: 10},
     content: {
@@ -42,8 +42,9 @@ const styles = makeStyles({
     },
     statusBar:{
         position: 'absolute',
-        top: 0, bottom: 0, left: 0,
-        width: 10,
+        top: 10, bottom: 10, left: 8,
+        borderRadius: 10,
+        width: 3,
         backgroundColor: 'var(--inactive)'
     },
     details: {

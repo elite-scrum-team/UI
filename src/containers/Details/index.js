@@ -35,6 +35,11 @@ const styles = {
         '@media only screen and (max-width: 800px)': {
             gridTemplateColumns: '1fr',
         }
+    },
+    actionMod:{
+        padding:0,
+        display: 'inline',
+        height: 'auto'
     }
 }
 
@@ -45,8 +50,9 @@ class Details extends Component {
         return (
             <Navigation>
                 <div className={classes.root}>
-                    <Paper elevation={1} square>
-                        <WarningDetails title='Hull i vei'
+                    <Paper elevation={1}>
+                        <WarningDetails 
+                            title='Hull i vei'
                             date='2019-01-09T21:39:59+01:00'
                             status={3}
                             province='Trondheim Kommune'
@@ -64,8 +70,8 @@ class Details extends Component {
                             />
                     </Paper>
                     <div className={classes.content}>
-                        <Paper elevation={1} className='p-30' square>
-                           <ActionModule />
+                        <Paper elevation={1} className='p-30'>
+                           <ActionModule className={classes.actionMod} />
                         </Paper>
                         <div>
                             <FeedModule

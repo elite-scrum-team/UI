@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import CommentBox from "./CommentBox";
 import StatusBox from "./StatusBox";
 import PropTypes from "prop-types";
+import CommentSection from "./CommentSection";
 
 
 const styles = makeStyles({
@@ -35,11 +36,17 @@ const FeedModule = (props) => {
                 statustekst={props.statustekst}
 
             />
+            <CommentSection
+                username='Ruben Solvang Valen'
+                breadtext='Ja dette blir bra! Kjør på'
+                commentDate={props.date}
+            />
         </div>
     )
 }
 
 FeedModule.propTypes = {
+    commentDate: PropTypes.string,
     date: PropTypes.string,
     province: PropTypes.string,
     status: PropTypes.number,
