@@ -5,11 +5,13 @@ import { useState } from 'react';
 import URLS from '../../../URLS';
 
 // Material UI components
+import Typography from '@material-ui/core/Typography';
 
 // Icons
 
 // Project components
 import WarningItem from './WarningItem';
+
 
 const styles = makeStyles({
     root: {
@@ -33,6 +35,7 @@ const WarningList = (props) => {
                     status={value.status}
                     description={value.description}/>
             ))}
+            {warnings.length === 0 && <Typography variant='subtitle1' align='center'>Ingen varsel å vise</Typography>}
         </div>
     );
 };
