@@ -20,7 +20,7 @@ class App extends Component {
         <BrowserRouter>
             <MuiThemeProvider theme={theme}>
                 <Switch>
-                  <Route exact path={URLS.details} component={Details} />
+                  <Route exact path={URLS.details.concat(':warnID')} component={Details} />
                   <Route exact path={URLS.recover} component={Recover} />
                   <Route exact path={URLS.home} component={Landing} />
                   <Route exact path={URLS.login} component={LogIn} />
