@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import moment from 'moment';
-import warningUtils from '../../../utils/warningUtils';
-import Paper from "@material-ui/core/es/Paper/Paper";
-import Typography from "@material-ui/core/es/Typography/Typography";
+
 
 // Material UI components
+import Paper from "@material-ui/core/es/Paper/Paper";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 // Icons
 
 // Project components
-
+import warningUtils from '../../../utils/warningUtils';
 
 const styles = makeStyles({
     root:{
