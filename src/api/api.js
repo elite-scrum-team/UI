@@ -12,8 +12,8 @@ export default {
         Fetch(METHODS.get, '/warnings/'+id)
     },
 
-    createWarning: (description, subCatId, status) =>{
-        Fetch(METHODS.post, '/warning', {description : description, subCatId: subCatId, status: status})
+    createWarning: (data) =>{
+        Fetch(METHODS.post, '/warning', data)
     },
 
 

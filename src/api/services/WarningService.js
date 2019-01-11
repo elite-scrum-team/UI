@@ -5,14 +5,29 @@ import API from "../api";
 export default class WarningService {
 
     static getWarnings = (callback) => {
-        return callback;
+        const response = API.getWarnings().response();
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+        });
     };
 
-    static getWarning = (callback) =>{
-        return callback;
+    static getWarning = (id,callback) =>{
+        const response = API.getWarning(id).response();
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+        });
     };
 
-    static createWarning = (callback) =>{
-        return callback;
+    //data object is going to contain details and possible images.
+    static createWarning = (data ,callback) =>{
+        const response = API.createWarning(data).response(true);
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+        });
     }
+
+
 }
