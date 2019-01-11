@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
+import URLS from "../../URLS";
 
 // Material UI components
 import Paper from "@material-ui/core/Paper";
@@ -8,9 +10,10 @@ import SignIn from "./components/SignIn";
 import Tabs from "./components/Tabs";
 import Register from "./components/Register";
 import Logo from "./components/Logo";
+import Progress from "./components/Progress";
 
 // Service import
-//import AuthService from "../../api/services/AuthService";
+import AuthService from "../../api/services/AuthService";
 
 // Project Components
 const styles = theme => ({
@@ -37,28 +40,58 @@ const styles = theme => ({
 
 class LogIn extends Component {
   state = {
-    isSignIn: true
+    isSignIn: true,
+    isLoading: false,
+    errorMessage: ""
   };
 
   changeTab = value => {
     this.setState({ isSignIn: value });
   };
 
-  logIn = data => event => {
+  logIn = (email, password) => event => {
     event.preventDefault();
 
-    const email = data.email;
-    const password = data.password;
+    // Set isLoading to true
+    this.setState({ isLoading: true });
 
-    //AuthService.token().then();
-
-    console.log("Hello :D", email, password);
+    AuthService.token(email, password, (isError, data) => {
+      if (isError) {
+        // Set error to true, and set errorMessage
+        this.setState({
+          errorMessage: "Feil brukernavn eller passord. Prøv igjen."
+        });
+      } else {
+        // Go to home page
+        this.props.history.push(URLS.home);
+      }
+      this.setState({ isLoading: false });
+    });
   };
 
-  reg = event => {
+  reg = (email, password, confirm) => event => {
     event.preventDefault();
 
-    console.log("Hello :D");
+    // Check if password and confirmed password matches
+    if (password !== confirm) {
+      this.setState({
+        errorMessage: "Passordene samsvarer ikke."
+      });
+      return;
+    }
+
+    // Register user
+    this.setState({ isLoading: true });
+    AuthService.createUser(email, password, (isError, data) => {
+      if (isError) {
+        this.setState({
+          errorMessage: "the email address alrealy exists"
+        });
+      } else {
+        this.props.history.push(URLS.home);
+      }
+      this.setState({ isLoading: false });
+    });
   };
 
   render() {
@@ -68,11 +101,23 @@ class LogIn extends Component {
         <main className={classes.main}>
           <Paper className={classes.paper}>
             <Logo />
-            <Tabs onChange={this.changeTab} />
-            {this.state.isSignIn ? (
-              <SignIn logIn={this.logIn} />
+            {this.state.isLoading ? (
+              <Progress />
             ) : (
-              <Register reg={this.reg} />
+              <div>
+                <Tabs onChange={this.changeTab} isSignIn={this.state.isSignIn}/>
+                {this.state.isSignIn ? (
+                  <SignIn
+                    logIn={this.logIn}
+                    errorMessage={this.state.errorMessage}
+                  />
+                ) : (
+                  <Register
+                    reg={this.reg}
+                    errorMessage={this.state.errorMessage}
+                  />
+                )}
+              </div>
             )}
           </Paper>
         </main>
@@ -81,4 +126,4 @@ class LogIn extends Component {
   }
 }
 
-export default withStyles(styles)(LogIn);
+export default withStyles(styles)(withRouter(LogIn));

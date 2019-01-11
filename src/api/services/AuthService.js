@@ -1,15 +1,15 @@
-import AUTH from '../auth';
-import { TOKEN } from '../helpers/http';
+import AUTH from "../auth";
+import { TOKEN } from "../helpers/http";
 
 // The userservice will do user related things,
 // and all the methods will return a promise
-export class AuthService {
+export default class AuthService {
     static createUser = (email, password, callback) => {
         // Trim and uncapitalize email
         email = email.trim().toLowerCase();
 
         const response = AUTH.createUser(email, password).response();
-        return response.then((data) => {
+        return response.then(data => {
             !callback || callback(response.isError, data);
         });
     };
@@ -26,5 +26,18 @@ export class AuthService {
             }
             !callback || callback(response.isError, data);
         });
+    }
+
+    static isAuthenticated () {
+        return typeof TOKEN.get() !== 'undefined'
+    }
+
+    static logOut() {
+        // If not logged in, return
+        if(!this.isAuthenticated()) {
+            return;
+        }
+
+        TOKEN.remove();
     }
 }
