@@ -17,7 +17,11 @@ export default {
     },
 
     commentOnWarning : (warningId, image , comment) =>{
-        Fetch(METHODS.post, '/comment', )
+        Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment},null, true )
+    },
+
+    createContract : (warningId, groupId, description) =>{
+        Fetch(METHODS.post, 'contracts', {WarningId: warningId, GroupId: groupId, description: description}, null , true)
     }
 
 }
