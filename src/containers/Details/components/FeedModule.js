@@ -28,6 +28,29 @@ const FeedModule = (props) => {
     return (
         <div className={classes.root}>
             <CommentBox/>
+            {(props.items != null)?(props.items.map((item, index) => {
+                    if(item.type === 'status') {
+                        return (
+                            <StatusBox
+                                date={item.data.date}
+                                province={item.data.province}
+                                status={item.data.status}
+                                statusMessage={item.data.statusMessage}
+                                statustekst={item.data.statustekst}
+                            />
+                        )
+                    } else if(item.type === 'comment') {
+                        return (
+                            <CommentSection
+                                username={item.data.username}
+                                breadtext={item.data.breadtext}
+                                commentDate={item.data.commentDate}
+                            />
+                        )
+                    }
+                })):null}
+
+
             <StatusBox
                 date={props.date}
                 province={props.province}

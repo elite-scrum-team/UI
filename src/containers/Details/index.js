@@ -70,9 +70,11 @@ class Details extends Component {
                             />
                     </Paper>
                     <div className={classes.content}>
-                        <Paper elevation={1} className='p-30'>
-                           <ActionModule className={classes.actionMod} />
-                        </Paper>
+                        <div>
+                            <Paper elevation={1} className='p-30'>
+                                <ActionModule className={classes.actionMod} />
+                            </Paper>
+                        </div>
                         <div>
                             <FeedModule
                                 province='Trondheim Kommune'
