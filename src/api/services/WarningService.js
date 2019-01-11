@@ -8,6 +8,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -16,6 +17,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -27,6 +29,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -39,6 +42,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -47,6 +51,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -55,6 +60,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -66,6 +72,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
 
     };
