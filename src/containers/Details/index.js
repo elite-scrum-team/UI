@@ -35,6 +35,11 @@ const styles = {
         '@media only screen and (max-width: 800px)': {
             gridTemplateColumns: '1fr',
         }
+    },
+    actionMod:{
+        padding:0,
+        display: 'inline',
+        height: 'auto'
     }
 }
 
@@ -66,7 +71,7 @@ class Details extends Component {
                     </Paper>
                     <div className={classes.content}>
                         <Paper elevation={1} className='p-30'>
-                           <ActionModule />
+                           <ActionModule className={classes.actionMod} />
                         </Paper>
                         <div>
                             <FeedModule

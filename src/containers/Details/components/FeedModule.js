@@ -39,7 +39,7 @@ const FeedModule = (props) => {
             <CommentSection
                 username='Ruben Solvang Valen'
                 breadtext='Ja dette blir bra! Kjør på'
-                date={props.commentDate}
+                commentDate={props.date}
             />
         </div>
     )
