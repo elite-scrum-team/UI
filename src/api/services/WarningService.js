@@ -1,6 +1,5 @@
 import API from "../api";
 
-// de snakker med warningservice.
 // and all the methods will return a promise
 export default class WarningService {
 
@@ -43,7 +42,23 @@ export default class WarningService {
         });
     };
 
-    static createContract = (warningId, groupId, description) =>{
+    static getContracts = (callback) => {
+        const response = API.getContracts().response();
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+        });
+    };
+
+    static getContract = (callback) => {
+        const response = API.getContracts().response();
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+        });
+    };
+
+    static createContract = (warningId, groupId, description, callback) =>{
         if(!description) return;
         description = description.trim();
 
@@ -53,8 +68,7 @@ export default class WarningService {
             !callback || callback(response.isError, data);
         });
 
-    }
-
+    };
 
 
 }

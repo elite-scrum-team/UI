@@ -21,7 +21,11 @@ export default {
     },
 
     createContract : (warningId, groupId, description) =>{
-        Fetch(METHODS.post, 'contracts', {WarningId: warningId, GroupId: groupId, description: description}, null , true)
+        Fetch(METHODS.post, '/contract', {WarningId: warningId, GroupId: groupId, description: description}, null , true)
+    },
+
+    getContracts : () =>{
+        Fetch(METHODS.get, '/contract')
     }
 
 }
