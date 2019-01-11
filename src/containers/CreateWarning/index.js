@@ -229,7 +229,7 @@ class CreateWarning extends Component {
                         <Divider/>
 
                         <div>
-                            <Button variant="contained" size={'large'} ize color='primary'
+                            <Button variant="contained" size={'large'} color='primary'
                                     className={classes.registerButton}
                                     onClick={() => this.openConfirmDialog()}
                             >

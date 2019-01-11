@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI components
+import Paper from '@material-ui/core/Paper';
 
 // Icons
 
@@ -10,6 +11,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 import Sidebar from './components/Sidebar';
+import InfoModule from './components/InfoModule';
 
 const styles = {
   root: {
@@ -17,10 +19,16 @@ const styles = {
     boxSizing: 'border-box',
     height: '100vh',
     marginTop: '-48px',
+    position: 'relative',
   },
   drawerPaper: {
     width: 320,
   },
+  infoModule: {
+    position: 'absolute',
+    top: 70, right: 20,
+    width: 400,
+  }
 }
 
 class Landing extends Component {
@@ -31,6 +39,10 @@ class Landing extends Component {
 
     handleChange = (name) => (event) => {
       this.setState({[name]: event.target.value});
+    }
+
+    goTo = (page) => {
+      this.props.history.push(page);
     }
 
     render() {
@@ -48,6 +60,9 @@ class Landing extends Component {
           <div className={classes.root}>
             <Map/>
           </div>
+          <Paper className={classes.infoModule}>
+            <InfoModule goTo={this.goTo}/>
+          </Paper>
         </Navigation>
       );
     }
