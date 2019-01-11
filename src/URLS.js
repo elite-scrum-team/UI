@@ -3,5 +3,5 @@ export default {
     login: '/login',
     recover: '/recover',
     createwarning: '/createwarning',
-    details: '/details/:warnID'
+    details: '/details/',
 };

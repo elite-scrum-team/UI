@@ -2,7 +2,6 @@
 import Cookies from "universal-cookie";
 import {
   BASE_API_URL as BASE,
-  METHODS,
   TOKEN_HEADER_NAME,
   TOKEN_COOKIE_ID
 } from "./config";

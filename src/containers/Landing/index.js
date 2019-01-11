@@ -3,20 +3,13 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI components
-import List from '@material-ui/core/List';
-import Drawer from '@material-ui/core/Drawer';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 // Icons
 
 // Project components
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
-
-import WarningItem from './components/WarningItem.js';
+import Sidebar from './components/Sidebar';
 
 const styles = {
   root: {
@@ -32,71 +25,31 @@ const styles = {
 
 class Landing extends Component {
 
+    state = {
+      search: '',
+    }
+
+    handleChange = (name) => (event) => {
+      this.setState({[name]: event.target.value});
+    }
+
     render() {
       const {classes} = this.props;
       return (
         <Navigation sidebar>
+          <Sidebar
+            searchValue={this.state.search}
+            onChange={this.handleChange('search')}
+            items={[
+              {id: 1, status: 2, title: 'Hello', description: 'What is going on???'},
+              {id: 2, status: 0, title: 'Hello', description: 'What is going on???'},
+            ]}
+          />
           <div className={classes.root}>
             <Map/>
           </div>
-          <SideDrawer />
         </Navigation>
-      )
+      );
     }
 }
-
-const SideDrawer = withStyles(styles) ((props) => {
-  const {classes} = props;
-  return (
-    <Drawer
-      className={classes.drawer}
-      variant='permanent'
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <SimpleTabs/>
-    </Drawer>
-  )
-});
-
-class SimpleTabs extends Component {
-  state = {
-    value: 0,
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  render() {
-    const { value } = this.state;
-
-    return (
-      <div>
-        <AppBar position='static'>
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label='Dine varsler' />
-            <Tab label='Andre varsler' />
-          </Tabs>
-        </AppBar>
-        {value === 0 && <TabContainer>
-            <WarningItem/>
-            <WarningItem/>
-        </TabContainer>}
-        {value === 1 && <TabContainer>Andre varsler</TabContainer>}
-      </div>
-    );
-  }
-}
-
-
-function TabContainer(props) {
-  return (
-    <List component='div' style={{ padding: 8 * 3 }}>
-      {props.children}
-    </List>
-  );
-}
-
 export default withStyles(styles)(Landing);

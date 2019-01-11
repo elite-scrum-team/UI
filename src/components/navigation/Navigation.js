@@ -5,7 +5,8 @@ import {withRouter} from 'react-router';
 import classNames from 'classnames';
 import URLS from '../../URLS';
 
-// API and store imports
+// Service imports
+import AuthService from '../../api/services/AuthService';
 
 // Material UI components
 import AppBar from '@material-ui/core/AppBar';
@@ -66,6 +67,11 @@ class Navigation extends Component {
         this.props.history.push(page);
     }
 
+    logOut = () => {
+        AuthService.logOut();
+        this.props.history.push(URLS.home);
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -77,10 +83,18 @@ class Navigation extends Component {
                         </div>
                         <div className={classes.flex}>
                             <div>
+                                {AuthService.isAuthenticated()?
+                                <Button
+                                    className={classes.logInButton}
+                                    size='small'
+                                    onClick={this.logOut}>Logg ut</Button>
+                                :
                                 <Button
                                     className={classes.logInButton}
                                     size='small'
                                     onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                                }
+                                
                             </div>
                             <div>
                                 <Button

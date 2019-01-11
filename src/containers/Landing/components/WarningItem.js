@@ -1,39 +1,59 @@
-import React from 'react';
-import { withStyles } from '@material-ui/styles';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
+import { useState } from 'react';
+import warningUtils from '../../../utils/warningUtils';
+import classNames from 'classnames';
 
 // Material UI components
-import List from '@material-ui/core/List';
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import Typography from "@material-ui/core/Typography/Typography";
-import Divider from "@material-ui/core/Divider/Divider";
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 // Icons
-import Send from '@material-ui/icons/Send';
 
 // Project components
 
-const styles = {
-  root: {
 
-  }
-}
-
-const WarningItem = withStyles(styles) ((props) => {
-  return (
-    <div>
-      <ListItem className='listItem' alignItems="flex-start" button>
-        <ListItemIcon><Send /></ListItemIcon>
-        <ListItemText
-          className='listItemText'
-          primary='Pothole at Times Square'
-          secondary={ <Typography noWrap>It is a giant whole n the middle of the street plz help</Typography>}
-        />
-      </ListItem>
-      <Divider />
-    </div>
-  )
+const styles = makeStyles({
+    root: {
+        width: '100%',
+    },
+    paper: {
+        width: '100%',
+        position: 'relative',
+        padding: 10,
+        marginBottom: 4,
+    },
+    statusBar: {
+        position: 'absolute',
+        top: 6, bottom: 6, left: 6,
+        borderRadius: 4,
+        width: 4,
+    },
+    content: {
+        marginLeft: 12,
+    }
 });
 
-export default withStyles(styles) (WarningItem);
+const WarningItem = (props) => {
+    // Styling
+    const classes = styles();
+
+    const statusCode = (props.status !== 'undefined' && props.status >= 0 && props.status <= 3) ? props.status : 1;
+    const statusClasses = warningUtils.getStatusClasses(statusCode)();
+
+    return (
+        <ButtonBase className={classes.root} onClick={props.onClick}> 
+            <Paper className={classes.paper}>
+                <div className={classNames(classes.statusBar, statusClasses.color)} />
+                <div className={classes.content}>
+                    <Typography variant='subtitle2' align='left'>{props.title}</Typography>
+                    <Typography variant='caption' align='left'>{props.description}</Typography>
+                </div>
+            </Paper>
+        </ButtonBase>
+    )
+};
+
+export default (WarningItem);
