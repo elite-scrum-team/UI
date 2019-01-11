@@ -11,6 +11,7 @@ export default class AuthService {
         const response = AUTH.createUser(email, password).response();
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -25,6 +26,7 @@ export default class AuthService {
                 TOKEN.set(data.token);
             }
             !callback || callback(response.isError, data);
+            return data;
         });
     }
 
