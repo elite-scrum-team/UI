@@ -1,5 +1,5 @@
 # build environment
-FROM circleci/node:10.10 as builder
+FROM node:10.10 as builder
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
