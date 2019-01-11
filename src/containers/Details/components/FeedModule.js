@@ -66,7 +66,7 @@ const FeedModule = (props) => {
             />
         </div>
     )
-}
+};
 
 FeedModule.propTypes = {
     commentDate: PropTypes.string,
@@ -75,6 +75,7 @@ FeedModule.propTypes = {
     status: PropTypes.number,
     statusMessage: PropTypes.string,
     statustekst: PropTypes.string,
-}
+    items: PropTypes.array,
+};
 
 export default (FeedModule);

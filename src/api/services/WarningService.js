@@ -1,6 +1,5 @@
 import API from "../api";
 
-// de snakker med warningservice.
 // and all the methods will return a promise
 export default class WarningService {
 
@@ -9,6 +8,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -17,6 +17,7 @@ export default class WarningService {
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
@@ -24,24 +25,57 @@ export default class WarningService {
     static createWarning = (data ,callback) =>{
         const response = API.createWarning(data).response(true);
 
+        if(!data) return;
+
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
     };
 
     static commentOnWarning = (warningId, comment, image = null ,callback) =>{
         comment = comment.trim();
 
-        // checking if comment has is a string and if comment isnt an empty string
-        if (typeof comment !== 'string' || comment === '') {
-            return;
-        }
+        if (!comment) return;
 
         const response = API.commentOnWarning(warningId, image, comment).response(true);
 
         return response.then(data => {
             !callback || callback(response.isError, data);
+            return data;
         });
-    }
+    };
+
+    static getContracts = (callback) => {
+        const response = API.getContracts().response();
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    };
+
+    static getContract = (callback) => {
+        const response = API.getContracts().response();
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    };
+
+    static createContract = (warningId, groupId, description, callback) =>{
+        if(!description) return;
+        description = description.trim();
+
+        const response = API.createContract(warningId,groupId,description);
+
+        return response.then(data => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+
+    };
+
 
 }
