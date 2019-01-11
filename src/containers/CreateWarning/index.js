@@ -21,9 +21,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 //Project components
 import Navigation from '../../components/navigation/Navigation';
 import Step from './components/Step';
-import CategoryDialog from './components/CategoryDialog';
-import Map from '../../components/miscellaneous/Map';
-import MapStep from './components/MapStep'
+import CategoryStep from './components/CategoryStep';
+import MapStep from './components/MapStep';
+import DescriptionStep from './components/DescriptionStep';
+import PictureStep from './components/PictureStep';
+import Typography from '@material-ui/core/Typography';
+import ConfirmDialog from './components/ConfirmDialog';
 
 
 const styles = {
@@ -32,9 +35,17 @@ const styles = {
         maxWidth: '600px',
         margin: 'auto',
         marginTop: '100px',
+        marginBottom: '50px',
+
     },
     button: {
         // left: '50px',
+    },
+    title: {
+        textAlign: 'center',
+        marginTop: '30px',
+        marginBottom: '30px',
+        fontWeight: '4',
     },
     mapContainer: {
         width: 450,
@@ -44,6 +55,7 @@ const styles = {
     },
     right: {
         marginLeft: '50px',
+        marginBottom: '20px',
     },
     imageDiv: {
         maxWidth: '450px',
@@ -63,6 +75,12 @@ const styles = {
         right: '-20px',
         top: '-20px',
         position: 'absolute',
+    },
+    registerButton: {
+        margin: 'auto',
+        display: 'block',
+        marginTop: '30px',
+        marginBottom: '10px',
     }
 }
 
@@ -74,7 +92,9 @@ class CreateWarning extends Component {
         images: [],
         imageFiles: [],
         category: null,
+        description: '',
         location: null,
+        confirmDialogOpen: false,
     };
 
     handleClickOpen = () => {
@@ -82,6 +102,18 @@ class CreateWarning extends Component {
             open: true,
         });
     };
+
+    openConfirmDialog = () => {
+        this.setState({
+            confirmDialogOpen: true,
+        })
+    }
+
+    closeConfirmDialog = () => {
+        this.setState({
+            confirmDialogOpen: false,
+        })
+    }
 
     handleClickDelete = index => {
         // Check if index is a valid index
@@ -97,15 +129,6 @@ class CreateWarning extends Component {
         this.setState({images: images, imageFiles: imageFiles});
     };
 
-    handleClose = () => {
-        this.setState({open: false});
-    };
-
-    handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value,
-        });
-    };
 
     onImageChange = (event) => {
         console.log(event.target.files);
@@ -139,9 +162,19 @@ class CreateWarning extends Component {
         }
     }
 
+    setCategory = (data) => {
+        console.log(data);
+        this.setState({category: data})
+    }
+
     mapClickCallback = (data) => {
         console.log(data);
         this.setState({location: data});
+    }
+
+    setDescription = (data) => {
+        console.log(data);
+        this.setState({description: data});
     }
 
     render() {
@@ -151,73 +184,58 @@ class CreateWarning extends Component {
             <Navigation>
                 <Card className={classes.card}>
                     <CardContent>
+                        <div>
+                            <Typography className={classes.title} gutterBottom variant='h2' component='h2'>
+                                Registrer varsel
+                            </Typography>
+                        </div>
+                        <Divider/>
+
                         <Step number={1} step={'Kategori'} description={'Velg den kategorien som passer best.'}/>
                         <div className={classes.right}>
-                            <Button variant="outlined" className={classes.button} onClick={this.handleClickOpen}>
-                                heyyo
-                            </Button>
-                            <Dialog
-                                onClose={this.handleClose}
-                                aria-labelledby='customized-dialog-title'
-                                open={this.state.open}>
-                                <CategoryDialog/>
-                            </Dialog>
+                            <CategoryStep
+                                categoryCallback={(e) => this.setCategory(e)}
+                            />
                         </div>
-
                         <Divider/>
 
                         <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
                         <div className={classes.right}>
-                            <MapStep location={this.state.location} mapMarkerCallback={(e) => this.mapClickCallback(e)}/>
+                            <MapStep
+                                location={this.state.location}
+                                mapMarkerCallback={(e) => this.mapClickCallback(e)}
+                            />
                         </div>
                         <Divider/>
 
                         <Step number={3} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
                         <div className={classes.right}>
-                            <TextField
-                                id='outlined-multiline-flexible'
-                                label='Multiline'
-                                multiline
-                                rowsMax='4'
-                                value={this.state.multiline}
-                                onChange={this.handleChange('multiline')}
-                                className={classes.textField}
-                                margin='normal'
-                                helperText=''
-                                variant='outlined'
+                            <DescriptionStep
+                                setDescriptionCallback={(e) => this.setDescription(e)}
                             />
                         </div>
                         <Divider/>
+
                         <Step number={4} step={'Bilde'}
                               description={'Last opp eventuelle bilder som beskriver problemet.'}/>
                         <div className={classes.right}>
-                            <input
-                                accept="image/*"
-                                className={classes.input}
-                                style={{display: 'none'}}
-                                id="upload-button"
-                                multiple
-                                type="file"
-                                onChange={this.onImageChange}
+                            <PictureStep
+                                images={this.state.images}
+                                onImageChangeCallback={(event) => this.onImageChange(event)}
+                                handleClickDeleteCallback={(index) => this.handleClickDelete(index)}
                             />
-                            <div>
-                                <label htmlFor="upload-button">
-                                    <Fab color="primary" aria-label="Add" component="span" className={classes.button}>
-                                        <AddIcon/>
-                                    </Fab>
-                                </label>
-                            </div>
-                            {this.state.images.map((img, index) => (
-                                <div className={classes.imageDiv} key={index}>
-                                    <img className={classes.image} id="target" src={img}/>
-                                    <Fab className={classes.deleteImg} value={index}
-                                         onClick={() => this.handleClickDelete(index)} color="secondary" size='small'
-                                         aria-label="Add" component="span">
-                                        <DeleteIcon/>
-                                    </Fab>
-                                </div>
-                            ))}
 
+                        </div>
+                        <Divider/>
+
+                        <div>
+                            <Button variant="contained" size={'large'} ize color='primary'
+                                    className={classes.registerButton}
+                                    onClick={() => this.openConfirmDialog()}
+                            >
+                                Send inn
+                            </Button>
+                            <ConfirmDialog open={this.state.confirmDialogOpen} closeConfirmDialogCallback={() => this.closeConfirmDialog()}/>
                         </div>
 
                     </CardContent>
