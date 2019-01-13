@@ -3,7 +3,7 @@ export const request = (method, url, headers, data) => {
     return fetch(url, {
         method: method,
         headers: headers,
-        body: JSON.stringify(data),
+        body: data ?  JSON.stringify(data) : null,
     })
     .catch((error) => console.log(error));
 };

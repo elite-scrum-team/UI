@@ -1,24 +1,43 @@
 import API from "../api";
+import * as WarningAction from '../../store/actions/WarningAction'
+import store from '../../store/store'
 
 // and all the methods will return a promise
 export default class WarningService {
 
-    static getWarnings = (callback) => {
+    // Fetches job posts
+    static getWarnings = async (orderBy = null) => {
+        // Fetch job posts
         const response = API.getWarnings().response();
+        return response.then((data) => {
+            data = data || [];
 
-        return response.then(data => {
-            !callback || callback(response.isError, data);
-            return data;
+            // If orderby is provided, sort the data
+            if(orderBy) {
+                for(const key in orderBy) {
+                    data = data.sort((a, b) => (a[key] === b[key])? 0 : a[key] ? 1 : -1)
+                }
+            }
+
+            WarningAction.setWarningPost(data)(store.dispatch);
+            return Promise.resolve(data);
         });
     };
 
-    static getWarning = (id,callback) =>{
-        const response = API.getWarning(id).response();
+    static getWarning = async (id) => {
+        // Check store if warning exist.
+        const warning = WarningAction.getWarningById(id)(store.getState());
 
-        return response.then(data => {
-            !callback || callback(response.isError, data);
-            return data;
-        });
+        if(warning) {
+            return Promise.resolve(warning)
+        } else {
+            // Fetch
+            return API.getWarning(id).response()
+                .then((data) => {
+                    WarningAction.setWarningById(id, data);
+                    return WarningAction.getWarningById(id)(store.getState());
+                });
+        }
     };
 
     //data object is going to contain details and possible images.

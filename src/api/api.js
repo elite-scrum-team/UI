@@ -9,7 +9,7 @@ export default {
     },
 
     getWarning: (id) =>{
-        return new Fetch(METHODS.get, '/warnings/'+id)
+        return new Fetch(METHODS.get, `/warnings/${id}`)
     },
 
     createWarning: (data) =>{
