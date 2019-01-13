@@ -15,8 +15,9 @@ export default class Fetch {
     this.url = BASE + url;
 
     // Adds token to Authentication header
-    if (withAuth) {
-      this.headers[TOKEN_HEADER_NAME] = "Bearer " + TOKEN.get();
+    const token = TOKEN.get();
+    if (withAuth && token) {
+      this.headers[TOKEN_HEADER_NAME] = 'Bearer '.concat(token);
     }
   }
 

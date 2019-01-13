@@ -51,6 +51,7 @@ class Details extends Component {
     state = {
         isLoading: false,
 
+        id: null,
         title: null,
         warnDate: null,
         status: 1,
@@ -62,13 +63,20 @@ class Details extends Component {
             lng: 0,
         },
         images: null,
-        items: null,
+
+        items: [],
     };
 
-    componentDidMount() {
-        this.setState({isLoading: true});
+    getWarningId = () => this.props.match.params.id;
 
-        WarningService.getWarning(1, (isError, data) => {
+    componentDidMount() {
+        // Get id
+        const id = this.getWarningId();
+
+        this.setState({id: id, isLoading: true});
+
+        // Get warning with given id
+        WarningService.getWarning(id, (isError, data) => {
             if(isError === false){
                 this.setState({
                     title: data.title,
@@ -81,6 +89,8 @@ class Details extends Component {
                     images: data.images,
                     items: data.items,
                 })
+            } else {
+                // Go to 404 page
             }
             this.setState({isLoading: false});
         });
@@ -104,11 +114,7 @@ class Details extends Component {
                             />
                         <Divider />
                         <ImageGrid
-                            images={[
-                                'https://wtop.com/wp-content/uploads/2018/02/1pothole-727x485.jpg',
-                                'https://wtop.com/wp-content/uploads/2018/02/1pothole-727x485.jpg',
-                                'https://wtop.com/wp-content/uploads/2018/02/1pothole-727x485.jpg',
-                            ]}
+                            images={this.state.images}
                             />
                     </Paper>
                     <div className={classes.content}>
@@ -119,11 +125,7 @@ class Details extends Component {
                         </div>
                         <div>
                             <FeedModule
-                                province='Trondheim Kommune'
-                                status={3}
-                                date='2019-01-09T21:39:59+01:00'
-                                statustekst='Work in Progress'
-                                statusMessage='Har sagt i fra til bedrift bla bla bla'
+                                id={this.state.id}
                                 items={this.state.items}
                             />
                         </div>

@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 
 const styles = makeStyles({
     root: {
-        paddingTop: 10
+        paddingTop: 4
     },
     userInfo:{
         alignItems: 'center',

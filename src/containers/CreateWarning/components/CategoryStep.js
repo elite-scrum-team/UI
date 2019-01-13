@@ -82,7 +82,10 @@ const CategoryList = (props) => {
 
     // Styling
     const classes = styles();
-    const categories = props.categories || [];
+    let categories = props.categories || [];
+    if(!(categories instanceof Array)) {
+        categories = [];
+    }
     
     return (
         <div>

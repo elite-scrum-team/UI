@@ -14,11 +14,11 @@ const styles = makeStyles({
         padding: 12,
         display: 'grid',
         
-        gridTemplateColumns: '1fr 1fr 1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
         gridGap: 12,
     
         '@media only screen and (max-width: 800px)': {
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: '1fr 1fr 1fr',
         },
 
         '@media only screen and (max-width: 600px)': {
@@ -46,11 +46,14 @@ const DescriptionDetails = (props) => {
     const images = props.images || [];
 
     return (
-        <div className={classes.root}>
+        images.length > 0 ? 
+            <div className={classes.root}>
             {images.map((image, index) => (
                 <ClickableImage key={image.concat(' - ', index)} className={classes.image} image={image} alt='warning image'/>
             ))}
-        </div>
+            </div>
+        :
+        null
     )
 }
 

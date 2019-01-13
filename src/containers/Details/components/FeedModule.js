@@ -24,8 +24,8 @@ const FeedModule = (props) => {
 
     return (
         <div className={classes.root}>
-            <CommentBox/>
-            {(props.items != null)?(props.items.map((item, index) => {
+            <CommentBox id={props.id}/>
+            {(props.items !== null)?(props.items.map((item, index) => {
                     if(item.type === 'status') {
                         return (
                             <StatusBox
@@ -48,32 +48,12 @@ const FeedModule = (props) => {
                         return null;
                     }
                 })) : null}
-
-
-            <StatusBox
-                date={props.date}
-                province={props.province}
-                status={props.status}
-                statusMessage={props.statusMessage}
-                statustekst={props.statustekst}
-
-            />
-            <CommentSection
-                username='Ruben Solvang Valen'
-                breadtext='Ja dette blir bra! Kjør på'
-                commentDate={props.date}
-            />
         </div>
     )
 };
 
 FeedModule.propTypes = {
-    commentDate: PropTypes.string,
-    date: PropTypes.string,
-    province: PropTypes.string,
-    status: PropTypes.number,
-    statusMessage: PropTypes.string,
-    statustekst: PropTypes.string,
+    id: PropTypes.string,
     items: PropTypes.array,
 };
 

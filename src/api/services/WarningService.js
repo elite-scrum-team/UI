@@ -34,7 +34,9 @@ export default class WarningService {
         });
     };
 
-    static commentOnWarning = (warningId, comment, image = null ,callback) =>{
+    // --- COMMENTS ---
+
+    static createComment = (warningId, comment, image = null ,callback) =>{
         comment = comment.trim();
 
         if (!comment) return;

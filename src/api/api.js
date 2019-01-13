@@ -24,16 +24,16 @@ export default {
     // --- CATEGORIES ---
 
     getCategories : () => {
-        return new Fetch(METHODS.get, '/category');
+        return new Fetch(METHODS.get, '/warning/category');
     },
 
     // --- CONTRACTS ---
     createContract : (warningId, groupId, description) =>{
-        return new Fetch(METHODS.post, '/contract', {warningId: warningId, groupId: groupId, description: description})
+        return new Fetch(METHODS.post, '/warning/contract', {warningId: warningId, groupId: groupId, description: description})
     },
 
     getContracts : () =>{
-        return new Fetch(METHODS.get, '/contract')
+        return new Fetch(METHODS.get, '/warning/contract')
     }
 
 }
