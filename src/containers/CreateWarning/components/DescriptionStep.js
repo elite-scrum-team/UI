@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
@@ -19,16 +17,11 @@ const styles = makeStyles({
 });
 
 const DescriptionStep = (props) => {
-    // State
-    const [description, setDescription] = useState('');
 
     // Styling
     const classes = styles();
 
     const handleChange = name => event => {
-        setDescription({
-            [name]: event.target.value,
-        });
         props.setDescriptionCallback(event.target.value);
     };
 

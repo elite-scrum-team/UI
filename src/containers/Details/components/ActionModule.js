@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import {Typography} from "@material-ui/core";
 
 // Material UI components
@@ -20,8 +19,6 @@ const styles = makeStyles({
 });
 
 const ActionModule = (props) => {
-    // State
-    const [data, setData] = useState({});
 
     // Styling
     const classes = styles();

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
@@ -19,12 +19,11 @@ import Button from '@material-ui/core/Button';
 
 // Project components
 import SearchBar from './SearchBar';
-import WarningItem from './WarningItem';
 import WarningList from './WarningList';
 
 const styles = makeStyles({
     root: {
-        
+        minHeight: 400,
     },
     loginButton: {
         display: 'block',
@@ -47,15 +46,19 @@ const SearchContent = (props) => {
 
     return (
         <div className={classes.root}>
-            <AppBar position='static'>
-                <Tabs value={section} onChange={(e, val) => setSection(val)}>
-                    <Tab label='Søk' value={0}/>
+            <AppBar position='static' color='secondary'>
+                <Tabs
+                    value={section}
+                    onChange={(e, val) => setSection(val)}
+                    centered={true}
+                    variant='fullWidth'>
+                    <Tab label='Søk varsler' value={0}/>
                     <Tab label='Mine varsler' value={1}/>
                 </Tabs>
             </AppBar>
             {section === 0 &&
                 <div>
-                    <SearchBar value={props.searchValue} onChange={props.onChange}/>
+                    <SearchBar value={props.searchValue} onChange={props.onChange} onSubmit={props.onSubmit}/>
                     <WarningList items={props.items} goTo={goTo}/>
                 </div>
             }
@@ -75,6 +78,14 @@ const SearchContent = (props) => {
             </div>}
         </div>
     )
+}
+
+SearchContent.propTypes = {
+    searchValue: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    items: PropTypes.array.isRequired,
+    goTo: PropTypes.func,
 }
 
 export default withRouter(SearchContent);

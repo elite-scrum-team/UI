@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import URLS from '../../../URLS';
 
 // Material UI components

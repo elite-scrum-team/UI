@@ -1,12 +1,20 @@
+import { METHODS } from './config';
+
 // Sends a normal request with a given method, url and data
 export const request = (method, url, headers, data) => {
-    return fetch(url, {
+    const fetchObject =  {
         method: method,
         headers: headers,
-        body: JSON.stringify(data),
-    })
+    };
+
+    if(method !== METHODS.get) {
+        fetchObject.body = JSON.stringify(data);
+    }
+
+    return fetch(url, fetchObject)
     .catch((error) => console.log(error));
 };
+
 
 // Sends a request with form data
 export const formRequest = (method, url, headers, data) => {

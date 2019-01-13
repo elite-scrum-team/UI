@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React  from 'react';
 import { makeStyles } from '@material-ui/styles';
 // Material UI components
 
@@ -15,12 +15,9 @@ const styles = makeStyles({
     root: {
         
     },
-
 });
 
 const FeedModule = (props) => {
-    // State
-    const [file, setFile] = useState(null);
 
     // Styling
     const classes = styles();
@@ -47,8 +44,10 @@ const FeedModule = (props) => {
                                 commentDate={item.data.commentDate}
                             />
                         )
+                    } else {
+                        return null;
                     }
-                })):null}
+                })) : null}
 
 
             <StatusBox

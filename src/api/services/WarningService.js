@@ -3,6 +3,7 @@ import API from "../api";
 // and all the methods will return a promise
 export default class WarningService {
 
+    // ---WARNINGS---
     static getWarnings = (callback) => {
         const response = API.getWarnings().response();
 
@@ -46,6 +47,18 @@ export default class WarningService {
         });
     };
 
+    // --- CATEGORIES ---
+
+    static getCategories = (callback) => {
+        const response = API.getCategories().response();
+
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
+
+    // --- CONTRACTS ---
     static getContracts = (callback) => {
         const response = API.getContracts().response();
 
@@ -76,6 +89,4 @@ export default class WarningService {
         });
 
     };
-
-
 }
