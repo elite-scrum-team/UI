@@ -77,26 +77,25 @@ class Details extends Component {
 
         this.setState({isLoading: true});
 
-        WarningService.getWarning(id).then(e => {
-            this.setState({
-                title : e.title,
-                warnDate: e.warnDate,
-                status: e.status ? e.status : 1,
-                province: e.province,
-                statusMessage: e.statusMessage,
-                description : e.description,
-                location : {
-                    lat: e.lat,
-                    lng: e.lng
-                },
-                images : e.images ? e.images : null,
-                items : e.items,
-
-                isLoading: false
-            });
-
-
-        }).catch(error => console.log(`error: \t ${error}`));
+        WarningService.getWarning(id, (isError, e) => {
+            if(isError === false) {
+                this.setState({
+                    title : e.title,
+                    warnDate: e.warnDate,
+                    status: e.status ? e.status : 1,
+                    province: e.province,
+                    statusMessage: e.statusMessage,
+                    description : e.description,
+                    location : {
+                        lat: e.lat,
+                        lng: e.lng
+                    },
+                    images : e.images ? e.images : null,
+                    items : e.items,
+                });
+            }
+            this.setState({isLoading: false});
+        });
 
     }
 

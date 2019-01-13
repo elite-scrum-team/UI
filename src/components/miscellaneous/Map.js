@@ -39,7 +39,7 @@ const Map = compose(
           fullscreenControl: false,
       }}
 
-      center={props.center}
+      
       
       onClick={
         props.clickable ? (e) => {

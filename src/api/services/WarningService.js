@@ -1,5 +1,6 @@
 import API from "../api";
-import * as WarningAction from '../../store/actions/WarningAction'
+import * as WarningAction from '../../store/actions/WarningAction';
+import * as CategoryAction from '../../store/actions/CategoryAction';
 import store from '../../store/store'
 
 // and all the methods will return a promise
@@ -21,19 +22,21 @@ export default class WarningService {
         });
     };
 
-    static getWarning = async (id) => {
+    static getWarning = async (id, callback) => {
         // Check store if warning exist.
-        const warning = WarningAction.getWarningById(id)(store.getState());
+        let warning = WarningAction.getWarningById(id)(store.getState());
 
         if(warning) {
+            !callback || callback(false, warning);
             return Promise.resolve(warning)
         } else {
             // Fetch
-            return API.getWarning(id).response()
-                .then((data) => {
-                    WarningAction.setWarningById(id, data);
-                    return WarningAction.getWarningById(id)(store.getState());
-                });
+            const response = API.getWarning(id).response()
+            return response.then((data) => {
+                WarningAction.setWarningById(id, data);
+                warning = WarningAction.getWarningById(id)(store.getState());
+                !callback || callback(response.isError, warning);
+            });
         }
     };
 
@@ -67,9 +70,21 @@ export default class WarningService {
     // --- CATEGORIES ---
 
     static getCategories = (callback) => {
+        // Check if categories exists
+        const categories = CategoryAction.getAllCategories(store.getState());
+
+        // If categories is already stored
+        if(categories && categories.length > 0) {
+            !callback || callback(false, categories);
+            return Promise.resolve(categories);
+        }
+
+        // If not, fetch from API
         const response = API.getCategories().response();
 
         return response.then((data) => {
+            CategoryAction.setAllCategories(data)(store.dispatch);
+            data = CategoryAction.getAllCategories(store.getState());
             !callback || callback(response.isError, data);
             return data;
         });
