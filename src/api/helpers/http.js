@@ -1,4 +1,3 @@
-// @flow
 import Cookies from "universal-cookie";
 import {
   BASE_API_URL as BASE,
@@ -8,7 +7,7 @@ import {
 import * as reqs from "./helpers";
 
 export default class Fetch {
-  constructor(method, url, data = {}, args = {}, withAuth = true) {
+  constructor(method, url, data = null, args = {}, withAuth = true) {
     this.method = method;
     this.data = data;
     this.headers = { "Content-Type": "application/json" };

@@ -26,12 +26,12 @@ const styles = {
     },
     content: {
         display: 'grid',
-        
+
         gridTemplateColumns: '1fr 3fr',
         gridGap: '14px',
 
         marginTop: 14,
-        
+
         '@media only screen and (max-width: 1000px)': {
             padding: '0 4px',
         },
@@ -75,25 +75,28 @@ class Details extends Component {
 
         this.setState({id: id, isLoading: true});
 
-        // Get warning with given id
-        WarningService.getWarning(id, (isError, data) => {
-            if(isError === false){
-                this.setState({
-                    title: data.title,
-                    warnDate: data.warnDate,
-                    status: data.status,
-                    province: data.province,
-                    statusMessage: data.statusMessage,
-                    description: data.description,
-                    location: data.location,
-                    images: data.images,
-                    items: data.items,
-                })
-            } else {
-                // Go to 404 page
-            }
-            this.setState({isLoading: false});
-        });
+        this.setState({isLoading: true});
+
+        WarningService.getWarning(id).then(e => {
+            this.setState({
+                title : e.title,
+                warnDate: e.warnDate,
+                status: e.status ? e.status : 1,
+                province: e.province,
+                statusMessage: e.statusMessage,
+                description : e.description,
+                location : {
+                    lat: e.lat,
+                    lng: e.lng
+                },
+                images : e.images ? e.images : null,
+                items : e.items,
+
+                isLoading: false
+            });
+
+
+        }).catch(error => console.log(`error: \t ${error}`));
 
     }
 
@@ -103,7 +106,7 @@ class Details extends Component {
             <Navigation isLoading={this.state.isLoading}>
                 <div className={classes.root}>
                     <Paper elevation={1}>
-                        <WarningDetails 
+                        <WarningDetails
                             title={this.state.title}
                             date={this.state.warnDate}
                             status={this.state.status}
