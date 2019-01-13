@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import URLS from '../../../URLS';
 
 // Material UI components
@@ -44,7 +42,7 @@ const InfoModule = (props) => {
 
     return (
         <div className={classes.root}>
-            <img className={classes.logo} src={LOGO} />
+            <img className={classes.logo} src={LOGO} alt='HverdagsHelt Logo'/>
             <div>
                 <Typography variant='h6' align='center'>Varsle din kommune om dine kommunale problemer</Typography>
             </div>

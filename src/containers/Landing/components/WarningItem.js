@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import warningUtils from '../../../utils/warningUtils';
 import classNames from 'classnames';
 

@@ -4,8 +4,9 @@ import {METHODS} from "./helpers/config";
 export default {
     // Here will all the API methods be
 
+    // --- WARNINGS ---
     getWarnings: ()=>{
-        return new Fetch(METHODS.get, '/warnings')
+        return new Fetch(METHODS.get, '/warning')
     },
 
     getWarning: (id) =>{
@@ -17,11 +18,18 @@ export default {
     },
 
     commentOnWarning : (warningId, image , comment) =>{
-        return new Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment},null, true )
+        return new Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment})
     },
 
+    // --- CATEGORIES ---
+
+    getCategories : () => {
+        return new Fetch(METHODS.get, '/category');
+    },
+
+    // --- CONTRACTS ---
     createContract : (warningId, groupId, description) =>{
-        return new Fetch(METHODS.post, '/contract', {WarningId: warningId, GroupId: groupId, description: description}, null , true)
+        return new Fetch(METHODS.post, '/contract', {warningId: warningId, groupId: groupId, description: description})
     },
 
     getContracts : () =>{

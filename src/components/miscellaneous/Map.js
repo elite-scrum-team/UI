@@ -38,6 +38,8 @@ const Map = compose(
           rotateControl: false,
           fullscreenControl: false,
       }}
+
+      center={props.center}
       
       onClick={
         props.clickable ? (e) => {
@@ -67,6 +69,8 @@ const Map = compose(
 });
 
 const MapWrapper = (props) => {
+
+    // const [center, setCenter] = useState({lat: 0, lng: 0});
 
     return (
       <Map

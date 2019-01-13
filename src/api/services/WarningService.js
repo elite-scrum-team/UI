@@ -4,10 +4,7 @@ import store from '../../store/store'
 
 // and all the methods will return a promise
 export default class WarningService {
-
-    // Fetches job posts
     static getWarnings = async (orderBy = null) => {
-        // Fetch job posts
         const response = API.getWarnings().response();
         return response.then((data) => {
             data = data || [];
@@ -65,6 +62,18 @@ export default class WarningService {
         });
     };
 
+    // --- CATEGORIES ---
+
+    static getCategories = (callback) => {
+        const response = API.getCategories().response();
+
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
+
+    // --- CONTRACTS ---
     static getContracts = (callback) => {
         const response = API.getContracts().response();
 
@@ -95,6 +104,4 @@ export default class WarningService {
         });
 
     };
-
-
 }

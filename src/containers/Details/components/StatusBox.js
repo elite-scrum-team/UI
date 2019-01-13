@@ -60,7 +60,7 @@ const StatusBox = (props) =>  {
 
     // Initialize status settings
     const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 3 ? props.status : 1;
-    const statusName = warningUtils.statusNames[statusCode];
+    // const statusName = warningUtils.statusNames[statusCode];
     const statusClasses = warningUtils.getStatusClasses(statusCode)();
 
     return (

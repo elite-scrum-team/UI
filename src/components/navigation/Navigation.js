@@ -13,7 +13,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 
 // Assets/Icons
 import Add from '@material-ui/icons/Add';
@@ -27,9 +26,6 @@ const styles = {
     },
     main: {
         marginTop: 48,
-        '@media only screen and (max-width: 600px)': {
-            marginTop: 56,
-        },
     },
     leftMargin: {
       
