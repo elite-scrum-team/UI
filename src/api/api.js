@@ -21,6 +21,10 @@ export default {
         return new Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment})
     },
 
+    addWarningImage: (id, image) => {
+        return new Fetch(METHODS.post, '/warning/image', {id: id, image: image});
+    },
+
     // --- CATEGORIES ---
 
     getCategories : () => {
