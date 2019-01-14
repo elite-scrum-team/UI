@@ -6,7 +6,7 @@ import Fab from "@material-ui/core/Fab";
 
 // Icons
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddPhotoAlternate from "../../../../node_modules/@material-ui/icons/AddPhotoAlternate";
+import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate";
 import IconButton from "@material-ui/core/IconButton";
 
 // Project components

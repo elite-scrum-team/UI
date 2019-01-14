@@ -13,6 +13,9 @@ const drawerWidth = 325;
 const styles = makeStyles({
     root: {
         width: drawerWidth,
+        // '@media only screen and (max-width: 600px)': {
+        //     width: '100%',
+        // },
         borderRight: 'none',
     }
 });
