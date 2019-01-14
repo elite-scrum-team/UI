@@ -4,4 +4,5 @@ export default {
     recover: '/recover',
     createwarning: '/createwarning',
     details: '/details/',
+    dashboard: '/dashboard/',
 };

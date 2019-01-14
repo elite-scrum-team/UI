@@ -13,7 +13,8 @@ import LogIn from './containers/LogIn';
 import Landing from './containers/Landing';
 import Recover from './containers/ChangePassword'
 import CreateWarning from './containers/CreateWarning';
-import Details from './containers/Details'
+import Details from './containers/Details';
+import Dashboard from './containers/Dashboard';
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
                             <Route exact path={URLS.home} component={Landing} />
                             <Route exact path={URLS.login} component={LogIn} />
                             <Route exact path={URLS.createwarning} component={CreateWarning} />
+                            <Route exact path={URLS.dashboard} component={Dashboard} />
                         </Switch>
                     </MuiThemeProvider>
                 </BrowserRouter>
