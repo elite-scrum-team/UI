@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import { useState } from 'react';
 import {Typography} from "@material-ui/core";
 
 // Material UI components
@@ -11,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 
 // Project components
+import ChangeStatus from './ChangeStatus';
 
 const styles = makeStyles({
     root: {
@@ -19,6 +21,19 @@ const styles = makeStyles({
 });
 
 const ActionModule = (props) => {
+    // State
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+
+    const openDialog = () => {
+        setDialogOpen(true)
+    };
+
+    const closeDialog = () => {
+        setDialogOpen(false)
+    }
+
+
 
     // Styling
     const classes = styles();
@@ -41,6 +56,7 @@ const ActionModule = (props) => {
                         <ListItemText primary="Ny status" />
                     </ListItem>
                     <Divider light />
+                    <ChangeStatus open={dialogOpen} closeDialogCallback={() => closeDialog()}/>
                 </List>
             </div>
         </div>
