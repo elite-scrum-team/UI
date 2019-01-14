@@ -16,6 +16,7 @@ import WarningDetails from "./components/WarningDetails";
 import ImageGrid from './components/ImageGrid';
 import ActionModule from './components/ActionModule';
 import FeedModule from './components/FeedModule';
+import ChangeStatus from "./components/ChangeStatus";
 
 const styles = {
     root: {
