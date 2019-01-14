@@ -1,6 +1,5 @@
 import API from "../api";
 import * as WarningAction from '../../store/actions/WarningAction';
-import * as CategoryAction from '../../store/actions/CategoryAction';
 import store from '../../store/store'
 
 // and all the methods will return a promise
@@ -41,22 +40,28 @@ export default class WarningService {
     };
 
     //data object is going to contain details and possible images.
-    static createWarning = (data ,callback) =>{
-        const response = API.createWarning(data).response(true);
+    static createWarning = (item ,callback) => {
+        // Split images and other data
+        const images = item.images;
+        delete item.images;
 
-        if(!data) return;
-
-        return response.then(data => {
+        // Create warning
+        const response = API.createWarning(item).response();
+        return response.then((data) => {
+            // Add images if no error
+            if(response.isError === false && images instanceof Array) {
+                images.forEach(async (image) => {
+                    await API.addWarningImage(data.id, image).response(true).then();
+                });
+            }
             !callback || callback(response.isError, data);
             return data;
         });
     };
 
     // --- COMMENTS ---
-
     static createComment = (warningId, comment, image = null ,callback) =>{
         comment = comment.trim();
-
         if (!comment) return;
 
         const response = API.commentOnWarning(warningId, image, comment).response(true);
@@ -66,29 +71,6 @@ export default class WarningService {
             return data;
         });
     };
-
-    // --- CATEGORIES ---
-
-    static getCategories = (callback) => {
-        // Check if categories exists
-        const categories = CategoryAction.getAllCategories(store.getState());
-
-        // If categories is already stored
-        if(categories && categories.length > 0) {
-            !callback || callback(false, categories);
-            return Promise.resolve(categories);
-        }
-
-        // If not, fetch from API
-        const response = API.getCategories().response();
-
-        return response.then((data) => {
-            CategoryAction.setAllCategories(data)(store.dispatch);
-            data = CategoryAction.getAllCategories(store.getState());
-            !callback || callback(response.isError, data);
-            return data;
-        });
-    }
 
     // --- CONTRACTS ---
     static getContracts = (callback) => {

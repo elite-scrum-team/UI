@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 import URLS from '../../URLS';
 
 // Service imports
+import CategoryService from '../../api/services/CategoryService';
 import WarningService from '../../api/services/WarningService';
 
 // Material UI components
@@ -109,10 +110,7 @@ class CreateWarning extends Component {
         confirmDialogOpen: false,
 
         // Data
-        categories: [
-            {id: '123', name: 'Something something'},
-            {id: '321', name: 'This is great!'},
-        ], // id and name
+        categories: [], // id and name
         
         // User created data
         images: [],
@@ -123,8 +121,9 @@ class CreateWarning extends Component {
     };
 
     componentDidMount() {
-        console.log("Fetching");
-        WarningService.getCategories((isError, data) => {
+        
+        // Get all categories
+        CategoryService.getCategories((isError, data) => {
             console.log(data);
             if(isError) {
                 console.log("Error fetching categories");
