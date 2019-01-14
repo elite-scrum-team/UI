@@ -101,6 +101,11 @@ class Details extends Component {
 
     }
 
+    changeStatus = (newStatus) => {
+        console.log(newStatus);
+        // Endre status
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -124,7 +129,10 @@ class Details extends Component {
                     <div className={classes.content}>
                         <div>
                             <Paper elevation={1} className='p-30'>
-                                <ActionModule className={classes.actionMod} />
+                                <ActionModule
+                                    className={classes.actionMod}
+                                    updateStatus={this.changeStatus}
+                                />
                             </Paper>
                         </div>
                         <div>

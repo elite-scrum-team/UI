@@ -13,7 +13,9 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 
 // Project components
-import StatusDialog from './StatusDialog'
+import StatusDialog from './StatusDialog';
+import statusLabels from '../../../utils/warningUtils';
+
 
 const styles = {
     root: {
@@ -28,20 +30,14 @@ class ActionModule extends Component {
         statusMsg: '',
     }
 
-    handleNewStatus = async (value) => {
-        await this.setState({newStatus: value});
-        console.log(value);
-        console.log("NewStatus: " + this.state.newStatus + ' ' + this.state.statusMsg);
-        this.setState({dialogOpen: (false)});
+    handleNewStatus = (value) => {
+        this.setState({dialogOpen: false});
+        this.props.updateStatus(value);
     };
 
     render() {
-
-
         // Styling
         const {classes} = this.props;
-
-
 
         return (
             <div className={classes.root}>
@@ -65,6 +61,8 @@ class ActionModule extends Component {
                 </div>
                 <StatusDialog
                     open={this.state.dialogOpen}
+                    submitStatus={this.handleNewStatus}
+                    statusNames={statusLabels}
                 />
             </div>
         )

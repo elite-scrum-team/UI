@@ -14,6 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import statusLabels from '../../../utils/warningUtils'
 
 
 const styles = {
@@ -25,29 +26,32 @@ const styles = {
 class StatusDialog extends Component{
     // State
     state = {
-        dialogOpen: false,
+        dialogOpen: this.props.open,
         newStatus: -1,
         statusMsg: '',
+        statusNames: statusLabels
     }
+
 
     handleChange = (name) => (event) => {
         this.setState({[name]: event.target.value});
     };
 
     handleNewStatus = () =>{
-
+        this.setState({dialogOpen: false});
+        this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
     };
 
     render() {
         // Styling
-        const {classes} = this.props;
+        const {classes, open} = this.props;
 
         return (
             <div className={classes.root}>
                 <MessageDialog
                     title='Sett ny status:'
                     actions={[{label: 'Send', action: ()=> this.handleNewStatus()}]}
-                    open={this.props.open}
+                    open={open}
                 >
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="status-simple">Status:</InputLabel>
@@ -59,11 +63,14 @@ class StatusDialog extends Component{
                                 id: 'status-simple',
                             }}
                         >
-                            <MenuItem value={0}>Ikke godkjent</MenuItem>
-                            <MenuItem value={1}>Godkjent</MenuItem>
-                            <MenuItem value={2}>Arbeid påbegynt</MenuItem>
-                            <MenuItem value={3}>Ferdig</MenuItem>
-                            <MenuItem value={4}>Avslått</MenuItem>
+                            {
+                                this.state.statusNames.statusLabels.map((item, index)=>{
+                                    return(
+                                        <MenuItem key={index} value={index}>
+                                            {item}
+                                        </MenuItem>
+                                    )})
+                            }
 
                         </Select>
                     </FormControl>
