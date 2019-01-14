@@ -12,7 +12,7 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 
 // Project components
-import ChangeStatus from './ChangeStatus';
+import MessageDialog from '../../../components/miscellaneous/MessageDialog';
 
 const styles = makeStyles({
     root: {
@@ -23,20 +23,15 @@ const styles = makeStyles({
 const ActionModule = (props) => {
     // State
     const [dialogOpen, setDialogOpen] = useState(false);
-
-
-    const openDialog = () => {
-        setDialogOpen(true)
-    };
-
-    const closeDialog = () => {
-        setDialogOpen(false)
-    }
-
-
+    const [newStatus, setNewStatus] = useState(null);
 
     // Styling
     const classes = styles();
+
+    const handleNewStatus = (value) => {
+        console.log(value);
+        setDialogOpen(false);
+    };
 
     return (
         <div className={classes.root}>
@@ -52,13 +47,25 @@ const ActionModule = (props) => {
                     <ListItem button divider>
                         <ListItemText primary="Registrer kontrakt" />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button onClick={() => setDialogOpen(true)}>
                         <ListItemText primary="Ny status" />
                     </ListItem>
                     <Divider light />
-                    <ChangeStatus open={dialogOpen} closeDialogCallback={() => closeDialog()}/>
                 </List>
             </div>
+            <MessageDialog
+                title='Sett ny status:'
+                actions={[
+                    {label: 'Ikke godjkent', action: ()=>{handleNewStatus(0)}},
+                    {label: 'Godkjent', action: ()=>{handleNewStatus(1)}},
+                    {label: 'Arbeid påbegynt', action: ()=>{handleNewStatus(2)}},
+                    {label: 'Ferdig', action: ()=>{handleNewStatus(3)}},
+                    {label: 'Deaktivert', action: ()=>{handleNewStatus(4)}}
+                ]}
+                open={dialogOpen}
+            >
+
+            </MessageDialog>
         </div>
     )
 }
