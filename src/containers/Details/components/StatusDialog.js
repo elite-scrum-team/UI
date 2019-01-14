@@ -20,6 +20,17 @@ import statusLabels from '../../../utils/warningUtils'
 const styles = {
     root: {
 
+    },
+    textField: {
+        width: 500,
+
+        '@media only screen and (max-width: 800px)': {
+            width: 300
+        }
+    },
+    formControl:{
+        width: 200,
+
     }
 };
 
