@@ -31,8 +31,8 @@ export default class WarningService {
         } else {
             // Fetch
             const response = API.getWarning(id).response()
-            return response.then((data) => {
-                WarningAction.setWarningById(id, data);
+            return response.then(async (data) => {
+                await WarningAction.setWarningById(id, data)(store.dispatch);
                 warning = WarningAction.getWarningById(id)(store.getState());
                 !callback || callback(response.isError, warning);
             });
@@ -58,6 +58,17 @@ export default class WarningService {
             return data;
         });
     };
+
+    // --- STATUS ---
+    static createStatus = (warningId, type, description, callback) => {
+        const statusObject = {warningId, type, description};
+
+        const response = API.addStatus(statusObject).response();
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
 
     // --- COMMENTS ---
     static createComment = (warningId, comment, image = null ,callback) =>{

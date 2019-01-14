@@ -23,15 +23,29 @@ export const getWarningById = (id) => (state) =>  getWarningPostState(state).war
 
 
 // --- Helper Methods ---
-const createWarningPost = (warning) => ({
-    ...warning,
-    title : warning.title,
-    warnDate: warning.warnDate,
-    status: warning.status,
-    province: warning.province,
-    statusMessage: warning.statusMessage,
-    description : warning.description,
-    location : warning.location,
-    images : warning.images,
-    items : warning.items,
-});
+const createWarningPost = (warning) => {
+
+    // Initialize location
+    const locationData = warning.location ? warning.location.coordinate.coordinates : [];
+    const location = {
+        lat: locationData[0],
+        lng: locationData[1],
+    };
+
+    // Initialize category
+    const categoryData = warning.category || {id: '1234', name: 'Problem'};
+    
+    // Initialize Status
+    let statusData = warning.statuses || [];
+    statusData = statusData.length > 0 ? statusData[0] : {type: 1, description: ''};
+    console.log("StatusData: ", statusData);
+    return {
+        ...warning,
+        id: warning.id,
+        createdAt: warning.createdAt,
+        category: categoryData,
+        status: statusData,
+        description : warning.description,
+        location : location,
+    }
+};

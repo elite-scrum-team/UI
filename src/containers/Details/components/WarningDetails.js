@@ -81,7 +81,7 @@ const WarningDetails = (props) =>  {
     const time = props.date ? moment(props.date).fromNow() : 'Ukjent';
 
     // Initialize status settings
-    const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 3 ? props.status : 1;
+    const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 4 ? props.status : 1;
     const statusName = warningUtils.statusNames[statusCode];
     const statusClasses = warningUtils.getStatusClasses(statusCode)(); 
 
@@ -105,7 +105,7 @@ const WarningDetails = (props) =>  {
                     <div className={classes.status}>
                         <Typography variant='caption'>Nyeste oppdatering</Typography>
                         <div className={classNames(classes.statusWrapper,statusClasses.border)}>
-                            {props.statusMessage}
+                            {props.statusMessage || 'Ingen oppdateringer publisert'}
                         </div>
                     </div>
                     <div className={classNames(classes.statusBar, statusClasses.color)}/>

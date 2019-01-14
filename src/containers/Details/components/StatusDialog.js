@@ -45,6 +45,7 @@ class StatusDialog extends Component{
 
 
     handleChange = (name) => (event) => {
+        console.log("Value: ", event.target.value);
         this.setState({[name]: event.target.value});
     };
 
@@ -61,7 +62,7 @@ class StatusDialog extends Component{
             <div className={classes.root}>
                 <MessageDialog
                     title='Sett ny status:'
-                    actions={[{label: 'Send', action: ()=> this.handleNewStatus()}]}
+                    actions={[{label: 'Send', action: this.handleNewStatus}]}
                     open={open}
                 >
                     <FormControl className={classes.formControl}>
