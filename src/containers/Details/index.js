@@ -45,7 +45,7 @@ const styles = {
         display: 'inline',
         height: 'auto'
     }
-}
+};
 
 class Details extends Component {
 
@@ -88,6 +88,7 @@ class Details extends Component {
                     location: e.location,
                 });
                 this.setState({isLoading: false});
+                console.log(e);
             } else {
                 this.props.history.push(URLS.home);
             }
@@ -106,13 +107,13 @@ class Details extends Component {
                 data,
             });
         });
-    }
+    };
 
     addItem = (item) => {
         const items = Object.assign([], this.state.items);
         items.push(item);
         this.setState({items});
-    }
+    };
 
     render() {
         const {classes} = this.props;

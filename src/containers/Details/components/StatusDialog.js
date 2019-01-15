@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {makeStyles, withStyles} from '@material-ui/styles';
-import { useState } from 'react';
+import {withStyles} from '@material-ui/styles';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // Icons
 
 // Project components
 import MessageDialog from '../../../components/miscellaneous/MessageDialog';
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import statusLabels from '../../../utils/warningUtils'
 
 
@@ -41,7 +39,7 @@ class StatusDialog extends Component{
         newStatus: -1,
         statusMsg: '',
         statusNames: statusLabels
-    }
+    };
 
 
     handleChange = (name) => (event) => {
@@ -50,8 +48,12 @@ class StatusDialog extends Component{
     };
 
     handleNewStatus = () =>{
-        this.setState({dialogOpen: false});
+        this.setState({statusDialogOpen: false});
         this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
+    };
+
+    cancel = () => {
+        this.props.cancel();
     };
 
     render() {
@@ -62,12 +64,14 @@ class StatusDialog extends Component{
             <div className={classes.root}>
                 <MessageDialog
                     title='Sett ny status:'
-                    actions={[{label: 'Send', action: this.handleNewStatus}]}
+                    actions={[{label: 'Send', action: this.handleNewStatus},
+                        {label: 'Avbryt', action: this.cancel}]}
                     open={open}
                 >
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="status-simple">Status:</InputLabel>
                         <Select
+                            native
                             value={this.state.newStatus}
                             onChange={this.handleChange('newStatus')}
                             inputProps={{
