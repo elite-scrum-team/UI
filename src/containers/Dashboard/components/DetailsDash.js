@@ -16,11 +16,15 @@ import ActionModule from "../../Details/components/ActionModule";
 import FeedModule from "../../Details/components/FeedModule";
 import ImageGrid from "../../Details/components/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
+import Hidden from '@material-ui/core/Hidden';
+import Button from "@material-ui/core/Button/Button";
 
 
 const styles = makeStyles({
     root: {
-        marginLeft: 340,
+        '@media only screen and (min-width: 600px)': {
+            marginLeft: 340,
+        },
         marginRight: 15,
         paddingTop: 50,
         paddingBottom: 100,
@@ -54,6 +58,14 @@ const styles = makeStyles({
         '@media only screen and (max-width: 800px)': {
             gridTemplateColumns: '1fr',
         }
+    },
+    style: {
+        margin: 0,
+        top: 'auto',
+        right: 20,
+        bottom: 20,
+        left: 'auto',
+        position: 'fixed',
     },
 
 });
@@ -126,6 +138,13 @@ const DetailsDash = (props) => {
                     </div>
                 </div>
             </div>
+            <Hidden implementation='js' smUp>
+                <div>
+                    <Button variant="contained" size={'large'} color="primary" className={classes.style}>
+                        Varselliste
+                    </Button>
+                </div>
+            </Hidden>
         </div>
     )
 }

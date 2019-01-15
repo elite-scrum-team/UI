@@ -20,6 +20,7 @@ const styles = {
     sidebar: {
         '@media only screen and (max-width: 600px)': {
             width: '100%',
+            marginTop: '48px',
         }
     },
 }
@@ -27,7 +28,7 @@ const styles = {
 class Dashboard extends Component {
 
     state = {
-        isLoading: true,
+        isLoading: false,
 
         id: null,
         title: null,
@@ -102,7 +103,13 @@ class Dashboard extends Component {
                             <DetailsDash state={this.state}/>
                         </div>
                     </Hidden>
+
                 </div>
+                <Hidden implementation='js' smUp>
+                    <div>
+                        <DetailsDash state={this.state}/>
+                    </div>
+                </Hidden>
             </Navigation>
         )
     }
