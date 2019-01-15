@@ -75,10 +75,6 @@ class StatusDialog extends Component{
         this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
     };
 
-    cancel = () => {
-        this.props.cancel();
-    };
-
     render() {
         // Styling
         const {classes, open} = this.props;
@@ -98,7 +94,6 @@ class StatusDialog extends Component{
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="status-simple">Status:</InputLabel>
                         <Select
-                            native
                             value={this.state.newStatus}
                             onChange={this.handleChange('newStatus')}
                             inputProps={{
