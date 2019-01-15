@@ -25,15 +25,19 @@ const styles = {
 
 class ActionModule extends Component {
     state = {
-        dialogOpen: false,
+        statusDialogOpen: false,
         newStatus: -1,
         statusMsg: '',
     }
 
     handleNewStatus = (value) => {
-        this.setState({dialogOpen: false});
+        this.setState({statusDialogOpen: false});
         this.props.updateStatus(value);
     };
+
+    handleToggle = (name) => (event) => {
+        this.setState({[name]: !this.state[name]});
+    }
 
     render() {
         // Styling
@@ -53,14 +57,15 @@ class ActionModule extends Component {
                         <ListItem button divider>
                             <ListItemText primary="Registrer kontrakt" />
                         </ListItem>
-                        <ListItem button onClick={() => this.setState({dialogOpen: true})}>
+                        <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
                             <ListItemText primary="Ny status" />
                         </ListItem>
                         <Divider light />
                     </List>
                 </div>
                 <StatusDialog
-                    open={this.state.dialogOpen}
+                    open={this.state.statusDialogOpen}
+                    onClose={this.handleToggle('statusDialogOpen')}
                     submitStatus={this.handleNewStatus}
                     statusNames={statusLabels}
                 />

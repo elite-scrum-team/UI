@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles, withStyles} from '@material-ui/styles';
+import {withStyles} from '@material-ui/styles';
 import { useState } from 'react';
+import warningUtils from '../../../utils/warningUtils';
+import classNames from 'classnames';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
@@ -18,9 +20,7 @@ import statusLabels from '../../../utils/warningUtils'
 
 
 const styles = {
-    root: {
-
-    },
+    root: {},
     textField: {
         width: 500,
 
@@ -30,8 +30,30 @@ const styles = {
     },
     formControl:{
         width: 200,
-
-    }
+    },
+    item: {
+        position: 'relative',
+    },
+    sidebar: {
+        position: 'absolute',
+        top: 2,
+        bottom: 2,
+        right: 4,
+        width: 4,
+        backgroundColor: 'red',
+    },
+    acknowledged: {
+       backgroundColor: 'var(--inactive)', 
+    },
+    progress: {
+        backgroundColor: 'var(--progress)', 
+    },
+    done: {
+        backgroundColor: 'var(--done)', 
+    },
+    rejected: {
+        backgroundColor: 'var(--rejected)', 
+    },
 };
 
 class StatusDialog extends Component{
@@ -57,12 +79,17 @@ class StatusDialog extends Component{
     render() {
         // Styling
         const {classes, open} = this.props;
+        const statusStyles = [classes.acknowledged, classes.progress, classes.done, classes.rejected];
 
         return (
             <div className={classes.root}>
                 <MessageDialog
                     title='Sett ny status:'
-                    actions={[{label: 'Send', action: this.handleNewStatus}]}
+                    onClose={this.props.onClose}
+                    actions={[
+                        {label: 'Lukk', action: this.props.onClose},
+                        {label: 'Send', action: this.handleNewStatus},
+                    ]}
                     open={open}
                 >
                     <FormControl className={classes.formControl}>
@@ -78,7 +105,8 @@ class StatusDialog extends Component{
                             {
                                 this.state.statusNames.statusLabels.map((item, index)=>{
                                     return(
-                                        <MenuItem key={index} value={index}>
+                                        <MenuItem className={classes.item} key={index} value={index}>
+                                            <div className={classNames(classes.sidebar, statusStyles[index])} />
                                             {item}
                                         </MenuItem>
                                     )})

@@ -58,7 +58,7 @@ export default {
     statusNames: ['Ikke behandlet', 'Behandlet', 'Pågående', 'Ferdig', 'Avslått'],
 
     //MÅ STÅ I RIKTIG REKKEFØLGE
-    statusLabels: ['Sett', 'Arbeid påbegynt','Ferdig','Avslått'],
+    statusLabels: ['Anerkjent', 'Arbeid påbegynt','Ferdig','Avslått'],
 
     getStatusClasses: (statusCode) => makeStyles({
         color: statusColorStyles[statusCode],

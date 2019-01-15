@@ -5,7 +5,6 @@ export const actions = {
 };
 
 // --- ACTIONS ---
-
 export const setWarningPost = (data) =>
     dispatch => {
         if (data instanceof Array) {

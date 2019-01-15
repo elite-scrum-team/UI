@@ -7,6 +7,7 @@ import warningUtils from '../../../utils/warningUtils';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
 
 // Icons
 
@@ -93,11 +94,13 @@ const WarningDetails = (props) =>  {
                         <Typography variant='h3'>
                             {props.title}
                         </Typography>
+                        <div className='mt-10 mb-10'>
+                            <Chip className={statusClasses.color} label={'Status: '.concat(statusName)}></Chip>
+                        </div>
                         <div className={classes.flex}>
                             <Typography className={classes.mr} variant='caption'>Publisert: {time}</Typography>
-                            <Typography variant='caption'>Status: {statusName}</Typography>
+                            <Typography className={classes.mr} variant='caption'>{props.province}</Typography>
                         </div>
-                        <Typography variant='caption'>{props.province}</Typography>
                         <div className='mt-10 mb-10'>
                             <Typography variant='subtitle1'>{props.description}</Typography>
                         </div>
@@ -111,7 +114,7 @@ const WarningDetails = (props) =>  {
                     <div className={classNames(classes.statusBar, statusClasses.color)}/>
                     <div className={classes.mapDiv}>
                         <div className={classes.mapWrapper}>
-                            <Map className={classes.mapwindow} locations={[props.location]}/>
+                            <Map className={classes.mapwindow} defaultCenter={props.location} locations={[props.location]}/>
                         </div>
                     </div>
                 </div>
