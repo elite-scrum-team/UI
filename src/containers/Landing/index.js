@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 
+// Services
+import WarningService from '../../api/services/WarningService';
+
 // Material UI components
 import Paper from '@material-ui/core/Paper';
 import Hidden from '@material-ui/core/Hidden';
@@ -50,8 +53,6 @@ const styles = theme => ({
   }
 });
 
-
-
 class Landing extends Component {
 
     state = {
@@ -59,10 +60,19 @@ class Landing extends Component {
       showMap: false,
 
       search: '',
-      items: [
-        {id: 1, status: 2, title: 'Hello', description: 'What is going on???', lat: 63.426114, lng: 10.404609},
-        {id: 2, status: 0, title: 'Hello', description: 'What is going on???', lat: 63.426734, lng: 10.45609},
-      ]
+      items: []
+    }
+
+    componentDidMount() {
+      this.setState({isLoading: true});
+
+      WarningService.getWarnings('createdAt', (isError, data) => {
+        if(isError === false) {
+          console.log(data);
+          this.setState({items: data});
+        }
+        this.setState({isLoading: false});
+      });
     }
 
     toggleChange = (name) => (event) => {
@@ -78,10 +88,8 @@ class Landing extends Component {
     }
 
     onSearch = (event) => {
-      console.log("Hello :D");
+
       event.preventDefault();
-
-
     }
 
     render() {

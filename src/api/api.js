@@ -10,7 +10,11 @@ export default {
     },
 
     getWarning: (id) =>{
-        return new Fetch(METHODS.get, `/warnings/${id}`)
+        return new Fetch(METHODS.get, `/warning/${id}`)
+    },
+
+    getWarningContent: (id) => {
+        return new Fetch(METHODS.get, '/warning/content/'.concat(id));
     },
 
     createWarning: (data) =>{
@@ -24,6 +28,12 @@ export default {
     addWarningImage: (id, image) => {
         return new Fetch(METHODS.post, '/warning/image', {id: id, image: image});
     },
+
+    addStatus: (data) => {
+        return new Fetch(METHODS.post, '/warning/status', {warningId: data.warningId, type: data.type, description: data.description});
+    },
+
+
 
     // --- CATEGORIES ---
 

@@ -4,7 +4,7 @@ import store from '../../store/store'
 
 // and all the methods will return a promise
 export default class WarningService {
-    static getWarnings = async (orderBy = null) => {
+    static getWarnings = async (orderBy = null, callback) => {
         const response = API.getWarnings().response();
         return response.then((data) => {
             data = data || [];
@@ -17,6 +17,10 @@ export default class WarningService {
             }
 
             WarningAction.setWarningPost(data)(store.dispatch);
+
+            data = data.map(WarningAction.createWarningPost);
+
+            !callback || callback(response.isError, data);
             return Promise.resolve(data);
         });
     };
@@ -31,8 +35,8 @@ export default class WarningService {
         } else {
             // Fetch
             const response = API.getWarning(id).response()
-            return response.then((data) => {
-                WarningAction.setWarningById(id, data);
+            return response.then(async (data) => {
+                await WarningAction.setWarningById(id, data)(store.dispatch);
                 warning = WarningAction.getWarningById(id)(store.getState());
                 !callback || callback(response.isError, warning);
             });
@@ -58,6 +62,44 @@ export default class WarningService {
             return data;
         });
     };
+
+    static getWarningItems = (id, callback) => {
+        // Check if items are in store
+        let items = WarningAction.getWarningItems(id)(store.getState());
+
+        // If they already exist...return
+        if(items) {
+            !callback || callback(false, items);
+            return Promise.resolve(items);
+        }
+        
+        // Get from database
+        const response = API.getWarningContent(id).response();
+        return response.then((data) => {
+            if(response.isError === false) {
+                WarningAction.setWarningItem(id, data)(store.dispatch);
+            }
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
+
+    static addWarningItem = (id, type, data) => {
+        const object = {type, data};
+
+        WarningAction.addWarningItem(id, object);
+    }
+
+    // --- STATUS ---
+    static createStatus = (warningId, type, description, callback) => {
+        const statusObject = {warningId, type, description: description};
+
+        const response = API.addStatus(statusObject).response();
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
 
     // --- COMMENTS ---
     static createComment = (warningId, comment, image = null ,callback) =>{

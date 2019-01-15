@@ -1,26 +1,58 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {makeStyles, withStyles} from '@material-ui/styles';
-import { useState } from 'react';
+import {withStyles} from '@material-ui/styles';
+import classNames from 'classnames';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // Icons
 
 // Project components
 import MessageDialog from '../../../components/miscellaneous/MessageDialog';
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import statusLabels from '../../../utils/warningUtils'
 
 
 const styles = {
-    root: {
+    root: {},
+    textField: {
+        width: 500,
 
-    }
+        '@media only screen and (max-width: 800px)': {
+            width: 300
+        }
+    },
+    formControl:{
+        width: 200,
+    },
+    item: {
+        position: 'relative',
+    },
+    sidebar: {
+        position: 'absolute',
+        top: 8,
+        bottom: 8,
+        right: 4,
+        height: 8,
+        width: 8,
+        borderRadius: 10,
+        backgroundColor: 'red',
+    },
+    acknowledged: {
+       backgroundColor: 'var(--inactive)',
+    },
+    progress: {
+        backgroundColor: 'var(--progress)',
+    },
+    done: {
+        backgroundColor: 'var(--done)',
+    },
+    rejected: {
+        backgroundColor: 'var(--rejected)',
+    },
 };
 
 class StatusDialog extends Component{
@@ -30,7 +62,7 @@ class StatusDialog extends Component{
         newStatus: -1,
         statusMsg: '',
         statusNames: statusLabels
-    }
+    };
 
 
     handleChange = (name) => (event) => {
@@ -42,15 +74,28 @@ class StatusDialog extends Component{
         this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
     };
 
+    cancel = () => {
+        this.setState({
+            newStatus: -1,
+            statusMsg: '',
+        });
+        this.props.onClose();
+    };
+
     render() {
         // Styling
         const {classes, open} = this.props;
+        const statusStyles = [classes.acknowledged, classes.progress, classes.done, classes.rejected];
 
         return (
             <div className={classes.root}>
                 <MessageDialog
                     title='Sett ny status:'
-                    actions={[{label: 'Send', action: ()=> this.handleNewStatus()}]}
+                    onClose={this.props.onClose}
+                    actions={[
+                        {label: 'Avbryt', action: this.props.onClose},
+                        {label: 'Send', action: this.handleNewStatus, disabled: this.state.newStatus === -1},
+                    ]}
                     open={open}
                 >
                     <FormControl className={classes.formControl}>
@@ -66,7 +111,8 @@ class StatusDialog extends Component{
                             {
                                 this.state.statusNames.statusLabels.map((item, index)=>{
                                     return(
-                                        <MenuItem key={index} value={index}>
+                                        <MenuItem className={classes.item} key={index} value={index}>
+                                            <div className={classNames(classes.sidebar, statusStyles[index])} />
                                             {item}
                                         </MenuItem>
                                     )})

@@ -2,7 +2,8 @@ import {actions} from '../actions/WarningAction';
 import {keyBy} from 'lodash';
 
 const initialState = {
-    warning : {}
+    warning : {},
+    warningItems: {}
 };
 
 export default function reducer(state = initialState, action) {
@@ -21,6 +22,35 @@ export default function reducer(state = initialState, action) {
                     ...state.warning,
                     [action.id]: action.payload,
                 }}
+        }
+
+        case action.SET_WARNING_ITEMS: {
+            return {
+                ...state,
+                warningItems: keyBy(action.payload, action.id),
+            }
+        }
+
+        case action.SET_WARNING_ITEM: {
+            return {
+                ...state,
+                warningItems: {
+                    ...state.warningItems,
+                    [action.id]: action.payload,
+                }
+            }
+        }
+
+        case action.ADD_WARNING_ITEM: {
+            const items = Object.assign([], state.warningItems[action.id]);
+            items.unshift(action.payload);
+            return {
+                ...state,
+                warningItems: {
+                    ...state.warningItems,
+                    [action.id]: items,
+                }
+            }
         }
 
         default:
