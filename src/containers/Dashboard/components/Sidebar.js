@@ -3,23 +3,20 @@ import { makeStyles } from '@material-ui/styles';
 
 // Material UI components
 import Drawer from '@material-ui/core/Drawer';
+import SearchContent from './SearchContent';
 
 // Icons
 
 // Project components
-import SearchContent from './SearchContent';
 
 const drawerWidth = 325;
 
 const styles = makeStyles({
-    root: {
-        width: drawerWidth,
-        // '@media only screen and (max-width: 600px)': {
-        //     width: '100%',
-        // },
-        borderRight: 'none',
-        marginTop: '48px',
-    }
+  root: {
+    width: drawerWidth,
+    borderRight: 'none',
+    marginTop: 48
+  }
 });
 
 const Sidebar = props => {
@@ -30,12 +27,14 @@ const Sidebar = props => {
     <div className={classes.root}>
       <Drawer
         variant='permanent'
-        classes={{paper: classes.root}}
+        classes={{
+          paper: classes.root
+        }}
       >
-          <SearchContent {...props} />
+        <SearchContent {...props} />
       </Drawer>
     </div>
   );
 };
 
-export default (Sidebar);
+export default Sidebar;

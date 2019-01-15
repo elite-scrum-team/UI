@@ -16,7 +16,9 @@ import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
 
 const styles = {
-    root: {},
+  root: {
+    marginTop: 48
+  },
     sidebar: {
         '@media only screen and (max-width: 600px)': {
             width: '100%',
@@ -42,7 +44,42 @@ class Dashboard extends Component {
             lng: 0,
         },
         images: null,
-        items: [],
+        statusChange: 1,
+        search: '',
+        items: [
+            {
+                id: 1,
+                status: 2,
+                title: 'Hello',
+                description: 'What is going on???',
+                lat: 63.426114,
+                lng: 10.404609
+            },
+            {
+                id: 2,
+                status: 0,
+                title: 'Hello',
+                description: 'What is going on???',
+                lat: 63.426734,
+                lng: 10.45609
+            },
+            {
+                id: 3,
+                status: 1,
+                title: 'Hello',
+                description: 'What is going on???',
+                lat: 63.426734,
+                lng: 10.45609
+            },
+            {
+                id: 2,
+                status: 3,
+                title: 'Hello',
+                description: 'What is going on???',
+                lat: 63.426734,
+                lng: 10.45609
+            }
+        ],
 
         showWarning: true,
     };
@@ -96,6 +133,7 @@ class Dashboard extends Component {
                                  items={this.state.items}
                                  onSubmit={this.onSearch}
                                  isLoading={this.state.isLoading}
+                                 statusChange={this.state.statusChange}
                         />
                     </Hidden>
                     <Hidden implementation='js' xsDown={this.state.showWarning}>
