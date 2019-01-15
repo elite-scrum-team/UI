@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
+
 // Icons
 
 // Project components
@@ -36,6 +37,10 @@ class ActionModule extends Component {
         this.setState({statusDialogOpen: false});
         this.props.updateStatus(value);
     };
+
+    handleToggle = (name) => (event) => {
+        this.setState({[name]: !this.state[name]});
+    }
 
     handleNewContract = (value) => {
         this.setState({contractDialogOpen: false});
@@ -76,6 +81,7 @@ class ActionModule extends Component {
                 </div>
                 <StatusDialog
                     open={this.state.statusDialogOpen}
+                    onClose={this.handleToggle('statusDialogOpen')}
                     submitStatus={this.handleNewStatus}
                     cancel={this.cancelDialog}
                     statusNames={statusLabels}
