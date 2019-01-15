@@ -71,7 +71,7 @@ class Navigation extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <Fragment id={'warningButton'}>
+            <Fragment>
                 <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div>

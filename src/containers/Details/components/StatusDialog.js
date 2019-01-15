@@ -93,7 +93,7 @@ class StatusDialog extends Component{
                     title='Sett ny status:'
                     onClose={this.cancel}
                     actions={[
-                        {label: 'Avbryt', action: this.props.onClose},
+                        {label: 'Avbryt', action: this.cancel},
                         {label: 'Send', action: this.handleNewStatus, disabled: this.state.newStatus === -1},
                     ]}
                     open={open}

@@ -46,10 +46,8 @@ export default class WarningService {
     //data object is going to contain details and possible images.
     static createWarning = (item ,callback) => {
         // Split images and other data
-        const images = item.images;
-        console.log("Images: ", images);    
+        const images = item.images; 
         delete item.images;
-        console.log("Images: ", images); 
 
         // Create warning
         const response = API.createWarning(item).response();
@@ -58,10 +56,9 @@ export default class WarningService {
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
                 images.forEach(await (async (image) => {
+                    // Upload image to server
                     await API.addWarningImage(data.id, image).response(true).then((imageData) => {
-                        console.log("Images: ", data, imageData);
                         if(data.images instanceof Array) {
-                            console.log("Pushing image");
                             data.images.push(imageData.image);
                         }
                     });

@@ -77,6 +77,7 @@ class Details extends Component {
 
         this.setState({id: id, isLoading: true});
 
+        // Get warning
         WarningService.getWarning(id, async (isError, e) => {
             if(isError === false) {
                 await this.setState({
@@ -89,11 +90,14 @@ class Details extends Component {
                     images: e.images,
                 });
                 this.setState({isLoading: false});
+
+                // Get warning content (comments, statuses, contracts)
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
             } else {
+                // The warning does not exist, go to frontpage
                 this.props.history.push(URLS.home);
             }
 
@@ -124,7 +128,10 @@ class Details extends Component {
 
     addItem = (item) => {
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
-    }
+        const items = Object.assign([], this.state.items);
+        items.push(item);
+        this.setState({items});
+    };
 
     render() {
         const {classes} = this.props;
