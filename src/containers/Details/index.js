@@ -109,6 +109,10 @@ class Details extends Component {
         });
     };
 
+    changeContract = (newContract) => {
+        console.log(newContract);
+    };
+
     addItem = (item) => {
         const items = Object.assign([], this.state.items);
         items.push(item);
@@ -141,6 +145,7 @@ class Details extends Component {
                                 <ActionModule
                                     className={classes.actionMod}
                                     updateStatus={this.changeStatus}
+                                    updateContract={this.changeContract}
                                 />
                             </Paper>
                         </div>

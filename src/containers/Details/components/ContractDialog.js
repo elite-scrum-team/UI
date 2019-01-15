@@ -8,6 +8,7 @@ import {withStyles} from '@material-ui/core/styles';
 // Project components
 import SearchableDropdown from "../../../components/miscellaneous/SearchableDropdown"
 import MessageDialog from '../../../components/miscellaneous/MessageDialog';
+import TextField from "@material-ui/core/TextField";
 
 
 
@@ -23,11 +24,16 @@ const styles = {
 class ContractDialog extends Component {
     state = {
         companyId: '',
-        description: '',
+        contractMsg: '',
     };
 
-    handleNewContract = (value) => {
-        this.props.submitContract(value);
+    handleNewContract = () => {
+        this.props.submitContract(this.state);
+    };
+
+    handleChange = (name) => (event) => {
+        console.log("Value: ", event.target.value);
+        this.setState({[name]: event.target.value});
     };
 
     render() {
@@ -60,6 +66,16 @@ class ContractDialog extends Component {
                                 {label: 'Påls Asfalt', value: 'Påls Asfalt'},
                                 {label: 'Pers Asfalt', value: 'Pers Asfalt'}
                             ]}
+                        />
+                        <TextField
+                            id="filled-email-input"
+                            label="Kontraktmelding"
+                            className={classes.textField}
+                            type="ContractMessage"
+                            name="ContractMessage"
+                            autoComplete="contractMsg"
+                            margin="normal"
+                            onChange={this.handleChange('contractMsg')}
                         />
                     </div>
                 </MessageDialog>
