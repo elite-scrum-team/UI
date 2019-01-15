@@ -75,6 +75,14 @@ class StatusDialog extends Component{
         this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
     };
 
+    cancel = () => {
+        this.setState({
+            newStatus: -1,
+            statusMsg: '',
+        });
+        this.props.onClose();
+    };
+
     render() {
         // Styling
         const {classes, open} = this.props;
@@ -86,7 +94,7 @@ class StatusDialog extends Component{
                     title='Sett ny status:'
                     onClose={this.props.onClose}
                     actions={[
-                        {label: 'Lukk', action: this.props.onClose},
+                        {label: 'Avbryt', action: this.cancel},
                         {label: 'Send', action: this.handleNewStatus},
                     ]}
                     open={open}
