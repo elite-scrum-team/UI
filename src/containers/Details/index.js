@@ -96,7 +96,7 @@ class Details extends Component {
             } else {
                 this.props.history.push(URLS.home);
             }
-            
+
         });
 
     }
@@ -104,7 +104,7 @@ class Details extends Component {
     changeStatus = (newStatus) => {
         console.log(newStatus);
         const status = newStatus.status + 1;
-   
+
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
             this.addItem({
@@ -124,7 +124,6 @@ class Details extends Component {
 
     addItem = (item) => {
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
-    }
         const items = Object.assign([], this.state.items);
         items.push(item);
         this.setState({items});
