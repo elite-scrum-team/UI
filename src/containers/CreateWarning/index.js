@@ -145,7 +145,7 @@ class CreateWarning extends Component {
             description: this.state.description,
             location: this.state.location,
             categoryId: this.state.category.id,
-            images: this.state.images,
+            images: this.state.imageFiles,
         }
 
         this.setState({isSending: true});

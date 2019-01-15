@@ -59,6 +59,9 @@ export const createWarningPost = (warning) => {
     let statusData = warning.statuses || [];
     statusData = statusData.length > 0 ? statusData[0] : {type: 1, description: ''};
     
+    // Initialize images
+    const images = warning.images ? warning.images.map(m => m.fileURL) : [];
+
     return {
         ...warning,
         id: warning.id,
@@ -67,5 +70,6 @@ export const createWarningPost = (warning) => {
         status: statusData,
         description : warning.description,
         location : location,
+        images: images,
     }
 };

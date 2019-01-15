@@ -26,7 +26,7 @@ export default {
     },
 
     addWarningImage: (id, image) => {
-        return new Fetch(METHODS.post, '/warning/image', {id: id, image: image});
+        return new Fetch(METHODS.post, '/warning/image', {warningId: id, image: image});
     },
 
     addStatus: (data) => {

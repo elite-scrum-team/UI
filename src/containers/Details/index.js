@@ -86,20 +86,13 @@ class Details extends Component {
                     statusMessage: e.status ? e.status.description : '',
                     description : e.description,
                     location: e.location,
+                    images: e.images,
                 });
                 this.setState({isLoading: false});
-<<<<<<< HEAD
-
-=======
->>>>>>> 8a0616d3031febe8c9b3376e172f11c707877862
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
-<<<<<<< HEAD
-=======
-                console.log(e);
->>>>>>> 8a0616d3031febe8c9b3376e172f11c707877862
             } else {
                 this.props.history.push(URLS.home);
             }

@@ -47,17 +47,27 @@ export default class WarningService {
     static createWarning = (item ,callback) => {
         // Split images and other data
         const images = item.images;
+        console.log("Images: ", images);    
         delete item.images;
+        console.log("Images: ", images); 
 
         // Create warning
         const response = API.createWarning(item).response();
-        return response.then((data) => {
+        return response.then(async (data) => {
+            console.log("WARNING DATA: ", data);
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
-                images.forEach(async (image) => {
-                    await API.addWarningImage(data.id, image).response(true).then();
-                });
+                images.forEach(await (async (image) => {
+                    await API.addWarningImage(data.id, image).response(true).then((imageData) => {
+                        console.log("Images: ", data, imageData);
+                        if(data.images instanceof Array) {
+                            console.log("Pushing image");
+                            data.images.push(imageData.image);
+                        }
+                    });
+                }));
             }
+            console.log("End data", data);
             !callback || callback(response.isError, data);
             return data;
         });
