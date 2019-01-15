@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Select from 'react-select'
 
 // Material UI components
 
@@ -16,11 +15,8 @@ const styles = {
     root: {
 
     },
-    dropdown:{
-        height: 500,
-    },
-    msgDia:{
-        height: 500
+    content: {
+        minHeight: 100,
     }
 };
 
@@ -34,10 +30,6 @@ class ContractDialog extends Component {
         this.props.submitContract(value);
     };
 
-    cancel = () => {
-        this.props.cancel();
-    };
-
     render() {
         const {classes} = this.props;
         return (
@@ -46,19 +38,30 @@ class ContractDialog extends Component {
                     className={classes.msgDia}
                     title='Etabler kontrakt'
                     actions={[
+                        {label: 'Avbryt', action: this.props.onClose},
                         {label: 'Send', action: this.handleNewContract},
-                        {label: 'Avbryt', action: this.cancel}
                     ]}
                     open={this.props.open}
                 >
-                    <SearchableDropdown
-                        className={classes.dropdown}
-                        options={[
-                            {label: 'Stein&Sprøyt AS', value: 'Stein&Sprøyt AS'},
-                            {label: 'Påls Asfalt', value: 'Påls Asfalt'},
-                            {label: 'Pers Asfalt', value: 'Pers Asfalt'}
-                        ]}
-                    />
+                    <div className={classes.content}>
+                        <SearchableDropdown
+                            className={classes.dropdown}
+                            options={[
+                                {label: 'Stein&Sprøyt AS', value: 'Stein&Sprøyt AS'},
+                                {label: 'Påls Asfalt', value: 'Påls Asfalt'},
+                                {label: 'Pers Asfalt', value: 'Pers Asfalt'},
+                                {label: 'Stein&Sprøyt AS', value: 'Stein&Sprøyt AS'},
+                                {label: 'Påls Asfalt', value: 'Påls Asfalt'},
+                                {label: 'Pers Asfalt', value: 'Pers Asfalt'},
+                                {label: 'Stein&Sprøyt AS', value: 'Stein&Sprøyt AS'},
+                                {label: 'Påls Asfalt', value: 'Påls Asfalt'},
+                                {label: 'Pers Asfalt', value: 'Pers Asfalt'},
+                                {label: 'Stein&Sprøyt AS', value: 'Stein&Sprøyt AS'},
+                                {label: 'Påls Asfalt', value: 'Påls Asfalt'},
+                                {label: 'Pers Asfalt', value: 'Pers Asfalt'}
+                            ]}
+                        />
+                    </div>
                 </MessageDialog>
             </div>
         )

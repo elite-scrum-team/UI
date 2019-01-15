@@ -8,7 +8,7 @@ import Select from 'react-select'
 // ]
 
 const SearchableDropdown = (props) => (
-    <Select options={props.options} />
+    <Select options={props.options} menuPortalTarget={document.body}  styles={{ menuPortal: base => ({ ...base, zIndex: 200000 }) }} />
 );
 
 export default (SearchableDropdown);

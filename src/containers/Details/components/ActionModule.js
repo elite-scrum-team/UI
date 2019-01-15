@@ -40,19 +40,10 @@ class ActionModule extends Component {
 
     handleToggle = (name) => (event) => {
         this.setState({[name]: !this.state[name]});
-    }
+    };
 
     handleNewContract = (value) => {
         this.setState({contractDialogOpen: false});
-    };
-
-    cancelDialog = () => {
-        this.setState({
-            contractDialogOpen: false,
-            statusDialogOpen: false,
-            newStatus: -1,
-            statusMsg: '',
-        })
     };
 
     render() {
@@ -88,7 +79,7 @@ class ActionModule extends Component {
                 />
                 <ContractDialog
                     open={this.state.contractDialogOpen}
-                    cancel={this.cancelDialog}
+                    onClose={this.handleToggle('contractDialogOpen')}
                     submitContract={this.handleNewContract}
 
                 />
