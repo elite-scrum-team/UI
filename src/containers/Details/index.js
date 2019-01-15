@@ -88,15 +88,22 @@ class Details extends Component {
                     location: e.location,
                 });
                 this.setState({isLoading: false});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8a0616d3031febe8c9b3376e172f11c707877862
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
+<<<<<<< HEAD
+=======
+                console.log(e);
+>>>>>>> 8a0616d3031febe8c9b3376e172f11c707877862
             } else {
                 this.props.history.push(URLS.home);
             }
-            
+
         });
 
     }
@@ -104,7 +111,7 @@ class Details extends Component {
     changeStatus = (newStatus) => {
         console.log(newStatus);
         const status = newStatus.status + 1;
-   
+
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
             this.addItem({
