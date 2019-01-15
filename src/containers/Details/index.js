@@ -88,15 +88,11 @@ class Details extends Component {
                     location: e.location,
                 });
                 this.setState({isLoading: false});
-<<<<<<< HEAD
 
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
-=======
-                console.log(e);
->>>>>>> 1e1c4bbef559bb665113b647d9389d52e054f700
             } else {
                 this.props.history.push(URLS.home);
             }
@@ -127,15 +123,8 @@ class Details extends Component {
     };
 
     addItem = (item) => {
-<<<<<<< HEAD
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
     }
-=======
-        const items = Object.assign([], this.state.items);
-        items.push(item);
-        this.setState({items});
-    };
->>>>>>> 1e1c4bbef559bb665113b647d9389d52e054f700
 
     render() {
         const {classes} = this.props;
