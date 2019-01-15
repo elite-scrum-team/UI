@@ -16,7 +16,6 @@ import WarningDetails from "./components/WarningDetails";
 import ImageGrid from './components/ImageGrid';
 import ActionModule from './components/ActionModule';
 import FeedModule from './components/FeedModule';
-import ChangeStatus from "./components/ChangeStatus";
 
 const styles = {
     root: {
@@ -74,6 +73,8 @@ class Details extends Component {
         // Get id
         const id = this.getWarningId();
 
+        console.log(id);
+
         this.setState({id: id, isLoading: true});
 
         this.setState({isLoading: true});
@@ -100,6 +101,11 @@ class Details extends Component {
 
     }
 
+    changeStatus = (newStatus) => {
+        console.log(newStatus);
+        // Endre status
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -123,7 +129,10 @@ class Details extends Component {
                     <div className={classes.content}>
                         <div>
                             <Paper elevation={1} className='p-30'>
-                                <ActionModule className={classes.actionMod} />
+                                <ActionModule
+                                    className={classes.actionMod}
+                                    updateStatus={this.changeStatus}
+                                />
                             </Paper>
                         </div>
                         <div>

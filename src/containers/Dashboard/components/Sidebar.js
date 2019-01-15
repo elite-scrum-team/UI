@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 // Material UI components
 import Drawer from '@material-ui/core/Drawer';
+import SearchContent from './SearchContent';
 
 // Icons
 
@@ -20,20 +21,21 @@ const styles = makeStyles({
     }
 });
 
-const Sidebar = (props) => {
-    // Styling
-    const classes = styles();
+const Sidebar = props => {
+  // Styling
+  const classes = styles();
 
-    return (
-        <div className={classes.root}>
-            <Drawer
-                variant='permanent'
-                classes= {{
-                    paper: classes.root,
-                }}>
-            </Drawer>
-        </div>
-    )
-}
+  return (
+    <div className={classes.root}>
+      <Drawer
+        variant='permanent'
+        classes={{
+          paper: classes.root
+        }}
+      />
+      <SearchContent {...props} />
+    </div>
+  );
+};
 
-export default (Sidebar);
+export default Sidebar;

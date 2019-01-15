@@ -5,6 +5,8 @@ import {withStyles} from '@material-ui/core/styles';
 // Material UI components
 import Sidebar from './components/Sidebar';
 import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
+import { AutoComplete } from 'material-ui';
 
 // Icons
 
@@ -88,7 +90,12 @@ class Dashboard extends Component {
             <Navigation isLoading={this.state.isLoading}>
                 <div className={classes.root}>
                     <Hidden implementation='js' xsDown>
-                        <Sidebar className={classes.sidebar}/>
+                        <Sidebar className={classes.sidebar}
+                                 searchValue={this.state.search}
+                                 items={this.state.items}
+                                 onSubmit={this.onSearch}
+                                 isLoading={this.state.isLoading}
+                        />
                     </Hidden>
                     <Hidden implementation='js' xsDown={this.state.showWarning}>
                         <div className={classes.root}>

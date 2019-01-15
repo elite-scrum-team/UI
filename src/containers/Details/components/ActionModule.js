@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/styles';
 import { useState } from 'react';
 import {Typography} from "@material-ui/core";
 
@@ -9,62 +9,68 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
+
 // Icons
 
 // Project components
-import ChangeStatus from './ChangeStatus';
+import StatusDialog from './StatusDialog';
+import statusLabels from '../../../utils/warningUtils';
 
-const styles = makeStyles({
+
+const styles = {
     root: {
         
     }
-});
+};
 
-const ActionModule = (props) => {
-    // State
-    const [dialogOpen, setDialogOpen] = useState(false);
-
-
-    const openDialog = () => {
-        setDialogOpen(true)
-    };
-
-    const closeDialog = () => {
-        setDialogOpen(false)
+class ActionModule extends Component {
+    state = {
+        dialogOpen: false,
+        newStatus: -1,
+        statusMsg: '',
     }
 
+    handleNewStatus = (value) => {
+        this.setState({dialogOpen: false});
+        this.props.updateStatus(value);
+    };
 
+    render() {
+        // Styling
+        const {classes} = this.props;
 
-    // Styling
-    const classes = styles();
-
-    return (
-        <div className={classes.root}>
-            <div>
-                <Typography variant={"h6"}>
-                    Actions:
-                </Typography>
-                <List component="nav" className={classes.root}>
-                    <ListItem button>
-                        <ListItemText primary="Varsle meg ved endringer" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button divider>
-                        <ListItemText primary="Registrer kontrakt" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Ny status" />
-                    </ListItem>
-                    <Divider light />
-                    <ChangeStatus open={dialogOpen} closeDialogCallback={() => closeDialog()}/>
-                </List>
+        return (
+            <div className={classes.root}>
+                <div>
+                    <Typography variant={"h6"}>
+                        Actions:
+                    </Typography>
+                    <List component="nav" className={classes.root}>
+                        <ListItem button>
+                            <ListItemText primary="Varsle meg ved endringer" />
+                        </ListItem>
+                        <Divider />
+                        <ListItem button divider>
+                            <ListItemText primary="Registrer kontrakt" />
+                        </ListItem>
+                        <ListItem button onClick={() => this.setState({dialogOpen: true})}>
+                            <ListItemText primary="Ny status" />
+                        </ListItem>
+                        <Divider light />
+                    </List>
+                </div>
+                <StatusDialog
+                    open={this.state.dialogOpen}
+                    submitStatus={this.handleNewStatus}
+                    statusNames={statusLabels}
+                />
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 ActionModule.propTypes = {
-    
+
 }
 
-export default (ActionModule);
+export default withStyles(styles)(ActionModule);

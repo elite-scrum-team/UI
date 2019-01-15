@@ -48,6 +48,9 @@ export const statusTextColorStyles = [
 export default {
     statusNames: ['Avslått', 'Inaktiv', 'Pågående', 'Ferdig'],
 
+    //MÅ STÅ I RIKTIG REKKEFØLGE
+    statusLabels: ['Ikke godkjent', 'Godkjent','Arbeid påbegynt','Ferdig','Avslått'],
+
     getStatusClasses: (statusCode) => makeStyles({
         color: statusColorStyles[statusCode],
         border: statusBGColorStyles[statusCode],
