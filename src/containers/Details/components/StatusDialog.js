@@ -4,15 +4,15 @@ import classNames from 'classnames';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // Icons
 
 // Project components
 import MessageDialog from '../../../components/miscellaneous/MessageDialog';
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import statusLabels from '../../../utils/warningUtils'
 
 
@@ -42,16 +42,16 @@ const styles = {
         backgroundColor: 'red',
     },
     acknowledged: {
-       backgroundColor: 'var(--inactive)', 
+       backgroundColor: 'var(--inactive)',
     },
     progress: {
-        backgroundColor: 'var(--progress)', 
+        backgroundColor: 'var(--progress)',
     },
     done: {
-        backgroundColor: 'var(--done)', 
+        backgroundColor: 'var(--done)',
     },
     rejected: {
-        backgroundColor: 'var(--rejected)', 
+        backgroundColor: 'var(--rejected)',
     },
 };
 
@@ -62,7 +62,7 @@ class StatusDialog extends Component{
         newStatus: -1,
         statusMsg: '',
         statusNames: statusLabels
-    }
+    };
 
 
     handleChange = (name) => (event) => {
@@ -72,6 +72,14 @@ class StatusDialog extends Component{
     handleNewStatus = () =>{
         this.setState({dialogOpen: false});
         this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
+    };
+
+    cancel = () => {
+        this.setState({
+            newStatus: -1,
+            statusMsg: '',
+        });
+        this.props.onClose();
     };
 
     render() {
@@ -85,7 +93,7 @@ class StatusDialog extends Component{
                     title='Sett ny status:'
                     onClose={this.props.onClose}
                     actions={[
-                        {label: 'Lukk', action: this.props.onClose},
+                        {label: 'Avbryt', action: this.props.onClose},
                         {label: 'Send', action: this.handleNewStatus, disabled: this.state.newStatus === -1},
                     ]}
                     open={open}

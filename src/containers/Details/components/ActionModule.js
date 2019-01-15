@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 // Project components
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../../utils/warningUtils';
+import ContractDialog from "./ContractDialog";
 
 
 const styles = {
@@ -25,9 +26,12 @@ const styles = {
 class ActionModule extends Component {
     state = {
         statusDialogOpen: false,
+        contractDialogOpen: false,
         newStatus: -1,
         statusMsg: '',
-    }
+        companyId: '',
+        contractDesc: '',
+    };
 
     handleNewStatus = (value) => {
         this.setState({statusDialogOpen: false});
@@ -36,7 +40,12 @@ class ActionModule extends Component {
 
     handleToggle = (name) => (event) => {
         this.setState({[name]: !this.state[name]});
-    }
+    };
+
+    handleNewContract = (value) => {
+        this.setState({contractDialogOpen: false});
+        this.props.updateContract(value);
+    };
 
     render() {
         // Styling
@@ -53,7 +62,7 @@ class ActionModule extends Component {
                             <ListItemText primary="Varsle meg ved endringer" />
                         </ListItem>
                         <Divider />
-                        <ListItem button divider>
+                        <ListItem button divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
                             <ListItemText primary="Registrer kontrakt" />
                         </ListItem>
                         <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
@@ -66,7 +75,14 @@ class ActionModule extends Component {
                     open={this.state.statusDialogOpen}
                     onClose={this.handleToggle('statusDialogOpen')}
                     submitStatus={this.handleNewStatus}
+                    cancel={this.cancelDialog}
                     statusNames={statusLabels}
+                />
+                <ContractDialog
+                    open={this.state.contractDialogOpen}
+                    onClose={this.handleToggle('contractDialogOpen')}
+                    submitContract={this.handleNewContract}
+
                 />
             </div>
         )
@@ -75,6 +91,6 @@ class ActionModule extends Component {
 
 ActionModule.propTypes = {
 
-}
+};
 
 export default withStyles(styles)(ActionModule);

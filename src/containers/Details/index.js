@@ -45,7 +45,7 @@ const styles = {
         display: 'inline',
         height: 'auto'
     }
-}
+};
 
 class Details extends Component {
 
@@ -88,11 +88,15 @@ class Details extends Component {
                     location: e.location,
                 });
                 this.setState({isLoading: false});
+<<<<<<< HEAD
 
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
+=======
+                console.log(e);
+>>>>>>> 1e1c4bbef559bb665113b647d9389d52e054f700
             } else {
                 this.props.history.push(URLS.home);
             }
@@ -116,11 +120,22 @@ class Details extends Component {
                 this.setState({items: data, status: status});
             })
         });
-    }
+    };
+
+    changeContract = (newContract) => {
+        console.log(newContract);
+    };
 
     addItem = (item) => {
+<<<<<<< HEAD
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
     }
+=======
+        const items = Object.assign([], this.state.items);
+        items.push(item);
+        this.setState({items});
+    };
+>>>>>>> 1e1c4bbef559bb665113b647d9389d52e054f700
 
     render() {
         const {classes} = this.props;
@@ -148,6 +163,7 @@ class Details extends Component {
                                 <ActionModule
                                     className={classes.actionMod}
                                     updateStatus={this.changeStatus}
+                                    updateContract={this.changeContract}
                                 />
                             </Paper>
                         </div>

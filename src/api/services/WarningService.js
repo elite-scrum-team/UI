@@ -92,7 +92,7 @@ export default class WarningService {
 
     // --- STATUS ---
     static createStatus = (warningId, type, description, callback) => {
-        const statusObject = {warningId, type, description};
+        const statusObject = {warningId, type, description: description};
 
         const response = API.addStatus(statusObject).response();
         return response.then((data) => {
