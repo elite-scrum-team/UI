@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import {Typography} from "@material-ui/core";
 
 // Material UI components

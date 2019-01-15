@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/styles';
-import { useState } from 'react';
-import warningUtils from '../../../utils/warningUtils';
 import classNames from 'classnames';
 
 // Material UI components
@@ -36,10 +33,12 @@ const styles = {
     },
     sidebar: {
         position: 'absolute',
-        top: 2,
-        bottom: 2,
+        top: 8,
+        bottom: 8,
         right: 4,
-        width: 4,
+        height: 8,
+        width: 8,
+        borderRadius: 10,
         backgroundColor: 'red',
     },
     acknowledged: {
