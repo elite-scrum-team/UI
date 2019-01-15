@@ -30,8 +30,8 @@ const WarningList = (props) => {
                 <WarningItem
                     key={value.id || index}
                     onClick={() => props.goTo(URLS.details.concat(value.id))}
-                    title={value.title}
-                    status={value.status}
+                    title={value.category ? value.category.name : 'Ukjent varsel'}
+                    status={value.status ? value.status.type : 0}
                     description={value.description}/>
             ))}
             {warnings.length === 0 && <Typography variant='subtitle1' align='center'>Ingen varsel å vise</Typography>}

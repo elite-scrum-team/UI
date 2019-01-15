@@ -60,9 +60,38 @@ export default {
     //MÅ STÅ I RIKTIG REKKEFØLGE
     statusLabels: ['Anerkjent', 'Arbeid påbegynt','Ferdig','Avslått'],
 
+
     getStatusClasses: (statusCode) => makeStyles({
         color: statusColorStyles[statusCode],
         border: statusBGColorStyles[statusCode],
         textColor: statusTextColorStyles[statusCode],
     }),
+
+    getAllStatusClasses: [
+        makeStyles({
+            color: statusColorStyles[0],
+            border: statusBGColorStyles[0],
+            textColor: statusTextColorStyles[0],
+        }),
+        makeStyles({
+            color: statusColorStyles[1],
+            border: statusBGColorStyles[1],
+            textColor: statusTextColorStyles[1],
+        }),
+        makeStyles({
+            color: statusColorStyles[2],
+            border: statusBGColorStyles[2],
+            textColor: statusTextColorStyles[2],
+        }),
+        makeStyles({
+            color: statusColorStyles[3],
+            border: statusBGColorStyles[3],
+            textColor: statusTextColorStyles[3],
+        }),
+        makeStyles({
+            color: statusColorStyles[4],
+            border: statusBGColorStyles[4],
+            textColor: statusTextColorStyles[4],
+        }),
+    ]
 }

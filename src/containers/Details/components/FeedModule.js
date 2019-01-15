@@ -1,5 +1,7 @@
 import React  from 'react';
 import { makeStyles } from '@material-ui/styles';
+import warningUtils from '../../../utils/warningUtils';
+
 // Material UI components
 
 // Icons
@@ -25,20 +27,22 @@ const FeedModule = (props) => {
     return (
         <div className={classes.root}>
             <CommentBox id={props.id}/>
-            {(props.items !== null)?(props.items.map((item, index) => {
-                    if(item.type === 'status') {
+            {(props.items) && (props.items.map((item, index) => {
+                    if(item.type === 'statuses') {
                         return (
                             <StatusBox
-                                date={item.data.date}
+                                key={item.data.id}
+                                date={item.data.createdAt}
                                 province={item.data.province}
-                                status={item.data.status}
-                                statusMessage={item.data.statusMessage}
-                                statustekst={item.data.statustekst}
+                                status={item.data.type}
+                                statusMessage={item.data.description}
+                                statustekst={warningUtils.statusNames[item.data.type]}
                             />
                         )
                     } else if(item.type === 'comment') {
                         return (
                             <CommentSection
+                                key={item.data.id}
                                 username={item.data.username}
                                 breadtext={item.data.breadtext}
                                 commentDate={item.data.commentDate}
@@ -47,7 +51,7 @@ const FeedModule = (props) => {
                     } else {
                         return null;
                     }
-                })) : null}
+                }))}
         </div>
     )
 };

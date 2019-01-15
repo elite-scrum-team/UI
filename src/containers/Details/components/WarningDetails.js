@@ -82,10 +82,13 @@ const WarningDetails = (props) =>  {
     const time = props.date ? moment(props.date).fromNow() : 'Ukjent';
 
     // Initialize status settings
-    const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 4 ? props.status : 1;
+    const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 4 ? props.status : 0;
     const statusName = warningUtils.statusNames[statusCode];
-    const statusClasses = warningUtils.getStatusClasses(statusCode)(); 
-
+    
+    let statusClasses = warningUtils.getAllStatusClasses;
+    statusClasses = statusClasses.map((s) => s());
+    statusClasses = statusClasses[statusCode];
+    
     return (
         <div className={classes.root}>
             <div className={classes.relative}>
@@ -114,7 +117,7 @@ const WarningDetails = (props) =>  {
                     <div className={classNames(classes.statusBar, statusClasses.color)}/>
                     <div className={classes.mapDiv}>
                         <div className={classes.mapWrapper}>
-                            <Map className={classes.mapwindow} defaultCenter={props.location} locations={[props.location]}/>
+                            <Map className={classes.mapwindow} defaultCenter={props.location} locations={[{location: props.location}]}/>
                         </div>
                     </div>
                 </div>

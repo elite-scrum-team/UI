@@ -13,6 +13,10 @@ export default {
         return new Fetch(METHODS.get, `/warning/${id}`)
     },
 
+    getWarningContent: (id) => {
+        return new Fetch(METHODS.get, '/warning/content/'.concat(id));
+    },
+
     createWarning: (data) =>{
         return new Fetch(METHODS.post, '/warning', data)
     },
@@ -28,6 +32,8 @@ export default {
     addStatus: (data) => {
         return new Fetch(METHODS.post, '/warning/status', {warningId: data.warningId, type: data.type, description: data.description});
     },
+
+
 
     // --- CATEGORIES ---
 

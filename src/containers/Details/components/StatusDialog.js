@@ -66,7 +66,6 @@ class StatusDialog extends Component{
 
 
     handleChange = (name) => (event) => {
-        console.log("Value: ", event.target.value);
         this.setState({[name]: event.target.value});
     };
 
@@ -87,7 +86,7 @@ class StatusDialog extends Component{
                     onClose={this.props.onClose}
                     actions={[
                         {label: 'Lukk', action: this.props.onClose},
-                        {label: 'Send', action: this.handleNewStatus},
+                        {label: 'Send', action: this.handleNewStatus, disabled: this.state.newStatus === -1},
                     ]}
                     open={open}
                 >
