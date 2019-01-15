@@ -18,7 +18,14 @@ const styles = {
     },
     content: {
         minHeight: 100,
-    }
+    },
+    textField: {
+        width: 500,
+
+        '@media only screen and (max-width: 800px)': {
+            width: 300
+        }
+    },
 };
 
 class ContractDialog extends Component {
