@@ -48,7 +48,6 @@ const MapStep = (props) => {
         setSelectedLocation({lat: locationObject.lat(), lng: locationObject.lng()});
         const data = {lat: locationObject.lat(), lng: locationObject.lng() };
         props.mapMarkerCallback(data);
-
     }
 
 

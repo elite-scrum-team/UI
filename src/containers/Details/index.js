@@ -88,12 +88,11 @@ class Details extends Component {
                     location: e.location,
                 });
                 this.setState({isLoading: false});
-
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
-
+                console.log(e);
             } else {
                 this.props.history.push(URLS.home);
             }
@@ -121,19 +120,14 @@ class Details extends Component {
 
     changeContract = (newContract) => {
         console.log(newContract);
-
-        WarningService.createContract(this.getWarningId(), newContract.companyId, newContract.contractMsg)
-            .then((data) => {
-                this.addItem({
-                    type: 'contracts',
-                    data
-                });
-
-            });
     };
 
     addItem = (item) => {
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
+    }
+        const items = Object.assign([], this.state.items);
+        items.push(item);
+        this.setState({items});
     };
 
     render() {

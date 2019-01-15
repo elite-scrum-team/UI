@@ -29,7 +29,7 @@ class App extends Component {
                             <Route exact path={URLS.home} component={Landing} />
                             <Route exact path={URLS.login} component={LogIn} />
                             <Route exact path={URLS.createwarning} component={CreateWarning} />
-                            <Route exact path={URLS.dashboard} component={Dashboard} />
+                            <Route exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                         </Switch>
                     </MuiThemeProvider>
                 </BrowserRouter>

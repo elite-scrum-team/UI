@@ -9,9 +9,6 @@ import URLS from '../../../URLS';
 import AuthService from '../../../api/services/AuthService';
 
 // Material UI components
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
@@ -20,10 +17,12 @@ import Button from '@material-ui/core/Button';
 // Project components
 import SearchBar from './SearchBar';
 import WarningList from './WarningList';
+import StatusTabs from './StatusTabs';
 
 const styles = makeStyles({
   root: {
-    minHeight: 400
+    minHeight: 400,
+    width: 325
   },
   loginButton: {
     display: 'block',
@@ -45,17 +44,7 @@ const SearchContent = props => {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static' color='secondary'>
-        <Tabs
-          value={section}
-          onChange={(e, val) => setSection(val)}
-          centered={true}
-          variant='fullWidth'
-        >
-          <Tab label='Søk varsler' value={0} />
-          <Tab label='Mine varsler' value={1} />
-        </Tabs>
-      </AppBar>
+      <StatusTabs value={section} onChange={val => setSection(val)} />
       {section === 0 && (
         <div>
           <SearchBar
@@ -63,31 +52,8 @@ const SearchContent = props => {
             onChange={props.onChange}
             onSubmit={props.onSubmit}
           />
-          <WarningList items={props.items} goTo={goTo} />
-        </div>
-      )}
 
-      {section === 1 && (
-        <div>
-          {AuthService.isAuthenticated() ? (
-            <div>
-              <WarningList items={props.items} goTo={goTo} />
-            </div>
-          ) : (
-            <div className='mt-30 p-5'>
-              <Typography variant='subtitle2' align='center'>
-                Du må logge inn for å se dine varsler!
-              </Typography>
-              <Button
-                className={classes.loginButton}
-                onClick={() => goTo(URLS.login)}
-                variant='contained'
-                color='primary'
-              >
-                Logg inn
-              </Button>
-            </div>
-          )}
+          <WarningList items={props.items} goTo={goTo} />
         </div>
       )}
     </div>
