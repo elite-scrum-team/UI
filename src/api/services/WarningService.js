@@ -16,7 +16,7 @@ export default class WarningService {
                 }
             }
 
-            WarningAction.setWarningPost(data)(store.dispatch);
+            // WarningAction.setWarningPost(data)(store.dispatch);
 
             data = data.map(WarningAction.createWarningPost);
 
@@ -51,20 +51,20 @@ export default class WarningService {
 
         // Create warning
         const response = API.createWarning(item).response();
-        return response.then(async (data) => {
-            console.log("WARNING DATA: ", data);
+        return response.then(async (data) => {  
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
-                images.forEach(await (async (image) => {
-                    // Upload image to server
-                    await API.addWarningImage(data.id, image).response(true).then((imageData) => {
-                        if(data.images instanceof Array) {
-                            data.images.push(imageData.image);
-                        }
-                    });
-                }));
+                for(var index in images) {
+                    // Upload images to server
+                    await API.addWarningImage(data.id, images[index]).response(true)
+                        .then((imageData) => {
+                            if(data.images instanceof Array && imageData) {
+                                data.images.push(imageData.image);
+                            }
+                        })
+                }
             }
-            console.log("End data", data);
+            
             !callback || callback(response.isError, data);
             return data;
         });

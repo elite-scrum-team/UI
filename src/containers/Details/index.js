@@ -62,6 +62,7 @@ class Details extends Component {
             lat: 0,
             lng: 0,
         },
+        municipality: null,
         images: null,
 
         items: [],
@@ -88,6 +89,7 @@ class Details extends Component {
                     description : e.description,
                     location: e.location,
                     images: e.images,
+                    municipality: e.municipality,
                 });
                 this.setState({isLoading: false});
 
@@ -147,6 +149,7 @@ class Details extends Component {
                             statusMessage={this.state.statusMessage}
                             description={this.state.description}
                             location={this.state.location}
+                            municipality={this.state.municipality}
                             />
                         <Divider />
                         <ImageGrid

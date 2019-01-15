@@ -53,7 +53,7 @@ export const createWarningPost = (warning) => {
     };
 
     // Initialize category
-    const categoryData = warning.category || {id: '1234', name: 'Problem'};
+    const categoryData = warning.category || {id: '1234', name: 'Ukjent problem'};
     
     // Initialize Status
     let statusData = warning.statuses || [];
@@ -71,5 +71,6 @@ export const createWarningPost = (warning) => {
         description : warning.description,
         location : location,
         images: images,
+        municipality: warning.location && warning.location.municipality ? warning.location.municipality.name : 'Ukjent',
     }
 };
