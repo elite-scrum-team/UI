@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import URLS from '../../URLS';
 
 // Material UI components
 import Paper from '@material-ui/core/Paper';
@@ -44,7 +45,7 @@ const styles = {
         display: 'inline',
         height: 'auto'
     }
-}
+};
 
 class Details extends Component {
 
@@ -53,9 +54,8 @@ class Details extends Component {
 
         id: null,
         title: null,
-        warnDate: null,
+        posted: null,
         status: 1,
-        province: null,
         statusMessage: null,
         description: null,
         location: {
@@ -77,46 +77,70 @@ class Details extends Component {
 
         this.setState({id: id, isLoading: true});
 
-        this.setState({isLoading: true});
-
-        WarningService.getWarning(id, (isError, e) => {
+        WarningService.getWarning(id, async (isError, e) => {
             if(isError === false) {
-                this.setState({
-                    title : e.title,
-                    warnDate: e.warnDate,
-                    status: e.status ? e.status : 1,
-                    province: e.province,
-                    statusMessage: e.statusMessage,
+                await this.setState({
+                    title : e.category.name,
+                    posted: e.createdAt,
+                    status: e.status ? e.status.type : 0,
+                    statusMessage: e.status ? e.status.description : '',
                     description : e.description,
-                    location : {
-                        lat: e.lat,
-                        lng: e.lng
-                    },
-                    images : e.images ? e.images : null,
-                    items : e.items,
+                    location: e.location,
                 });
+                this.setState({isLoading: false});
+                await WarningService.getWarningItems(id)
+                .then((data) => {
+                    this.setState({items: data});
+                });
+                console.log(e);
+            } else {
+                this.props.history.push(URLS.home);
             }
-            this.setState({isLoading: false});
+            
         });
 
     }
 
     changeStatus = (newStatus) => {
         console.log(newStatus);
-        // Endre status
+        const status = newStatus.status + 1;
+   
+        WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
+        .then((data) => {
+            this.addItem({
+                type: 'statuses',
+                data,
+            });
+            WarningService.getWarningItems(this.getWarningId())
+            .then((data) => {
+                this.setState({items: data, status: status});
+            })
+        });
+    };
+
+    changeContract = (newContract) => {
+        console.log(newContract);
+    };
+
+    addItem = (item) => {
+        WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
     }
+        const items = Object.assign([], this.state.items);
+        items.push(item);
+        this.setState({items});
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Navigation isLoading={this.state.isLoading}>
+                {this.state.isLoading ? null :
                 <div className={classes.root}>
                     <Paper elevation={1}>
                         <WarningDetails
                             title={this.state.title}
-                            date={this.state.warnDate}
+                            date={this.state.posted}
                             status={this.state.status}
-                            province={this.state.province}
                             statusMessage={this.state.statusMessage}
                             description={this.state.description}
                             location={this.state.location}
@@ -132,6 +156,7 @@ class Details extends Component {
                                 <ActionModule
                                     className={classes.actionMod}
                                     updateStatus={this.changeStatus}
+                                    updateContract={this.changeContract}
                                 />
                             </Paper>
                         </div>
@@ -143,9 +168,10 @@ class Details extends Component {
                         </div>
                     </div>
                 </div>
-                </Navigation>
+                }
+            </Navigation>
         )
     }
 }
 
-export default withStyles(styles)(Details);
+export default (withStyles(styles)(Details));

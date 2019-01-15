@@ -58,9 +58,17 @@ const Map = compose(
       }
     >
       {/* Render markes */}
-      {props.showMarkers && props.locations.map((location, i) => (
-        <Marker key={i.toString().concat(location.lat)} position={{ lat: location.lat, lng: location.lng }} clickable={location.onClick} onClick={() => location.onClick(location)}/>
-      ))}
+      {props.showMarkers && props.locations.map((location, i) => {
+        
+        location.location = location.location || {};
+
+        return (<Marker
+          key={i.toString().concat(location.lat)}
+          position={location.location}
+          clickable={location.onClick}
+          onClick={location.onClick ? () => location.onClick(location) : null}/>
+        )
+        })}
 
       {props.clickable && <Marker position={selectedLocation} icon={WarningMarkerIcon} clickable={false}/>}
 

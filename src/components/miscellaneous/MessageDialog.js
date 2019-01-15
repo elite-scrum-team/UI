@@ -75,7 +75,7 @@ const MessageDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 {actions.map((action) => (
-                    <Button key={action.label} onClick={action.action} color={action.color || 'primary'}>
+                    <Button key={action.label} onClick={action.action} color={action.color || 'primary'} disabled={action.disabled}>
                         {action.label}
                     </Button>
                 ))}
