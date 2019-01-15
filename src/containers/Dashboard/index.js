@@ -13,12 +13,50 @@ import { AutoComplete } from 'material-ui';
 // Project components
 
 const styles = {
-  root: {}
+  root: {
+    marginTop: 48
+  }
 };
 
 class Dashboard extends Component {
   state = {
-    isLoading: false
+    isLoading: false,
+    statusChange: 1,
+    search: '',
+    items: [
+      {
+        id: 1,
+        status: 2,
+        title: 'Hello',
+        description: 'What is going on???',
+        lat: 63.426114,
+        lng: 10.404609
+      },
+      {
+        id: 2,
+        status: 0,
+        title: 'Hello',
+        description: 'What is going on???',
+        lat: 63.426734,
+        lng: 10.45609
+      },
+      {
+        id: 3,
+        status: 1,
+        title: 'Hello',
+        description: 'What is going on???',
+        lat: 63.426734,
+        lng: 10.45609
+      },
+      {
+        id: 2,
+        status: 3,
+        title: 'Hello',
+        description: 'What is going on???',
+        lat: 63.426734,
+        lng: 10.45609
+      }
+    ]
   };
 
   render() {
@@ -32,6 +70,7 @@ class Dashboard extends Component {
             items={this.state.items}
             onSubmit={this.onSearch}
             isLoading={this.state.isLoading}
+            statusChange={this.state.statusChange}
           />
         </div>
       </Navigation>

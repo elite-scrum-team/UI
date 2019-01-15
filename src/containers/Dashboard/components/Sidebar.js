@@ -14,7 +14,8 @@ const drawerWidth = 325;
 const styles = makeStyles({
   root: {
     width: drawerWidth,
-    borderRight: 'none'
+    borderRight: 'none',
+    marginTop: 48
   }
 });
 
@@ -29,8 +30,9 @@ const Sidebar = props => {
         classes={{
           paper: classes.root
         }}
-      />
-      <SearchContent {...props} />
+      >
+        <SearchContent {...props} />
+      </Drawer>
     </div>
   );
 };
