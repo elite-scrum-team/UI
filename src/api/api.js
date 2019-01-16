@@ -39,10 +39,7 @@ export default {
         return new Fetch(METHODS.post, '/warning/status', {warningId: data.warningId, type: data.type, description: data.description});
     },
 
-
-
     // --- CATEGORIES ---
-
     getCategories : () => {
         return new Fetch(METHODS.get, '/warning/category');
     },

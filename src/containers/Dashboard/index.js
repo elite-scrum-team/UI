@@ -65,12 +65,15 @@ class Dashboard extends Component {
     getWarningId = () => this.props.match.params.id;
 
     componentDidMount() {
+        this.setState({isLoading: true});
         AuthService.getUserData((isError, data) => {
             if(isError === false) {
                 // Get id
                 const id = this.getWarningId();
-                this.setState({id: id, municipalityId: data ? data.municipality : '4dd2c0aa-9b39-40a8-9950-c0ae87c788b4'});
-
+                const roles = data.roles;
+                const municipalityId = AuthService.isEmployee();
+                this.setState({id: id, municipalityId: municipalityId});
+                
                 this.onSectionChange(NEW_SECTION);
                 
             } else {
@@ -147,7 +150,6 @@ class Dashboard extends Component {
 
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
-            //WarningService.addWarningItem(this.getWarningId(), 'statuses', data);
             WarningService.getWarningItems(this.getWarningId())
             .then((itemData) => {
                 this.setState({warningItems: itemData, status: status});
@@ -180,7 +182,7 @@ class Dashboard extends Component {
                                 items={this.state.items}
                                 onSubmit={this.onSearch}
                                 isLoading={this.state.listIsLoading}
-                                onSectionChange={this.state.onSectionChange}
+                                onSectionChange={this.onSectionChange}
                                 statusChange={this.state.statusChange}
                                 onChange={this.handleChange('search')}
                                 mountWarningCallback={(id) => this.mountWarning(id)}

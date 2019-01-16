@@ -1,34 +1,46 @@
 import {actions} from '../actions/UserAction';
 
 const initialState = {
+    id: null,
     email: null,
-    municipality: null,
+    isAdmin: false,
+    group: [],
+    roles: {
+        municipalities: [],
+        groups: [],
+    },
 };
 
 export default function reducer(state = initialState, action) {
-    const data = action.payload;
-    if(!isPayloadValid(data)) {
-        return state;
-    }
-
+ 
     switch (action.type) {
 
         case actions.SET_USER_DATA: {
             return {
                 ...state,
-                email: action.payload.email ? action.payload.email : null,
-                municipality: action.payload.municipality ? action.payload.municipality : null,
-            };
+                ...action.payload,
+                roles: {
+                    municipalities: action.payload.group ?
+                        action.payload.group.filter(g => g.municipalitiy).map(g => g.municipalitiy) : [],
+                    groups: action.payload.group ? action.payload.group.map(g => g.id) : [],
+                }
+            }
+        }
+
+        case actions.CLEAR_USER_DATA: {
+            return {
+                id: null,
+                email: null,
+                isAdmin: false,
+                group: [],
+                roles: {
+                    municipalities: [],
+                    groups: [],
+                },
+            }
         }
 
         default:
             return state;
     }
-};
-
-// Helper functions
-
-// Checks if action.payload data is not null or undefined
-const isPayloadValid = (payload) => {
-    return (typeof(payload) !== undefined);
 };
