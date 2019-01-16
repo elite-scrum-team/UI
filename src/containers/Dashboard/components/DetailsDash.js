@@ -37,7 +37,7 @@ const styles = makeStyles({
     center: {
         margin: 'auto',
         display: 'block',
-        maxWidth: 850,
+        maxWidth: 1000,
 
     },
     img: {
@@ -80,16 +80,12 @@ const DetailsDash = (props) => {
     // Styling
     const classes = styles();
 
-    const loadWarning = (event) => {
-
-    }
-
-    if (props.state.title == null) {
+    if (props.showWarning == null) {
         return (
             <div className={classes.root}>
                 <img className={classes.img}
-                     src={LogoImage}
-                     title={'Hverdagshelt logo'}/>
+                    src={LogoImage}
+                    title={'Hverdagshelt logo'}/>
             </div>
         )
     };
@@ -105,12 +101,12 @@ const DetailsDash = (props) => {
             <Paper elevation={1} className={classes.center}>
                 <WarningDetails
                     title={props.state.title}
-                    date={props.state.warnDate}
+                    date={props.state.posted}
                     status={props.state.status}
-                    province={props.state.province}
                     statusMessage={props.state.statusMessage}
                     description={props.state.description}
                     location={props.state.location}
+                    municipality={props.state.municipality}
                 />
                 <ImageGrid
                     images={props.state.images}
@@ -120,13 +116,16 @@ const DetailsDash = (props) => {
                 <div className={classes.content}>
                     <div>
                         <Paper elevation={1} className='p-30'>
-                            <ActionModule className={classes.actionMod}/>
+                            <ActionModule
+                                className={classes.actionMod}
+                                updateStatus={props.changeStatus}
+                                updateContract={props.changeContract}/>
                         </Paper>
                     </div>
                     <div>
                         <FeedModule
                             id={props.state.id}
-                            items={props.state.statusItems}
+                            items={props.state.warningItems}
                         />
                     </div>
                 </div>
