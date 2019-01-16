@@ -4,10 +4,15 @@ import store from '../../store/store'
 
 // and all the methods will return a promise
 export default class WarningService {
-    static getWarnings = async (orderBy = null, callback) => {
-        const response = API.getWarnings().response();
+
+    static getWarnings = async (orderBy = null, filters = {}, callback) => {
+        const response = API.getWarnings(filters).response();
         return response.then((data) => {
             data = data || [];
+
+            if(!(data instanceof Array)) {
+                data = [];
+            }
 
             // If orderby is provided, sort the data
             if(orderBy) {
@@ -17,7 +22,6 @@ export default class WarningService {
             }
 
             // WarningAction.setWarningPost(data)(store.dispatch);
-
             data = data.map(WarningAction.createWarningPost);
 
             !callback || callback(response.isError, data);
