@@ -39,9 +39,13 @@ class ContractDialog extends Component {
     };
 
     handleChange = (name) => (event) => {
-        console.log("Value: ", event.target.value);
         this.setState({[name]: event.target.value});
     };
+
+    //Company can't be handled by handleChange, because the SearchableDropdown event does not have a .target property
+    handleCompanySelect = (event) => {
+        this.setState({companyId: event.value})
+    }
 
     render() {
         const {classes} = this.props;
@@ -73,6 +77,7 @@ class ContractDialog extends Component {
                                 {label: 'Påls Asfalt', value: 'Påls Asfalt'},
                                 {label: 'Pers Asfalt', value: 'Pers Asfalt'}
                             ]}
+                            onChange={this.handleCompanySelect}
                         />
                         <TextField
                             id="filled-email-input"

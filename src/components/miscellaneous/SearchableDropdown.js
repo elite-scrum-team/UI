@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select'
+import PropTypes from "prop-types";
 
 // const options = [
 //     { value: 'chocolate', label: 'Chocolate' },
@@ -7,8 +8,25 @@ import Select from 'react-select'
 //     { value: 'vanilla', label: 'Vanilla' }
 // ]
 
-const SearchableDropdown = (props) => (
-    <Select options={props.options} menuPortalTarget={document.body}  styles={{ menuPortal: base => ({ ...base, zIndex: 200000 }) }} />
-);
+
+
+const SearchableDropdown = (props) => {
+
+    const handleChange = (event) => {
+        props.onChange(event);
+    };
+
+    return (
+        <Select options={props.options}
+                menuPortalTarget={document.body}
+                styles={{menuPortal: base => ({...base, zIndex: 200000})}}
+                onChange={handleChange}
+        />
+    )
+}
+
+SearchableDropdown.propTypes = {
+    onChange: PropTypes.func,
+};
 
 export default (SearchableDropdown);
