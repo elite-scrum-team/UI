@@ -59,23 +59,25 @@ class ActionModule extends Component {
                     <Typography variant={"h6"}>
                         Actions:
                     </Typography>
-                    <List component="nav" className={classes.root}>
-                        <ListItem button>
+                    <List component="nav" className={classes.root} dense>
+                        <ListItem button dense>
                             <ListItemText primary="Varsle meg ved endringer" />
                         </ListItem>
                         <Divider />
                         
                         {AuthService.isEmployee(this.props.municipalityId) &&
                             <Fragment>
-                                <ListItem button divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
+                                <ListItem button dense divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
                                     <ListItemText primary="Registrer kontrakt" />
                                 </ListItem>
-                                <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
+                                <Divider light />
+                                <ListItem button dense onClick={() => this.setState({statusDialogOpen: true})}>
                                     <ListItemText primary="Ny status" />
                                 </ListItem>
+                                <Divider light />
                             </Fragment>
                         }
-                        <Divider light />
+                        
                     </List>
                 </div>
                 <StatusDialog

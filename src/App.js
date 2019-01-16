@@ -20,7 +20,7 @@ import Details from './containers/Details';
 import Dashboard from './containers/Dashboard';
 
 // The user needs to be authorized (logged in) to access these routes
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const EmployeeRoute = ({ component: Component, ...rest }) => {
     return (
       <Route
         {...rest}
@@ -28,6 +28,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             (AuthService.isAuthenticated() && AuthService.isEmployee())?
                 <Component {...props} /> :
                 <Redirect to={URLS.login} />
+        )}
+      />
+    );
+};
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={(props) => (
+            (AuthService.isAuthenticated())?
+                <Component {...props} /> :
+                <Redirect to={URLS.login.concat('?', rest.path ? 'redirect='.concat(rest.path) : '')} />
         )}
       />
     );
@@ -52,8 +65,8 @@ class App extends Component {
                                 <Route exact path={URLS.recover} component={Recover} />
                                 <Route exact path={URLS.home} component={Landing} />
                                 <Route exact path={URLS.login} component={LogIn} />
-                                <Route exact path={URLS.createwarning} component={CreateWarning} />
-                                <PrivateRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
+                                <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
+                                <EmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                             </Switch>
                         </MuiThemeProvider>
                     </BrowserRouter>

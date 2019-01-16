@@ -14,6 +14,9 @@ import Progress from "./components/Progress";
 // Service import
 import AuthService from "../../api/services/AuthService";
 
+// External imports
+import queryString from 'query-string'
+
 // Project Components
 const styles = theme => ({
   main: {
@@ -41,8 +44,12 @@ class LogIn extends Component {
   state = {
     isSignIn: true,
     isLoading: false,
-    errorMessage: ""
+    errorMessage: "",
   };
+
+  componentDidMount() {
+    console.log(this.props.location);
+  }
 
   changeTab = value => {
     this.setState({ isSignIn: value });
@@ -62,7 +69,9 @@ class LogIn extends Component {
         });
       } else {
         // Go to home page
-        this.props.history.push(URLS.home);
+        const queryParams = queryString.parse(this.props.location.search);
+        const urls = queryParams.redirect ? queryParams.redirect : URLS.home;
+        this.props.history.push(urls);
       }
       this.setState({ isLoading: false });
     });
@@ -87,7 +96,9 @@ class LogIn extends Component {
           errorMessage: "the email address alrealy exists"
         });
       } else {
-        this.props.history.push(URLS.home);
+        const queryParams = queryString.parse(this.props.location.search);
+        const urls = queryParams.redirect ? queryParams.redirect : URLS.home;
+        this.props.history.push(urls);
       }
       this.setState({ isLoading: false });
     });

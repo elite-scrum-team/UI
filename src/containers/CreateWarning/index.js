@@ -138,8 +138,10 @@ class CreateWarning extends Component {
             this.setState({isLoading: false});
         });
 
-        GeoService.getGeoLocation((e)=>this.setState({currentLocation: {lat: e.coords.latitude, lng: e.coords.longitude}}));
-
+        // Ask for current location
+        GeoService.getGeoLocation((e) =>
+            this.setState({currentLocation: {lat: e.coords.latitude, lng: e.coords.longitude}})
+        );
     }
 
     sendWarning = () => {

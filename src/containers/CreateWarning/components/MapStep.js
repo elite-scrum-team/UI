@@ -58,6 +58,7 @@ const MapStep = (props) => {
                     <Map
                         clickable={onMapClick}
                         defaultCenter={props.location}
+                        zoom={14}
                     />
                 </div>
 
