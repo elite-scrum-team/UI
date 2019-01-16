@@ -27,3 +27,4 @@ const createCategory = (category) => ({
     id: category.id,
     name: category.name,
 });
+

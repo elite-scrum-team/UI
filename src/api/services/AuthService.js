@@ -1,5 +1,7 @@
 import AUTH from "../auth";
 import { TOKEN } from "../helpers/http";
+import * as UserAction from '../../store/actions/UserAction';
+import store from '../../store/store'
 
 // The userservice will do user related things,
 // and all the methods will return a promise
@@ -31,6 +33,17 @@ export default class AuthService {
             }
             !callback || callback(response.isError, data);
             return data;
+        });
+    }
+
+    static getUserData = (callback) => {
+
+        const response = AUTH.getUserData().response();
+        return response.then((data) => {
+            if(response.isError === false) {
+                UserAction.setUserData(data)(store.dispatch);
+            }
+            !callback || callback(response.isError, data);
         });
     }
 

@@ -8,6 +8,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     const data = action.payload;
+
     if(!isPayloadValid(data)) {
         return state;
     }
