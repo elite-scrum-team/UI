@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import URLS from '../../../URLS';
+import keyBy from 'lodash'
+import WarningService from '../../../api/services/WarningService'
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 
 // Project components
 import WarningItem from './WarningItem';
+
+
 
 
 const styles = makeStyles({
@@ -29,7 +33,7 @@ const WarningList = (props) => {
             {warnings.map((value, index) => (
                 <WarningItem
                     key={value.id || index}
-                    onClick={() => props.goTo(URLS.details.concat(value.id))}
+                    onClick={props.detail ? () => props.detail(value) : ()=> props.goTo(URLS.details.concat(value.id))}
                     title={value.category ? value.category.name : 'Ukjent varsel'}
                     status={value.status ? value.status.type : 0}
                     description={value.description}/>

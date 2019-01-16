@@ -15,6 +15,11 @@ const styles = makeStyles({
     root: {
         width: drawerWidth,
         borderRight: 'none',
+    },
+    progress: {
+        display: 'block',
+        margin: 'auto',
+        marginTop: 12,
     }
 });
 
@@ -29,7 +34,7 @@ const Sidebar = (props) => {
                 classes= {{
                     paper: classes.root,
                 }}>
-                <SearchContent {...props} />
+                <SearchContent {...props} detail={props.detail} />
             </Drawer>
         </div>
     )

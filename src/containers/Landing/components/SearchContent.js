@@ -48,14 +48,14 @@ const SearchContent = (props) => {
     // Go to login
     const goTo = (page) => {
         props.history.push(page);
-    }
+    };
 
     const changeSection = (value) => {
         if(props.onSectionChange) {
             props.onSectionChange(value);
         }
         setSection(value);
-    }
+    };
 
     return (
         <div className={classes.root}>
@@ -72,15 +72,15 @@ const SearchContent = (props) => {
             {section === 0 &&
                 <div>
                     <SearchBar value={props.searchValue} onChange={props.onChange} onSubmit={props.onSubmit}/>
-                    {props.isLoading ? <CircularProgress className={classes.progress}/> : <WarningList items={props.items} goTo={goTo}/>}
+                    {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ? <WarningList items={props.items} detail={props.detail}/> : <WarningList items={props.items} goTo={goTo}/>}
                 </div>
             }
-            
+
             {section === 1 &&
             <div>
                 {AuthService.isAuthenticated() ?
                     <div>
-                        {props.isLoading ? <CircularProgress className={classes.progress}/> : <WarningList items={props.items} goTo={goTo}/>}
+                        {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ? <WarningList items={props.items} detail={props.detail}/> : <WarningList items={props.items} goTo={goTo}/>  }
                     </div>
                 :
                     <div className='mt-30 p-5'>
