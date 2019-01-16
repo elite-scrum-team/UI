@@ -10,15 +10,18 @@ export default class WarningService {
         return response.then((data) => {
             data = data || [];
 
+            if(!(data instanceof Array)) {
+                data = [];
+            }
+
             // If orderby is provided, sort the data
-            if(orderBy && data instanceof Array) {
+            if(orderBy) {
                 for(const key in orderBy) {
                     data = data.sort((a, b) => (a[key] === b[key])? 0 : a[key] ? 1 : -1)
                 }
             }
 
             // WarningAction.setWarningPost(data)(store.dispatch);
-
             data = data.map(WarningAction.createWarningPost);
 
             !callback || callback(response.isError, data);

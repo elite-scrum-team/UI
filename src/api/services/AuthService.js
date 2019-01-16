@@ -9,7 +9,11 @@ export default class AuthService {
         email = email.trim().toLowerCase();
 
         const response = AUTH.createUser(email, password).response();
-        return response.then(data => {
+        return response.then(async data => {
+            if(response.isError === false) {
+                await AuthService.token(email, password);
+            }
+
             !callback || callback(response.isError, data);
             return data;
         });
