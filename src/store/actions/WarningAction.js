@@ -53,12 +53,15 @@ export const createWarningPost = (warning) => {
     };
 
     // Initialize category
-    const categoryData = warning.category || {id: '1234', name: 'Problem'};
+    const categoryData = warning.category || {id: '1234', name: 'Ukjent problem'};
     
     // Initialize Status
     let statusData = warning.statuses || [];
     statusData = statusData.length > 0 ? statusData[0] : {type: 1, description: ''};
     
+    // Initialize images
+    const images = warning.images ? warning.images.map(m => m.fileURL) : [];
+
     return {
         ...warning,
         id: warning.id,
@@ -67,5 +70,7 @@ export const createWarningPost = (warning) => {
         status: statusData,
         description : warning.description,
         location : location,
+        images: images,
+        municipality: warning.location && warning.location.municipality ? warning.location.municipality.name : 'Ukjent',
     }
 };

@@ -4,10 +4,15 @@ import store from '../../store/store'
 
 // and all the methods will return a promise
 export default class WarningService {
-    static getWarnings = async (orderBy = null, callback) => {
-        const response = API.getWarnings().response();
+
+    static getWarnings = async (orderBy = null, filters = {}, callback) => {
+        const response = API.getWarnings(filters).response();
         return response.then((data) => {
             data = data || [];
+
+            if(!(data instanceof Array)) {
+                data = [];
+            }
 
             // If orderby is provided, sort the data
             if(orderBy) {
@@ -16,8 +21,7 @@ export default class WarningService {
                 }
             }
 
-            WarningAction.setWarningPost(data)(store.dispatch);
-
+            // WarningAction.setWarningPost(data)(store.dispatch);
             data = data.map(WarningAction.createWarningPost);
 
             !callback || callback(response.isError, data);
@@ -46,18 +50,25 @@ export default class WarningService {
     //data object is going to contain details and possible images.
     static createWarning = (item ,callback) => {
         // Split images and other data
-        const images = item.images;
+        const images = item.images; 
         delete item.images;
 
         // Create warning
         const response = API.createWarning(item).response();
-        return response.then((data) => {
+        return response.then(async (data) => {  
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
-                images.forEach(async (image) => {
-                    await API.addWarningImage(data.id, image).response(true).then();
-                });
+                for(var index in images) {
+                    // Upload images to server
+                    await API.addWarningImage(data.id, images[index]).response(true)
+                        .then((imageData) => {
+                            if(data.images instanceof Array && imageData) {
+                                data.images.push(imageData.image);
+                            }
+                        })
+                }
             }
+            
             !callback || callback(response.isError, data);
             return data;
         });

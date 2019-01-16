@@ -62,6 +62,7 @@ class Details extends Component {
             lat: 0,
             lng: 0,
         },
+        municipality: null,
         images: null,
 
         items: [],
@@ -77,6 +78,7 @@ class Details extends Component {
 
         this.setState({id: id, isLoading: true});
 
+        // Get warning
         WarningService.getWarning(id, async (isError, e) => {
             if(isError === false) {
                 await this.setState({
@@ -86,17 +88,21 @@ class Details extends Component {
                     statusMessage: e.status ? e.status.description : '',
                     description : e.description,
                     location: e.location,
+                    images: e.images,
+                    municipality: e.municipality,
                 });
                 this.setState({isLoading: false});
+
+                // Get warning content (comments, statuses, contracts)
                 await WarningService.getWarningItems(id)
                 .then((data) => {
                     this.setState({items: data});
                 });
-                console.log(e);
             } else {
+                // The warning does not exist, go to frontpage
                 this.props.history.push(URLS.home);
             }
-            
+
         });
 
     }
@@ -104,7 +110,7 @@ class Details extends Component {
     changeStatus = (newStatus) => {
         console.log(newStatus);
         const status = newStatus.status + 1;
-   
+
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
             this.addItem({
@@ -124,6 +130,9 @@ class Details extends Component {
 
     addItem = (item) => {
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
+        const items = Object.assign([], this.state.items);
+        items.push(item);
+        this.setState({items});
     };
 
     render() {
@@ -140,6 +149,7 @@ class Details extends Component {
                             statusMessage={this.state.statusMessage}
                             description={this.state.description}
                             location={this.state.location}
+                            municipality={this.state.municipality}
                             />
                         <Divider />
                         <ImageGrid

@@ -5,8 +5,9 @@ export default {
     // Here will all the API methods be
 
     // --- WARNINGS ---
-    getWarnings: ()=>{
-        return new Fetch(METHODS.get, '/warning')
+    getWarnings: (filters)=>{
+        console.log("FILTERS: ", filters);
+        return new Fetch(METHODS.get, '/warning?' + (filters ? Object.keys(filters).map(key => key.concat('=', filters[key], '&')) : ''))
     },
 
     getWarning: (id) =>{
@@ -26,7 +27,7 @@ export default {
     },
 
     addWarningImage: (id, image) => {
-        return new Fetch(METHODS.post, '/warning/image', {id: id, image: image});
+        return new Fetch(METHODS.post, '/warning/image', {warningId: id, image: image});
     },
 
     addStatus: (data) => {
