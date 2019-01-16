@@ -65,8 +65,11 @@ class Landing extends Component {
 
     componentDidMount() {
       this.setState({isLoading: true});
+      this.getWarnings({});
+    }
 
-      WarningService.getWarnings('createdAt', (isError, data) => {
+    getWarnings = (filters) => {
+      WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
         if(isError === false) {
           console.log(data);
           this.setState({items: data});

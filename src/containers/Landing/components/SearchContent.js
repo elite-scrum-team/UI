@@ -14,6 +14,7 @@ import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Icons
 
@@ -29,6 +30,11 @@ const styles = makeStyles({
         display: 'block',
         margin: 'auto',
         marginTop: 10,
+    },
+    progress: {
+        display: 'block',
+        margin: 'auto',
+        marginTop: 12,
     }
 });
 
@@ -44,12 +50,19 @@ const SearchContent = (props) => {
         props.history.push(page);
     }
 
+    const changeSection = (value) => {
+        if(props.onSectionChange) {
+            props.onSectionChange(value);
+        }
+        setSection(value);
+    }
+
     return (
         <div className={classes.root}>
             <AppBar position='static' color='secondary'>
                 <Tabs
                     value={section}
-                    onChange={(e, val) => setSection(val)}
+                    onChange={(e, val) => changeSection(val)}
                     centered={true}
                     variant='fullWidth'>
                     <Tab label='Søk varsler' value={0}/>
@@ -59,7 +72,7 @@ const SearchContent = (props) => {
             {section === 0 &&
                 <div>
                     <SearchBar value={props.searchValue} onChange={props.onChange} onSubmit={props.onSubmit}/>
-                    <WarningList items={props.items} goTo={goTo}/>
+                    {props.isLoading ? <CircularProgress className={classes.progress}/> : <WarningList items={props.items} goTo={goTo}/>}
                 </div>
             }
             
@@ -67,7 +80,7 @@ const SearchContent = (props) => {
             <div>
                 {AuthService.isAuthenticated() ?
                     <div>
-                        <WarningList items={props.items} goTo={goTo}/>
+                        {props.isLoading ? <CircularProgress className={classes.progress}/> : <WarningList items={props.items} goTo={goTo}/>}
                     </div>
                 :
                     <div className='mt-30 p-5'>

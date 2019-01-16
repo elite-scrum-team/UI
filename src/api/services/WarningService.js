@@ -4,13 +4,14 @@ import store from '../../store/store'
 
 // and all the methods will return a promise
 export default class WarningService {
-    static getWarnings = async (orderBy = null, callback) => {
-        const response = API.getWarnings().response();
+
+    static getWarnings = async (orderBy = null, filters = {}, callback) => {
+        const response = API.getWarnings(filters).response();
         return response.then((data) => {
             data = data || [];
 
             // If orderby is provided, sort the data
-            if(orderBy) {
+            if(orderBy && data instanceof Array) {
                 for(const key in orderBy) {
                     data = data.sort((a, b) => (a[key] === b[key])? 0 : a[key] ? 1 : -1)
                 }
