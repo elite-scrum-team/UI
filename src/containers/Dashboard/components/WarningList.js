@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 // Project components
 import WarningItem from './WarningItem';
 
+
 const styles = makeStyles({
   root: {
     padding: '10px 4px'
@@ -28,10 +29,12 @@ const WarningList = props => {
       {warnings.map((value, index) => (
         <WarningItem
           key={value.id || index}
-          onClick={() => props.goTo(URLS.details.concat(value.id))}
-          title={value.title}
-          status={value.status}
+          id={value.id}
+          onClick={() => props.goTo(URLS.dashboard.concat(value.id))}
+          title={value.category.name}
+          status={value.status.type}
           description={value.description}
+          mountWarningCallback={(e) => props.mountWarningCallback(e)}
         />
       ))}
       {warnings.length === 0 && (

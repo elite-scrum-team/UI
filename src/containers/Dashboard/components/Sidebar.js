@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/styles';
 
 // Material UI components
 import Drawer from '@material-ui/core/Drawer';
-import SearchContent from './SearchContent';
 
 // Icons
 
 // Project components
+import SearchContent from './SearchContent';
 
 const drawerWidth = 325;
 
@@ -31,7 +31,9 @@ const Sidebar = props => {
           paper: classes.root
         }}
       >
-        <SearchContent {...props} />
+        <SearchContent {...props}
+                       mountWarningCallback={(e) => props.mountWarningCallback(e)}
+        />
       </Drawer>
     </div>
   );

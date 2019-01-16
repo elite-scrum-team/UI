@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 
 // Project components
 
-
 const styles = makeStyles({
     root: {
         width: '100%',
@@ -25,7 +24,9 @@ const styles = makeStyles({
     },
     statusBar: {
         position: 'absolute',
-        top: 6, bottom: 6, left: 6,
+        top: 6,
+        bottom: 6,
+        left: 6,
         borderRadius: 4,
         width: 4,
     },

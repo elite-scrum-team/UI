@@ -112,7 +112,6 @@ class Landing extends Component {
     }
 
     onSearch = (event) => {
-
       event.preventDefault();
     }
 
