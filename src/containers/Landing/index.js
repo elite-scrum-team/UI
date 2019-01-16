@@ -91,8 +91,10 @@ class Landing extends Component {
       this.setState({isLoading: true});
 
       if(value === SEARCH_SECTION) {
+        console.log("Get warnings");
         this.getWarnings({});
       } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
+        console.log("Get user warnings");
         this.getWarnings({useUserId: true});
       }
     }
