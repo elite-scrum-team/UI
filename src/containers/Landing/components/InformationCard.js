@@ -59,13 +59,13 @@ const InformationCard = (props) => {
                 <div className={classNames(classes.inf)}>
 
                     <div className={classes.padd}>
+                        <TimeIcon className='mr-10'/>
                         <Typography variant='caption'>{props.time}</Typography>
-                        <TimeIcon />
                     </div>
 
                     <div className={classes.padd}>
                         <Typography variant='caption'>{props.municipality}</Typography>
-                        <LocationIcon />
+                        <LocationIcon className='ml-10'/>
                     </div>
                 </div>
             </div>

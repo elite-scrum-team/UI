@@ -71,7 +71,7 @@ const SmallDetail = (props) => {
                     <Typography variant='h3'>{props.item.category.name}</Typography>
                     <InformationCard status={`status: ${statusName}`} color={statusClasses} time={time} municipality={props.item.municipality}/>
                     <TextCard text={props.item.description}/>
-                    <TextCard text={props.item.status.description}/>
+                    <TextCard text={props.item.status.description} gray/>
                 </div>
                 </div>
                 }

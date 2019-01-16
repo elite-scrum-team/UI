@@ -59,7 +59,7 @@ const SearchContent = (props) => {
 
     return (
         <div className={classes.root}>
-            <AppBar position='static' color='secondary'>
+            <AppBar position='sticky' color='secondary'>
                 <Tabs
                     value={section}
                     onChange={(e, val) => changeSection(val)}

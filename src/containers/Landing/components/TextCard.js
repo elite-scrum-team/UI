@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import classNames from 'classnames';
 
 // Material UI components
 
@@ -14,13 +15,17 @@ import Typography from "@material-ui/core/Typography"
 const styles = makeStyles({
     root: {
         width: '80%',
-        paddingTop:'30px',
+        marginTop: 30,
+        padding: 8,
     },
     flex: {
 
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+    },
+    gray: {
+        backgroundColor: 'rgba(0,0,0,0.2)',
     }
 });
 
@@ -29,9 +34,10 @@ const TextCard = (props) => {
     const classes = styles();
 
     return (
-        <div className={classes.root}>
+        props.text ? <div className={classNames(classes.root, props.gray ? classes.gray : '')}>
             <Typography>{props.text}</Typography>
         </div>
+        : null
     )
 };
 
