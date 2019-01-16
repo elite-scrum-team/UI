@@ -12,7 +12,7 @@ const styles = theme => ({
     width: '100%'
   },
   button: {
-    width: '33%',
+    width: '33.1%',
     borderRadius: 0
   },
   rightBorder: {
@@ -40,6 +40,7 @@ class StatusTabs extends Component {
     return (
       <div className={classes.root}>
         <Button
+          size='small'
           className={classNames(
             classes.button,
             classes.rightBorder,
@@ -50,6 +51,7 @@ class StatusTabs extends Component {
           Nytt
         </Button>
         <Button
+          size='small'
           className={classNames(
             classes.button,
             classes.leftBorder,
@@ -61,6 +63,7 @@ class StatusTabs extends Component {
           Behandlet
         </Button>
         <Button
+          size='small'
           className={classNames(
             classes.button,
             classes.leftBorder,
