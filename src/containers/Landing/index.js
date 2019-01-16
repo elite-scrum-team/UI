@@ -56,16 +56,19 @@ const styles = theme => ({
 class Landing extends Component {
 
     state = {
-      isLoading: true,
-      showMap: false,
-
-      search: '',
-      items: []
+        isLoading: true,
+        showMap: false,
+        currentLocation: {
+            lat: 0,
+            lng: 0,
+        },
+        search: '',
+        items: []
     }
 
     componentDidMount() {
       this.setState({isLoading: true});
-
+      this.getGeoLocation();
       WarningService.getWarnings('createdAt', (isError, data) => {
         if(isError === false) {
           console.log(data);
@@ -92,6 +95,25 @@ class Landing extends Component {
       event.preventDefault();
     }
 
+    getGeoLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    console.log(position.coords);
+                    this.setState(prevState => ({
+                        currentLocation: {
+                            ...prevState.currentLocation,
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        }
+                    }))
+                }
+            )
+        } else {
+            console.log('error lul');
+        }
+    }
+
     render() {
       const {classes} = this.props;
       return (
@@ -108,7 +130,10 @@ class Landing extends Component {
 
           <Hidden implementation='js' smDown={!this.state.showMap}>
             <div className={classes.root}>
-              <Map locations={this.state.items}/>
+              <Map
+                  locations={this.state.items}
+                  defaultCenter={this.state.currentLocation}
+              />
             </div>
           </Hidden>
           {!this.state.showMap && <Paper className={classes.infoModule}>
