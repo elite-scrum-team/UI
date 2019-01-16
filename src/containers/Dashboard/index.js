@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI components
 import Sidebar from './components/Sidebar';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import { AutoComplete } from 'material-ui';
 
 // Icons
 
@@ -14,11 +11,15 @@ import { AutoComplete } from 'material-ui';
 import WarningService from "../../api/services/WarningService";
 import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
+import SearchContent from "../Landing/components/SearchContent";
+import URLS from "../../URLS";
+import PropTypes from "prop-types";
+import WarningList from "./components/WarningList";
 
 const styles = {
-  root: {
-    marginTop: 48
-  },
+    root: {
+        marginTop: 48
+    },
     sidebar: {
         '@media only screen and (max-width: 600px)': {
             width: '100%',
@@ -46,71 +47,71 @@ class Dashboard extends Component {
         images: null,
         statusChange: 1,
         search: '',
-        items: [
-            {
-                id: 1,
-                status: 2,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426114,
-                lng: 10.404609
-            },
-            {
-                id: 2,
-                status: 0,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426734,
-                lng: 10.45609
-            },
-            {
-                id: 3,
-                status: 1,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426734,
-                lng: 10.45609
-            },
-            {
-                id: 2,
-                status: 3,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426734,
-                lng: 10.45609
-            }
-        ],
+        statusItems: [],
+        items: [],
 
-        showWarning: true,
+        showWarning: false,
     };
 
-    getWarningId = () => this.props.match.params.warnID;
+    getWarningId = () => this.props.match.params.id;
+
+    goTo = page => {
+        console.log(this.props);
+        this.props.history.push(page);
+    };
+
+    mountWarning = (id) => {
+        console.log(this.props);
+        this.setState({isLoading: true});
+        if (id == null) {
+            if (this.getWarningId() != null) {
+                this.setState({
+                    id: null,
+                    title: null,
+                    posted: null,
+                    status: 1,
+                    statusMessage: null,
+                    description: null,
+                    location: {
+                        lat: 0,
+                        lng: 0,
+                    },
+                });
+            }
+            this.setState({isLoading: false});
+        }
+        else {
+            WarningService.getWarning(id, (isError, e) => {
+                if (isError === false) {
+                    this.setState({
+                        title: e.category.name,
+                        posted: e.createdAt,
+                        status: e.status ? e.status.type : 0,
+                        statusMessage: e.status ? e.status.description : '',
+                        description: e.description,
+                        location: e.location,
+                    });
+                }
+                this.setState({isLoading: false});
+                WarningService.getWarningItems(id)
+                    .then((data) => {
+                        this.setState({statusItems: data});
+                    });
+            });
+        }
+    };
 
     componentDidMount() {
         // Get id
         const id = this.getWarningId();
+        this.setState({id: id});
 
-        if (id === null) {
-            this.setState({isLoading: false});
-            return;
-        }
+        this.mountWarning(id);
 
-        WarningService.getWarning(id, (isError, e) => {
+        WarningService.getWarnings('createdAt', (isError, data) => {
             if (isError === false) {
-                this.setState({
-                    title: e.title,
-                    warnDate: e.warnDate,
-                    status: e.status ? e.status : 1,
-                    province: e.province,
-                    statusMessage: e.statusMessage,
-                    description: e.description,
-                    location: {
-                        lat: e.lat,
-                        lng: e.lng
-                    },
-                    images: e.images ? e.images : null,
-                    items: e.items,
-                });
+                console.log(data);
+                this.setState({items: data});
             }
             this.setState({isLoading: false});
         });
@@ -120,34 +121,58 @@ class Dashboard extends Component {
         console.log(this.state.id);
     }
 
-    what = () => console.log(this.state.id);
+    onSearch = (event) => {
+        event.preventDefault();
+    };
+
+    handleChange = (name) => (event) => {
+        this.setState({[name]: event.target.value});
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Navigation isLoading={this.state.isLoading}>
                 <div className={classes.root}>
-                    <Hidden implementation='js' xsDown>
-                        <Sidebar className={classes.sidebar}
-                                 searchValue={this.state.search}
-                                 items={this.state.items}
-                                 onSubmit={this.onSearch}
-                                 isLoading={this.state.isLoading}
-                                 statusChange={this.state.statusChange}
-                        />
-                    </Hidden>
-                    <Hidden implementation='js' xsDown={this.state.showWarning}>
+                    {!this.state.showWarning &&
+                    <div>
+                        <Hidden implementation='js' xsDown>
+                            <Sidebar className={classes.sidebar}
+                                     searchValue={this.state.search}
+                                     items={this.state.items}
+                                     onSubmit={this.onSearch}
+                                     isLoading={this.state.isLoading}
+                                     statusChange={this.state.statusChange}
+                                     onChange={this.handleChange('search')}
+                                     mountWarningCallback={(e) => this.mountWarning(e)}
+                            />
+                        </Hidden>
+                        <Hidden implementation='js' smUp>
+                            <SearchContent className={classes.sidebar}
+                                           searchValue={this.state.search}
+                                           items={this.state.items}
+                                           onSubmit={this.onSearch}
+                                           isLoading={this.state.isLoading}
+                                           statusChange={this.state.statusChange}
+                                           onChange={this.handleChange('search')}
+                                           mountWarningCallback={(e) => this.mountWarning(e)}
+                            />
+                        </Hidden>
+                    </div>
+                    }
+                    <Hidden implementation='js' xsDown={!this.state.showWarning}>
                         <div className={classes.root}>
                             <DetailsDash state={this.state}/>
                         </div>
                     </Hidden>
 
                 </div>
-                <Hidden implementation='js' smUp>
-                    <div>
-                        <DetailsDash state={this.state}/>
-                    </div>
-                </Hidden>
+                {/*<Hidden implementation='js' smUp>*/}
+                    {/*<div>*/}
+                        {/*<DetailsDash {...this.props} mountWarningCallback={() => this.mountWarning()}*/}
+                                     {/*state={this.state}/>*/}
+                    {/*</div>*/}
+                {/*</Hidden>*/}
             </Navigation>
         )
     }

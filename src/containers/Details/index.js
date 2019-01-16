@@ -124,10 +124,6 @@ class Details extends Component {
 
     addItem = (item) => {
         WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
-    }
-        const items = Object.assign([], this.state.items);
-        items.push(item);
-        this.setState({items});
     };
 
     render() {

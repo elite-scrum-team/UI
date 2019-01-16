@@ -18,12 +18,17 @@ import ImageGrid from "../../Details/components/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
 import Hidden from '@material-ui/core/Hidden';
 import Button from "@material-ui/core/Button/Button";
+import WarningList from "./WarningList";
+import URLS from "../../../URLS";
 
 
 const styles = makeStyles({
     root: {
         '@media only screen and (min-width: 600px)': {
             marginLeft: 340,
+        },
+        '@media only screen and (max-width: 599px)': {
+            marginLeft: 15,
         },
         marginRight: 15,
         paddingTop: 50,
@@ -71,23 +76,6 @@ const styles = makeStyles({
 });
 
 const DetailsDash = (props) => {
-    // State
-
-    // const [id, setID] = useState({
-    //
-    //     id: null,
-    //     title: null,
-    //     warnDate: null,
-    //     status: 1,
-    //     province: null,
-    //     statusMessage: null,
-    //     description: null,
-    //     location: {
-    //         lat: 0,
-    //         lng: 0,
-    //     },
-    //     images: null,
-    // });
 
     // Styling
     const classes = styles();
@@ -96,7 +84,7 @@ const DetailsDash = (props) => {
 
     }
 
-    if (props.state.id == null) {
+    if (props.state.title == null) {
         return (
             <div className={classes.root}>
                 <img className={classes.img}
@@ -104,8 +92,13 @@ const DetailsDash = (props) => {
                      title={'Hverdagshelt logo'}/>
             </div>
         )
-    }
-    ;
+    };
+
+    const goTo = page => {
+        console.log(props);
+        props.history.push(page);
+        props.mountWarningCallback(null);
+    };
 
     return (
         <div className={classes.root}>
@@ -133,20 +126,28 @@ const DetailsDash = (props) => {
                     <div>
                         <FeedModule
                             id={props.state.id}
-                            items={props.state.items}
+                            items={props.state.statusItems}
                         />
                     </div>
                 </div>
             </div>
             <Hidden implementation='js' smUp>
                 <div>
-                    <Button variant="contained" size={'large'} color="primary" className={classes.style}>
+                    <Button onClick={() => goTo(URLS.dashboard)} variant="contained" size={'large'} color="primary" className={classes.style}>
                         Varselliste
                     </Button>
                 </div>
             </Hidden>
         </div>
     )
-}
+};
+
+DetailsDash.propTypes = {
+    goTo: PropTypes.func
+};
+
+DetailsDash.defaultProps = {
+    goTo: () => {}
+};
 
 export default (DetailsDash);

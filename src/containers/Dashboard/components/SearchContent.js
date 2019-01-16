@@ -39,6 +39,7 @@ const SearchContent = props => {
 
   // Go to login
   const goTo = page => {
+    console.log(props);
     props.history.push(page);
   };
 
@@ -53,7 +54,7 @@ const SearchContent = props => {
             onSubmit={props.onSubmit}
           />
 
-          <WarningList items={props.items} goTo={goTo} />
+          <WarningList mountWarningCallback={(e) => props.mountWarningCallback(e)} items={props.items} goTo={goTo} />
         </div>
       )}
     </div>
