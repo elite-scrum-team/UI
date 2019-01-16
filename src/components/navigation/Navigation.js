@@ -13,10 +13,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
+import IconButton from "@material-ui/core/IconButton";
 
 // Assets/Icons
 import Add from '@material-ui/icons/Add';
-
+import Logo from '../miscellaneous/Logo';
 
 // Project components
 
@@ -53,6 +54,16 @@ const styles = {
     smallIcon: {
         height: 16,
         width: 16,
+    },
+    SVGLogo: {
+        fill: '#fff',
+        height: '100%',
+        width: '100%',
+    },
+    logoClicker:{
+        alignItems: 'left',
+        height: 50,
+        width: 50
     }
 };
 
@@ -61,12 +72,12 @@ class Navigation extends Component {
 
     goTo = (page) => {
         this.props.history.push(page);
-    }
+    };
 
     logOut = () => {
         AuthService.logOut();
         this.props.history.push(URLS.home);
-    }
+    };
 
     render() {
         const {classes} = this.props;
@@ -74,10 +85,19 @@ class Navigation extends Component {
             <Fragment>
                 <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
-                        <div>
-
+                        <div className={classes.logoClicker} >
+                            <IconButton onClick={()=>this.goTo(URLS.home)}>
+                                <Logo className={classes.SVGLogo}/>
+                            </IconButton>
                         </div>
                         <div className={classes.flex}>
+
+                            {AuthService.isEmployee() &&
+                                    <Button
+                                        className={classes.logInButton}
+                                        size='small'
+                                        onClick={() => this.goTo(URLS.dashboard)}>Dashboard</Button>
+                            }
                             <div>
                                 {AuthService.isAuthenticated()?
                                 <Button

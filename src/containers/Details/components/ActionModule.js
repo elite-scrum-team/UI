@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment} from 'react';
 import { withStyles } from '@material-ui/styles';
 import {Typography} from "@material-ui/core";
+
+// Service
+import AuthService from '../../../api/services/AuthService';
 
 // Material UI components
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-
 
 // Icons
 
@@ -62,12 +64,17 @@ class ActionModule extends Component {
                             <ListItemText primary="Varsle meg ved endringer" />
                         </ListItem>
                         <Divider />
-                        <ListItem button divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
-                            <ListItemText primary="Registrer kontrakt" />
-                        </ListItem>
-                        <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
-                            <ListItemText primary="Ny status" />
-                        </ListItem>
+                        
+                        {AuthService.isEmployee(this.props.municipalityId) &&
+                            <Fragment>
+                                <ListItem button divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
+                                    <ListItemText primary="Registrer kontrakt" />
+                                </ListItem>
+                                <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
+                                    <ListItemText primary="Ny status" />
+                                </ListItem>
+                            </Fragment>
+                        }
                         <Divider light />
                     </List>
                 </div>

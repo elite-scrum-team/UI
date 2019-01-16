@@ -90,6 +90,7 @@ class Details extends Component {
                     location: e.location,
                     images: e.images,
                     municipality: e.municipality,
+                    municipalityId: e.municipalityId,
                 });
                 this.setState({isLoading: false});
 
@@ -163,6 +164,7 @@ class Details extends Component {
                                     className={classes.actionMod}
                                     updateStatus={this.changeStatus}
                                     updateContract={this.changeContract}
+                                    municipalityId={this.state.municipalityId}
                                 />
                             </Paper>
                         </div>

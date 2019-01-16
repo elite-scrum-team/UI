@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import URLS from '../../URLS';
+
+// Service imports
+import AuthService from '../../api/services/AuthService';
 
 // Material UI components
 import Sidebar from './components/Sidebar';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import { AutoComplete } from 'material-ui';
 
 // Icons
 
@@ -14,11 +15,13 @@ import { AutoComplete } from 'material-ui';
 import WarningService from "../../api/services/WarningService";
 import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
+import SearchContent from "./components/SearchContent";
+import WarningList from "./components/WarningList";
 
 const styles = {
-  root: {
-    marginTop: 48
-  },
+    root: {
+        marginTop: 48
+    },
     sidebar: {
         '@media only screen and (max-width: 600px)': {
             width: '100%',
@@ -27,10 +30,15 @@ const styles = {
     },
 }
 
+const NEW_SECTION = 0;
+const ACTIVE_SECTION = 1;
+const DONE_SECTION = 2;
+
 class Dashboard extends Component {
 
     state = {
         isLoading: false,
+        listIsLoading: true,
 
         id: null,
         title: null,
@@ -46,108 +54,156 @@ class Dashboard extends Component {
         images: null,
         statusChange: 1,
         search: '',
-        items: [
-            {
-                id: 1,
-                status: 2,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426114,
-                lng: 10.404609
-            },
-            {
-                id: 2,
-                status: 0,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426734,
-                lng: 10.45609
-            },
-            {
-                id: 3,
-                status: 1,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426734,
-                lng: 10.45609
-            },
-            {
-                id: 2,
-                status: 3,
-                title: 'Hello',
-                description: 'What is going on???',
-                lat: 63.426734,
-                lng: 10.45609
-            }
-        ],
+        warningItems: [],
 
-        showWarning: true,
+
+        items: [],
+
+        showWarning: false,
     };
 
-    getWarningId = () => this.props.match.params.warnID;
+    getWarningId = () => this.props.match.params.id;
 
     componentDidMount() {
-        // Get id
-        const id = this.getWarningId();
-
-        if (id === null) {
-            this.setState({isLoading: false});
-            return;
-        }
-
-        WarningService.getWarning(id, (isError, e) => {
-            if (isError === false) {
-                this.setState({
-                    title: e.title,
-                    warnDate: e.warnDate,
-                    status: e.status ? e.status : 1,
-                    province: e.province,
-                    statusMessage: e.statusMessage,
-                    description: e.description,
-                    location: {
-                        lat: e.lat,
-                        lng: e.lng
-                    },
-                    images: e.images ? e.images : null,
-                    items: e.items,
-                });
+        this.setState({isLoading: true});
+        AuthService.getUserData((isError, data) => {
+            if(isError === false) {
+                // Get id
+                const id = this.getWarningId();
+                const roles = data.roles;
+                const municipalityId = AuthService.isEmployee();
+                this.setState({id: id, municipalityId: municipalityId});
+                
+                this.onSectionChange(NEW_SECTION);
+                
+            } else {
+                //this.props.history.push(URLS.home);
             }
             this.setState({isLoading: false});
-        });
-
-        this.setState({id: id, isLoading: false});
-
-        console.log(this.state.id);
+        });   
     }
 
-    what = () => console.log(this.state.id);
+    goTo = page => {
+        this.props.history.push(page);
+    };
+
+    mountWarning = (warningId) => {
+        const id = warningId || this.getWarningId();
+        if(id == null) {
+            this.setState({showWarning: false })
+        }
+        else {
+            this.setState({isLoading: true});
+            WarningService.getWarning(id, (isError, e) => {
+                if (isError === false) {
+                    this.setState({
+                        title: e.category.name,
+                        posted: e.createdAt,
+                        status: e.status ? e.status.type : 0,
+                        statusMessage: e.status ? e.status.description : '',
+                        description: e.description,
+                        location: e.location,
+                        showWarning: true,
+                    });
+
+                    WarningService.getWarningItems(id)
+                    .then((data) => {
+                        this.setState({warningItems: data});
+                    });
+                }
+                this.setState({isLoading: false});
+            });
+        }
+    };
+
+    getWarnings = (filters) => {
+        this.setState({listIsLoading: true});
+        WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
+            if(isError === false) {
+                console.log(data);
+                this.setState({items: data});
+            }
+            this.setState({listIsLoading: false});
+        });
+    };
+
+    onSectionChange = (value) => {
+        if(value === NEW_SECTION) {
+            this.getWarnings({onlyStatus: 0, municipality: this.state.municipality});
+        } else if(value === ACTIVE_SECTION) {
+            this.getWarnings({onlyStatus: [1,2], municipality: this.state.municipality});
+        } else if(value === DONE_SECTION) {
+            this.getWarnings({onlyStatus: [3,4], municipality: this.state.municipality})
+        }
+    }
+
+    onSearch = (event) => {
+        event.preventDefault();
+    };
+
+    handleChange = (name) => (event) => {
+        this.setState({[name]: event.target.value});
+    };
+
+    changeStatus = (newStatus) => {
+        const status = newStatus.status + 1;
+
+        WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
+        .then((data) => {
+            WarningService.getWarningItems(this.getWarningId())
+            .then((itemData) => {
+                this.setState({warningItems: itemData, status: status});
+            })
+        });
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Navigation isLoading={this.state.isLoading}>
                 <div className={classes.root}>
-                    <Hidden implementation='js' xsDown>
-                        <Sidebar className={classes.sidebar}
-                                 searchValue={this.state.search}
-                                 items={this.state.items}
-                                 onSubmit={this.onSearch}
-                                 isLoading={this.state.isLoading}
-                                 statusChange={this.state.statusChange}
-                        />
-                    </Hidden>
-                    <Hidden implementation='js' xsDown={this.state.showWarning}>
+                    <div>
+                        <Hidden implementation='js' xsDown>
+                            <Sidebar className={classes.sidebar}
+                                searchValue={this.state.search}
+                                items={this.state.items}
+                                onSubmit={this.onSearch}
+                                isLoading={this.state.listIsLoading}
+                                onSectionChange={this.onSectionChange}
+                                statusChange={this.state.statusChange}
+                                onChange={this.handleChange('search')}
+                                mountWarningCallback={(id) => this.mountWarning(id)}
+                            />
+                        </Hidden>
+                        {!this.state.showWarning &&
+                        <Hidden implementation='js' smUp>
+                            <SearchContent className={classes.sidebar}
+                                searchValue={this.state.search}
+                                items={this.state.items}
+                                onSubmit={this.onSearch}
+                                isLoading={this.state.listIsLoading}
+                                onSectionChange={this.onSectionChange}
+                                statusChange={this.state.statusChange}
+                                onChange={this.handleChange('search')}
+                                mountWarningCallback={(id) => this.mountWarning(id)}
+                            />
+                        </Hidden>
+                        }
+                    </div>
+
+                    <Hidden implementation='js' xsDown={!this.state.showWarning}>
                         <div className={classes.root}>
-                            <DetailsDash state={this.state}/>
+                            {!this.state.isLoading && this.state.showWarning &&
+                                <DetailsDash
+                                    mountWarningCallback={(id) => this.mountWarning(id)}
+                                    state={this.state}
+                                    showWarning={this.state.showWarning}
+                                    changeStatus={this.changeStatus}/>
+                            }
                         </div>
                     </Hidden>
 
                 </div>
-                <Hidden implementation='js' smUp>
-                    <div>
-                        <DetailsDash state={this.state}/>
-                    </div>
-                </Hidden>
             </Navigation>
         )
     }

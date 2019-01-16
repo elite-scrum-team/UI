@@ -77,7 +77,7 @@ class Landing extends Component {
     componentDidMount() {
       this.setState({isLoading: true});
       this.getGeoLocation();
-      this.getWarnings({});
+      this.getWarnings({excludeStatus: [0]});
     }
 
     getWarnings = (filters) => {
@@ -95,7 +95,7 @@ class Landing extends Component {
 
       if(value === SEARCH_SECTION) {
         console.log("Get warnings");
-        this.getWarnings({});
+        this.getWarnings({excludeStatus: [0, 1]});
       } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
         console.log("Get user warnings");
         this.getWarnings({useUserId: true});

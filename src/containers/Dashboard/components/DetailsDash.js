@@ -18,12 +18,17 @@ import ImageGrid from "../../Details/components/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
 import Hidden from '@material-ui/core/Hidden';
 import Button from "@material-ui/core/Button/Button";
+import WarningList from "./WarningList";
+import URLS from "../../../URLS";
 
 
 const styles = makeStyles({
     root: {
-        '@media only screen and (min-width: 600px)': {
+        '@media only screen and (min-width: 601px)': {
             marginLeft: 340,
+        },
+        '@media only screen and (max-width: 600px)': {
+            marginLeft: 15,
         },
         marginRight: 15,
         paddingTop: 50,
@@ -32,7 +37,7 @@ const styles = makeStyles({
     center: {
         margin: 'auto',
         display: 'block',
-        maxWidth: 850,
+        maxWidth: 1000,
 
     },
     img: {
@@ -71,53 +76,37 @@ const styles = makeStyles({
 });
 
 const DetailsDash = (props) => {
-    // State
-
-    // const [id, setID] = useState({
-    //
-    //     id: null,
-    //     title: null,
-    //     warnDate: null,
-    //     status: 1,
-    //     province: null,
-    //     statusMessage: null,
-    //     description: null,
-    //     location: {
-    //         lat: 0,
-    //         lng: 0,
-    //     },
-    //     images: null,
-    // });
 
     // Styling
     const classes = styles();
 
-    const loadWarning = (event) => {
-
-    }
-
-    if (props.state.id == null) {
+    if (props.showWarning == null) {
         return (
             <div className={classes.root}>
                 <img className={classes.img}
-                     src={LogoImage}
-                     title={'Hverdagshelt logo'}/>
+                    src={LogoImage}
+                    title={'Hverdagshelt logo'}/>
             </div>
         )
-    }
-    ;
+    };
+
+    const goTo = page => {
+        console.log(props);
+        //props.history.push(page);
+        props.mountWarningCallback(null);
+    };
 
     return (
         <div className={classes.root}>
             <Paper elevation={1} className={classes.center}>
                 <WarningDetails
                     title={props.state.title}
-                    date={props.state.warnDate}
+                    date={props.state.posted}
                     status={props.state.status}
-                    province={props.state.province}
                     statusMessage={props.state.statusMessage}
                     description={props.state.description}
                     location={props.state.location}
+                    municipality={props.state.municipality}
                 />
                 <ImageGrid
                     images={props.state.images}
@@ -127,26 +116,37 @@ const DetailsDash = (props) => {
                 <div className={classes.content}>
                     <div>
                         <Paper elevation={1} className='p-30'>
-                            <ActionModule className={classes.actionMod}/>
+                            <ActionModule
+                                className={classes.actionMod}
+                                updateStatus={props.changeStatus}
+                                updateContract={props.changeContract}/>
                         </Paper>
                     </div>
                     <div>
                         <FeedModule
                             id={props.state.id}
-                            items={props.state.items}
+                            items={props.state.warningItems}
                         />
                     </div>
                 </div>
             </div>
             <Hidden implementation='js' smUp>
                 <div>
-                    <Button variant="contained" size={'large'} color="primary" className={classes.style}>
+                    <Button onClick={() => goTo(URLS.dashboard)} variant="contained" size={'large'} color="primary" className={classes.style}>
                         Varselliste
                     </Button>
                 </div>
             </Hidden>
         </div>
     )
-}
+};
+
+DetailsDash.propTypes = {
+    goTo: PropTypes.func
+};
+
+DetailsDash.defaultProps = {
+    goTo: () => {}
+};
 
 export default (DetailsDash);
