@@ -7,7 +7,12 @@ export default {
     // --- WARNINGS ---
     getWarnings: (filters)=>{
         console.log("FILTERS: ", filters);
-        return new Fetch(METHODS.get, '/warning?' + (filters ? Object.keys(filters).map(key => key.concat('=', filters[key], '&')) : ''))
+        return new Fetch(METHODS.get, '/warning?' + (filters ?
+            Object.keys(filters).map(key => {
+                return filters[key] instanceof Array 
+                    ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
+                    : `${key}=${filters[key]}&`
+             }) : ''))
     },
 
     getWarning: (id) =>{

@@ -24,6 +24,7 @@
     "react-test-renderer": "^16.7.0",
     "react-select": "^2.2.0",
     "recompose": "^0.30.0",
+    "underscore": "^1.9.1",
     "universal-cookie": "^3.0.7"
   },
   "scripts": {
