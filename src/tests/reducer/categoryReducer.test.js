@@ -5,9 +5,8 @@ import { actions } from '../../store/actions/CategoryAction';
 
 //MOCKDATA
 import categories from './mock/category'
-import warnings from "./mock/warning";
 
-describe('Article reducer', () => {
+describe('Catagory reducer', () => {
 
     it('should return the initial state', () => {
         expect(reducer(undefined, {})).toEqual(
