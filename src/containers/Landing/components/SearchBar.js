@@ -45,16 +45,16 @@ const SearchBar = (props) => {
             </div>
         </form>
     )
-}
+};
 
 SearchBar.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     onSubmit: PropTypes.func,
-}
+};
 
 SearchBar.defaultProps = {
     onSubmit: () => {},
-}
+};
 
 export default (SearchBar);
