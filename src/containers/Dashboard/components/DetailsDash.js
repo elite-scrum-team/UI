@@ -24,10 +24,10 @@ import URLS from "../../../URLS";
 
 const styles = makeStyles({
     root: {
-        '@media only screen and (min-width: 600px)': {
+        '@media only screen and (min-width: 601px)': {
             marginLeft: 340,
         },
-        '@media only screen and (max-width: 599px)': {
+        '@media only screen and (max-width: 600px)': {
             marginLeft: 15,
         },
         marginRight: 15,
@@ -96,7 +96,7 @@ const DetailsDash = (props) => {
 
     const goTo = page => {
         console.log(props);
-        props.history.push(page);
+        //props.history.push(page);
         props.mountWarningCallback(null);
     };
 

@@ -11,10 +11,11 @@ import Hidden from '@material-ui/core/Hidden';
 import WarningService from "../../api/services/WarningService";
 import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
-import SearchContent from "../Landing/components/SearchContent";
+import SearchContent from "./components/SearchContent";
 import URLS from "../../URLS";
 import PropTypes from "prop-types";
 import WarningList from "./components/WarningList";
+import AuthService from "../../api/services/AuthService";
 
 const styles = {
     root: {
@@ -28,10 +29,14 @@ const styles = {
     },
 }
 
+const SEARCH_SECTION = 0;
+const USER_SECTION = 1;
+
 class Dashboard extends Component {
 
     state = {
-        isLoading: false,
+        isLoading: true,
+        listIsLoading: true,
 
         id: null,
         title: null,
@@ -78,6 +83,7 @@ class Dashboard extends Component {
                     },
                 });
             }
+            this.setState({showWarning: false});
             this.setState({isLoading: false});
         }
         else {
@@ -92,6 +98,7 @@ class Dashboard extends Component {
                         location: e.location,
                     });
                 }
+                this.setState({showWarning: true});
                 this.setState({isLoading: false});
                 WarningService.getWarningItems(id)
                     .then((data) => {
@@ -101,6 +108,29 @@ class Dashboard extends Component {
         }
     };
 
+    getWarnings = (filters) => {
+        this.setState({listIsLoading: true});
+        WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
+            if(isError === false) {
+                console.log(data);
+                this.setState({items: data});
+            }
+            this.setState({listIsLoading: false});
+        });
+    };
+
+    onSectionChange = (value) => {
+        this.setState({isLoading: true});
+
+        if(value === SEARCH_SECTION) {
+            console.log("Get warnings");
+            this.getWarnings({});
+        } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
+            console.log("Get user warnings");
+            this.getWarnings({useUserId: true});
+        }
+    }
+
     componentDidMount() {
         // Get id
         const id = this.getWarningId();
@@ -108,13 +138,15 @@ class Dashboard extends Component {
 
         this.mountWarning(id);
 
-        WarningService.getWarnings('createdAt', (isError, data) => {
-            if (isError === false) {
-                console.log(data);
-                this.setState({items: data});
-            }
-            this.setState({isLoading: false});
-        });
+        this.getWarnings({});
+
+        // WarningService.getWarnings('createdAt', (isError, data) => {
+        //     if (isError === false) {
+        //         console.log(data);
+        //         this.setState({items: data});
+        //     }
+        //     this.setState({isLoading: false});
+        // });
 
         this.setState({id: id, isLoading: false});
 
@@ -134,35 +166,36 @@ class Dashboard extends Component {
         return (
             <Navigation isLoading={this.state.isLoading}>
                 <div className={classes.root}>
-                    {!this.state.showWarning &&
                     <div>
                         <Hidden implementation='js' xsDown>
                             <Sidebar className={classes.sidebar}
                                      searchValue={this.state.search}
                                      items={this.state.items}
                                      onSubmit={this.onSearch}
-                                     isLoading={this.state.isLoading}
+                                     isLoading={this.state.listIsLoading}
                                      statusChange={this.state.statusChange}
                                      onChange={this.handleChange('search')}
                                      mountWarningCallback={(e) => this.mountWarning(e)}
                             />
                         </Hidden>
+                        {!this.state.showWarning &&
                         <Hidden implementation='js' smUp>
                             <SearchContent className={classes.sidebar}
                                            searchValue={this.state.search}
                                            items={this.state.items}
                                            onSubmit={this.onSearch}
-                                           isLoading={this.state.isLoading}
+                                           isLoading={this.state.listIsLoading}
                                            statusChange={this.state.statusChange}
                                            onChange={this.handleChange('search')}
                                            mountWarningCallback={(e) => this.mountWarning(e)}
                             />
                         </Hidden>
+                        }
                     </div>
-                    }
+
                     <Hidden implementation='js' xsDown={!this.state.showWarning}>
                         <div className={classes.root}>
-                            <DetailsDash state={this.state}/>
+                            <DetailsDash mountWarningCallback={(e) => this.mountWarning(e)} state={this.state}/>
                         </div>
                     </Hidden>
 

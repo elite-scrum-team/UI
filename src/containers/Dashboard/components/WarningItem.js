@@ -39,7 +39,7 @@ const WarningItem = props => {
     // Styling
     const classes = styles();
 
-    const statusCode = (props.status !== 'undefined' && props.status >= 0 && props.status <= 3) ? props.status : 1;
+    const statusCode = (props.status !== 'undefined' && props.status >= 0 && props.status <= 4) ? props.status : 1;
     const statusClasses = warningUtils.getStatusClasses(statusCode)();
 
     const clickButton = () => {
