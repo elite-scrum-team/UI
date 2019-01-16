@@ -48,6 +48,13 @@ const SearchContent = props => {
 
     const [section, setSection] = useState(0);
 
+    const handleSectionChange = (val) => {
+        if(props.onSectionChange) {
+            props.onSectionChange(val);
+        }
+        setSection(val);
+    }
+
     // Go to login
     const goTo = page => {
         console.log(props);
@@ -56,7 +63,7 @@ const SearchContent = props => {
 
     return (
         <div className={classes.root}>
-            <StatusTabs value={section} onChange={val => setSection(val)}/>
+            <StatusTabs value={section} onChange={handleSectionChange}/>
             {section === 0 && (
                 <div>
                     <SearchBar
@@ -64,14 +71,13 @@ const SearchContent = props => {
                         onChange={props.onChange}
                         onSubmit={props.onSubmit}
                     />
-
-                    {props.isLoading ?
-                        <CircularProgress className={classes.progress}/> :
-                        <WarningList mountWarningCallback={(e) => props.mountWarningCallback(e)} items={props.items}
-                                     goTo={goTo}/>
-                    }
                 </div>
-            )}
+            )}  
+            {props.isLoading ?
+                <CircularProgress className={classes.progress}/> :
+                <WarningList mountWarningCallback={(e) => props.mountWarningCallback(e)} items={props.items}
+                                goTo={goTo}/>
+            }
         </div>
     );
 };
