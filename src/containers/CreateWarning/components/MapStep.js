@@ -55,7 +55,10 @@ const MapStep = (props) => {
         <div className={classes.root}>
             <div className={classes.right}>
                 <div className={classes.mapContainer}>
-                    <Map clickable={onMapClick}/>
+                    <Map
+                        clickable={onMapClick}
+                        defaultCenter={props.location}
+                    />
                 </div>
 
                 <div className={classes.detailContainer}>
