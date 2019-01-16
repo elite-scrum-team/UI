@@ -5,6 +5,7 @@ import URLS from '../../URLS';
 // Service imports
 import CategoryService from '../../api/services/CategoryService';
 import WarningService from '../../api/services/WarningService';
+import GeoService from '../../api/services/GeoService';
 
 // Material UI components
 import Paper from '@material-ui/core/Paper';
@@ -108,6 +109,10 @@ class CreateWarning extends Component {
         open: false,
         isError: false,
         confirmDialogOpen: false,
+        currentLocation: {
+            lat: 63.428322,
+            lng: 10.392774,
+        },
 
         // Data
         categories: [], // id and name
@@ -121,7 +126,7 @@ class CreateWarning extends Component {
     };
 
     componentDidMount() {
-        
+
         // Get all categories
         CategoryService.getCategories((isError, data) => {
             console.log(data);
@@ -132,6 +137,9 @@ class CreateWarning extends Component {
             }
             this.setState({isLoading: false});
         });
+
+        GeoService.getGeoLocation((e)=>this.setState({currentLocation: {lat: e.coords.latitude, lng: e.coords.longitude}}));
+
     }
 
     sendWarning = () => {
@@ -199,6 +207,8 @@ class CreateWarning extends Component {
         if (event.target.files && event.target.files[0]) {
             [].forEach.call(event.target.files, readImage)
         }
+
+        console.log(this.state.currentLocation)
     }
 
     setCategory = (data) => {
@@ -244,7 +254,7 @@ class CreateWarning extends Component {
                             <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
                             <div className={classes.fillSection}>
                                 <MapStep
-                                    location={this.state.location}
+                                    location={this.state.currentLocation}
                                     mapMarkerCallback={(e) => this.mapClickCallback(e)}
                                 />
                             </div>
