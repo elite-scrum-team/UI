@@ -110,8 +110,8 @@ class CreateWarning extends Component {
         isError: false,
         confirmDialogOpen: false,
         currentLocation: {
-            lat: 0,
-            lng: 0
+            lat: 63.428322,
+            lng: 10.392774,
         },
 
         // Data
