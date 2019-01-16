@@ -23,7 +23,7 @@ const SearchableDropdown = (props) => {
                 onChange={handleChange}
         />
     )
-}
+};
 
 SearchableDropdown.propTypes = {
     onChange: PropTypes.func,
