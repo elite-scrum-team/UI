@@ -37,7 +37,7 @@ const DONE_SECTION = 2;
 class Dashboard extends Component {
 
     state = {
-        isLoading: true,
+        isLoading: false,
         listIsLoading: true,
 
         id: null,
@@ -66,7 +66,7 @@ class Dashboard extends Component {
 
     componentDidMount() {
         AuthService.getUserData((isError, data) => {
-            if(isError === true) {
+            if(isError === false) {
                 // Get id
                 const id = this.getWarningId();
                 this.setState({id: id, municipalityId: data ? data.municipality : '4dd2c0aa-9b39-40a8-9950-c0ae87c788b4'});
@@ -147,10 +147,10 @@ class Dashboard extends Component {
 
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
-            WarningService.addWarningItem(this.getWarningId(), 'statuses', data);
+            //WarningService.addWarningItem(this.getWarningId(), 'statuses', data);
             WarningService.getWarningItems(this.getWarningId())
-            .then((data) => {
-                this.setState({items: data, status: status});
+            .then((itemData) => {
+                this.setState({warningItems: itemData, status: status});
             })
         });
     };
