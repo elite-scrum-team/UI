@@ -10,5 +10,9 @@ export default {
 
     token: (email, password) => {
         return new Fetch(METHODS.post, '/auth/login', {email: email, password: password}, null, false);
+    },
+
+    getUserData: () => {
+        return new Fetch(METHODS.get, '/auth/user');
     }
 }
