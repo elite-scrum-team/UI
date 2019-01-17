@@ -115,7 +115,7 @@ class Dashboard extends Component {
                 console.log(data);
                 this.setState({items: data});
             }
-            this.setState({listIsLoading: false});
+            this.setState({listIsLoading: true});
         });
     };
 

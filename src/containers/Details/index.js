@@ -64,6 +64,7 @@ class Details extends Component {
         },
         municipality: null,
         images: null,
+        userId: null,
 
         items: [],
     };
@@ -90,6 +91,7 @@ class Details extends Component {
                     location: e.location,
                     images: e.images,
                     municipality: e.municipality,
+                    userId: e.userId,
                 });
                 this.setState({isLoading: false});
 

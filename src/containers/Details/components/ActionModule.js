@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/styles';
+import React, {Component} from 'react';
+import {withStyles} from '@material-ui/styles';
 import {Typography} from "@material-ui/core";
 
 // Material UI components
@@ -12,25 +12,27 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 
 // Project components
+import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../../utils/warningUtils';
 import ContractDialog from "./ContractDialog";
 
 
 const styles = {
-    root: {
-        
-    }
+    root: {}
 };
 
 class ActionModule extends Component {
     state = {
+        deleteDialogOpen: false,
         statusDialogOpen: false,
         contractDialogOpen: false,
         newStatus: -1,
         statusMsg: '',
         companyId: '',
         contractDesc: '',
+
+        ownWarning: true,
     };
 
     handleNewStatus = (value) => {
@@ -58,19 +60,35 @@ class ActionModule extends Component {
                         Actions:
                     </Typography>
                     <List component="nav" className={classes.root}>
+
+                        {this.state.ownWarning &&
+                            <div>
+                                <ListItem button onClick={() => this.setState(({deleteDialogOpen: true}))}>
+                                    <ListItemText primary="Slett varsel"/>
+                                </ListItem>
+                                <Divider/>
+                            </div>
+                        }
                         <ListItem button>
-                            <ListItemText primary="Varsle meg ved endringer" />
+                            <ListItemText primary="Varsle meg ved endringer"/>
                         </ListItem>
-                        <Divider />
-                        <ListItem button divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
-                            <ListItemText primary="Registrer kontrakt" />
+                        <Divider/>
+                        <ListItem button divider onClick={() => this.setState(({contractDialogOpen: true}))}>
+                            <ListItemText primary="Registrer kontrakt"/>
                         </ListItem>
                         <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
-                            <ListItemText primary="Ny status" />
+                            <ListItemText primary="Ny status"/>
                         </ListItem>
-                        <Divider light />
+                        <Divider light/>
                     </List>
                 </div>
+                <DeleteDialog
+                    open={this.state.deleteDialogOpen}
+                    onClose={this.handleToggle('deleteDialogOpen')}
+                    submitStatus={this.handleNewStatus}
+                    cancel={this.cancelDialog}
+                    statusNames={statusLabels}
+                />
                 <StatusDialog
                     open={this.state.statusDialogOpen}
                     onClose={this.handleToggle('statusDialogOpen')}
@@ -89,8 +107,6 @@ class ActionModule extends Component {
     }
 }
 
-ActionModule.propTypes = {
-
-};
+ActionModule.propTypes = {};
 
 export default withStyles(styles)(ActionModule);
