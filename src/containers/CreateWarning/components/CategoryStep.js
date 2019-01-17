@@ -21,7 +21,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = makeStyles({
     root: {
-        padding: '18px 0px',
+        padding: '18px 0',
         position: 'relative',
     },
     titleWrapper: {
