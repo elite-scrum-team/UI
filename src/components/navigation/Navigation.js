@@ -30,8 +30,9 @@ const styles = {
         marginTop: 48,
     },
     leftMargin: {
-      
-      right: 'auto',
+      left: 400,
+      right: 0,
+      width: 'auto',
     },
     navContent: {
         display: 'flex',

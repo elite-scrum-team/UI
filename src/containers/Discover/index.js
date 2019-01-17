@@ -154,7 +154,7 @@ class Discover extends Component {
         this.setState({});
         this.mapGoTo(location);
         
-        this.setState({isLoading: true, currentLocation: location, search: {}});
+        this.setState({isLoading: true, currentLocation: location, search: {}, zoom: 15});
         const filters = {
           ...filter,
           lat: location.lat,
@@ -207,7 +207,6 @@ class Discover extends Component {
 
     onSearch = async (event) => {
       if(!event) return;
-      console.log(event.label);
       await this.setState({search: event, municipalityId: event.value});
       this.getWarningsWithMunicipality({excludeStatus: [0, 4, 5]});
     };
@@ -217,7 +216,7 @@ class Discover extends Component {
         this.setState({
             detail: true,
             item: item,
-            zoom: 15,
+            zoom: 18,
         });
         this.mapGoTo(item.location);
     };
