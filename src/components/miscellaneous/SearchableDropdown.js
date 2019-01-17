@@ -13,14 +13,22 @@ import PropTypes from "prop-types";
 const SearchableDropdown = (props) => {
 
     const handleChange = (event) => {
-        props.onChange(event);
+        if(props.onChange) {
+            props.onChange(event);
+        }
     };
 
     return (
-        <Select options={props.options}
-                menuPortalTarget={document.body}
-                styles={{menuPortal: base => ({...base, zIndex: 200000})}}
-                onChange={handleChange}
+        <Select   
+            {...props}
+            className={props.className}
+            options={props.options}
+            menuPortalTarget={document.body}
+            styles={{
+                ...props.styles || {},
+                menuPortal: base => ({...base, zIndex: 200000})
+            }}
+            onChange={handleChange}
         />
     )
 };

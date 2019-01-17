@@ -19,7 +19,6 @@ import Typography from "@material-ui/core/Typography"
 const styles = makeStyles({
     root: {
         width: '80%',
-
     },
     flex: {
         paddingTop:10,

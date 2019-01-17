@@ -49,6 +49,10 @@ class LogIn extends Component {
 
   componentDidMount() {
     console.log(this.props.location);
+    if(AuthService.isAuthenticated()) {
+      this.props.history.replace(URLS.discover);
+    }
+
   }
 
   changeTab = value => {
@@ -74,7 +78,7 @@ class LogIn extends Component {
       } else {
         // Go to home page
         const queryParams = queryString.parse(this.props.location.search);
-        const urls = queryParams.redirect ? queryParams.redirect : URLS.home;
+        const urls = queryParams.redirect ? queryParams.redirect : URLS.discover;
         this.props.history.push(urls);
       }
       this.setState({ isLoading: false });
@@ -101,7 +105,7 @@ class LogIn extends Component {
         });
       } else {
         const queryParams = queryString.parse(this.props.location.search);
-        const urls = queryParams.redirect ? queryParams.redirect : URLS.home;
+        const urls = queryParams.redirect ? queryParams.redirect : URLS.discover;
         this.props.history.push(urls);
       }
       this.setState({ isLoading: false });

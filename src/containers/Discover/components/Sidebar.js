@@ -9,7 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 // Project components
 import SearchContent from './SearchContent';
 
-const drawerWidth = 325;
+const drawerWidth = 400;
 
 const styles = makeStyles({
     root: {

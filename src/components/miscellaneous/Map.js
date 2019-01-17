@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // Icons
 import WarningMarkerIcon from '../../assets/img/warningMarker.png';
+import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
@@ -27,6 +28,7 @@ const Map = compose(
 
   return (
     <GoogleMap
+      {...props}
       defaultZoom={props.zoom}
       defaultCenter={{ lat: props.defaultCenter.lat, lng: props.defaultCenter.lng }}
       defaultOptions = {{
@@ -38,7 +40,7 @@ const Map = compose(
           rotateControl: false,
           fullscreenControl: false,
       }}
-
+      ref={props.onMapMounted}
       
       
       onClick={
@@ -65,8 +67,9 @@ const Map = compose(
         return (<Marker
           key={i.toString().concat(location.lat)}
           position={location.location}
-          clickable={location.onClick}
-          onClick={location.onClick ? () => location.onClick(location) : null}/>
+          clickable={location.onClick !== undefined}
+          onClick={location.onClick ? () => location.onClick(location) : null}
+          icon={WarningMarkerCircleIcon}/>
         )
         })}
 
@@ -80,8 +83,16 @@ const MapWrapper = (props) => {
 
     // const [center, setCenter] = useState({lat: 0, lng: 0});
 
+    const onMapMounted = (map) => {
+      if(props.map && map) {
+        props.map(map);
+      }
+    }
+
     return (
       <Map
+        {...props}
+        onMapMounted={onMapMounted}
         defaultCenter={props.defaultCenter || {}}
         showMarkers={props.showMarkers}
         locations={props.locations || []}

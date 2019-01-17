@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action) {
         }
 
         case actions.SET_CATEGORY: {
-            return {...state, warncategoriesing: {
+            return {...state, categories: {
                     ...state.categories,
                     [action.id]: action.payload,
                 }}
