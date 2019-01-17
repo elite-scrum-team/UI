@@ -6,7 +6,6 @@ const initialState = {
     isAdmin: false,
     group: [],
     roles: {
-        municipalities: [],
         groups: [],
     },
 };
@@ -20,9 +19,9 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 ...action.payload,
                 roles: {
-                    municipalities: action.payload.group ?
-                        action.payload.group.filter(g => g.municipalitiy).map(g => g.municipalitiy) : [],
-                    groups: action.payload.group ? action.payload.group.map(g => g.id) : [],
+                    groups: action.payload.group ? action.payload.group.map(g => (
+                        {name: g.name, id: g.id, municipalitiyId: g.municipalitiy }
+                    )) : [],
                 }
             }
         }

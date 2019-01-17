@@ -39,6 +39,7 @@ class Dashboard extends Component {
     state = {
         isLoading: false,
         listIsLoading: true,
+        selectedGroup: null,
 
         id: null,
         title: null,
@@ -128,12 +129,21 @@ class Dashboard extends Component {
     };
 
     onSectionChange = (value) => {
+
+        const extraFilter = {};
+
+        // If municiaplity id is provided, add it to the filter
+        // extraFilter.municipalitiy = this.state... // etc
+
+        // if not, add group id
+        // extraFilter.groupId = this.state... // etc
+
         if(value === NEW_SECTION) {
-            this.getWarnings({onlyStatus: 0, municipality: this.state.municipality});
+            this.getWarnings({onlyStatus: 0, ...extraFilter});
         } else if(value === ACTIVE_SECTION) {
-            this.getWarnings({onlyStatus: [1,2], municipality: this.state.municipality});
+            this.getWarnings({onlyStatus: [1,2], ...extraFilter});
         } else if(value === DONE_SECTION) {
-            this.getWarnings({onlyStatus: [3,4], municipality: this.state.municipality})
+            this.getWarnings({onlyStatus: [3,4], ...extraFilter})
         }
     }
 
