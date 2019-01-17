@@ -122,7 +122,7 @@ const WarningDetails = (props) =>  {
                             </div>
                             <div>
                                 <div className={classNames(classes.flex, 'mb-10')}>
-                                    <Typography className={classes.mr} variant='caption'>{props.municipality}</Typography>
+                                    <Typography className={classes.mr} variant='caption'>{props.municipality} kommune</Typography>
                                     <LocationIcon />
                                 </div>
                                 <div className={classes.flex}>
