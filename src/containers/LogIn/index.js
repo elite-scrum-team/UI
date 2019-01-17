@@ -55,6 +55,10 @@ class LogIn extends Component {
     this.setState({ isSignIn: value });
   };
 
+  goTo = (page) => {
+    this.props.history.push(page);
+  }
+
   logIn = (email, password) => event => {
     event.preventDefault();
 
@@ -110,7 +114,7 @@ class LogIn extends Component {
       <div>
         <main className={classes.main}>
           <Paper className={classes.paper}>
-            <Logo />
+            <Logo onClick={() => this.goTo(URLS.home)}/>
             {this.state.isLoading ? (
               <Progress />
             ) : (
