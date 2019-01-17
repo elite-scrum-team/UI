@@ -71,6 +71,7 @@ export const createWarningPost = (warning) => {
         description : warning.description,
         location : location,
         images: images,
+        municipalityId: warning.location && warning.location.municipality ? warning.location.municipality.id : null,
         municipality: warning.location && warning.location.municipality ? warning.location.municipality.name : 'Ukjent',
     }
 };

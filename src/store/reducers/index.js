@@ -4,9 +4,11 @@ import { combineReducers } from 'redux';
 
 import warning from './WarningReducer';
 import category from './CategoryReducer';
+import user from './UserReducer';
 
 export default combineReducers({
     warning,
     category,
+    user
 });
 

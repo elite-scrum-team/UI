@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
-import {withStyles} from '@material-ui/styles';
+import React, { Component, Fragment} from 'react';
+import { withStyles } from '@material-ui/styles';
 import {Typography} from "@material-ui/core";
+
+// Service
+import AuthService from '../../../api/services/AuthService';
 
 // Material UI components
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-
 
 // Icons
 
@@ -19,7 +21,9 @@ import ContractDialog from "./ContractDialog";
 
 
 const styles = {
-    root: {}
+    root: {
+        
+    }
 };
 
 class ActionModule extends Component {
@@ -59,27 +63,33 @@ class ActionModule extends Component {
                     <Typography variant={"h6"}>
                         Actions:
                     </Typography>
-                    <List component="nav" className={classes.root}>
-
+                    <List component="nav" className={classes.root} dense>
                         {this.state.ownWarning &&
-                            <div>
-                                <ListItem button onClick={() => this.setState(({deleteDialogOpen: true}))}>
-                                    <ListItemText primary="Slett varsel"/>
-                                </ListItem>
-                                <Divider/>
-                            </div>
+                        <div>
+                            <ListItem button onClick={() => this.setState(({deleteDialogOpen: true}))}>
+                                <ListItemText primary="Slett varsel"/>
+                            </ListItem>
+                            <Divider/>
+                        </div>
                         }
-                        <ListItem button>
-                            <ListItemText primary="Varsle meg ved endringer"/>
+                        <ListItem button dense>
+                            <ListItemText primary="Varsle meg ved endringer" />
                         </ListItem>
-                        <Divider/>
-                        <ListItem button divider onClick={() => this.setState(({contractDialogOpen: true}))}>
-                            <ListItemText primary="Registrer kontrakt"/>
-                        </ListItem>
-                        <ListItem button onClick={() => this.setState({statusDialogOpen: true})}>
-                            <ListItemText primary="Ny status"/>
-                        </ListItem>
-                        <Divider light/>
+                        <Divider />
+
+                        {AuthService.isEmployee(this.props.municipalityId) &&
+                            <Fragment>
+                                <ListItem button dense divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
+                                    <ListItemText primary="Registrer kontrakt" />
+                                </ListItem>
+                                <Divider light />
+                                <ListItem button dense onClick={() => this.setState({statusDialogOpen: true})}>
+                                    <ListItemText primary="Ny status" />
+                                </ListItem>
+                                <Divider light />
+                            </Fragment>
+                        }
+
                     </List>
                 </div>
                 <DeleteDialog
@@ -107,6 +117,8 @@ class ActionModule extends Component {
     }
 }
 
-ActionModule.propTypes = {};
+ActionModule.propTypes = {
+
+};
 
 export default withStyles(styles)(ActionModule);

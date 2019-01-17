@@ -92,6 +92,7 @@ class Details extends Component {
                     images: e.images,
                     municipality: e.municipality,
                     userId: e.userId,
+                    municipalityId: e.municipalityId,
                 });
                 this.setState({isLoading: false});
 
@@ -160,11 +161,12 @@ class Details extends Component {
                     </Paper>
                     <div className={classes.content}>
                         <div>
-                            <Paper elevation={1} className='p-30'>
+                            <Paper elevation={1} className='p-20'>
                                 <ActionModule
                                     className={classes.actionMod}
                                     updateStatus={this.changeStatus}
                                     updateContract={this.changeContract}
+                                    municipalityId={this.state.municipalityId}
                                 />
                             </Paper>
                         </div>

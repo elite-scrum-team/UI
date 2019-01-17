@@ -8,7 +8,8 @@ const styles = theme => ({
   root: {
     width: "100%",
     maxWidth: "100%",
-    overflow: "hidden"
+    overflow: "hidden",
+    cursor: 'pointer',
   },
   img: { width: "100%", height: "auto", objectFit: "cover" }
 });
@@ -17,7 +18,7 @@ class Logo extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} onClick={this.props.onClick}>
         <img className={classes.img} src={LogoImage} alt="logo" />
       </div>
     );

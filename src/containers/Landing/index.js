@@ -21,6 +21,7 @@ import Map from '../../components/miscellaneous/Map';
 import Sidebar from './components/Sidebar';
 import InfoModule from './components/InfoModule';
 import SearchContent from './components/SearchContent';
+import SmallDetail from './components/SmallDetail'
 
 const styles = theme => ({
   root: {
@@ -68,13 +69,15 @@ class Landing extends Component {
             lng: 10.392774,
         },
         search: '',
-        items: []
-    }
+        items: [],
+        detail: false,
+        item: {},
+};
 
     componentDidMount() {
       this.setState({isLoading: true});
       this.getGeoLocation();
-      this.getWarnings({});
+      this.getWarnings({excludeStatus: [0]});
     }
 
     getWarnings = (filters) => {
@@ -85,62 +88,78 @@ class Landing extends Component {
         }
         this.setState({isLoading: false});
       });
-    }
+    };
 
     onSectionChange = (value) => {
       this.setState({isLoading: true});
 
       if(value === SEARCH_SECTION) {
         console.log("Get warnings");
-        this.getWarnings({});
+        this.getWarnings({excludeStatus: [0, 1]});
       } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
         console.log("Get user warnings");
         this.getWarnings({useUserId: true});
       }
-    }
+    };
 
     toggleChange = (name) => (event) => {
       this.setState({[name]: !this.state[name]});
-    }
+    };
 
     handleChange = (name) => (event) => {
       this.setState({[name]: event.target.value});
-    }
+    };
 
     goTo = (page) => {
       this.props.history.push(page);
-    }
+    };
 
     onSearch = (event) => {
       event.preventDefault();
-    }
+    };
 
     getGeoLocation = () => {
-      GeoService.getGeoLocation((position) => {
-        console.log(position.coords);
-        this.setState(prevState => ({
-            currentLocation: {
-                ...prevState.currentLocation,
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            }
-        }));
-      });
-    }
+        GeoService.getGeoLocation((position) => {
+            console.log(position.coords);
+            this.setState(prevState => ({
+                currentLocation: {
+                    ...prevState.currentLocation,
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                }
+            }));
+        });
+    };
+
+    detail = async (item) =>{
+        console.log(item)
+        this.setState({
+            detail: true,
+            item: item
+        });
+    };
 
     render() {
       const {classes} = this.props;
       return (
         <Navigation sidebar>
           <Hidden implementation='js' smDown>
-            <Sidebar
+
+              {!this.state.detail
+                  ?
+                  <Sidebar
               searchValue={this.state.search}
               onChange={this.handleChange('search')}
               items={this.state.items}
               onSubmit={this.onSearch}
               onSectionChange={this.onSectionChange}
               isLoading={this.state.isLoading}
+              detail={this.detail}
             />
+                  :
+                  <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
+              }
+
           </Hidden>
 
           <Hidden implementation='js' smDown={!this.state.showMap}>
@@ -167,7 +186,7 @@ class Landing extends Component {
                   onSectionChange={this.onSectionChange}
                   isLoading={this.state.isLoading}
                 />
-                
+
               </div>
             </Hidden>
           }
