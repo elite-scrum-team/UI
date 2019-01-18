@@ -146,6 +146,13 @@ class Navigation extends Component {
 
                         </div>
                         <div className={classes.flex}>
+                            <div>
+                                <Button
+                                    className={classes.warningButton}
+                                    size='small'
+                                    color='secondary'
+                                    onClick={() => this.goTo(URLS.events)}>Nyheter</Button>
+                            </div>
                             {AuthService.isEmployee() &&
                                     <Button
                                         className={classes.logInButton}

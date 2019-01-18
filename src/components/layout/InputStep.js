@@ -16,13 +16,13 @@ const styles = makeStyles({
     },
 });
 
-const DescriptionStep = (props) => {
+const InputStep = (props) => {
 
     // Styling
     const classes = styles();
 
     const handleChange = name => event => {
-        props.setDescriptionCallback(event.target.value);
+        props.setInputCallback(event.target.value);
     };
 
     return (
@@ -30,12 +30,12 @@ const DescriptionStep = (props) => {
             <TextField
 
                 id='outlined-multiline-flexible'
-                label='Beskrivelse'
+                label={props.stepName}
                 multiline
-                rows='3'
+                rows={props.rows}
                 fullWidth
                 value={props.multiline}
-                onChange={handleChange('Beskrivelse')}
+                onChange={handleChange(props.stepName)}
                 margin='normal'
                 helperText=''
                 variant='outlined'
@@ -44,4 +44,4 @@ const DescriptionStep = (props) => {
     )
 }
 
-export default (DescriptionStep);
+export default (InputStep);

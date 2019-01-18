@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import moment from 'moment';
-import warningUtils from '../../../utils/warningUtils';
+import warningUtils from '../../utils/warningUtils';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +14,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import TimeIcon from '@material-ui/icons/AccessTime';
 
 // Project components
-import Map from "../../../components/miscellaneous/Map";
+import Map from "../miscellaneous/Map";
 
 
 const styles = makeStyles({

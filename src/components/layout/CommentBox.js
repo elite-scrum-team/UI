@@ -2,7 +2,7 @@ import React, {Component}  from 'react';
 import { withStyles } from '@material-ui/styles';
 
 // Service imports
-import WarningService from '../../../api/services/WarningService';
+import WarningService from '../../api/services/WarningService';
 
 // Material UI components
 import Button from "@material-ui/core/Button";

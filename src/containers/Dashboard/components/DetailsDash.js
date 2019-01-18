@@ -8,10 +8,10 @@ import {makeStyles} from '@material-ui/styles';
 import Paper from "@material-ui/core/Paper";
 
 // Project components
-import WarningDetails from "../../Details/components/WarningDetails";
-import ActionModule from "../../Details/components/ActionModule";
-import FeedModule from "../../Details/components/FeedModule";
-import ImageGrid from "../../Details/components/ImageGrid";
+import WarningDetails from "../../../components/layout/WarningDetails";
+import ActionModule from "../../../components/layout/ActionModule";
+import FeedModule from "../../../components/layout/FeedModule";
+import ImageGrid from "../../../components/layout/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
 import Hidden from '@material-ui/core/Hidden';
 import Button from "@material-ui/core/Button/Button";
@@ -114,9 +114,13 @@ const DetailsDash = (props) => {
                     <div>
                         <Paper elevation={1} className='p-30'>
                             <ActionModule
+                                selectedGroup={this.props.selectedGroup}
                                 className={classes.actionMod}
                                 updateStatus={props.changeStatus}
-                                updateContract={props.changeContract}/>
+                                updateContract={props.changeContract}
+                                contracts={this.props.state.contracts}
+                                company={this.props.state.selectedGroup}
+                            />
                         </Paper>
                     </div>
                     <div>

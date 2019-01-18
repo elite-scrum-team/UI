@@ -14,10 +14,10 @@ import ContractService from '../../api/services/ContractService';
 
 // Project components
 import Navigation from '../../components/navigation/Navigation';
-import WarningDetails from './components/WarningDetails';
-import ImageGrid from './components/ImageGrid';
-import ActionModule from './components/ActionModule';
-import FeedModule from './components/FeedModule';
+import WarningDetails from '../../components/layout/WarningDetails';
+import ImageGrid from '../../components/layout/ImageGrid';
+import ActionModule from '../../components/layout/ActionModule';
+import FeedModule from '../../components/layout/FeedModule';
 
 const styles = {
   root: {
@@ -51,6 +51,8 @@ const styles = {
 class Details extends Component {
   state = {
     isLoading: false,
+    contracts: null,
+    company: null,
 
     id: null,
     title: null,
@@ -64,6 +66,7 @@ class Details extends Component {
     },
     municipality: null,
     images: null,
+    userId: null,
 
     items: []
   };
@@ -90,7 +93,9 @@ class Details extends Component {
           location: e.location,
           images: e.images,
           municipality: e.municipality,
-          municipalityId: e.municipalityId
+          userId: e.userId,
+          municipalityId: e.municipalityId,
+          contracts: e.contracts
         });
         this.setState({ isLoading: false });
 
@@ -106,7 +111,7 @@ class Details extends Component {
   }
 
   changeStatus = newStatus => {
-    console.log(newStatus);
+    console.log(this.state);
     const status = newStatus.status + 1;
 
     WarningService.createStatus(
@@ -147,7 +152,6 @@ class Details extends Component {
   };
 
   render() {
-    console.log(this.items);
     const { classes } = this.props;
     return (
       <Navigation isLoading={this.state.isLoading}>
@@ -174,6 +178,8 @@ class Details extends Component {
                     updateStatus={this.changeStatus}
                     updateContract={this.changeContract}
                     municipalityId={this.state.municipalityId}
+                    contract={this.state.contracts}
+                    company={this.state.company}
                   />
                 </Paper>
               </div>
