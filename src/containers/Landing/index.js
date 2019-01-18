@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import URLS from '../../URLS';
 
@@ -10,7 +9,6 @@ import GeoService from '../../api/services/GeoService';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 
 // Services
@@ -52,7 +50,6 @@ const styles = {
         
         width: '100vw',
         maxWidth: 400,
-        display: 'block',
         margin: 'auto',
         padding: 48,
 

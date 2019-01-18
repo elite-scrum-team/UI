@@ -88,9 +88,16 @@ const styles = {
 
 class Navigation extends Component {
 
+    state = {
+        dashboard: false
+    };
+
     componentDidMount() {
-        console.log(this.props.match.url + '/' === URLS.dashboard);
+        console.log(this.props.match.url === URLS.dashboard);
+        this.setState({dashboard: this.isDashboard()})
     }
+
+    isDashboard = () => {return this.props.match.url === URLS.dashboard};
 
     goTo = (page) => {
         this.props.history.push(page);
@@ -114,9 +121,13 @@ class Navigation extends Component {
                             </IconButton>
                             </div>
                             {
-                            <CompanyDropdown className={classes.companyDropdown}/>||
-                            this.props.match.url + '/' === URLS.dashboard ||
-                            AuthService.isCompanyOrEmployee()
+                                this.state.dashboard
+                                &&
+                                AuthService.isCompanyOrEmployee()
+                                &&
+                                <CompanyDropdown className={classes.companyDropdown}/>
+
+
                             }
 
                         </div>

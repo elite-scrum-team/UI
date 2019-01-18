@@ -50,9 +50,11 @@ export default class AuthService {
 
     static getCompanies (municipalityId = null) {
         const roles = UserAction.getUserData(store.getState()).roles || {};
+        console.log(UserAction.getUserData(store.getState()) || {});
+        console.log(roles);
         const groups = roles.groups || [];
 
-        return groups.filter(g => !g.municipalitiyId);
+        return groups;
     }
 
     static isEmployee (municipalityId = null) {
