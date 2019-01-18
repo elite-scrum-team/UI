@@ -1,14 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/styles';
-import {useState} from 'react';
 
 // Material UI components
 
 // Icons
-import Accessible from '@material-ui/icons/Accessible';
 import Paper from "@material-ui/core/Paper";
-import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 
 // Project components
 import WarningDetails from "../../../components/layout/WarningDetails";
@@ -18,7 +15,6 @@ import ImageGrid from "../../../components/layout/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
 import Hidden from '@material-ui/core/Hidden';
 import Button from "@material-ui/core/Button/Button";
-import WarningList from "./WarningList";
 import URLS from "../../../URLS";
 
 
@@ -85,6 +81,7 @@ const DetailsDash = (props) => {
             <div className={classes.root}>
                 <img className={classes.img}
                     src={LogoImage}
+                    alt={'Hverdagshelt logo'}
                     title={'Hverdagshelt logo'}/>
             </div>
         )

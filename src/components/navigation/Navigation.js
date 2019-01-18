@@ -20,6 +20,7 @@ import Add from '@material-ui/icons/Add';
 import Logo from '../miscellaneous/Logo';
 
 // Project components
+import CompanyDropdown from '../miscellaneous/CompanyDropdown'
 
 const styles = {
     appbar: {
@@ -29,8 +30,12 @@ const styles = {
         marginTop: 48,
     },
     leftMargin: {
-      
-      right: 'auto',
+      left: 450,
+      width: 'auto',
+      '@media only screen and (max-width: 800px)': {
+          left: 0,
+          width: '100%',
+      }
     },
     navContent: {
         display: 'flex',
@@ -60,15 +65,39 @@ const styles = {
         height: '100%',
         width: '100%',
     },
-    logoClicker:{
-        alignItems: 'left',
+    logoWrapper: {
+        minWidth: 50,
+        minHeight: 50,
+      height: 50,
+      width: 50,
+    },
+    leftSection:{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         height: 50,
         width: 50
+    },
+    companyDropdown: {
+        alignSelf: 'start',
+        textColor: '#fff',
+        color: '#fff',
+        width: 200,
     }
 };
 
 
 class Navigation extends Component {
+
+    state = {
+        dashboard: false
+    };
+
+    componentDidMount() {
+        this.setState({dashboard: this.isDashboard()})
+    }
+
+    isDashboard = () => {return this.props.match.url === URLS.dashboard};
 
     goTo = (page) => {
         this.props.history.push(page);
@@ -79,19 +108,44 @@ class Navigation extends Component {
         this.props.history.push(URLS.home);
     };
 
+    groupChange = (selection) => {
+        this.props.selectGroup(selection);
+    };
+
+    goToHome = () => {
+        if(this.props.match.url === URLS.discover) {
+            this.goTo(URLS.home);
+        } else {
+            this.goTo(URLS.discover);
+        }
+    }
+
     render() {
         const {classes} = this.props;
         return (
             <Fragment>
                 <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
-                        <div className={classes.logoClicker} >
-                            <IconButton onClick={()=>this.goTo(URLS.home)}>
+                        <div className={classes.leftSection} >
+                            <div className={classes.logoWrapper}>
+                            <IconButton onClick={this.goToHome}>
                                 <Logo className={classes.SVGLogo}/>
                             </IconButton>
+                            </div>
+                            {
+                                this.state.dashboard
+                                &&
+                                AuthService.isCompanyOrEmployee()
+                                &&
+                                <CompanyDropdown
+                                    changeGroup={this.groupChange}
+                                    className={classes.companyDropdown}/>
+
+
+                            }
+
                         </div>
                         <div className={classes.flex}>
-
                             {AuthService.isEmployee() &&
                                     <Button
                                         className={classes.logInButton}

@@ -33,11 +33,11 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: rgb(209, 208, 208); 
   width: 4px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: rgb(165, 163, 163); 
 }

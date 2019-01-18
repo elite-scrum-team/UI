@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import URLS from '../../URLS';
 
 // Service imports
 import AuthService from '../../api/services/AuthService';
@@ -16,7 +15,6 @@ import WarningService from "../../api/services/WarningService";
 import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
 import SearchContent from "./components/SearchContent";
-import WarningList from "./components/WarningList";
 
 const styles = {
     root: {
@@ -28,7 +26,7 @@ const styles = {
             marginTop: '48px',
         }
     },
-}
+};
 
 const NEW_SECTION = 0;
 const ACTIVE_SECTION = 1;
@@ -39,6 +37,7 @@ class Dashboard extends Component {
     state = {
         isLoading: false,
         listIsLoading: true,
+        selectedGroup: null,
 
         id: null,
         title: null,
@@ -56,7 +55,6 @@ class Dashboard extends Component {
         search: '',
         warningItems: [],
 
-
         items: [],
 
         showWarning: false,
@@ -70,7 +68,6 @@ class Dashboard extends Component {
             if(isError === false) {
                 // Get id
                 const id = this.getWarningId();
-                const roles = data.roles;
                 const municipalityId = AuthService.isEmployee();
                 this.setState({id: id, municipalityId: municipalityId});
                 
@@ -120,7 +117,6 @@ class Dashboard extends Component {
         this.setState({listIsLoading: true});
         WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
             if(isError === false) {
-                console.log(data);
                 this.setState({items: data});
             }
             this.setState({listIsLoading: true});
@@ -128,14 +124,28 @@ class Dashboard extends Component {
     };
 
     onSectionChange = (value) => {
+
+        const extraFilter = {};
+
+        // If municiaplity id is provided, add it to the filter
+        // extraFilter.municipalitiy = this.state... // etc
+
+        // if not, add group id
+        // extraFilter.groupId = this.state... // etc
+
         if(value === NEW_SECTION) {
-            this.getWarnings({onlyStatus: 0, municipality: this.state.municipality});
+            this.getWarnings({onlyStatus: 0, ...extraFilter});
         } else if(value === ACTIVE_SECTION) {
-            this.getWarnings({onlyStatus: [1,2], municipality: this.state.municipality});
+            this.getWarnings({onlyStatus: [1,2], ...extraFilter});
         } else if(value === DONE_SECTION) {
-            this.getWarnings({onlyStatus: [3,4], municipality: this.state.municipality})
+            this.getWarnings({onlyStatus: [3,4], ...extraFilter});
         }
-    }
+    };
+
+    groupSelect = (selection) => {
+        this.setState({selectedGroup: selection});
+        console.log(selection)
+    };
 
     onSearch = (event) => {
         event.preventDefault();
@@ -160,7 +170,9 @@ class Dashboard extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <Navigation isLoading={this.state.isLoading}>
+            <Navigation
+                selectGroup={this.groupSelect}
+                isLoading={this.state.isLoading}>
                 <div className={classes.root}>
                     <div>
                         <Hidden implementation='js' xsDown>

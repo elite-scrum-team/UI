@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import warningUtils from '../../../utils/warningUtils';
 import classNames from 'classnames';
+import moment from 'moment';
 
 // Material UI components
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -19,7 +20,7 @@ const styles = makeStyles({
     paper: {
         width: '100%',
         position: 'relative',
-        padding: 10,
+        padding: 14,
         marginBottom: 4,
     },
     statusBar: {
@@ -32,6 +33,24 @@ const styles = makeStyles({
     },
     content: {
         marginLeft: 12,
+
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    imageWrapper: {
+        maxWidth: 56,
+        minWidth: 56,
+    },
+    image: {
+        width: '100%',
+        height: 'auto',
+        objectFit: 'cover',
+    },
+    flex: {
+        marginLeft: 12,
+        display: 'flex',
+        justifyContent: 'space-between',
     }
 });
 
@@ -42,13 +61,27 @@ const WarningItem = (props) => {
     const statusCode = (props.status !== 'undefined' && props.status >= 0 && props.status <= 4) ? props.status : 1;
     const statusClasses = warningUtils.getStatusClasses(statusCode)();
 
+    const time = props.posted ? moment(props.posted).fromNow() : '';
+
     return (
         <ButtonBase className={classes.root} onClick={props.onClick}> 
             <Paper className={classes.paper}>
                 <div className={classNames(classes.statusBar, statusClasses.color)} />
+                <div className={classes.flex}>
+                    <Typography variant='subtitle1' align='left'>{props.title}</Typography>
+                    <Typography variant='caption' align='right'>{time}</Typography>
+                </div>
                 <div className={classes.content}>
-                    <Typography variant='subtitle2' align='left'>{props.title}</Typography>
-                    <Typography variant='caption' align='left'>{props.description}</Typography>
+                    <div>
+                        <Typography variant='body2' align='left'>{props.description}</Typography>
+                    </div>
+                    <div>
+                        {props.image &&
+                        <div className={classes.imageWrapper}>
+                            <img className={classes.image} src={props.image} alt={props.title} />
+                        </div>
+                        }
+                    </div>
                 </div>
             </Paper>
         </ButtonBase>

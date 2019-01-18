@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
+import mapStyles from '../../assets/mapStyles.json';
 
 // Icons
 import WarningMarkerIcon from '../../assets/img/warningMarker.png';
+// import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
@@ -27,6 +29,7 @@ const Map = compose(
 
   return (
     <GoogleMap
+      {...props}
       defaultZoom={props.zoom}
       defaultCenter={{ lat: props.defaultCenter.lat, lng: props.defaultCenter.lng }}
       defaultOptions = {{
@@ -37,8 +40,9 @@ const Map = compose(
           zoomControl: false,
           rotateControl: false,
           fullscreenControl: false,
+          styles: mapStyles,
       }}
-
+      ref={props.onMapMounted}
       
       
       onClick={
@@ -65,8 +69,10 @@ const Map = compose(
         return (<Marker
           key={i.toString().concat(location.lat)}
           position={location.location}
-          clickable={location.onClick}
-          onClick={location.onClick ? () => location.onClick(location) : null}/>
+          clickable={location.onClick !== undefined}
+          onClick={location.onClick ? () => location.onClick(location) : null}
+         // icon={WarningMarkerCircleIcon}
+         />
         )
         })}
 
@@ -76,18 +82,37 @@ const Map = compose(
   )
 });
 
-const MapWrapper = (props) => {
 
-    // const [center, setCenter] = useState({lat: 0, lng: 0});
+class MapWrapper extends Component {
 
+  state = {
+    locations: [],
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.locations !== this.props.locations) {
+      this.setState({locations: this.props.locations});
+    }
+  }
+
+  onMapMounted = (map) => {
+    if(this.props.map && map) {
+      this.props.map(map);
+    }
+  }
+
+  render() {
     return (
       <Map
-        defaultCenter={props.defaultCenter || {}}
-        showMarkers={props.showMarkers}
-        locations={props.locations || []}
-        zoom={props.zoom}
-        clickable={props.clickable}/>
+        {...this.props}
+        onMapMounted={this.onMapMounted}
+        defaultCenter={this.props.defaultCenter || {}}
+        showMarkers={this.props.showMarkers}
+        locations={this.state.locations}
+        zoom={this.props.zoom}
+        clickable={this.props.clickable}/>
     )
+  }
 }
 
 MapWrapper.propTypes = {

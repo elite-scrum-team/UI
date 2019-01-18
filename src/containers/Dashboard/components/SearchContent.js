@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/styles';
 import {useState} from 'react';
 import {withRouter} from 'react-router-dom';
-import URLS from '../../../URLS';
 
 // Service imports
-import AuthService from '../../../api/services/AuthService';
 
 // Material UI components
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Icons

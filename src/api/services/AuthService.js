@@ -51,11 +51,23 @@ export default class AuthService {
     static isEmployee (municipalityId = null) {
         const roles = UserAction.getUserData(store.getState()).roles;
         if(municipalityId) {
-            return roles.municipalities.includes(municipalityId);
+            return roles.groups.filter(e  => e.municipalitiyId === municipalityId)
         } else {
-            return roles.municipalities.length > 0 ? roles.municipalities[0] : false;
+            return roles.groups.length > 0 ? roles.groups[0] : false;
         }
-        
+    }
+
+    static isCompany (companyId = null) {
+        const roles = UserAction.getUserData(store.getState()).roles || {};
+        const groups = roles.groups || [];
+
+        return groups.filter(g => !g.municipalitiyId).length > 0;
+    }
+
+    static isCompanyOrEmployee() {
+        const roles = UserAction.getUserData(store.getState()).roles || {};
+        const groups = roles.groups || [];
+        return groups.length > 0;
     }
 
     static isAuthenticated () {
