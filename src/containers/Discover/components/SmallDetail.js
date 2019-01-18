@@ -31,6 +31,15 @@ const styles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+    },
+    image: {
+       width: '100%',
+       height: 'auto',
+       maxWidth: 400,
+       objectFit: 'cover',
+       
+       display: 'block',
+       margin: 'auto',
     }
 });
 
@@ -69,9 +78,11 @@ const SmallDetail = (props) => {
                 </AppBar>
                 <div className={classes.flex}>
                     <Typography variant='h3'>{props.item.category.name}</Typography>
-                    <InformationCard status={`status: ${statusName}`} color={statusClasses} time={time} municipality={props.item.municipality}/>
+                    <InformationCard status={`Status: ${statusName}`} color={statusClasses} time={time} municipality={props.item.municipality}/>
                     <TextCard text={props.item.description}/>
                     <TextCard text={props.item.status.description} gray/>
+                    {props.item.images && props.item.images.length > 0 ?
+                        <img className={classes.image} src={props.item.images[0]} alt={props.item.category.name}/> : null }
                 </div>
                 </div>
                 }

@@ -8,7 +8,6 @@ import GeoService from '../../api/services/GeoService';
 import LocationService from '../../api/services/LocationService';
 
 // Material UI components
-import Paper from '@material-ui/core/Paper';
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 
@@ -20,7 +19,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 import Sidebar from './components/Sidebar';
-import InfoModule from './components/InfoModule';
 import SearchContent from './components/SearchContent';
 import SmallDetail from './components/SmallDetail'
 
@@ -211,7 +209,7 @@ class Discover extends Component {
       this.getWarningsWithMunicipality({excludeStatus: [0, 4, 5]});
     };
 
-    detail = async (item) =>{
+    detail = async (item) => {
         console.log(item);
         this.setState({
             detail: true,
