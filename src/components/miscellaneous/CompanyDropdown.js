@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 
 //Service imports
 import * as UserAction from '../../store/actions/UserAction';
-import AuthService from '../../api/services/AuthService';
 
 // Material UI components
 import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -29,7 +25,7 @@ const styles = {
         selectTextColor: "#fff"
     },
 
-}
+};
 
 class CompanyDropdown extends Component {
 
@@ -41,10 +37,6 @@ class CompanyDropdown extends Component {
         this.setState({[name]: event.target.value});
     };
 
-    componentDidMount() {
-        console.log()
-        console.log(this.state)
-    }
 
     render() {
         const {classes} = this.props;
@@ -62,7 +54,7 @@ class CompanyDropdown extends Component {
                             Selskaper
                         </MenuItem>
                         {this.props.companies.map(e =>
-                            <MenuItem key={e.id} value={e.id} disabled>
+                            <MenuItem key={e.id} value={e.id}>
                                 {e.name}
                             </MenuItem>
                         )}
@@ -75,6 +67,6 @@ class CompanyDropdown extends Component {
 
 const mapStoreToProps = (state) => ({
     companies: UserAction.getUserData(state).roles.groups,
-})
+});
 
 export default connect(mapStoreToProps)(withStyles(styles)(CompanyDropdown));
