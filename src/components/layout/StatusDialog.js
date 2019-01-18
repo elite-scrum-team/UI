@@ -12,8 +12,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 // Icons
 
 // Project components
-import MessageDialog from '../../../components/miscellaneous/MessageDialog';
-import statusLabels from '../../../utils/warningUtils'
+import MessageDialog from '../miscellaneous/MessageDialog';
+import statusLabels from '../../utils/warningUtils'
 
 
 const styles = {

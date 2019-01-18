@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 // Icons
 
 // Project components
-import warningUtils from '../../../utils/warningUtils';
+import warningUtils from '../../utils/warningUtils';
 
 const styles = makeStyles({
     root:{

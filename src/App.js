@@ -19,7 +19,7 @@ import Recover from './containers/ChangePassword'
 import CreateWarning from './containers/CreateWarning';
 import Details from './containers/Details';
 import Dashboard from './containers/Dashboard';
-import Events from './containers/Events';
+import CreateNews from './containers/CreateNews';
 
 // pointless comment
 // The user needs to be authorized (logged in) to access these routes
@@ -70,6 +70,7 @@ class App extends Component {
                                 <Route exact path={URLS.home} component={Landing} />
                                 <Route exact path={URLS.login} component={LogIn} />
                                 <Route exact path={URLS.events} component={Events} />
+                                <Route exact path={URLS.createnews} component={CreateNews} />
                                 <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
                                 <EmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                             </Switch>

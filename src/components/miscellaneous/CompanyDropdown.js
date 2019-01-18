@@ -46,16 +46,30 @@ const styles = {
 class CompanyDropdown extends Component {
 
     state={
-        selected: "",
+        selected: {},
     };
 
     handleChange = (name) => (event) => {
+        console.log("1: " + this.state.selected)
+        console.log("2: " + JSON.stringify(event.target.value));
         this.setState({[name]: event.target.value});
         this.props.changeGroup(event.target.value);
     };
 
+    componentDidMount() {
+        this.init();
+    }
+
+    init = async () => {
+        console.log(this.props.companies);
+        const defaultGroup = this.props.companies.find(e => e.municipalitiyId !== null) || this.props.companies[0];
+        await this.setState({selected: defaultGroup});
+        console.log(this.state, defaultGroup);
+    }
+
     render() {
         const {classes} = this.props;
+        console.log("STATE: " , this.state.selected)
         return (
             <div className={classes.root}>
                 <FormControl className={classes.formControl}>
@@ -64,7 +78,7 @@ class CompanyDropdown extends Component {
                         autoWidth={true}
                         value={this.state.selected}
                         name="company"
-                        displayEmpty
+
                         inputProps={{
                             classes: {
                                 icon: classes.dropArrow,
@@ -73,7 +87,7 @@ class CompanyDropdown extends Component {
                         onChange={this.handleChange('selected')}
                     >
                         <MenuItem value="" disabled>
-                            Selskaper
+                            Grupper
                         </MenuItem>
                         {this.props.companies.map(e =>
                             <MenuItem key={e.id} value={e}>

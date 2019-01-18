@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/styles';
 // Icons
 
 // Project components
-import ClickableImage from '../../../components/miscellaneous/ClickableImage';
+import ClickableImage from '../miscellaneous/ClickableImage';
 
 const styles = makeStyles({
     root: {

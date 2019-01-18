@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 // Icons
 
 // Project components
-import Map from '../../../components/miscellaneous/Map';
+import Map from '../miscellaneous/Map';
 
 const styles = makeStyles({
     root: {

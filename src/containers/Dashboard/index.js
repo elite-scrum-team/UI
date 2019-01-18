@@ -119,7 +119,7 @@ class Dashboard extends Component {
             if(isError === false) {
                 this.setState({items: data});
             }
-            this.setState({listIsLoading: false});
+            this.setState({listIsLoading: true});
         });
     };
 
@@ -132,6 +132,14 @@ class Dashboard extends Component {
 
         // if not, add group id
         // extraFilter.groupId = this.state... // etc
+
+        if(this.state.selectedGroup !== null){
+            if (this.state.selectedGroup.municipalityId !== null){
+                extraFilter.municipalitiyId = this.state.selectedGroup.municipalitiyId;
+            }else{
+                extraFilter.groupId = this.state.selectedGroup.id;
+            }
+        }
 
         if(value === NEW_SECTION) {
             this.getWarnings({onlyStatus: 0, ...extraFilter});
@@ -176,7 +184,8 @@ class Dashboard extends Component {
                 <div className={classes.root}>
                     <div>
                         <Hidden implementation='js' xsDown>
-                            <Sidebar className={classes.sidebar}
+                            <Sidebar
+                                className={classes.sidebar}
                                 searchValue={this.state.search}
                                 items={this.state.items}
                                 onSubmit={this.onSearch}
@@ -207,6 +216,7 @@ class Dashboard extends Component {
                         <div className={classes.root}>
                             {!this.state.isLoading && this.state.showWarning &&
                                 <DetailsDash
+                                    selectedGroup={this.state.selectedGroup}
                                     mountWarningCallback={(id) => this.mountWarning(id)}
                                     state={this.state}
                                     showWarning={this.state.showWarning}

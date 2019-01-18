@@ -7,4 +7,5 @@ export default {
     discover: '/discover/',
     dashboard: '/dashboard/',
     events: '/events/',
+    createnews: '/createnews',
 };
