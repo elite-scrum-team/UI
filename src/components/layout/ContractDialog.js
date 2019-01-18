@@ -6,8 +6,8 @@ import {withStyles} from '@material-ui/core/styles';
 // Icons
 
 // Project components
-import SearchableDropdown from "../../../components/miscellaneous/SearchableDropdown"
-import MessageDialog from '../../../components/miscellaneous/MessageDialog';
+import SearchableDropdown from "../miscellaneous/SearchableDropdown"
+import MessageDialog from '../miscellaneous/MessageDialog';
 import TextField from "@material-ui/core/TextField";
 
 

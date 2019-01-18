@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/styles';
 import {Typography} from "@material-ui/core";
 
 // Service
-import AuthService from '../../../api/services/AuthService';
+import AuthService from '../../api/services/AuthService';
 
 // Material UI components
 import List from '@material-ui/core/List';
@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 // Project components
 import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
-import statusLabels from '../../../utils/warningUtils';
+import statusLabels from '../../utils/warningUtils';
 import ContractDialog from "./ContractDialog";
 
 

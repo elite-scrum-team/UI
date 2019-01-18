@@ -11,10 +11,10 @@ import Paper from "@material-ui/core/Paper";
 import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 
 // Project components
-import WarningDetails from "../../Details/components/WarningDetails";
-import ActionModule from "../../Details/components/ActionModule";
-import FeedModule from "../../Details/components/FeedModule";
-import ImageGrid from "../../Details/components/ImageGrid";
+import WarningDetails from "../../../components/layout/WarningDetails";
+import ActionModule from "../../../components/layout/ActionModule";
+import FeedModule from "../../../components/layout/FeedModule";
+import ImageGrid from "../../../components/layout/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
 import Hidden from '@material-ui/core/Hidden';
 import Button from "@material-ui/core/Button/Button";

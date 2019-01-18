@@ -5,4 +5,5 @@ export default {
     createwarning: '/createwarning',
     details: '/details/',
     dashboard: '/dashboard/',
+    createnews: '/createnews',
 };

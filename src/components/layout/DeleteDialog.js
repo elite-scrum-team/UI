@@ -12,8 +12,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 // Icons
 
 // Project components
-import MessageDialog from '../../../components/miscellaneous/MessageDialog';
-import statusLabels from '../../../utils/warningUtils'
+import MessageDialog from '../miscellaneous/MessageDialog';
+import statusLabels from '../../utils/warningUtils'
 
 
 const styles = {
@@ -42,7 +42,7 @@ const styles = {
         backgroundColor: 'red',
     },
     acknowledged: {
-       backgroundColor: 'var(--inactive)',
+        backgroundColor: 'var(--inactive)',
     },
     progress: {
         backgroundColor: 'var(--progress)',
@@ -59,7 +59,7 @@ class StatusDialog extends Component{
     // State
     state = {
         dialogOpen: this.props.open,
-        newStatus: -1,
+        newStatus: 4,
         statusMsg: '',
         statusNames: statusLabels
     };
@@ -71,6 +71,7 @@ class StatusDialog extends Component{
 
     handleNewStatus = () =>{
         this.setState({dialogOpen: false});
+        this.props.onClose();
         this.props.submitStatus({status: this.state.newStatus, statusMsg: this.state.statusMsg});
     };
 
@@ -90,36 +91,36 @@ class StatusDialog extends Component{
         return (
             <div className={classes.root}>
                 <MessageDialog
-                    title='Sett ny status:'
+                    title='Slett varsling'
                     onClose={this.cancel}
                     actions={[
                         {label: 'Avbryt', action: this.cancel},
-                        {label: 'Send', action: this.handleNewStatus, disabled: this.state.newStatus === -1},
+                        {label: 'Slett', action: this.handleNewStatus, disabled: this.state.newStatus === -1},
                     ]}
                     open={open}
                 >
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="status-simple">Status:</InputLabel>
-                        <Select
-                            value={this.state.newStatus}
-                            onChange={this.handleChange('newStatus')}
-                            inputProps={{
-                                name: 'Status',
-                                id: 'status-simple',
-                            }}
-                        >
-                            {
-                                this.state.statusNames.statusLabels.map((item, index)=>{
-                                    return(
-                                        <MenuItem className={classes.item} key={index} value={index}>
-                                            <div className={classNames(classes.sidebar, statusStyles[index])} />
-                                            {item}
-                                        </MenuItem>
-                                    )})
-                            }
+                    {/*<FormControl className={classes.formControl}>*/}
+                        <InputLabel htmlFor="status-simple">Hvis du velger å slette varslingen vil den ikke fjernes fra databasen, men gjort usynlig for vanlige brukere.</InputLabel>
+                        {/*<Select*/}
+                            {/*value={this.state.newStatus}*/}
+                            {/*onChange={this.handleChange('newStatus')}*/}
+                            {/*inputProps={{*/}
+                                {/*name: 'Status',*/}
+                                {/*id: 'status-simple',*/}
+                            {/*}}*/}
+                        {/*>*/}
+                            {/*{*/}
+                                {/*this.state.statusNames.statusLabels.map((item, index)=>{*/}
+                                    {/*return(*/}
+                                        {/*<MenuItem className={classes.item} key={index} value={index}>*/}
+                                            {/*<div className={classNames(classes.sidebar, statusStyles[index])} />*/}
+                                            {/*{item}*/}
+                                        {/*</MenuItem>*/}
+                                    {/*)})*/}
+                            {/*}*/}
 
-                        </Select>
-                    </FormControl>
+                        {/*</Select>*/}
+                    {/*</FormControl>*/}
                     <br/>
                     <TextField
                         id="filled-email-input"
