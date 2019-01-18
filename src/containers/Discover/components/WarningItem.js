@@ -19,7 +19,7 @@ const styles = makeStyles({
     paper: {
         width: '100%',
         position: 'relative',
-        padding: 10,
+        padding: 14,
         marginBottom: 4,
     },
     statusBar: {
@@ -47,8 +47,8 @@ const WarningItem = (props) => {
             <Paper className={classes.paper}>
                 <div className={classNames(classes.statusBar, statusClasses.color)} />
                 <div className={classes.content}>
-                    <Typography variant='subtitle2' align='left'>{props.title}</Typography>
-                    <Typography variant='caption' align='left'>{props.description}</Typography>
+                    <Typography variant='subtitle1' align='left'>{props.title}</Typography>
+                    <Typography variant='body2' align='left'>{props.description}</Typography>
                 </div>
             </Paper>
         </ButtonBase>

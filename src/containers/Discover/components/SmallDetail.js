@@ -20,7 +20,7 @@ import Typography from "@material-ui/core/Typography"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import warningUtils from "../../../utils/warningUtils";
 
-const drawerWidth = 400;
+const drawerWidth = 450;
 
 const styles = makeStyles({
     root: {
