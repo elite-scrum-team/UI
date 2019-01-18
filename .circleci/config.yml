@@ -14,15 +14,14 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
 
-      - run: npm install -no-audit
+      - run: npm install --only=prod -no-audit
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: echo "tests passed!"
+      - run: npm build 
 
       - setup_remote_docker: 
           docker_layer_caching: true 
