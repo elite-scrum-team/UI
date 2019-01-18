@@ -22,7 +22,6 @@ const WarningList = (props) => {
     const classes = styles();
 
     const warnings = props.items || [];
-    console.log(warnings);
 
     return (
         <div className={classes.root}>

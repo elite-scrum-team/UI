@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { MAP } from 'react-google-maps/lib/constants';
 import mapStyles from '../../assets/mapStyles.json';
 
 // Icons

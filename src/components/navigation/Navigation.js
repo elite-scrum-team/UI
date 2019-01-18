@@ -112,6 +112,14 @@ class Navigation extends Component {
         this.props.selectGroup(selection);
     };
 
+    goToHome = () => {
+        if(this.props.match.url === URLS.discover) {
+            this.goTo(URLS.home);
+        } else {
+            this.goTo(URLS.discover);
+        }
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -120,7 +128,7 @@ class Navigation extends Component {
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div className={classes.leftSection} >
                             <div className={classes.logoWrapper}>
-                            <IconButton onClick={()=>this.goTo(URLS.discover)}>
+                            <IconButton onClick={this.goToHome}>
                                 <Logo className={classes.SVGLogo}/>
                             </IconButton>
                             </div>

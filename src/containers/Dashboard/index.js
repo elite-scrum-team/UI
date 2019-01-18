@@ -118,7 +118,6 @@ class Dashboard extends Component {
         this.setState({listIsLoading: true});
         WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
             if(isError === false) {
-                console.log(data);
                 this.setState({items: data});
             }
             this.setState({listIsLoading: false});
