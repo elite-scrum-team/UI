@@ -13,6 +13,7 @@ import AuthService from './api/services/AuthService';
 
 // Project components
 import LogIn from './containers/LogIn';
+import Discover from './containers/Discover';
 import Landing from './containers/Landing';
 import Recover from './containers/ChangePassword'
 import CreateWarning from './containers/CreateWarning';
@@ -63,6 +64,7 @@ class App extends Component {
                             <Switch>
                                 <Route exact path={URLS.details.concat(':id')} component={Details} />
                                 <Route exact path={URLS.recover} component={Recover} />
+                                <Route exact path={URLS.discover} component={Discover} />
                                 <Route exact path={URLS.home} component={Landing} />
                                 <Route exact path={URLS.login} component={LogIn} />
                                 <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />

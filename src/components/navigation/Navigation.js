@@ -20,6 +20,7 @@ import Add from '@material-ui/icons/Add';
 import Logo from '../miscellaneous/Logo';
 
 // Project components
+import CompanyDropdown from '../miscellaneous/CompanyDropdown'
 
 const styles = {
     appbar: {
@@ -29,8 +30,9 @@ const styles = {
         marginTop: 48,
     },
     leftMargin: {
-      
-      right: 'auto',
+      left: 400,
+      right: 0,
+      width: 'auto',
     },
     navContent: {
         display: 'flex',
@@ -60,15 +62,32 @@ const styles = {
         height: '100%',
         width: '100%',
     },
-    logoClicker:{
-        alignItems: 'left',
+    logoWrapper: {
+        minWidth: 50,
+        minHeight: 50,
+      height: 50,
+      width: 50,
+    },
+    leftSection:{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         height: 50,
         width: 50
+    },
+    companyDropdown: {
+        alignSelf: 'start',
+        textColor: '#fff',
+        width: 200,
     }
 };
 
 
 class Navigation extends Component {
+
+    componentDidMount() {
+        console.log(this.props.match.url + '/' === URLS.dashboard);
+    }
 
     goTo = (page) => {
         this.props.history.push(page);
@@ -85,13 +104,20 @@ class Navigation extends Component {
             <Fragment>
                 <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
-                        <div className={classes.logoClicker} >
+                        <div className={classes.leftSection} >
+                            <div className={classes.logoWrapper}>
                             <IconButton onClick={()=>this.goTo(URLS.home)}>
                                 <Logo className={classes.SVGLogo}/>
                             </IconButton>
+                            </div>
+                            {
+                            <CompanyDropdown className={classes.companyDropdown}/>||
+                            this.props.match.url + '/' === URLS.dashboard ||
+                            AuthService.isCompanyOrEmployee()
+                            }
+
                         </div>
                         <div className={classes.flex}>
-
                             {AuthService.isEmployee() &&
                                     <Button
                                         className={classes.logInButton}

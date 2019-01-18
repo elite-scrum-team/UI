@@ -24,7 +24,8 @@ import WarningList from './WarningList';
 
 const styles = makeStyles({
     root: {
-        minHeight: 400,
+        backgroundColor: 'white',
+        minHeight: 600,
     },
     loginButton: {
         display: 'block',
@@ -35,6 +36,9 @@ const styles = makeStyles({
         display: 'block',
         margin: 'auto',
         marginTop: 12,
+    },
+    search: {
+        width: '100%',
     }
 });
 
@@ -71,8 +75,14 @@ const SearchContent = (props) => {
             </AppBar>
             {section === 0 &&
                 <div>
-                    <SearchBar value={props.searchValue} onChange={props.onChange} onSubmit={props.onSubmit}/>
-                    {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ? <WarningList items={props.items} detail={props.detail}/> : <WarningList items={props.items} goTo={goTo}/>}
+                    <SearchBar
+                        className={classes.search}
+                        value={props.searchValue}
+                        onChange={props.onSubmit}
+                        options={props.municipalities}
+                        onLocationClick={props.onLocation}/>
+                    {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ?
+                        <WarningList items={props.items} detail={props.detail}/> : <WarningList items={props.items} goTo={goTo}/>}
                 </div>
             }
 
@@ -80,7 +90,8 @@ const SearchContent = (props) => {
             <div>
                 {AuthService.isAuthenticated() ?
                     <div>
-                        {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ? <WarningList items={props.items} detail={props.detail}/> : <WarningList items={props.items} goTo={goTo}/>  }
+                        {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ?
+                            <WarningList items={props.items} detail={props.detail}/> : <WarningList items={props.items} goTo={goTo}/>  }
                     </div>
                 :
                     <div className='mt-30 p-5'>
@@ -94,10 +105,10 @@ const SearchContent = (props) => {
 }
 
 SearchContent.propTypes = {
-    searchValue: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
+    searchValue: PropTypes.object,
     onSubmit: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
+    onLocation: PropTypes.func,
     goTo: PropTypes.func,
 }
 

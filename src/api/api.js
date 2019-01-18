@@ -51,6 +51,11 @@ export default {
 
     getContracts : () =>{
         return new Fetch(METHODS.get, '/warning/contract')
+    },
+
+    // --- MUNICIPALITIES ---
+    getMunicipalities: () => {
+        return new Fetch(METHODS.get, '/location/municipality');
     }
 
 }

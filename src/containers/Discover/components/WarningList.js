@@ -13,9 +13,6 @@ import Typography from '@material-ui/core/Typography';
 // Project components
 import WarningItem from './WarningItem';
 
-
-
-
 const styles = makeStyles({
     root: {
         padding: '10px 4px',

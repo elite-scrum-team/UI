@@ -1,202 +1,163 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import URLS from '../../URLS';
 
 // Services
-import AuthService from '../../api/services/AuthService';
-import WarningService from '../../api/services/WarningService';
 import GeoService from '../../api/services/GeoService';
 
 // Material UI components
 import Paper from '@material-ui/core/Paper';
-import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 
+// Services
+import LocationService from '../../api/services/LocationService';
+
 // Icons
-import MapIcon from '@material-ui/icons/Map';
-import CloseIcon from '@material-ui/icons/Close';
+import Logo from '../../assets/img/logo.png';
+import LocationIcon from '@material-ui/icons/LocationOn';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import PersonIcon from '@material-ui/icons/Person';
 
 // Project components
-import Navigation from '../../components/navigation/Navigation';
-import Map from '../../components/miscellaneous/Map';
-import Sidebar from './components/Sidebar';
-import InfoModule from './components/InfoModule';
-import SearchContent from './components/SearchContent';
-import SmallDetail from './components/SmallDetail'
+import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
 
-const styles = theme => ({
-  root: {
-    overflow: 'hidden',
-    boxSizing: 'border-box',
-    height: '100vh',
-    marginTop: '-48px',
-    position: 'relative',
-  },
-  drawerPaper: {
-    width: 320,
-  },
-  infoModule: {
-    position: 'absolute',
-    top: 70, right: 20,
-    width: 400,
+const styles = {
+    root: {
+        position: 'relative',
+        height: '100vh',
+        width: '100vw',
 
-    [theme.breakpoints.down('sm')]: {
-      position: 'static',
-      width: '100%',
-      maxWidth: '98vw',
-      margin: 'auto',
+        background: 'url(http://paperlief.com/images/snow-mountain-landscape-wallpaper-1.jpg)',
+        backgroundSize: 'auto',
+        backgroundRepeat: 'no-repeat',
+
+        maxHeight: '100vh',
+        overflow: 'hidden', 
     },
-  },
-  content: {
-    marginTop: 10,
-  },
-  fabBtn: {
-    position: 'fixed',
-    bottom: 10,
-    right: 10,
-  }
-});
+    content: {
+        position: 'absolute',
+        top: 0, bottom: 0, left: 0, right: 0,
 
-const SEARCH_SECTION = 0;
-const USER_SECTION = 1;
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    paper: {
+        
+        width: '100vw',
+        maxWidth: 900,
+        display: 'block',
+        margin: 'auto',
+        padding: 30,
+
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+
+        '@media only screen and (max-width: 600px)': {
+            padding: '30px 30px',
+            width: '76vw',
+        }
+    },
+    logo: {
+        width: '100%',
+        maxWidth: 450,
+        height: 'auto',
+        objectFit: 'cover',
+    },
+    input: {
+        width: '80vw',
+        maxWidth: 500,
+    },
+    buttonWrapper: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginTop: 12,
+        maxWidth: 400,
+
+    }
+}
 
 class Landing extends Component {
 
     state = {
-        isLoading: true,
-        showMap: false,
-        currentLocation: {
-            lat: 63.428322,
-            lng: 10.392774,
-        },
-        search: '',
-        items: [],
-        detail: false,
-        item: {},
-};
+        municipalities: [],
+    }
 
     componentDidMount() {
-      this.setState({isLoading: true});
-      this.getGeoLocation();
-      this.getWarnings({excludeStatus: [0]});
+        this.getAllMunicipalities();
     }
 
-    getWarnings = (filters) => {
-      WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
-        if(isError === false) {
-          console.log(data);
-          this.setState({items: data});
-        }
-        this.setState({isLoading: false});
-      });
-    };
+    getAllMunicipalities() {
+        LocationService.getMunicipalities((isError, data) => {
+            if(isError === false) {
+                this.setState({municipalities: data.map(m => ({value: m.id, label: m.name}))});
+            }
+        });
+    }
 
-    onSectionChange = (value) => {
-      this.setState({isLoading: true});
+    searchByLocation = () => {
+        GeoService.getGeoLocation((position) => {
+            this.props.history.push(URLS.discover);
+        });
+    }
 
-      if(value === SEARCH_SECTION) {
-        console.log("Get warnings");
-        this.getWarnings({excludeStatus: [0, 1]});
-      } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
-        console.log("Get user warnings");
-        this.getWarnings({useUserId: true});
-      }
-    };
+    onMunicipalitySelected = (event) => {
 
-    toggleChange = (name) => (event) => {
-      this.setState({[name]: !this.state[name]});
-    };
-
-    handleChange = (name) => (event) => {
-      this.setState({[name]: event.target.value});
-    };
+        this.props.history.push(URLS.discover.concat('?municipality=', event.value));
+    }
 
     goTo = (page) => {
-      this.props.history.push(page);
-    };
-
-    onSearch = (event) => {
-      event.preventDefault();
-    };
-
-    getGeoLocation = () => {
-        GeoService.getGeoLocation((position) => {
-            console.log(position.coords);
-            this.setState(prevState => ({
-                currentLocation: {
-                    ...prevState.currentLocation,
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }
-            }));
-        });
-    };
-
-    detail = async (item) =>{
-        console.log(item)
-        this.setState({
-            detail: true,
-            item: item
-        });
-    };
+        this.props.history.push(page);
+    }
 
     render() {
-      const {classes} = this.props;
-      return (
-        <Navigation sidebar>
-          <Hidden implementation='js' smDown>
-
-              {!this.state.detail
-                  ?
-                  <Sidebar
-              searchValue={this.state.search}
-              onChange={this.handleChange('search')}
-              items={this.state.items}
-              onSubmit={this.onSearch}
-              onSectionChange={this.onSectionChange}
-              isLoading={this.state.isLoading}
-              detail={this.detail}
-            />
-                  :
-                  <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
-              }
-
-          </Hidden>
-
-          <Hidden implementation='js' smDown={!this.state.showMap}>
+        const {classes} = this.props;
+        return (
             <div className={classes.root}>
-              <Map
-                  locations={this.state.items}
-                  defaultCenter={this.state.currentLocation}
-              />
+                <div className={classes.content}>
+                    <Paper className={classes.paper} elevation={5}>
+                        <img className={classes.logo} src={Logo} />
+                        <div className='pt-10 pb-20'>
+                            <Typography variant='h5' align='center'>
+                                Varsle din kommune om dine kommunale problemer
+                            </Typography>
+                        </div>
+                        <div className={classes.buttonWrapper}>
+                            <Button onClick={() => this.goTo(URLS.createwarning)} variant='outlined' size='medium' color='error'>Send varsel<FeedbackIcon className='ml-5' /></Button>
+                            <Button onClick={() => this.goTo(URLS.login)} variant='outlined' size='medium' color='primary'><PersonIcon className='mr-5'/> Logg inn</Button>
+                        </div>
+                        <div className='pt-20 pb-20 w-100'>
+                            <SearchableDropdown
+                                className={classes.input}
+                                options={this.state.municipalities}
+                                onChange={this.onMunicipalitySelected}
+                                placeholder='Søk etter kommune'
+                                />
+                        </div>
+                        <Typography variant='caption' align='center'>
+                                eller
+                        </Typography>
+                        <div className='mt-15'>
+                            <Fab
+                                onClick={this.searchByLocation}
+                                size='medium'
+                                variant='extended'
+                                color='primary'>
+                                <LocationIcon className='mr-5'/>
+                                Søk med min posisjon
+                            </Fab>
+                        </div>
+                    </Paper>
+                </div>
             </div>
-          </Hidden>
-          {!this.state.showMap && <Paper className={classes.infoModule}>
-            <InfoModule goTo={this.goTo}/>
-          </Paper>
-          }
-
-          {!this.state.showMap &&
-            <Hidden implementation='js' mdUp>
-              <div className={classes.content}>
-                <SearchContent
-                  searchValue={this.state.search}
-                  onChange={this.handleChange('search')}
-                  items={this.state.items}
-                  onSubmit={this.onSearch}
-                  onSectionChange={this.onSectionChange}
-                  isLoading={this.state.isLoading}
-                />
-
-              </div>
-            </Hidden>
-          }
-          <Hidden implementation='js' mdUp>
-            <Fab className={classes.fabBtn} color='primary' onClick={this.toggleChange('showMap')}>
-              {this.state.showMap ? <CloseIcon /> : <MapIcon />}
-            </Fab>
-          </Hidden>
-        </Navigation>
-      );
+        )
     }
 }
+
 export default withStyles(styles)(Landing);

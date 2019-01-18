@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { MAP } from 'react-google-maps/lib/constants';
+import MunicipalityGEOJSON from '../../assets/kommuner.json';
+import mapStyles from '../../assets/mapStyles.json';
 
 // Icons
 import WarningMarkerIcon from '../../assets/img/warningMarker.png';
+import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
@@ -27,6 +31,7 @@ const Map = compose(
 
   return (
     <GoogleMap
+      {...props}
       defaultZoom={props.zoom}
       defaultCenter={{ lat: props.defaultCenter.lat, lng: props.defaultCenter.lng }}
       defaultOptions = {{
@@ -37,8 +42,9 @@ const Map = compose(
           zoomControl: false,
           rotateControl: false,
           fullscreenControl: false,
+          styles: mapStyles,
       }}
-
+      ref={props.onMapMounted}
       
       
       onClick={
@@ -65,8 +71,9 @@ const Map = compose(
         return (<Marker
           key={i.toString().concat(location.lat)}
           position={location.location}
-          clickable={location.onClick}
-          onClick={location.onClick ? () => location.onClick(location) : null}/>
+          clickable={location.onClick !== undefined}
+          onClick={location.onClick ? () => location.onClick(location) : null}
+          icon={WarningMarkerCircleIcon}/>
         )
         })}
 
@@ -76,12 +83,58 @@ const Map = compose(
   )
 });
 
+
 const MapWrapper = (props) => {
 
     // const [center, setCenter] = useState({lat: 0, lng: 0});
 
+    const refreshDataFromGeoJson = function (currentMap) {
+      if (!currentMap) {
+        return;
+      }
+       // Call the Data class in the initial google map API
+       let newData = new window.google.maps.Data();
+      // Define the GeoJson object
+      let tempGeoJsonObj;
+      try {
+        tempGeoJsonObj = MunicipalityGEOJSON;
+        newData.setStyle({
+          fillColor: null,
+          strokeWeight: 1,
+          visible: false,
+          fillOpacity: 0,
+        })
+    
+        // Call the addGeoJson from the Data class 
+        let newFeatures = newData.addGeoJson(tempGeoJsonObj);
+      } catch (error) {
+        newData.setMap(null);
+        return;
+      }
+    
+      // Set the data to the current map 
+      newData.setMap(currentMap.context[MAP]);
+      return newData;
+    }
+
+    const onMapMounted = (map) => {
+      if(props.map && map) {
+        map.
+        props.map(map);
+
+       /*  const currentMap = map;
+        (window).googleMapsObject = currentMap.context[MAP];
+        //load the GeoJson to the map
+        refreshDataFromGeoJson(currentMap); */
+        //set props.currentMap 
+        // this.setState({currentMap: currentMap});
+      }
+    }
+
     return (
       <Map
+        {...props}
+        onMapMounted={onMapMounted}
         defaultCenter={props.defaultCenter || {}}
         showMarkers={props.showMarkers}
         locations={props.locations || []}
