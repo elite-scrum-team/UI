@@ -73,7 +73,8 @@ const Map = compose(
           position={location.location}
           clickable={location.onClick !== undefined}
           onClick={location.onClick ? () => location.onClick(location) : null}
-          icon={WarningMarkerCircleIcon}/>
+         // icon={WarningMarkerCircleIcon}
+         />
         )
         })}
 
