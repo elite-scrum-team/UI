@@ -35,8 +35,8 @@ class CompanyDropdown extends Component {
 
     handleChange = (name) => (event) => {
         this.setState({[name]: event.target.value});
+        this.props.changeGroup(event.target.value);
     };
-
 
     render() {
         const {classes} = this.props;
@@ -54,7 +54,7 @@ class CompanyDropdown extends Component {
                             Selskaper
                         </MenuItem>
                         {this.props.companies.map(e =>
-                            <MenuItem key={e.id} value={e.id}>
+                            <MenuItem key={e.id} value={e}>
                                 {e.name}
                             </MenuItem>
                         )}
