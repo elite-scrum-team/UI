@@ -50,7 +50,6 @@ const styles = {
         
         width: '100vw',
         maxWidth: 900,
-        display: 'block',
         margin: 'auto',
         padding: 30,
 

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
 
 //Service imports
+import * as UserAction from '../../store/actions/UserAction';
 import AuthService from '../../api/services/AuthService';
 
 // Material UI components
@@ -33,10 +35,6 @@ class CompanyDropdown extends Component {
 
     state={
         selected: "",
-        companies: [{
-            name: null,
-            id: null
-        }]
     };
 
     handleChange = (name) => (event) => {
@@ -45,7 +43,7 @@ class CompanyDropdown extends Component {
 
     componentDidMount() {
         console.log()
-        this.setState({companies: AuthService.getCompanies()})
+        console.log(this.state)
     }
 
     render() {
@@ -63,7 +61,7 @@ class CompanyDropdown extends Component {
                         <MenuItem value="" disabled>
                             Selskaper
                         </MenuItem>
-                        {this.state.companies.map(e =>
+                        {this.props.companies.map(e =>
                             <MenuItem key={e.id} value={e.id} disabled>
                                 {e.name}
                             </MenuItem>
@@ -75,4 +73,8 @@ class CompanyDropdown extends Component {
     }
 }
 
-export default withStyles(styles)(CompanyDropdown);
+const mapStoreToProps = (state) => ({
+    companies: UserAction.getUserData(state).roles.groups,
+})
+
+export default connect(mapStoreToProps)(withStyles(styles)(CompanyDropdown));
