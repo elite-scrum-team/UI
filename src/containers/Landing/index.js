@@ -70,7 +70,7 @@ const styles = {
         objectFit: 'cover',
     },
     input: {
-        width: '90vw',
+        width: '80vw',
         maxWidth: 500,
     },
     buttonWrapper: {
