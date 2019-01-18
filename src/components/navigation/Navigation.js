@@ -81,6 +81,7 @@ const styles = {
     companyDropdown: {
         alignSelf: 'start',
         textColor: '#fff',
+        color: '#fff',
         width: 200,
     }
 };

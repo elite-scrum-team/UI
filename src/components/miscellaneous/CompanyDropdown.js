@@ -24,6 +24,22 @@ const styles = {
     formControl: {
         selectTextColor: "#fff"
     },
+    dropdownStyle: {
+
+    },
+    selection: {
+        color: '#fff',
+        '&:before': {
+            borderColor: '#fff',
+        },
+
+        '&:after': {
+            borderColor: '#fff',
+        }
+    },
+    dropArrow: {
+        fill: '#fff',
+    }
 
 };
 
@@ -44,10 +60,16 @@ class CompanyDropdown extends Component {
             <div className={classes.root}>
                 <FormControl className={classes.formControl}>
                     <Select
+                        className={classes.selection}
                         autoWidth={true}
                         value={this.state.selected}
                         name="company"
                         displayEmpty
+                        inputProps={{
+                            classes: {
+                                icon: classes.dropArrow,
+                            },
+                        }}
                         onChange={this.handleChange('selected')}
                     >
                         <MenuItem value="" disabled>
