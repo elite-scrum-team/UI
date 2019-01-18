@@ -106,7 +106,7 @@ class Navigation extends Component {
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div className={classes.leftSection} >
                             <div className={classes.logoWrapper}>
-                            <IconButton onClick={()=>this.goTo(URLS.home)}>
+                            <IconButton onClick={()=>this.goTo(URLS.discover)}>
                                 <Logo className={classes.SVGLogo}/>
                             </IconButton>
                             </div>
