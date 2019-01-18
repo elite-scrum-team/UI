@@ -24,6 +24,7 @@ const WarningList = (props) => {
     const classes = styles();
 
     const warnings = props.items || [];
+    console.log(warnings);
 
     return (
         <div className={classes.root}>
@@ -33,7 +34,9 @@ const WarningList = (props) => {
                     onClick={props.detail ? () => props.detail(value) : ()=> props.goTo(URLS.details.concat(value.id))}
                     title={value.category ? value.category.name : 'Ukjent varsel'}
                     status={value.status ? value.status.type : 0}
-                    description={value.description}/>
+                    description={value.description}
+                    image={value.images && value.images.length > 0 ? value.images[0] : null}
+                    posted={value.createdAt}/>
             ))}
             {warnings.length === 0 && <Typography variant='subtitle1' align='center'>Ingen varsel å vise</Typography>}
         </div>
