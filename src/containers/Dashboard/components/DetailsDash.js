@@ -117,7 +117,10 @@ const DetailsDash = (props) => {
                                 selectedGroup={this.props.selectedGroup}
                                 className={classes.actionMod}
                                 updateStatus={props.changeStatus}
-                                updateContract={props.changeContract}/>
+                                updateContract={props.changeContract}
+                                contracts={this.props.state.contracts}
+                                company={this.props.state.selectedGroup}
+                            />
                         </Paper>
                     </div>
                     <div>

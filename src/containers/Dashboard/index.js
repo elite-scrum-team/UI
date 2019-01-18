@@ -46,6 +46,7 @@ class Dashboard extends Component {
         province: null,
         statusMessage: null,
         description: null,
+        contracts: null,
         location: {
             lat: 0,
             lng: 0,
@@ -101,6 +102,7 @@ class Dashboard extends Component {
                         description: e.description,
                         location: e.location,
                         showWarning: true,
+                        contracts: e.contracts
                     });
 
                     WarningService.getWarningItems(id)
@@ -220,7 +222,9 @@ class Dashboard extends Component {
                                     mountWarningCallback={(id) => this.mountWarning(id)}
                                     state={this.state}
                                     showWarning={this.state.showWarning}
-                                    changeStatus={this.changeStatus}/>
+                                    changeStatus={this.changeStatus}
+
+                                />
                             }
                         </div>
                     </Hidden>

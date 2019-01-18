@@ -1,6 +1,8 @@
 import React, { Component, Fragment} from 'react';
 import { withStyles } from '@material-ui/styles';
 import {Typography} from "@material-ui/core";
+import {connect} from 'react-redux';
+
 
 // Service
 import AuthService from '../../api/services/AuthService';
@@ -18,6 +20,7 @@ import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from "./ContractDialog";
+import * as UserAction from "../../store/actions/UserAction";
 
 
 const styles = {
@@ -28,6 +31,7 @@ const styles = {
 
 class ActionModule extends Component {
     state = {
+        selected: null,
         deleteDialogOpen: false,
         statusDialogOpen: false,
         contractDialogOpen: false,
@@ -37,6 +41,23 @@ class ActionModule extends Component {
         contractDesc: '',
 
         ownWarning: true,
+    };
+
+    componentDidMount() {
+        this.init();
+    }
+
+    init = async () => {
+        if(this.props.company === null){
+            console.log(this.props.companies);
+            const defaultGroup = this.props.companies.find(e => e.municipalitiyId !== null) || this.props.companies[0];
+            await this.setState({selected: defaultGroup});
+            console.log(this.state, defaultGroup);
+        }
+    };
+
+    checkContract = () => {
+        return this.props.contracts ? this.props.contracts.find(e => e.groupId):false;
     };
 
     handleNewStatus = (value) => {
@@ -77,7 +98,7 @@ class ActionModule extends Component {
                         </ListItem>
                         <Divider />
 
-                        {AuthService.isEmployee(this.props.municipalityId) &&
+                        {(AuthService.isEmployee(this.props.municipalityId) &&
                             <Fragment>
                                 <ListItem button dense divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
                                     <ListItemText primary="Registrer kontrakt" />
@@ -87,7 +108,16 @@ class ActionModule extends Component {
                                     <ListItemText primary="Ny status" />
                                 </ListItem>
                                 <Divider light />
+                            </Fragment>)
+                            ||
+                        (this.checkContract() &&
+                            <Fragment>
+                                <ListItem button dense onClick={() => this.setState({statusDialogOpen: true})}>
+                                    <ListItemText primary="Ny status" />
+                                </ListItem>
+                                <Divider light />
                             </Fragment>
+                        )
                         }
 
                     </List>
@@ -121,4 +151,8 @@ ActionModule.propTypes = {
 
 };
 
-export default withStyles(styles)(ActionModule);
+const mapStoreToProps = (state) => ({
+    companies: UserAction.getUserData(state).roles.groups,
+});
+
+export default connect(mapStoreToProps)(withStyles(styles)(ActionModule));

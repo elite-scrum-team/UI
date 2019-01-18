@@ -51,6 +51,8 @@ class Details extends Component {
 
     state = {
         isLoading: false,
+        contracts: null,
+        company: null,
 
         id: null,
         title: null,
@@ -93,6 +95,7 @@ class Details extends Component {
                     municipality: e.municipality,
                     userId: e.userId,
                     municipalityId: e.municipalityId,
+                    contracts: e.contracts,
                 });
                 this.setState({isLoading: false});
 
@@ -105,13 +108,11 @@ class Details extends Component {
                 // The warning does not exist, go to frontpage
                 this.props.history.push(URLS.home);
             }
-
         });
-
     }
 
     changeStatus = (newStatus) => {
-        console.log(newStatus);
+        console.log(this.state);
         const status = newStatus.status + 1;
 
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
@@ -167,6 +168,8 @@ class Details extends Component {
                                     updateStatus={this.changeStatus}
                                     updateContract={this.changeContract}
                                     municipalityId={this.state.municipalityId}
+                                    contract={this.state.contracts}
+                                    company={this.state.company}
                                 />
                             </Paper>
                         </div>
