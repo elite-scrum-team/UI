@@ -87,8 +87,7 @@ const MapWrapper = (props) => {
 
     const onMapMounted = (map) => {
       if(props.map && map) {
-        map.
-        props.map(map);
+          map.props.map(map);
       }
     }
 
