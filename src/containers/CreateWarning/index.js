@@ -17,10 +17,10 @@ import Typography from '@material-ui/core/Typography';
 
 //Project components
 import Navigation from '../../components/navigation/Navigation';
-import Step from './components/Step';
+import Step from '../../components/layout/Step';
 import CategoryStep from './components/CategoryStep';
-import MapStep from './components/MapStep';
-import DescriptionStep from './components/DescriptionStep';
+import MapStep from '../../components/layout/MapStep';
+import DescriptionStep from '../../components/layout/InputStep';
 import PictureStep from './components/PictureStep';
 import ConfirmDialog from './components/ConfirmDialog';
 import MessageDialog from '../../components/miscellaneous/MessageDialog';
@@ -89,12 +89,12 @@ const styles = {
         top: '-20px',
         position: 'absolute',
     },
-    registerButton: {
-        margin: 'auto',
-        display: 'block',
-        marginTop: '30px',
-        marginBottom: '10px',
-    },
+        registerButton: {
+            margin: 'auto',
+            display: 'block',
+            marginTop: '30px',
+            marginBottom: '10px',
+        },
     bottom: {
         paddingBottom: 30,
     }
@@ -210,7 +210,7 @@ class CreateWarning extends Component {
             [].forEach.call(event.target.files, readImage)
         }
 
-        console.log(this.state.currentLocation)
+        console.log(this.state.images)
     }
 
     setCategory = (data) => {
@@ -223,6 +223,7 @@ class CreateWarning extends Component {
 
     setDescription = (data) => {
         this.setState({description: data});
+        console.log(this.state.description);
     }
 
     canSendWarning = () => {
@@ -265,7 +266,7 @@ class CreateWarning extends Component {
                             <Step number={3} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
                             <div className={classes.right}>
                                 <DescriptionStep
-                                    setDescriptionCallback={(e) => this.setDescription(e)}
+                                    setInputCallback={(e) => this.setDescription(e)} stepName={'Beskrivelse'} rows={3}
                                 />
                             </div>
                             <Divider/>

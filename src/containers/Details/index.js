@@ -13,10 +13,10 @@ import WarningService from "../../api/services/WarningService";
 
 // Project components
 import Navigation from '../../components/navigation/Navigation'
-import WarningDetails from "./components/WarningDetails";
-import ImageGrid from './components/ImageGrid';
-import ActionModule from './components/ActionModule';
-import FeedModule from './components/FeedModule';
+import WarningDetails from "../../components/layout/WarningDetails";
+import ImageGrid from '../../components/layout/ImageGrid';
+import ActionModule from '../../components/layout/ActionModule';
+import FeedModule from '../../components/layout/FeedModule';
 
 const styles = {
     root: {
@@ -64,6 +64,7 @@ class Details extends Component {
         },
         municipality: null,
         images: null,
+        userId: null,
 
         items: [],
     };
@@ -90,6 +91,7 @@ class Details extends Component {
                     location: e.location,
                     images: e.images,
                     municipality: e.municipality,
+                    userId: e.userId,
                     municipalityId: e.municipalityId,
                 });
                 this.setState({isLoading: false});

@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/styles';
 import {Typography} from "@material-ui/core";
 
 // Service
-import AuthService from '../../../api/services/AuthService';
+import AuthService from '../../api/services/AuthService';
 
 // Material UI components
 import List from '@material-ui/core/List';
@@ -14,8 +14,9 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 
 // Project components
+import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
-import statusLabels from '../../../utils/warningUtils';
+import statusLabels from '../../utils/warningUtils';
 import ContractDialog from "./ContractDialog";
 
 
@@ -27,12 +28,15 @@ const styles = {
 
 class ActionModule extends Component {
     state = {
+        deleteDialogOpen: false,
         statusDialogOpen: false,
         contractDialogOpen: false,
         newStatus: -1,
         statusMsg: '',
         companyId: '',
         contractDesc: '',
+
+        ownWarning: true,
     };
 
     handleNewStatus = (value) => {
@@ -60,11 +64,19 @@ class ActionModule extends Component {
                         Actions:
                     </Typography>
                     <List component="nav" className={classes.root} dense>
+                        {this.state.ownWarning &&
+                        <div>
+                            <ListItem button onClick={() => this.setState(({deleteDialogOpen: true}))}>
+                                <ListItemText primary="Slett varsel"/>
+                            </ListItem>
+                            <Divider/>
+                        </div>
+                        }
                         <ListItem button dense>
                             <ListItemText primary="Varsle meg ved endringer" />
                         </ListItem>
                         <Divider />
-                        
+
                         {AuthService.isEmployee(this.props.municipalityId) &&
                             <Fragment>
                                 <ListItem button dense divider onClick={()=> this.setState(({contractDialogOpen: true}))}>
@@ -77,9 +89,16 @@ class ActionModule extends Component {
                                 <Divider light />
                             </Fragment>
                         }
-                        
+
                     </List>
                 </div>
+                <DeleteDialog
+                    open={this.state.deleteDialogOpen}
+                    onClose={this.handleToggle('deleteDialogOpen')}
+                    submitStatus={this.handleNewStatus}
+                    cancel={this.cancelDialog}
+                    statusNames={statusLabels}
+                />
                 <StatusDialog
                     open={this.state.statusDialogOpen}
                     onClose={this.handleToggle('statusDialogOpen')}

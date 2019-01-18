@@ -119,7 +119,7 @@ class Dashboard extends Component {
             if(isError === false) {
                 this.setState({items: data});
             }
-            this.setState({listIsLoading: false});
+            this.setState({listIsLoading: true});
         });
     };
 
