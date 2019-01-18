@@ -31,7 +31,7 @@ const styles = {
         height: '100vh',
         width: '100vw',
 
-        background: 'url(http://www.freegreatpicture.com/files/photo105/52121-landscape-wallpapers.jpg)',
+        background: 'url(http://paperlief.com/images/snow-mountain-landscape-wallpaper-1.jpg)',
         backgroundSize: 'auto',
         backgroundRepeat: 'no-repeat',
 
@@ -59,8 +59,8 @@ const styles = {
         alignItems: 'center',
 
         '@media only screen and (max-width: 600px)': {
-            height: '100vh',
-            width: '100vw',
+            padding: '30px 30px',
+            width: '76vw',
         }
     },
     logo: {
@@ -123,14 +123,14 @@ class Landing extends Component {
                 <div className={classes.content}>
                     <Paper className={classes.paper} elevation={5}>
                         <img className={classes.logo} src={Logo} />
-                        <div className='pt-10 pb-40'>
+                        <div className='pt-10 pb-20'>
                             <Typography variant='h5' align='center'>
                                 Varsle din kommune om dine kommunale problemer
                             </Typography>
                         </div>
                         <div className={classes.buttonWrapper}>
-                            <Button onClick={() => this.goTo(URLS.createwarning)} variant='outlined' size='small' color='error'>Send varsel<FeedbackIcon className='ml-5' /></Button>
-                            <Button onClick={() => this.goTo(URLS.login)} variant='outlined' size='small' color='primary'><PersonIcon className='mr-5'/> Logg inn</Button>
+                            <Button onClick={() => this.goTo(URLS.createwarning)} variant='outlined' size='medium' color='error'>Send varsel<FeedbackIcon className='ml-5' /></Button>
+                            <Button onClick={() => this.goTo(URLS.login)} variant='outlined' size='medium' color='primary'><PersonIcon className='mr-5'/> Logg inn</Button>
                         </div>
                         <div className='pt-20 pb-20 w-100'>
                             <SearchableDropdown
