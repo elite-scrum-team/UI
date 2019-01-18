@@ -68,7 +68,6 @@ class Dashboard extends Component {
             if(isError === false) {
                 // Get id
                 const id = this.getWarningId();
-                const roles = data.roles;
                 const municipalityId = AuthService.isEmployee();
                 this.setState({id: id, municipalityId: municipalityId});
                 
