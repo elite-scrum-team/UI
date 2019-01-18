@@ -114,6 +114,7 @@ const DetailsDash = (props) => {
                     <div>
                         <Paper elevation={1} className='p-30'>
                             <ActionModule
+                                selectedGroup={this.props.selectedGroup}
                                 className={classes.actionMod}
                                 updateStatus={props.changeStatus}
                                 updateContract={props.changeContract}/>
