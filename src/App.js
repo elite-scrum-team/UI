@@ -20,6 +20,7 @@ import CreateWarning from './containers/CreateWarning';
 import Details from './containers/Details';
 import Dashboard from './containers/Dashboard';
 import CreateNews from './containers/CreateNews';
+import Events from './containers/Events';
 
 // pointless comment
 // The user needs to be authorized (logged in) to access these routes
