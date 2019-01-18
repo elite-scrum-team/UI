@@ -56,6 +56,11 @@ export default {
     // --- MUNICIPALITIES ---
     getMunicipalities: () => {
         return new Fetch(METHODS.get, '/location/municipality');
+    },
+
+    // --- COMPANIES ---
+    getAllCompanies: () => {
+        return new Fetch(METHODS.get, '/user/groups?onlyCompanies=true');
     }
 
 }

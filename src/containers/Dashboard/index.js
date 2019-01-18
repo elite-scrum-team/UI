@@ -139,7 +139,7 @@ class Dashboard extends Component {
         } else if(value === ACTIVE_SECTION) {
             this.getWarnings({onlyStatus: [1,2], ...extraFilter});
         } else if(value === DONE_SECTION) {
-            this.getWarnings({onlyStatus: [3,4], ...extraFilter})
+            this.getWarnings({onlyStatus: [3,4], ...extraFilter});
         }
     };
 

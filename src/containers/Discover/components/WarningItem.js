@@ -40,6 +40,7 @@ const styles = makeStyles({
     },
     imageWrapper: {
         maxWidth: 56,
+        minWidth: 56,
     },
     image: {
         width: '100%',
