@@ -30,7 +30,7 @@ const styles = {
         marginTop: 48,
     },
     leftMargin: {
-      left: 400,
+      left: 450,
       width: 'auto',
       '@media only screen and (max-width: 800px)': {
           left: 0,

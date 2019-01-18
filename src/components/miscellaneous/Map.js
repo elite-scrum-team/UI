@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MAP } from 'react-google-maps/lib/constants';
-import MunicipalityGEOJSON from '../../assets/kommuner.json';
+// import MunicipalityGEOJSON from '../../assets/kommuner.json';
 import mapStyles from '../../assets/mapStyles.json';
 
 // Icons
@@ -97,7 +97,7 @@ const MapWrapper = (props) => {
       // Define the GeoJson object
       let tempGeoJsonObj;
       try {
-        tempGeoJsonObj = MunicipalityGEOJSON;
+        tempGeoJsonObj = {};
         newData.setStyle({
           fillColor: null,
           strokeWeight: 1,
