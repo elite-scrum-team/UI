@@ -6,7 +6,6 @@ export default {
 
   // --- WARNINGS ---
   getWarnings: filters => {
-    console.log('FILTERS: ', filters);
     return new Fetch(
       METHODS.get,
       '/warning?' +
@@ -15,7 +14,7 @@ export default {
               return filters[key] instanceof Array
                 ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
                 : `${key}=${filters[key]}&`;
-            })
+            }).join('')
           : '')
     );
   },

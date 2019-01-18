@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 // Service
 import AuthService from '../../api/services/AuthService';
+import * as UserAction from '../../store/actions/UserAction';
 
 // Material UI components
 import List from '@material-ui/core/List';
@@ -19,7 +20,6 @@ import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
-import * as UserAction from '../../store/actions/UserAction';
 
 const styles = {
   root: {}
@@ -27,7 +27,6 @@ const styles = {
 
 class ActionModule extends Component {
   state = {
-    selected: null,
     deleteDialogOpen: false,
     statusDialogOpen: false,
     contractDialogOpen: false,
@@ -37,21 +36,6 @@ class ActionModule extends Component {
     contractDesc: '',
 
     ownWarning: true
-  };
-
-  componentDidMount() {
-    this.init();
-  }
-
-  init = async () => {
-    if (this.props.company === null) {
-      console.log(this.props.companies);
-      const defaultGroup =
-        this.props.companies.find(e => e.municipalitiyId !== null) ||
-        this.props.companies[0];
-      await this.setState({ selected: defaultGroup });
-      console.log(this.state, defaultGroup);
-    }
   };
 
   checkContract = () => {
@@ -99,7 +83,7 @@ class ActionModule extends Component {
             </ListItem>
             <Divider />
 
-            {(AuthService.isEmployee(this.props.municipalityId) && (
+            {(AuthService.isEmployee(this.props.selectedGroup.municipalityId) && (
               <Fragment>
                 <ListItem
                   button
@@ -161,7 +145,8 @@ class ActionModule extends Component {
 ActionModule.propTypes = {};
 
 const mapStoreToProps = state => ({
-  companies: UserAction.getUserData(state).roles.groups
+  companies: UserAction.getUserData(state).roles.groups,
+  selectedGroup: UserAction.getUserData(state).selectedGroup || {},
 });
 
 export default connect(mapStoreToProps)(withStyles(styles)(ActionModule));

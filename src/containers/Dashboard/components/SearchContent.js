@@ -20,7 +20,7 @@ const styles = makeStyles({
     root: {
         minHeight: 400,
         '@media only screen and (min-width: 601px)': {
-            width: 325
+            width:450
         },
         '@media only screen and (max-width: 600px)': {
             width: '100%'
@@ -53,7 +53,6 @@ const SearchContent = props => {
 
     // Go to login
     const goTo = page => {
-        console.log(props);
         props.history.push(page);
     };
 

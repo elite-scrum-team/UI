@@ -38,6 +38,15 @@ export default class AuthService {
     }
 
     static getUserData = (callback) => {
+        const userData = UserAction.getUserData(store.getState());
+
+        // Check if userData is in the store
+        if(userData.id) {
+            !callback || callback(false, userData);
+            return Promise.resolve(userData);
+        }
+
+        // Otherwise fetch from server
         const response = AUTH.getUserData().response();
         return response.then((data) => {
             if(response.isError === false) {
@@ -46,6 +55,14 @@ export default class AuthService {
             }
             !callback || callback(response.isError, data);
         });
+    }
+
+    static setCurrentGroup = (groupObject) => {
+        UserAction.setCurrentGroup(groupObject)(store.dispatch);
+    }
+
+    static getCurrentGroup = () => {
+        return UserAction.getCurrentGroup(store.getState());
     }
 
     static isEmployee (municipalityId = null) {
@@ -71,7 +88,11 @@ export default class AuthService {
     }
 
     static isAuthenticated () {
-        return typeof TOKEN.get() !== 'undefined'
+        const isAuthenticated = typeof TOKEN.get() !== 'undefined';
+        if(!isAuthenticated) {
+            UserAction.clearUserData()(store.dispatch);
+        }
+        return isAuthenticated;
     }
 
     static logOut() {

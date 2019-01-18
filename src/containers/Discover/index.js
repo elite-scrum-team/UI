@@ -159,17 +159,16 @@ class Discover extends Component {
           lng: location.lng,
           excludeStatus: [0, 4, 5]
         };
-        this.getWarnings(filters)
+        this.getWarnings(filters, false)
       });
     }
 
-    getWarnings = (filters) => {
+    getWarnings = (filters, willGoTo=true) => {
       WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
         if(isError === false) {
-          console.log(data);
           this.setState({items: data.map(e => ({...e, onClick: () => this.detail(e)}))});
           if(data && data.length > 0 && data[0].location) {
-            this.mapGoTo(data[0].location);
+            willGoTo && this.mapGoTo(data[0].location);
             this.setState({currentLocation: data[0].location});
           }
         }

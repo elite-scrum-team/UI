@@ -32,7 +32,7 @@ const styles = {
     leftMargin: {
       left: 450,
       width: 'auto',
-      '@media only screen and (max-width: 800px)': {
+      '@media only screen and (max-width: 960px)': {
           left: 0,
           width: '100%',
       }
@@ -89,16 +89,6 @@ const styles = {
 
 class Navigation extends Component {
 
-    state = {
-        dashboard: false
-    };
-
-    componentDidMount() {
-        this.setState({dashboard: this.isDashboard()})
-    }
-
-    isDashboard = () => {return this.props.match.url === URLS.dashboard};
-
     goTo = (page) => {
         this.props.history.push(page);
     };
@@ -109,7 +99,9 @@ class Navigation extends Component {
     };
 
     groupChange = (selection) => {
-        this.props.selectGroup(selection);
+        if(this.props.selectGroup) {
+            this.props.selectGroup(selection);
+        }
     };
 
     goToHome = () => {
@@ -133,15 +125,13 @@ class Navigation extends Component {
                             </IconButton>
                             </div>
                             {
-                                this.state.dashboard
+                                this.props.dashboard
                                 &&
                                 AuthService.isCompanyOrEmployee()
                                 &&
                                 <CompanyDropdown
-                                    changeGroup={this.groupChange}
+                                    onChange={this.groupChange}
                                     className={classes.companyDropdown}/>
-
-
                             }
 
                         </div>

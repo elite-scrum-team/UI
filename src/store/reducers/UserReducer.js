@@ -8,6 +8,8 @@ const initialState = {
     roles: {
         groups: [],
     },
+
+    selectedGroup: null, // The current selected group
 };
 
 export default function reducer(state = initialState, action) {
@@ -15,18 +17,33 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
 
         case actions.SET_USER_DATA: {
+
+            const groups = action.payload.group ? action.payload.group.map(g => (
+                {name: g.name, id: g.id, municipalitiyId: g.municipalitiy }
+            )) : [];
+
+            // Set default selected group
+            let selectedGroup = null;
+            if(state.selectedGroup === null && groups.length > 0) {
+                selectedGroup = groups.find(e => e.municipalitiyId !== null) || groups[0];
+            }
+
             return {
                 ...state,
                 ...action.payload,
                 roles: {
-                    groups: action.payload.group ? action.payload.group.map(g => (
-                        {name: g.name, id: g.id, municipalitiyId: g.municipalitiy }
-                    )) : [],
-                }
+                    groups: groups
+                },
+                selectedGroup: selectedGroup,
             }
         }
 
+        case actions.SET_CURRENT_GROUP: {
+            return {...state, selectedGroup: action.payload};
+        }
+
         case actions.CLEAR_USER_DATA: {
+            console.log('CLEARING USER DATA');
             return {
                 id: null,
                 email: null,
@@ -36,6 +53,7 @@ export default function reducer(state = initialState, action) {
                     municipalities: [],
                     groups: [],
                 },
+                selectedGroup: null,
             }
         }
 

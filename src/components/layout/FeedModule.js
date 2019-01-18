@@ -20,7 +20,6 @@ const FeedModule = props => {
   // Styling
   const classes = styles();
 
-  console.log(props.items);
   return (
     <div className={classes.root}>
       <CommentBox id={props.id} />
