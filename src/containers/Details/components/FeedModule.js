@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React  from 'react';
 import { makeStyles } from '@material-ui/styles';
+import warningUtils from '../../../utils/warningUtils';
+
 // Material UI components
 
 // Icons
@@ -15,66 +17,47 @@ const styles = makeStyles({
     root: {
         
     },
-
 });
 
 const FeedModule = (props) => {
-    // State
-    const [file, setFile] = useState(null);
 
     // Styling
     const classes = styles();
 
     return (
         <div className={classes.root}>
-            <CommentBox/>
-            {(props.items != null)?(props.items.map((item, index) => {
-                    if(item.type === 'status') {
+            <CommentBox id={props.id}/>
+            {(props.items) && (props.items.map((item, index) => {
+                    if(item.type === 'statuses') {
                         return (
                             <StatusBox
-                                date={item.data.date}
+                                key={item.data.id}
+                                date={item.data.createdAt}
                                 province={item.data.province}
-                                status={item.data.status}
-                                statusMessage={item.data.statusMessage}
-                                statustekst={item.data.statustekst}
+                                status={item.data.type}
+                                statusMessage={item.data.description}
+                                statustekst={warningUtils.statusNames[item.data.type]}
                             />
                         )
                     } else if(item.type === 'comment') {
                         return (
                             <CommentSection
+                                key={item.data.id}
                                 username={item.data.username}
                                 breadtext={item.data.breadtext}
                                 commentDate={item.data.commentDate}
                             />
                         )
+                    } else {
+                        return null;
                     }
-                })):null}
-
-
-            <StatusBox
-                date={props.date}
-                province={props.province}
-                status={props.status}
-                statusMessage={props.statusMessage}
-                statustekst={props.statustekst}
-
-            />
-            <CommentSection
-                username='Ruben Solvang Valen'
-                breadtext='Ja dette blir bra! Kjør på'
-                commentDate={props.date}
-            />
+                }))}
         </div>
     )
 };
 
 FeedModule.propTypes = {
-    commentDate: PropTypes.string,
-    date: PropTypes.string,
-    province: PropTypes.string,
-    status: PropTypes.number,
-    statusMessage: PropTypes.string,
-    statustekst: PropTypes.string,
+    id: PropTypes.string,
     items: PropTypes.array,
 };
 

@@ -1,5 +1,7 @@
 import AUTH from "../auth";
 import { TOKEN } from "../helpers/http";
+import * as UserAction from '../../store/actions/UserAction';
+import store from '../../store/store'
 
 // The userservice will do user related things,
 // and all the methods will return a promise
@@ -9,7 +11,11 @@ export default class AuthService {
         email = email.trim().toLowerCase();
 
         const response = AUTH.createUser(email, password).response();
-        return response.then(data => {
+        return response.then(async data => {
+            if(response.isError === false) {
+                await AuthService.token(email, password);
+            }
+
             !callback || callback(response.isError, data);
             return data;
         });
@@ -21,13 +27,56 @@ export default class AuthService {
         email = email.trim().toLowerCase();
 
         const response = AUTH.token(email, password).response();
-        return response.then((data) => {
+        return response.then(async (data) => {
             if(response.isError === false && data && data.token) {
                 TOKEN.set(data.token);
+                await AuthService.getUserData();
             }
             !callback || callback(response.isError, data);
             return data;
         });
+    }
+
+    static getUserData = (callback) => {
+        const response = AUTH.getUserData().response();
+        return response.then((data) => {
+            if(response.isError === false) {
+                UserAction.setUserData(data)(store.dispatch);
+                data = UserAction.getUserData(store.getState());
+            }
+            !callback || callback(response.isError, data);
+        });
+    }
+
+    static getCompanies (municipalityId = null) {
+        const roles = UserAction.getUserData(store.getState()).roles || {};
+        console.log(UserAction.getUserData(store.getState()) || {});
+        console.log(roles);
+        const groups = roles.groups || [];
+
+        return groups;
+    }
+
+    static isEmployee (municipalityId = null) {
+        const roles = UserAction.getUserData(store.getState()).roles;
+        if(municipalityId) {
+            return roles.groups.filter(e  => e.municipalitiyId === municipalityId)
+        } else {
+            return roles.groups.length > 0 ? roles.groups[0] : false;
+        }
+    }
+
+    static isCompany (companyId = null) {
+        const roles = UserAction.getUserData(store.getState()).roles || {};
+        const groups = roles.groups || [];
+
+        return groups.filter(g => !g.municipalitiyId).length > 0;
+    }
+
+    static isCompanyOrEmployee() {
+        const roles = UserAction.getUserData(store.getState()).roles || {};
+        const groups = roles.groups || [];
+        return groups.length > 0;
     }
 
     static isAuthenticated () {
@@ -39,7 +88,8 @@ export default class AuthService {
         if(!this.isAuthenticated()) {
             return;
         }
-
+        
         TOKEN.remove();
+        UserAction.clearUserData()(store.dispatch);
     }
 }

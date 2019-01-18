@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import URLS from '../../../URLS';
+import keyBy from 'lodash'
+import WarningService from '../../../api/services/WarningService'
 
 // Material UI components
+import Typography from '@material-ui/core/Typography';
 
 // Icons
 
@@ -28,11 +30,12 @@ const WarningList = (props) => {
             {warnings.map((value, index) => (
                 <WarningItem
                     key={value.id || index}
-                    onClick={() => props.goTo(URLS.details.concat(value.id))}
-                    title={value.title}
-                    status={value.status}
+                    onClick={props.detail ? () => props.detail(value) : ()=> props.goTo(URLS.details.concat(value.id))}
+                    title={value.category ? value.category.name : 'Ukjent varsel'}
+                    status={value.status ? value.status.type : 0}
                     description={value.description}/>
             ))}
+            {warnings.length === 0 && <Typography variant='subtitle1' align='center'>Ingen varsel å vise</Typography>}
         </div>
     );
 };

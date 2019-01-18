@@ -59,8 +59,8 @@ const StatusBox = (props) =>  {
     const time = props.date ? moment(props.date).fromNow() : 'Ukjent';
 
     // Initialize status settings
-    const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 3 ? props.status : 1;
-    const statusName = warningUtils.statusNames[statusCode];
+    const statusCode = props.status  !== undefined && props.status >= 0 && props.status <= 4 ? props.status : 0;
+    // const statusName = warningUtils.statusNames[statusCode];
     const statusClasses = warningUtils.getStatusClasses(statusCode)();
 
     return (
@@ -70,7 +70,7 @@ const StatusBox = (props) =>  {
                     <div>
                         <div className={classes.messageText} >
                             <Typography className={classes.provincemessage} variant='caption'>
-                                {props.province} har byttet status til "{<span className={statusClasses.textColor}>{props.statustekst}</span>}"
+                                Status er byttet til "{<span className={statusClasses.textColor}>{props.statustekst}</span>}"
                             </Typography>
                             <Typography color='textSecondary' variant='caption'>
                                 {props.statusMessage}

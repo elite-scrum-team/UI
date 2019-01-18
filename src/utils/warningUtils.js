@@ -2,7 +2,7 @@ import {makeStyles} from '@material-ui/styles';
 
 export const statusColorStyles = [
     {
-        backgroundColor: 'var(--rejected)',
+        backgroundColor: 'var(--inactive)',
     },
     {
         backgroundColor: 'var(--inactive)',
@@ -12,12 +12,15 @@ export const statusColorStyles = [
     },
     {
         backgroundColor: 'var(--done)',
-    }
+    },
+    {
+        backgroundColor: 'var(--rejected)',
+    },
 ];
 
 export const statusBGColorStyles = [
     {
-        border: '2px solid var(--rejected)',
+        border: '2px solid var(--inactive)',
     },
     {
         border: '2px solid var(--inactive)',
@@ -27,12 +30,15 @@ export const statusBGColorStyles = [
     },
     {
         border: '2px solid var(--done)',
-    }
+    },
+    {
+        border: '2px solid var(--rejected)',
+    },
 ];
 
 export const statusTextColorStyles = [
     {
-        color: 'var(--rejected)',
+        color: 'var(--inactive)',
     },
     {
         color: 'var(--inactive)',
@@ -42,15 +48,50 @@ export const statusTextColorStyles = [
     },
     {
         color: 'var(--done)',
-    }
+    },
+    {
+        color: 'var(--rejected)',
+    },
 ];
 
 export default {
-    statusNames: ['Avslått', 'Inaktiv', 'Pågående', 'Ferdig'],
+    statusNames: ['Ikke behandlet', 'Behandlet', 'Pågående', 'Ferdig', 'Avslått'],
+
+    //MÅ STÅ I RIKTIG REKKEFØLGE
+    statusLabels: ['Anerkjent', 'Arbeid påbegynt','Ferdig','Avslått'],
+
 
     getStatusClasses: (statusCode) => makeStyles({
         color: statusColorStyles[statusCode],
         border: statusBGColorStyles[statusCode],
         textColor: statusTextColorStyles[statusCode],
     }),
+
+    getAllStatusClasses: [
+        makeStyles({
+            color: statusColorStyles[0],
+            border: statusBGColorStyles[0],
+            textColor: statusTextColorStyles[0],
+        }),
+        makeStyles({
+            color: statusColorStyles[1],
+            border: statusBGColorStyles[1],
+            textColor: statusTextColorStyles[1],
+        }),
+        makeStyles({
+            color: statusColorStyles[2],
+            border: statusBGColorStyles[2],
+            textColor: statusTextColorStyles[2],
+        }),
+        makeStyles({
+            color: statusColorStyles[3],
+            border: statusBGColorStyles[3],
+            textColor: statusTextColorStyles[3],
+        }),
+        makeStyles({
+            color: statusColorStyles[4],
+            border: statusBGColorStyles[4],
+            textColor: statusTextColorStyles[4],
+        }),
+    ]
 }

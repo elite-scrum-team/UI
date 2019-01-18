@@ -1,22 +1,19 @@
-import React, {Component, useState} from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import {makeStyles} from '@material-ui/styles';
+import URLS from '../../URLS';
+
+// Service imports
+import CategoryService from '../../api/services/CategoryService';
+import WarningService from '../../api/services/WarningService';
+import GeoService from '../../api/services/GeoService';
 
 // Material UI components
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import Fab from '@material-ui/core/Fab';
-
+import Typography from '@material-ui/core/Typography';
 
 // Icons
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-
 
 //Project components
 import Navigation from '../../components/navigation/Navigation';
@@ -25,18 +22,26 @@ import CategoryStep from './components/CategoryStep';
 import MapStep from './components/MapStep';
 import DescriptionStep from './components/DescriptionStep';
 import PictureStep from './components/PictureStep';
-import Typography from '@material-ui/core/Typography';
 import ConfirmDialog from './components/ConfirmDialog';
+import MessageDialog from '../../components/miscellaneous/MessageDialog';
 
 
 const styles = {
     root: {},
     card: {
-        maxWidth: '600px',
-        margin: 'auto',
-        marginTop: '100px',
-        marginBottom: '50px',
+        maxWidth: 800,
+        margin: '100px auto 50px auto',
 
+        '@media only screen and (max-width: 600px)': {
+            marginTop: 0,
+            marginBottom: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+        }
+
+    },
+    content: {
+        paddingTop: 20,
     },
     button: {
         // left: '50px',
@@ -56,6 +61,14 @@ const styles = {
     right: {
         marginLeft: '50px',
         marginBottom: '20px',
+    },
+    fillSection: {
+        marginLeft: '50px',
+        marginBottom: '20px',
+
+        '@media only screen and (max-width: 600px)': {
+            marginLeft: 0,
+        }
     },
     imageDiv: {
         maxWidth: '450px',
@@ -81,6 +94,9 @@ const styles = {
         display: 'block',
         marginTop: '30px',
         marginBottom: '10px',
+    },
+    bottom: {
+        paddingBottom: 30,
     }
 }
 
@@ -88,31 +104,73 @@ const styles = {
 class CreateWarning extends Component {
 
     state = {
+        isLoading: true,
+        isSending: false,
         open: false,
+        isError: false,
+        confirmDialogOpen: false,
+        currentLocation: {
+            lat: 63.428322,
+            lng: 10.392774,
+        },
+
+        // Data
+        categories: [], // id and name
+        
+        // User created data
         images: [],
         imageFiles: [],
         category: null,
         description: '',
         location: null,
-        confirmDialogOpen: false,
     };
 
-    handleClickOpen = () => {
-        this.setState({
-            open: true,
+    componentDidMount() {
+
+        // Get all categories
+        CategoryService.getCategories((isError, data) => {
+            console.log(data);
+            if(isError) {
+                console.log("Error fetching categories");
+            } else {
+                this.setState({categories: data});
+            }
+            this.setState({isLoading: false});
         });
-    };
 
-    openConfirmDialog = () => {
-        this.setState({
-            confirmDialogOpen: true,
-        })
+        // Ask for current location
+        GeoService.getGeoLocation((e) =>
+            this.setState({currentLocation: {lat: e.coords.latitude, lng: e.coords.longitude}})
+        );
     }
 
-    closeConfirmDialog = () => {
-        this.setState({
-            confirmDialogOpen: false,
-        })
+    sendWarning = () => {
+        // Do nothing if already loading
+        if(this.state.isLoading) {
+            return;
+        }
+
+        // Warning object to send
+        const warning = {
+            description: this.state.description,
+            location: this.state.location,
+            categoryId: this.state.category.id,
+            images: this.state.imageFiles,
+        }
+
+        this.setState({isSending: true});
+        WarningService.createWarning(warning, (isError, data) => {
+            console.log(data);
+            if(isError) {
+                this.setState({isError: true, isSending: false, confirmDialogOpen: false});
+            } else {
+                this.props.history.push(URLS.details.concat(data.id));
+            }
+        });
+    }
+
+    handleToggle = (name) => (event) => {
+        this.setState({[name]: !this.state[name]});
     }
 
     handleClickDelete = index => {
@@ -129,9 +187,8 @@ class CreateWarning extends Component {
         this.setState({images: images, imageFiles: imageFiles});
     };
 
-
     onImageChange = (event) => {
-        console.log(event.target.files);
+        
         // Function for reading and adding an image
         const readImage = (file) => {
             let reader = new FileReader();
@@ -143,7 +200,6 @@ class CreateWarning extends Component {
                 imageFiles.push(file);
 
                 this.setState({images: images, imageFiles: imageFiles});
-                console.log(this.state.images);
             };
 
             reader.readAsDataURL(file);
@@ -151,95 +207,105 @@ class CreateWarning extends Component {
 
         // Read images
         if (event.target.files && event.target.files[0]) {
-
-
             [].forEach.call(event.target.files, readImage)
-            // for(let i = 0; i < event.target.files.length; i++) {
-            //     reader.readAsDataURL(event.target.files[i]);
-            // }
-            //event.target.files.forEach((image) => );
-
         }
+
+        console.log(this.state.currentLocation)
     }
 
     setCategory = (data) => {
-        console.log(data);
         this.setState({category: data})
     }
 
     mapClickCallback = (data) => {
-        console.log(data);
         this.setState({location: data});
     }
 
     setDescription = (data) => {
-        console.log(data);
         this.setState({description: data});
+    }
+
+    canSendWarning = () => {
+        return this.state.category !== null && this.state.location !== null && this.state.description.length > 2;
     }
 
     render() {
         const {classes} = this.props;
 
         return (
-            <Navigation>
-                <Card className={classes.card}>
-                    <CardContent>
-                        <div>
-                            <Typography className={classes.title} gutterBottom variant='h2' component='h2'>
-                                Registrer varsel
-                            </Typography>
-                        </div>
-                        <Divider/>
+            <Navigation isLoading={this.state.isLoading}>
+                {this.state.isLoading ? null :
+                    <Paper className={classes.card}>
+                        <div className={classes.content}>
+                            <div>
+                                <Typography className={classes.title} gutterBottom variant='h2' component='h2'>
+                                    Registrer varsel
+                                </Typography>
+                            </div>
+                            <Divider/>
 
-                        <Step number={1} step={'Kategori'} description={'Velg den kategorien som passer best.'}/>
-                        <div className={classes.right}>
-                            <CategoryStep
-                                categoryCallback={(e) => this.setCategory(e)}
-                            />
-                        </div>
-                        <Divider/>
+                            <Step number={1} step={'Kategori'} description={'Velg den kategorien som passer best.'}/>
+                            <div className={classes.right}>
+                                <CategoryStep
+                                    categories={this.state.categories}
+                                    categoryCallback={(e) => this.setCategory(e)}
+                                />
+                            </div>
+                            <Divider/>
 
-                        <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
-                        <div className={classes.right}>
-                            <MapStep
-                                location={this.state.location}
-                                mapMarkerCallback={(e) => this.mapClickCallback(e)}
-                            />
-                        </div>
-                        <Divider/>
+                            <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
+                            <div className={classes.fillSection}>
+                                <MapStep
+                                    location={this.state.currentLocation}
+                                    mapMarkerCallback={(e) => this.mapClickCallback(e)}
+                                />
+                            </div>
+                            <Divider/>
 
-                        <Step number={3} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
-                        <div className={classes.right}>
-                            <DescriptionStep
-                                setDescriptionCallback={(e) => this.setDescription(e)}
-                            />
-                        </div>
-                        <Divider/>
+                            <Step number={3} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
+                            <div className={classes.right}>
+                                <DescriptionStep
+                                    setDescriptionCallback={(e) => this.setDescription(e)}
+                                />
+                            </div>
+                            <Divider/>
 
-                        <Step number={4} step={'Bilde'}
-                              description={'Last opp eventuelle bilder som beskriver problemet.'}/>
-                        <div className={classes.right}>
-                            <PictureStep
-                                images={this.state.images}
-                                onImageChangeCallback={(event) => this.onImageChange(event)}
-                                handleClickDeleteCallback={(index) => this.handleClickDelete(index)}
-                            />
+                            <Step number={4} step={'Bilde'}
+                                description={'Last opp eventuelle bilder som beskriver problemet.'}/>
+                            <div className={classes.fillSection}>
+                                <PictureStep
+                                    images={this.state.images}
+                                    onImageChangeCallback={(event) => this.onImageChange(event)}
+                                    handleClickDeleteCallback={(index) => this.handleClickDelete(index)}
+                                />
 
-                        </div>
-                        <Divider/>
+                            </div>
+                            <Divider/>
 
-                        <div>
-                            <Button variant="contained" size={'large'} ize color='primary'
+                            <div className={classes.bottom}>
+                                <Button variant="contained" size={'large'} color='primary'
                                     className={classes.registerButton}
-                                    onClick={() => this.openConfirmDialog()}
-                            >
-                                Send inn
-                            </Button>
-                            <ConfirmDialog open={this.state.confirmDialogOpen} closeConfirmDialogCallback={() => this.closeConfirmDialog()}/>
-                        </div>
+                                    onClick={this.handleToggle('confirmDialogOpen')}
+                                    disabled={!this.canSendWarning()}
+                                >
+                                    Send inn
+                                </Button>
+                                <ConfirmDialog
+                                    open={this.state.confirmDialogOpen}
+                                    onSubmit={this.sendWarning}
+                                    isLoading={this.state.isSending}
+                                    closeConfirmDialogCallback={this.handleToggle('confirmDialogOpen')}/>
+                            </div>
 
-                    </CardContent>
-                </Card>
+                        </div>
+                    </Paper>
+                }
+                <MessageDialog
+                    open={this.state.isError}
+                    onClose={this.handleToggle('isError')}
+                    title={'Det oppstod en feil'}
+                    content='Kunne ikke sende varselen til kommunen'
+                    error={true}/>
             </Navigation>
         )
     }

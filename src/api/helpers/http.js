@@ -1,4 +1,3 @@
-// @flow
 import Cookies from "universal-cookie";
 import {
   BASE_API_URL as BASE,
@@ -8,15 +7,16 @@ import {
 import * as reqs from "./helpers";
 
 export default class Fetch {
-  constructor(method, url, data = {}, args = {}, withAuth = true) {
+  constructor(method, url, data = null, args = {}, withAuth = true) {
     this.method = method;
     this.data = data;
     this.headers = { "Content-Type": "application/json" };
     this.url = BASE + url;
 
     // Adds token to Authentication header
-    if (withAuth) {
-      this.headers[TOKEN_HEADER_NAME] = "Bearer " + TOKEN.get();
+    const token = TOKEN.get();
+    if (withAuth && token) {
+      this.headers[TOKEN_HEADER_NAME] = 'Bearer '.concat(token);
     }
   }
 

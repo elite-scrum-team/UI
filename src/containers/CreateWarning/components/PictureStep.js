@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 
 // Material UI components
 import Fab from "@material-ui/core/Fab";
 
 // Icons
-import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddPhotoAlternate from "../../../../node_modules/@material-ui/icons/AddPhotoAlternate";
+import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate";
 import IconButton from "@material-ui/core/IconButton";
 
 // Project components
@@ -17,23 +14,35 @@ import IconButton from "@material-ui/core/IconButton";
 // Styling
 const styles = makeStyles({
     imageDiv: {
-        maxWidth: '450px',
+        marginTop: 10,
+        maxWidth: 275,
         maxHeight: '350px',
         position: 'relative',
-        marginTop: '30px',
-        marginRight: '30px',
+
+        '@media only screen and (max-width: 600px)': {
+            maxWidth: '90vw',
+            display: 'block',
+            margin: 'auto',
+        }
     },
     image: {
         width: '100%',
         height: 'auto',
         objectFit: 'cover',
-        maxWidth: '100%',
         maxHeight: '300px',
+        maxWidth: '90vw',
+        display: 'block',
+        margin: 'auto',
     },
     deleteImg: {
         right: '-20px',
         top: '-20px',
         position: 'absolute',
+    },
+    inputSection: {
+        '@media only screen and (max-width: 600px)': {
+            marginLeft: 50,
+        }
     }
 });
 
@@ -52,7 +61,7 @@ const PictureStep = (props) => {
                 type="file"
                 onChange={props.onImageChangeCallback}
             />
-            <div>
+            <div className={classes.inputSection}>
                 <label htmlFor="upload-button">
                     <IconButton color="primary" aria-label="Add" component="span" className={classes.button}>
                         <AddPhotoAlternate fontSize={'large'} className={classes.bookmark} color='action'/>
@@ -61,7 +70,7 @@ const PictureStep = (props) => {
             </div>
             {props.images.map((img, index) => (
                 <div className={classes.imageDiv} key={index}>
-                    <img className={classes.image} id="target" src={img}/>
+                    <img className={classes.image} id="target" src={img} alt='warningvisual'/>
                     <Fab className={classes.deleteImg} value={index}
                          onClick={() => props.handleClickDeleteCallback(index)} color="secondary" size='small'
                          aria-label="Add" component="span">

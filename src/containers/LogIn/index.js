@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import URLS from "../../URLS";
@@ -14,6 +13,9 @@ import Progress from "./components/Progress";
 
 // Service import
 import AuthService from "../../api/services/AuthService";
+
+// External imports
+import queryString from 'query-string'
 
 // Project Components
 const styles = theme => ({
@@ -42,12 +44,24 @@ class LogIn extends Component {
   state = {
     isSignIn: true,
     isLoading: false,
-    errorMessage: ""
+    errorMessage: "",
   };
+
+  componentDidMount() {
+    console.log(this.props.location);
+    if(AuthService.isAuthenticated()) {
+      this.props.history.replace(URLS.discover);
+    }
+
+  }
 
   changeTab = value => {
     this.setState({ isSignIn: value });
   };
+
+  goTo = (page) => {
+    this.props.history.push(page);
+  }
 
   logIn = (email, password) => event => {
     event.preventDefault();
@@ -63,7 +77,9 @@ class LogIn extends Component {
         });
       } else {
         // Go to home page
-        this.props.history.push(URLS.home);
+        const queryParams = queryString.parse(this.props.location.search);
+        const urls = queryParams.redirect ? queryParams.redirect : URLS.discover;
+        this.props.history.push(urls);
       }
       this.setState({ isLoading: false });
     });
@@ -88,7 +104,9 @@ class LogIn extends Component {
           errorMessage: "the email address alrealy exists"
         });
       } else {
-        this.props.history.push(URLS.home);
+        const queryParams = queryString.parse(this.props.location.search);
+        const urls = queryParams.redirect ? queryParams.redirect : URLS.discover;
+        this.props.history.push(urls);
       }
       this.setState({ isLoading: false });
     });
@@ -100,7 +118,7 @@ class LogIn extends Component {
       <div>
         <main className={classes.main}>
           <Paper className={classes.paper}>
-            <Logo />
+            <Logo onClick={() => this.goTo(URLS.home)}/>
             {this.state.isLoading ? (
               <Progress />
             ) : (

@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 
 // Material UI components
 import Avatar from '@material-ui/core/Avatar';
@@ -15,14 +13,15 @@ const styles = makeStyles({
     root: {
         display: 'flex',
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 15,
+        marginLeft: 12,
     },
     text: {
         marginLeft: 12,
     }
 });
 
-const TemplateComponent = (props) => {
+const Step = (props) => {
 
     // Styling
     const classes = styles();
@@ -42,5 +41,5 @@ const TemplateComponent = (props) => {
     )
 }
 
-export default (TemplateComponent);
+export default (Step);
 

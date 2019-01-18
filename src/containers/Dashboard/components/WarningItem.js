@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
 import warningUtils from '../../../utils/warningUtils';
 import classNames from 'classnames';
 
@@ -14,37 +12,43 @@ import Typography from '@material-ui/core/Typography';
 
 // Project components
 
-
 const styles = makeStyles({
     root: {
-        width: '100%',
+        width: '100%'
     },
     paper: {
         width: '100%',
         position: 'relative',
         padding: 10,
-        marginBottom: 4,
+        marginBottom: 4
     },
     statusBar: {
         position: 'absolute',
-        top: 6, bottom: 6, left: 6,
+        top: 6,
+        bottom: 6,
+        left: 6,
         borderRadius: 4,
-        width: 4,
+        width: 4
     },
     content: {
         marginLeft: 12,
     }
 });
 
-const WarningItem = (props) => {
+const WarningItem = props => {
     // Styling
     const classes = styles();
 
-    const statusCode = (props.status !== 'undefined' && props.status >= 0 && props.status <= 3) ? props.status : 1;
+    const statusCode = (props.status !== 'undefined' && props.status >= 0 && props.status <= 4) ? props.status : 1;
     const statusClasses = warningUtils.getStatusClasses(statusCode)();
 
+    const clickButton = () => {
+        props.onClick();
+        props.mountWarningCallback(props.id);
+    } ;
+
     return (
-        <ButtonBase className={classes.root} onClick={props.onClick}> 
+        <ButtonBase className={classes.root} onClick={() => clickButton()}>
             <Paper className={classes.paper}>
                 <div className={classNames(classes.statusBar, statusClasses.color)} />
                 <div className={classes.content}>
@@ -56,4 +60,4 @@ const WarningItem = (props) => {
     )
 };
 
-export default (WarningItem);
+export default WarningItem;

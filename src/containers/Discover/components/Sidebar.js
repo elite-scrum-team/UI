@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 
 // Material UI components
 import Drawer from '@material-ui/core/Drawer';
@@ -11,12 +9,17 @@ import Drawer from '@material-ui/core/Drawer';
 // Project components
 import SearchContent from './SearchContent';
 
-const drawerWidth = 325;
+const drawerWidth = 450;
 
 const styles = makeStyles({
     root: {
         width: drawerWidth,
         borderRight: 'none',
+    },
+    progress: {
+        display: 'block',
+        margin: 'auto',
+        marginTop: 12,
     }
 });
 
@@ -31,7 +34,7 @@ const Sidebar = (props) => {
                 classes= {{
                     paper: classes.root,
                 }}>
-                <SearchContent {...props} />
+                <SearchContent {...props} detail={props.detail} />
             </Drawer>
         </div>
     )

@@ -13,13 +13,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
+import IconButton from "@material-ui/core/IconButton";
 
 // Assets/Icons
 import Add from '@material-ui/icons/Add';
-
+import Logo from '../miscellaneous/Logo';
 
 // Project components
+import CompanyDropdown from '../miscellaneous/CompanyDropdown'
 
 const styles = {
     appbar: {
@@ -27,13 +28,14 @@ const styles = {
     },
     main: {
         marginTop: 48,
-        '@media only screen and (max-width: 600px)': {
-            marginTop: 56,
-        },
     },
     leftMargin: {
-      
-      right: 'auto',
+      left: 450,
+      width: 'auto',
+      '@media only screen and (max-width: 800px)': {
+          left: 0,
+          width: '100%',
+      }
     },
     navContent: {
         display: 'flex',
@@ -57,20 +59,57 @@ const styles = {
     smallIcon: {
         height: 16,
         width: 16,
+    },
+    SVGLogo: {
+        fill: '#fff',
+        height: '100%',
+        width: '100%',
+    },
+    logoWrapper: {
+        minWidth: 50,
+        minHeight: 50,
+      height: 50,
+      width: 50,
+    },
+    leftSection:{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 50,
+        width: 50
+    },
+    companyDropdown: {
+        alignSelf: 'start',
+        textColor: '#fff',
+        width: 200,
     }
 };
 
 
 class Navigation extends Component {
 
+    state = {
+        dashboard: false
+    };
+
+    componentDidMount() {
+        this.setState({dashboard: this.isDashboard()})
+    }
+
+    isDashboard = () => {return this.props.match.url === URLS.dashboard};
+
     goTo = (page) => {
         this.props.history.push(page);
-    }
+    };
 
     logOut = () => {
         AuthService.logOut();
         this.props.history.push(URLS.home);
-    }
+    };
+
+    groupChange = (selection) => {
+        this.props.selectGroup(selection);
+    };
 
     render() {
         const {classes} = this.props;
@@ -78,10 +117,32 @@ class Navigation extends Component {
             <Fragment>
                 <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
-                        <div>
+                        <div className={classes.leftSection} >
+                            <div className={classes.logoWrapper}>
+                            <IconButton onClick={()=>this.goTo(URLS.discover)}>
+                                <Logo className={classes.SVGLogo}/>
+                            </IconButton>
+                            </div>
+                            {
+                                this.state.dashboard
+                                &&
+                                AuthService.isCompanyOrEmployee()
+                                &&
+                                <CompanyDropdown
+                                    changeGroup={this.groupChange}
+                                    className={classes.companyDropdown}/>
+
+
+                            }
 
                         </div>
                         <div className={classes.flex}>
+                            {AuthService.isEmployee() &&
+                                    <Button
+                                        className={classes.logInButton}
+                                        size='small'
+                                        onClick={() => this.goTo(URLS.dashboard)}>Dashboard</Button>
+                            }
                             <div>
                                 {AuthService.isAuthenticated()?
                                 <Button

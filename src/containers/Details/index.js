@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import URLS from '../../URLS';
 
 // Material UI components
 import Paper from '@material-ui/core/Paper';
@@ -26,12 +27,12 @@ const styles = {
     },
     content: {
         display: 'grid',
-        
+
         gridTemplateColumns: '1fr 3fr',
         gridGap: '14px',
 
         marginTop: 14,
-        
+
         '@media only screen and (max-width: 1000px)': {
             padding: '0 4px',
         },
@@ -44,94 +45,141 @@ const styles = {
         display: 'inline',
         height: 'auto'
     }
-}
+};
 
 class Details extends Component {
 
     state = {
         isLoading: false,
 
+        id: null,
         title: null,
-        warnDate: null,
+        posted: null,
         status: 1,
-        province: null,
         statusMessage: null,
         description: null,
         location: {
             lat: 0,
             lng: 0,
         },
+        municipality: null,
         images: null,
-        items: null,
+
+        items: [],
     };
 
-    componentDidMount() {
-        this.setState({isLoading: true});
+    getWarningId = () => this.props.match.params.id;
 
-        WarningService.getWarning(1, (isError, data) => {
-            if(isError === false){
-                this.setState({
-                    title: data.title,
-                    warnDate: data.warnDate,
-                    status: data.status,
-                    province: data.province,
-                    statusMessage: data.statusMessage,
-                    description: data.description,
-                    location: data.location,
-                    images: data.images,
-                    items: data.items,
-                })
+    componentDidMount() {
+        // Get id
+        const id = this.getWarningId();
+
+        console.log(id);
+
+        this.setState({id: id, isLoading: true});
+
+        // Get warning
+        WarningService.getWarning(id, async (isError, e) => {
+            if(isError === false) {
+                await this.setState({
+                    title : e.category.name,
+                    posted: e.createdAt,
+                    status: e.status ? e.status.type : 0,
+                    statusMessage: e.status ? e.status.description : '',
+                    description : e.description,
+                    location: e.location,
+                    images: e.images,
+                    municipality: e.municipality,
+                    municipalityId: e.municipalityId,
+                });
+                this.setState({isLoading: false});
+
+                // Get warning content (comments, statuses, contracts)
+                await WarningService.getWarningItems(id)
+                .then((data) => {
+                    this.setState({items: data});
+                });
+            } else {
+                // The warning does not exist, go to frontpage
+                this.props.history.push(URLS.home);
             }
-            this.setState({isLoading: false});
+
         });
 
     }
+
+    changeStatus = (newStatus) => {
+        console.log(newStatus);
+        const status = newStatus.status + 1;
+
+        WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
+        .then((data) => {
+            this.addItem({
+                type: 'statuses',
+                data,
+            });
+            WarningService.getWarningItems(this.getWarningId())
+            .then((data) => {
+                this.setState({items: data, status: status});
+            })
+        });
+    };
+
+    changeContract = (newContract) => {
+        console.log(newContract);
+    };
+
+    addItem = (item) => {
+        WarningService.addWarningItem(this.getWarningId(), item.type, item.data);
+        const items = Object.assign([], this.state.items);
+        items.push(item);
+        this.setState({items});
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Navigation isLoading={this.state.isLoading}>
+                {this.state.isLoading ? null :
                 <div className={classes.root}>
                     <Paper elevation={1}>
-                        <WarningDetails 
+                        <WarningDetails
                             title={this.state.title}
-                            date={this.state.warnDate}
+                            date={this.state.posted}
                             status={this.state.status}
-                            province={this.state.province}
                             statusMessage={this.state.statusMessage}
                             description={this.state.description}
                             location={this.state.location}
+                            municipality={this.state.municipality}
                             />
                         <Divider />
                         <ImageGrid
-                            images={[
-                                'https://wtop.com/wp-content/uploads/2018/02/1pothole-727x485.jpg',
-                                'https://wtop.com/wp-content/uploads/2018/02/1pothole-727x485.jpg',
-                                'https://wtop.com/wp-content/uploads/2018/02/1pothole-727x485.jpg',
-                            ]}
+                            images={this.state.images}
                             />
                     </Paper>
                     <div className={classes.content}>
                         <div>
-                            <Paper elevation={1} className='p-30'>
-                                <ActionModule className={classes.actionMod} />
+                            <Paper elevation={1} className='p-20'>
+                                <ActionModule
+                                    className={classes.actionMod}
+                                    updateStatus={this.changeStatus}
+                                    updateContract={this.changeContract}
+                                    municipalityId={this.state.municipalityId}
+                                />
                             </Paper>
                         </div>
                         <div>
                             <FeedModule
-                                province='Trondheim Kommune'
-                                status={3}
-                                date='2019-01-09T21:39:59+01:00'
-                                statustekst='Work in Progress'
-                                statusMessage='Har sagt i fra til bedrift bla bla bla'
+                                id={this.state.id}
                                 items={this.state.items}
                             />
                         </div>
                     </div>
                 </div>
-                </Navigation>
+                }
+            </Navigation>
         )
     }
 }
 
-export default withStyles(styles)(Details);
+export default (withStyles(styles)(Details));

@@ -1,10 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 import moment from 'moment';
-
-
 
 // Material UI components
 import Avatar from '@material-ui/core/Avatar';
@@ -17,7 +14,7 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 
 const styles = makeStyles({
     root: {
-        paddingTop: 10
+        paddingTop: 4
     },
     userInfo:{
         alignItems: 'center',
@@ -44,7 +41,6 @@ const styles = makeStyles({
 
 const CommentSection = (props) => {
     // State
-    const [data, setData] = useState({});
     const time = props.commentDate ? moment(props.commentDate).fromNow() : 'Ukjent';
 
 
