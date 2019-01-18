@@ -129,7 +129,7 @@ class Landing extends Component {
             <div className={classes.root}>
                 <div className={classes.content}>
                     <Paper className={classes.paper} elevation={5}>
-                        <img className={classes.logo} src={Logo} />
+                        <img className={classes.logo} src={Logo} alt='Hverdagshelt logo'/>
                         <div className='pt-10 pb-20'>
                             <Typography variant='h5' align='center'>
                                 Varsle din kommune om dine kommunale problemer

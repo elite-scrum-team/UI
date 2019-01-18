@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import URLS from '../../../URLS';
-import keyBy from 'lodash'
-import WarningService from '../../../api/services/WarningService'
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';

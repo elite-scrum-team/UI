@@ -81,7 +81,8 @@ const SmallDetail = (props) => {
                     <InformationCard status={`Status: ${statusName}`} color={statusClasses} time={time} municipality={props.item.municipality}/>
                     <TextCard text={props.item.description}/>
                     <TextCard text={props.item.status.description} gray/>
-                    {props.item.images && props.item.images.length > 0 ? <img className={classes.image} src={props.item.images[0]}/> : null }
+                    {props.item.images && props.item.images.length > 0 ?
+                        <img className={classes.image} src={props.item.images[0]} alt={props.item.category.name}/> : null }
                 </div>
                 </div>
                 }
