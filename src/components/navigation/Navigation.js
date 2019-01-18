@@ -93,7 +93,6 @@ class Navigation extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.match.url === URLS.dashboard);
         this.setState({dashboard: this.isDashboard()})
     }
 
@@ -106,6 +105,10 @@ class Navigation extends Component {
     logOut = () => {
         AuthService.logOut();
         this.props.history.push(URLS.home);
+    };
+
+    groupChange = (selection) => {
+        this.props.selectGroup(selection);
     };
 
     render() {
@@ -125,7 +128,9 @@ class Navigation extends Component {
                                 &&
                                 AuthService.isCompanyOrEmployee()
                                 &&
-                                <CompanyDropdown className={classes.companyDropdown}/>
+                                <CompanyDropdown
+                                    changeGroup={this.groupChange}
+                                    className={classes.companyDropdown}/>
 
 
                             }

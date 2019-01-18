@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import URLS from '../../URLS';
 
 // Service imports
 import AuthService from '../../api/services/AuthService';
@@ -16,7 +15,6 @@ import WarningService from "../../api/services/WarningService";
 import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
 import SearchContent from "./components/SearchContent";
-import WarningList from "./components/WarningList";
 
 const styles = {
     root: {
@@ -28,7 +26,7 @@ const styles = {
             marginTop: '48px',
         }
     },
-}
+};
 
 const NEW_SECTION = 0;
 const ACTIVE_SECTION = 1;
@@ -56,7 +54,6 @@ class Dashboard extends Component {
         statusChange: 1,
         search: '',
         warningItems: [],
-
 
         items: [],
 
@@ -145,7 +142,12 @@ class Dashboard extends Component {
         } else if(value === DONE_SECTION) {
             this.getWarnings({onlyStatus: [3,4], ...extraFilter})
         }
-    }
+    };
+
+    groupSelect = (selection) => {
+        this.setState({selectedGroup: selection});
+        console.log(selection)
+    };
 
     onSearch = (event) => {
         event.preventDefault();
@@ -170,7 +172,9 @@ class Dashboard extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <Navigation isLoading={this.state.isLoading}>
+            <Navigation
+                selectGroup={this.groupSelect}
+                isLoading={this.state.isLoading}>
                 <div className={classes.root}>
                     <div>
                         <Hidden implementation='js' xsDown>
