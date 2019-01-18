@@ -31,8 +31,11 @@ const styles = {
     },
     leftMargin: {
       left: 400,
-      right: 0,
       width: 'auto',
+      '@media only screen and (max-width: 800px)': {
+          left: 0,
+          width: '100%',
+      }
     },
     navContent: {
         display: 'flex',

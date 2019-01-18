@@ -31,9 +31,11 @@ const styles = {
         height: '100vh',
         width: '100vw',
 
-        background: 'url(http://paperlief.com/images/snow-mountain-landscape-wallpaper-1.jpg)',
+      /*   background: 'url(http://paperlief.com/images/snow-mountain-landscape-wallpaper-1.jpg)',
         backgroundSize: 'auto',
         backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white', */
+        backgroundColor: 'white',
 
         maxHeight: '100vh',
         overflow: 'hidden', 
@@ -49,9 +51,10 @@ const styles = {
     paper: {
         
         width: '100vw',
-        maxWidth: 900,
+        maxWidth: 400,
+        display: 'block',
         margin: 'auto',
-        padding: 30,
+        padding: 48,
 
         display: 'flex',
         flexDirection: 'column',
@@ -70,7 +73,7 @@ const styles = {
     },
     input: {
         width: '80vw',
-        maxWidth: 500,
+        maxWidth: 400,
     },
     buttonWrapper: {
         display: 'flex',
@@ -79,7 +82,15 @@ const styles = {
         marginTop: 12,
         maxWidth: 400,
 
-    }
+        '@media only screen and (max-width: 600px)': {
+            flexDirection: 'column',
+        }
+    },
+    mb: {
+        '@media only screen and (max-width: 600px)': {
+            marginBottom: 10,
+        }
+    },
 }
 
 class Landing extends Component {
@@ -128,8 +139,8 @@ class Landing extends Component {
                             </Typography>
                         </div>
                         <div className={classes.buttonWrapper}>
-                            <Button onClick={() => this.goTo(URLS.createwarning)} variant='outlined' size='medium' color='error'>Send varsel<FeedbackIcon className='ml-5' /></Button>
-                            <Button onClick={() => this.goTo(URLS.login)} variant='outlined' size='medium' color='primary'><PersonIcon className='mr-5'/> Logg inn</Button>
+                            <Button className={classes.mb} onClick={() => this.goTo(URLS.createwarning)} variant='outlined' size='medium' color='default'>Send varsel<FeedbackIcon className='ml-5' /></Button>
+                            <Button className={classes.mb} onClick={() => this.goTo(URLS.login)} variant='outlined' size='medium' color='primary'><PersonIcon className='mr-5'/> Logg inn</Button>
                         </div>
                         <div className='pt-20 pb-20 w-100'>
                             <SearchableDropdown
