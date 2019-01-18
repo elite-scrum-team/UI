@@ -50,19 +50,22 @@ class CompanyDropdown extends Component {
     };
 
     handleChange = (name) => (event) => {
-        console.log("1: " + this.state.selected)
-        console.log("2: " + JSON.stringify(event.target.value));
         this.setState({[name]: event.target.value});
         this.props.changeGroup(event.target.value);
     };
 
     componentDidMount() {
-        this.init();
+        this.setDefaultGroup(this.props.companies);
     }
 
-    init = async () => {
-        console.log(this.props.companies);
-        const defaultGroup = this.props.companies.find(e => e.municipalitiyId !== null) || this.props.companies[0];
+    componentDidUpdate(prevProps) {
+        if(this.props.companies && prevProps.companies !== this.props.companies) {
+            this.setDefaultGroup(this.props.companies);
+        }
+    }
+
+    setDefaultGroup = async (companies) => {
+        const defaultGroup = companies.find(e => e.municipalitiyId !== null) || companies[0];
         await this.setState({selected: defaultGroup});
         console.log(this.state, defaultGroup);
     }
