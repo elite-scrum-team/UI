@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 
 // Service imports
 import AuthService from '../../api/services/AuthService';
+import ContractService from '../../api/services/ContractService';
 
 // Material UI components
 import Sidebar from './components/Sidebar';
@@ -173,6 +174,21 @@ class Dashboard extends Component {
         });
     };
 
+    changeContract = newContract => {
+        const warningId = this.getWarningId();
+        ContractService.createContract(
+          warningId,
+          newContract.companyId,
+          newContract.description
+        ).then(data => {
+          WarningService.getWarningItems(this.getWarningId()).then(data => {
+            this.setState({ warningItems: data });
+          });
+        });
+    
+        console.log('Contract: ', newContract);
+      };
+
     render() {
         const {classes} = this.props;
         return (
@@ -219,6 +235,7 @@ class Dashboard extends Component {
                                     state={this.state}
                                     showWarning={this.state.showWarning}
                                     changeStatus={this.changeStatus}
+                                    changeContract={this.changeContract}
                                 />
                             }
                         </div>

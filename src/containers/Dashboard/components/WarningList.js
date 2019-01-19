@@ -36,9 +36,11 @@ const WarningList = props => {
           key={value.id || index}
           id={value.id}
           onClick={(e) => onClick(e, value)}
-          title={value.category.name}
-          status={value.status.type}
+          title={value.category ? value.category.name : 'Ukjent varsel'}
+          status={value.status ? value.status.type : 0}
           description={value.description}
+          image={value.images && value.images.length > 0 ? value.images[0] : null}
+          posted={value.createdAt}
         />
       ))}
       {warnings.length === 0 && (

@@ -143,6 +143,7 @@ class Discover extends Component {
     }
 
     getWarningsWithLocation = (filter) => {
+
       GeoService.getGeoLocation((position) => {
         // Got position
         const location = {

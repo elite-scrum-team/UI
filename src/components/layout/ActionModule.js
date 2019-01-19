@@ -55,7 +55,9 @@ class ActionModule extends Component {
 
   handleNewContract = value => {
     this.setState({ contractDialogOpen: false });
-    this.props.updateContract(value);
+    if(this.props.updateContract) {
+      this.props.updateContract(value);
+    }
   };
 
   render() {
