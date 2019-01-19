@@ -33,9 +33,7 @@ class ContractDialog extends Component {
     companies: []
   };
   componentDidMount() {
-    console.log('DID MOUNT');
     ContractService.getAllCompanies((isError, data) => {
-      console.log('GOT HERE, ', data);
       if (!isError) {
         this.setState({
           companies: data.map(c => ({ value: c.id, label: c.name }))

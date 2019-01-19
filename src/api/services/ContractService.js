@@ -1,5 +1,4 @@
 import API from '../api';
-import store from '../../store/store';
 
 // and all the methods will return a promise
 export default class ContractService {

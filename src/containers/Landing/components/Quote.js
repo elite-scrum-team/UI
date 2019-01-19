@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
@@ -29,10 +27,7 @@ const styles = makeStyles({
 });
 
 const Quote = (props) => {
-    // State
-    const [open, setData] = useState({});
-
-    // Styling
+ 
     const classes = styles();
 
     return (

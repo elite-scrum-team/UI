@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import URLS from '../../../URLS';
@@ -27,7 +27,6 @@ const styles = makeStyles({
     },
     content: {
         maxWidth: 800,
-        display: 'block',
         margin: 'auto',
 
         display: 'flex',

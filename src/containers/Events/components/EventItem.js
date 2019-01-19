@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
@@ -24,11 +22,9 @@ const styles = makeStyles({
         height: 300,
 
         '&:hover': {
-            borderRadius: 4,
             // boxShadow: '2px 1px 3px 0px rgba(0,0,0,0.5)',
             zIndex: 200,
             transform: 'scale(1.03)',
-            
             borderRadius: 0,
         }
     },

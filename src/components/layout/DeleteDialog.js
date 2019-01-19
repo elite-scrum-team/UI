@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/styles';
-import classNames from 'classnames';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
-import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 
 // Icons
 
@@ -86,7 +82,6 @@ class StatusDialog extends Component{
     render() {
         // Styling
         const {classes, open} = this.props;
-        const statusStyles = [classes.acknowledged, classes.progress, classes.done, classes.rejected];
 
         return (
             <div className={classes.root}>

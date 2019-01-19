@@ -259,7 +259,7 @@ class Discover extends Component {
               <div className={classes.content}>
               {!this.state.detail
                   ?
-                  <Sidebar
+                  <SearchContent
                     searchValue={this.state.search}
                     items={this.state.items}
                     onSubmit={this.onSearch}
