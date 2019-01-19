@@ -2,64 +2,71 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import URLS from '../../URLS';
 
+
 // Services
 import GeoService from '../../api/services/GeoService';
-
-// Material UI components
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
-
-// Services
 import LocationService from '../../api/services/LocationService';
 
+// Material UI components
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+
 // Icons
-import Logo from '../../assets/img/logo.png';
-import LocationIcon from '@material-ui/icons/LocationOn';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PersonIcon from '@material-ui/icons/Person';
+import Logo from '../../assets/img/HverdagsHeltLogo.png';
+import LogoIcon from '../../components/miscellaneous/Logo';
 
 // Project components
-import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
+import Functions from './components/Functions';
+import Tutorial from './components/Tutorial';
+import Quote from './components/Quote';
+import Starter from './components/Starter';
 
 const styles = {
     root: {
-        position: 'relative',
         height: '100vh',
-        width: '100vw',
-
-      /*   background: 'url(http://paperlief.com/images/snow-mountain-landscape-wallpaper-1.jpg)',
-        backgroundSize: 'auto',
-        backgroundRepeat: 'no-repeat',
-        backgroundColor: 'white', */
-        backgroundColor: 'white',
-
-        maxHeight: '100vh',
-        overflow: 'hidden', 
-    },
-    content: {
-        position: 'absolute',
-        top: 0, bottom: 0, left: 0, right: 0,
 
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'column',
     },
-    paper: {
-        
-        width: '100vw',
-        maxWidth: 400,
+    imageWrapper: {
+        display: 'block',
         margin: 'auto',
-        padding: 48,
+        '@media only screen and (max-width: 600px)': {
+            maxWidth: 275,
+        }
+    },
+    top: {
+        position: 'relative',
+        backgroundColor: '#009688',
+        width: '100%',
+        minHeight: 200,
+        zIndex: 99,
+        paddingBottom: 40,
 
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
 
         '@media only screen and (max-width: 600px)': {
-            padding: '30px 30px',
-            width: '76vw',
+            paddingTop: 42,
+            paddingBottom: 22,
+            minHeight: 125,
+        }
+    },
+    contentWrapper: {
+        zIndex: 100,
+        flexGrow: 1,
+        boxShadow: '0px -3px 2px 0px rgba(0,0,0,0.2)',
+        backgroundColor: 'white',
+    },
+    textWrapper: {
+        color: 'white',
+        maxWidth: 700,  
+    },
+    text: {
+        '@media only screen and (max-width: 800px)': {
+            fontSize: '22px',
         }
     },
     logo: {
@@ -67,27 +74,30 @@ const styles = {
         maxWidth: 450,
         height: 'auto',
         objectFit: 'cover',
+        display: 'block',
+        margin: 'auto',
     },
-    input: {
-        width: '80vw',
-        maxWidth: 400,
-    },
-    buttonWrapper: {
+    nav: {
+        position: 'absolute',
+        top: 0,
+        width: '90vw',
+        maxWidth: 800,
         display: 'flex',
         justifyContent: 'space-between',
+        height: 48,
+        color: 'white',
+    },
+    SVGLogo: {
+        fill: '#fff',
+        height: '100%',
         width: '100%',
-        marginTop: 12,
-        maxWidth: 400,
-
-        '@media only screen and (max-width: 600px)': {
-            flexDirection: 'column',
-        }
     },
-    mb: {
-        '@media only screen and (max-width: 600px)': {
-            marginBottom: 10,
-        }
-    },
+    logoWrapper: {
+        minWidth: 50,
+        minHeight: 50,
+        width: 50,
+        height: 50,
+    }
 }
 
 class Landing extends Component {
@@ -127,40 +137,33 @@ class Landing extends Component {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <div className={classes.content}>
-                    <Paper className={classes.paper} elevation={5}>
-                        <img className={classes.logo} src={Logo} alt='Hverdagshelt logo'/>
-                        <div className='pt-10 pb-20'>
-                            <Typography variant='h5' align='center'>
-                                Varsle din kommune om dine kommunale problemer
+                
+                <div className={classes.top}>
+                    <div className={classes.nav}>
+                        <div className={classes.logoWrapper}><IconButton><LogoIcon className={classes.SVGLogo}/></IconButton></div>
+                        <Button variant='text' size='small' color='inherit' onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                    </div>
+                    <div className='pl-10 pr-10'>
+                        <div className={classes.imageWrapper}>
+                            <img className={classes.logo} src={Logo} alt='HverdagsHeltLogo' />
+                        </div>
+                        <div className={classes.textWrapper}>
+                            <Typography className={classes.text} variant='h3' color='inherit' align='center'>
+                            Varsle din kommune om dine kommunale problemer
                             </Typography>
                         </div>
-                        <div className={classes.buttonWrapper}>
-                            <Button className={classes.mb} onClick={() => this.goTo(URLS.createwarning)} variant='outlined' size='medium' color='default'>Send varsel<FeedbackIcon className='ml-5' /></Button>
-                            <Button className={classes.mb} onClick={() => this.goTo(URLS.login)} variant='outlined' size='medium' color='primary'><PersonIcon className='mr-5'/> Logg inn</Button>
-                        </div>
-                        <div className='pt-20 pb-20 w-100'>
-                            <SearchableDropdown
-                                className={classes.input}
-                                options={this.state.municipalities}
-                                onChange={this.onMunicipalitySelected}
-                                placeholder='Søk etter kommune'
-                                />
-                        </div>
-                        <Typography variant='caption' align='center'>
-                                eller
-                        </Typography>
-                        <div className='mt-15'>
-                            <Fab
-                                onClick={this.searchByLocation}
-                                size='medium'
-                                variant='extended'
-                                color='primary'>
-                                <LocationIcon className='mr-5'/>
-                                Søk med min posisjon
-                            </Fab>
-                        </div>
-                    </Paper>
+                    </div>
+                </div>
+                <div className={classes.contentWrapper}>
+                    <Functions
+                        municipalities={this.state.municipalities}
+                        onMunicipalitySelected={this.onMunicipalitySelected}
+                        goTo={this.goTo}
+                        searchByLocation={this.searchByLocation}
+                        />
+                    <Tutorial />
+                    <Quote />
+                    <Starter goTo={this.goTo} />
                 </div>
             </div>
         )

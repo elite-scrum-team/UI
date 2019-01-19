@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
     label: {
-        color: "#fff"
+        color: "#fff",
     },
     formControl: {
         selectTextColor: "#fff"
@@ -37,6 +37,9 @@ const styles = {
     },
     dropArrow: {
         fill: '#fff',
+    },
+    toFront: {
+        zIndex: 30000,
     }
 };
 
@@ -57,10 +60,11 @@ class CompanyDropdown extends Component {
                         className={classes.selection}
                         autoWidth={true}
                         value={this.props.selectedGroup}
-
                         inputProps={{
                             classes: {
                                 icon: classes.dropArrow,
+                                selectMenu: classes.toFront,
+                                select: classes.toFront,
                             },
                         }}
                         onChange={this.handleChange('selected')}

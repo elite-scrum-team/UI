@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import warningUtils from '../../../utils/warningUtils';
+import warningUtils from '../../utils/warningUtils';
 import classNames from 'classnames';
 import moment from 'moment';
 

@@ -14,17 +14,23 @@ import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
+import Hidden from '@material-ui/core/Hidden';
+import Drawer from '@material-ui/core/Drawer';
 
 // Assets/Icons
 import Add from '@material-ui/icons/Add';
 import Logo from '../miscellaneous/Logo';
+import MenuIcon from '@material-ui/icons/Menu';
 
 // Project components
-import CompanyDropdown from '../miscellaneous/CompanyDropdown'
+import CompanyDropdown from '../miscellaneous/CompanyDropdown';
+import URIButton from './URIButton';
+import Sidebar from './Sidebar';
 
 const styles = {
     appbar: {
         height: 48,
+        zIndex: 1299,
     },
     main: {
         marginTop: 48,
@@ -50,6 +56,10 @@ const styles = {
     },
     warningButton: {
         marginLeft: 24,
+        borderColor: 'white',
+    },
+    menuButton: {
+        color: 'white',
     },
     flex: {
         display: 'flex',
@@ -83,11 +93,24 @@ const styles = {
         textColor: '#fff',
         color: '#fff',
         width: 200,
+    },
+    sidebar: {
+        zIndex: 100,
+        minWidth: 200,
+        width: '100vw',
+        overflow: 'hidden',
+    },
+    behind: {
+        zIndex: 1200,
     }
 };
 
 
 class Navigation extends Component {
+
+    state = {
+        showSidebar: false,
+    }
 
     goTo = (page) => {
         this.props.history.push(page);
@@ -112,6 +135,10 @@ class Navigation extends Component {
         }
     }
 
+    toggleSidebar = () => {
+        this.setState({showSidebar: !this.state.showSidebar});
+    };
+
     render() {
         const {classes} = this.props;
         return (
@@ -135,44 +162,57 @@ class Navigation extends Component {
                             }
 
                         </div>
-                        <div className={classes.flex}>
-                            <div>
-                                <Button
-                                    className={classes.warningButton}
-                                    size='small'
-                                    color='secondary'
-                                    onClick={() => this.goTo(URLS.events)}>Nyheter</Button>
-                            </div>
-                            {AuthService.isEmployee() &&
+                        <Hidden implementation='js' xsDown>
+                            <div className={classes.flex}>
+                                <URIButton
+                                    goTo={this.goTo}
+                                    to={URLS.events}
+                                    label='Nyheter' />
+                                {AuthService.isCompanyOrEmployee() &&
+                                        <URIButton
+                                            goTo={this.goTo}
+                                            to={URLS.dashboard}
+                                            label='Dashboard' />
+                                }
+                                <div>
+                                    {AuthService.isAuthenticated()?
                                     <Button
                                         className={classes.logInButton}
                                         size='small'
-                                        onClick={() => this.goTo(URLS.dashboard)}>Dashboard</Button>
-                            }
-                            <div>
-                                {AuthService.isAuthenticated()?
-                                <Button
-                                    className={classes.logInButton}
-                                    size='small'
-                                    onClick={this.logOut}>Logg ut</Button>
-                                :
-                                <Button
-                                    className={classes.logInButton}
-                                    size='small'
-                                    onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
-                                }
-                                
-                            </div>
-                            <div>
-                                <Button
+                                        onClick={this.logOut}>Logg ut</Button>
+                                    :
+                                    <Button
+                                        className={classes.logInButton}
+                                        size='small'
+                                        onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                                    }
+                                    
+                                </div>
+                                <URIButton
                                     className={classes.warningButton}
-                                    size='small'
+                                    goTo={this.goTo}
+                                    to={URLS.createwarning}
+                                    label='Ny varsel'
                                     variant='outlined'
-                                    color='secondary'
-                                    onClick={() => this.goTo(URLS.createwarning)}>Ny varsel <Add /></Button>
+                                    icon={<Add />} />
                             </div>
-                        </div>
-                        
+                        </Hidden>
+
+                        <Hidden implementation='js' mdUp>
+                            <IconButton className={classes.menuButton} onClick={this.toggleSidebar}><MenuIcon/></IconButton>
+
+                            <Drawer
+                                anchor='top'
+                                open={this.state.showSidebar}
+                                onClose={this.toggleSidebar}
+                                classes={{
+                                    paper: classes.sidebar,
+                                    modal: classes.behind,
+                                }}
+                            >
+                                <Sidebar onClose={this.toggleSidebar} logOut={this.logOut}/>
+                            </Drawer>
+                        </Hidden>
                     </Toolbar>
                 </AppBar>
                 

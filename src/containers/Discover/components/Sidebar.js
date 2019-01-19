@@ -15,6 +15,10 @@ const styles = makeStyles({
     root: {
         width: drawerWidth,
         borderRight: 'none',
+
+        '@media only screen and (max-width: 600px)': {
+            width: '100%',
+        }
     },
     progress: {
         display: 'block',

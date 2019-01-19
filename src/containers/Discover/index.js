@@ -234,7 +234,7 @@ class Discover extends Component {
                     isLoading={this.state.isLoading}
                     detail={this.detail}
                     municipalities={this.state.municipalities}
-                    onLocation={(e) => this.getWarningsWithLocation()}
+                    onLocation={this.getWarningsWithLocation}
             />
                   :
                   <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
@@ -257,17 +257,21 @@ class Discover extends Component {
           {!this.state.showMap &&
             <Hidden implementation='js' mdUp>
               <div className={classes.content}>
-                <SearchContent
-                  searchValue={this.state.search}
-                  items={this.state.items}
-                  onSubmit={this.onSearch}
-                  onSectionChange={this.onSectionChange}
-                  isLoading={this.state.isLoading}
-                  detail={this.detail}
-                  municipalities={this.state.municipalities}
-                  onLocation={this.getWarningsWithLocation}
-                />
-
+              {!this.state.detail
+                  ?
+                  <Sidebar
+                    searchValue={this.state.search}
+                    items={this.state.items}
+                    onSubmit={this.onSearch}
+                    onSectionChange={this.onSectionChange}
+                    isLoading={this.state.isLoading}
+                    detail={this.detail}
+                    municipalities={this.state.municipalities}
+                    onLocation={this.getWarningsWithLocation}
+                  />
+                  :
+                  <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
+              }
               </div>
             </Hidden>
           }
