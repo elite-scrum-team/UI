@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import URLS from '../../URLS';
 
-
 // Services
+import AuthService from '../../api/services/AuthService';
 import GeoService from '../../api/services/GeoService';
 import LocationService from '../../api/services/LocationService';
 
@@ -133,6 +133,11 @@ class Landing extends Component {
         this.props.history.push(page);
     }
 
+    logOut = () => {
+        AuthService.logOut();
+        this.setState({}); // For rerender
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -141,7 +146,12 @@ class Landing extends Component {
                 <div className={classes.top}>
                     <div className={classes.nav}>
                         <div className={classes.logoWrapper}><IconButton><LogoIcon className={classes.SVGLogo}/></IconButton></div>
-                        <Button variant='text' size='small' color='inherit' onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                        {AuthService.isAuthenticated() ?
+                            <Button variant='text' size='small' color='inherit' onClick={this.logOut}>Logg ut</Button>
+                            :
+                            <Button variant='text' size='small' color='inherit' onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
+                        }
+                        
                     </div>
                     <div className='pl-10 pr-10'>
                         <div className={classes.imageWrapper}>
