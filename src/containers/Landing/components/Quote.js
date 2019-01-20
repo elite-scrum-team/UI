@@ -13,10 +13,15 @@ const styles = makeStyles({
         backgroundColor: 'whitesmoke',
         padding: 48,
         minHeight: 200,
+
+        display: 'flex',
+        margin: 'auto',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     content: {
+        height: '100%',
         maxWidth: 800,
-        display: 'block',
         margin: 'auto',
     },
     text: {
@@ -33,9 +38,9 @@ const Quote = (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.content}>
-                <Typography className={classes.text} variant='h4' >
-                    <i>"Kommunenen min har aldri vært så problemfri på flere tiår på grunn av HverdagsHelt. HverdagsHelt
-                    gjør det så lett å varsle min kommune og følge med på løsninsgprosessen."</i>
+                <Typography className={classes.text} variant='h5' >
+                    <i>"Kommunen min har aldri vært så problemfri på flere tiår på grunn av HverdagsHelt. HverdagsHelt
+                    gjør det så lett å varsle min kommune og følge med på løsningsprosessen."</i>
                 </Typography>
                 <Typography variant='caption' align='right'>Anonym</Typography>
             </div>
