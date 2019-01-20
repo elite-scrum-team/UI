@@ -97,32 +97,4 @@ export default class eventService {
             return data;
         });
     };
-
-    static getEventItems = (id, callback) => {
-        // Check if items are in store
-        let items = EventAction.getEventItems(id)(store.getState());
-
-        // If they already exist...return
-        if(items) {
-            !callback || callback(false, items);
-            return Promise.resolve(items);
-        }
-
-        // Get from database
-        const response = API.getEventContent(id).response();
-        return response.then((data) => {
-            if(response.isError === false) {
-                EventAction.setEventItem(id, data)(store.dispatch);
-            }
-            !callback || callback(response.isError, data);
-            return data;
-        });
-    };
-
-    static addEventItem = (id, type, data) => {
-        const object = {type, data};
-
-        EventAction.addEventItem(id, object);
-    }
-
 }

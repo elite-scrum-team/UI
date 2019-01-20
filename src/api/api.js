@@ -86,27 +86,25 @@ export default {
   getAllEvents: () =>{
     return new Fetch(METHODS.get, '/event')
   },
-    getEventById: () =>{
-        return new Fetch(METHODS.get, '/event/'.concat(id))
-    },
-
-    getMunicipalityEvent: (municipalityId) =>{
-        return new Fetch(METHODS.get, '/event/municipality/'.concat(municipalityId))
-    },
-
-    createEvent: (data) => {
-        return new Fetch(METHODS.post, '/event', data);
-    },
-    updateEvent: (id, data) =>{
-        return new Fetch(METHODS.put, '/event/'.concat(id), data);
-    },
-    addEventImage: (id, image) =>{
-        return new Fetch(METHODS.post, '/event/image', {
-            eventId: id,
-            image: image
-        });
-    },
-    getEventContent: id => {
-        return new Fetch(METHODS.get, '/event/content/'.concat(id));
-    },
+  getEventById: (id) =>{
+      return new Fetch(METHODS.get, '/event/'.concat(id))
+  },
+  getMunicipalityEvent: (municipalityId) =>{
+      return new Fetch(METHODS.get, '/event/municipality/'.concat(municipalityId))
+  },
+  createEvent: (data) => {
+      return new Fetch(METHODS.post, '/event', data);
+  },
+  updateEvent: (id, data) =>{
+      return new Fetch(METHODS.put, '/event/'.concat(id), data);
+  },
+  addEventImage: (id, image) =>{
+      return new Fetch(METHODS.post, '/event/image', {
+          eventId: id,
+          image: image
+      });
+  },
+  getEventContent: id => {
+      return new Fetch(METHODS.get, '/event/content/'.concat(id));
+  },
 };

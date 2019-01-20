@@ -8,10 +8,6 @@ import GeoService from '../../api/services/GeoService';
 import LocationService from '../../api/services/LocationService';
 
 // Material UI components
-<<<<<<< HEAD
-
-=======
->>>>>>> 5c968bbd96cd351448f0e3383827c4c3dad18c64
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 
@@ -239,11 +235,7 @@ class Discover extends Component {
                     isLoading={this.state.isLoading}
                     detail={this.detail}
                     municipalities={this.state.municipalities}
-<<<<<<< HEAD
-                    onLocation={() => this.getWarningsWithLocation()}
-=======
                     onLocation={this.getWarningsWithLocation}
->>>>>>> 5c968bbd96cd351448f0e3383827c4c3dad18c64
             />
                   :
                   <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>

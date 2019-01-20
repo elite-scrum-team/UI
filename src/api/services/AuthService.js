@@ -6,6 +6,9 @@ import store from '../../store/store'
 // The userservice will do user related things,
 // and all the methods will return a promise
 export default class AuthService {
+
+    static hasUserData = false;
+
     static createUser = (email, password, callback) => {
         // Trim and uncapitalize email
         email = email.trim().toLowerCase();
@@ -52,6 +55,7 @@ export default class AuthService {
             if(response.isError === false) {
                 UserAction.setUserData(data)(store.dispatch);
                 data = UserAction.getUserData(store.getState());
+                this.hasUserData = true;
             }
             !callback || callback(response.isError, data);
         });
@@ -89,7 +93,7 @@ export default class AuthService {
 
     static isAuthenticated () {
         const isAuthenticated = typeof TOKEN.get() !== 'undefined';
-        if(!isAuthenticated) {
+        if(!isAuthenticated && this.hasUserData) {
             UserAction.clearUserData()(store.dispatch);
         }
         return isAuthenticated;

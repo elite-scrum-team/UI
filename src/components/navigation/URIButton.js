@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
+import classNames from 'classnames';
 
 // Material UI components
 import Button from '@material-ui/core/Button';
@@ -12,6 +13,9 @@ import Button from '@material-ui/core/Button';
 const styles = makeStyles({
     root: {
         color: 'white',
+    },
+    underline: {
+        borderBottom: '2px solid white',
     }
 });
 
@@ -21,7 +25,7 @@ const URIButton = (props) => {
     const classes = styles();
 
     return (
-        <div className={classes.root}>
+        <div className={classNames(classes.root, props.active ? classes.underline : '')}>
             <Button
                 className={props.className}
                 variant={props.variant || 'text'}

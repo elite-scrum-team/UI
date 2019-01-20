@@ -112,6 +112,8 @@ class Navigation extends Component {
         showSidebar: false,
     }
 
+    activeURI = () => this.props.match.path;
+
     goTo = (page) => {
         this.props.history.push(page);
     };
@@ -160,16 +162,17 @@ class Navigation extends Component {
                                     onChange={this.groupChange}
                                     className={classes.companyDropdown}/>
                             }
-
                         </div>
                         <Hidden implementation='js' xsDown>
                             <div className={classes.flex}>
                                 <URIButton
                                     goTo={this.goTo}
                                     to={URLS.events}
+                                    active={this.activeURI() === URLS.events}
                                     label='Nyheter' />
                                 {AuthService.isCompanyOrEmployee() &&
                                         <URIButton
+                                            active={this.activeURI() === URLS.dashboard}
                                             goTo={this.goTo}
                                             to={URLS.dashboard}
                                             label='Dashboard' />
@@ -198,7 +201,7 @@ class Navigation extends Component {
                             </div>
                         </Hidden>
 
-                        <Hidden implementation='js' mdUp>
+                        <Hidden implementation='js' smUp>
                             <IconButton className={classes.menuButton} onClick={this.toggleSidebar}><MenuIcon/></IconButton>
 
                             <Drawer
