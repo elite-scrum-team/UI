@@ -1,31 +1,27 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/styles';
-import {useState} from 'react';
 
 // Material UI components
 
 // Icons
-import Accessible from '@material-ui/icons/Accessible';
 import Paper from "@material-ui/core/Paper";
-import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 
 // Project components
-import WarningDetails from "../../Details/components/WarningDetails";
-import ActionModule from "../../Details/components/ActionModule";
-import FeedModule from "../../Details/components/FeedModule";
-import ImageGrid from "../../Details/components/ImageGrid";
+import WarningDetails from "../../../components/layout/WarningDetails";
+import ActionModule from "../../../components/layout/ActionModule";
+import FeedModule from "../../../components/layout/FeedModule";
+import ImageGrid from "../../../components/layout/ImageGrid";
 import LogoImage from "../../../assets/img/logo.png";
 import Hidden from '@material-ui/core/Hidden';
 import Button from "@material-ui/core/Button/Button";
-import WarningList from "./WarningList";
 import URLS from "../../../URLS";
 
 
 const styles = makeStyles({
     root: {
         '@media only screen and (min-width: 601px)': {
-            marginLeft: 340,
+            marginLeft: 460,
         },
         '@media only screen and (max-width: 600px)': {
             marginLeft: 15,
@@ -85,7 +81,8 @@ const DetailsDash = (props) => {
             <div className={classes.root}>
                 <img className={classes.img}
                     src={LogoImage}
-                    title={'Hverdagshelt logo'}/>
+                    alt={'Hverdagshelt logo'}
+                />
             </div>
         )
     };
@@ -119,7 +116,9 @@ const DetailsDash = (props) => {
                             <ActionModule
                                 className={classes.actionMod}
                                 updateStatus={props.changeStatus}
-                                updateContract={props.changeContract}/>
+                                updateContract={props.changeContract}
+                                contracts={props.state.contracts}
+                            />
                         </Paper>
                     </div>
                     <div>

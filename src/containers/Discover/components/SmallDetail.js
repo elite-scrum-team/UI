@@ -20,17 +20,31 @@ import Typography from "@material-ui/core/Typography"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import warningUtils from "../../../utils/warningUtils";
 
-const drawerWidth = 400;
+const drawerWidth = 450;
 
 const styles = makeStyles({
     root: {
         width: drawerWidth,
+
+        '@media only screen and (max-width: 800px)': {
+            width: '100%',
+            marginTop: 48,
+        }
     },
     flex: {
         paddingTop:'30px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+    },
+    image: {
+       width: '100%',
+       height: 'auto',
+       maxWidth: 400,
+       objectFit: 'cover',
+       
+       display: 'block',
+       margin: 'auto',
     }
 });
 
@@ -48,6 +62,8 @@ const SmallDetail = (props) => {
     let statusClasses = warningUtils.getAllStatusClasses;
     statusClasses = statusClasses.map((s) => s());
     statusClasses = statusClasses[statusCode];
+
+    console.log("DRAWER");
 
     return (
         <div className={classes.root}>
@@ -69,9 +85,11 @@ const SmallDetail = (props) => {
                 </AppBar>
                 <div className={classes.flex}>
                     <Typography variant='h3'>{props.item.category.name}</Typography>
-                    <InformationCard status={`status: ${statusName}`} color={statusClasses} time={time} municipality={props.item.municipality}/>
+                    <InformationCard status={`Status: ${statusName}`} color={statusClasses} time={time} municipality={props.item.municipality}/>
                     <TextCard text={props.item.description}/>
                     <TextCard text={props.item.status.description} gray/>
+                    {props.item.images && props.item.images.length > 0 ?
+                        <img className={classes.image} src={props.item.images[0]} alt={props.item.category.name}/> : null }
                 </div>
                 </div>
                 }

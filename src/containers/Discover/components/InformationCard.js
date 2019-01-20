@@ -2,16 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
-// Material UI components
-import Drawer from '@material-ui/core/Drawer';
-
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
 import TimeIcon from '@material-ui/icons/AccessTime';
 
 // Project components
-
-import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography"
 

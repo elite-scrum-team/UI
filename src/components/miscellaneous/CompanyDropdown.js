@@ -1,52 +1,55 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
 
 //Service imports
-import AuthService from '../../api/services/AuthService';
+import * as UserAction from '../../store/actions/UserAction';
 
 // Material UI components
 import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem";
+import Typography from '@material-ui/core/Typography';
 
 // Icons
 
 // Project components
 
 const styles = {
-    root: {
-
-    },
     label: {
-        color: "#fff"
+        color: "#fff",
     },
     formControl: {
         selectTextColor: "#fff"
     },
+    dropdownStyle: {
 
-}
+    },
+    selection: {
+        color: '#fff',
+        '&:before': {
+            borderColor: '#fff',
+        },
+
+        '&:after': {
+            borderColor: '#fff',
+        }
+    },
+    dropArrow: {
+        fill: '#fff',
+    },
+    toFront: {
+        zIndex: 30000,
+    }
+};
 
 class CompanyDropdown extends Component {
 
-    state={
-        selected: "",
-        companies: [{
-            name: null,
-            id: null
-        }]
-    };
-
     handleChange = (name) => (event) => {
-        this.setState({[name]: event.target.value});
+        if(this.props.onChange) {
+            this.props.onChange(event.target.value);
+        }
     };
-
-    componentDidMount() {
-        console.log()
-        this.setState({companies: AuthService.getCompanies()})
-    }
 
     render() {
         const {classes} = this.props;
@@ -54,17 +57,23 @@ class CompanyDropdown extends Component {
             <div className={classes.root}>
                 <FormControl className={classes.formControl}>
                     <Select
+                        className={classes.selection}
                         autoWidth={true}
-                        value={this.state.selected}
-                        name="company"
-                        displayEmpty
+                        value={this.props.selectedGroup}
+                        inputProps={{
+                            classes: {
+                                icon: classes.dropArrow,
+                                selectMenu: classes.toFront,
+                                select: classes.toFront,
+                            },
+                        }}
                         onChange={this.handleChange('selected')}
                     >
-                        <MenuItem value="" disabled>
-                            Selskaper
-                        </MenuItem>
-                        {this.state.companies.map(e =>
-                            <MenuItem key={e.id} value={e.id} disabled>
+                        <div className='p-10'>
+                            <Typography variant='body2'>Mine grupper</Typography>
+                        </div>
+                        {this.props.companies.map(e =>
+                            <MenuItem key={e.id} value={e}>
                                 {e.name}
                             </MenuItem>
                         )}
@@ -75,4 +84,9 @@ class CompanyDropdown extends Component {
     }
 }
 
-export default withStyles(styles)(CompanyDropdown);
+const mapStoreToProps = (state) => ({
+    companies: UserAction.getUserData(state).roles.groups,
+    selectedGroup: UserAction.getCurrentGroup(state) || {},
+});
+
+export default connect(mapStoreToProps)(withStyles(styles)(CompanyDropdown));

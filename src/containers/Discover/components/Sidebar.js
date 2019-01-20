@@ -9,12 +9,16 @@ import Drawer from '@material-ui/core/Drawer';
 // Project components
 import SearchContent from './SearchContent';
 
-const drawerWidth = 400;
+const drawerWidth = 450;
 
 const styles = makeStyles({
     root: {
         width: drawerWidth,
         borderRight: 'none',
+
+        '@media only screen and (max-width: 600px)': {
+            width: '100%',
+        }
     },
     progress: {
         display: 'block',

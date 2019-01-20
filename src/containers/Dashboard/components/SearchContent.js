@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/styles';
 import {useState} from 'react';
 import {withRouter} from 'react-router-dom';
-import URLS from '../../../URLS';
 
 // Service imports
-import AuthService from '../../../api/services/AuthService';
 
 // Material UI components
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Icons
@@ -24,7 +20,7 @@ const styles = makeStyles({
     root: {
         minHeight: 400,
         '@media only screen and (min-width: 601px)': {
-            width: 325
+            width:450
         },
         '@media only screen and (max-width: 600px)': {
             width: '100%'
@@ -57,7 +53,6 @@ const SearchContent = props => {
 
     // Go to login
     const goTo = page => {
-        console.log(props);
         props.history.push(page);
     };
 
