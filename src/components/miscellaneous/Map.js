@@ -8,7 +8,9 @@ import WarningMarkerIcon from '../../assets/img/warningMarker.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Circle } from 'react-google-maps'
+
+const CIRCLE_RADIUS = 2000;
 
 // React-Google-Maps component
 const Map = compose(
@@ -65,7 +67,6 @@ const Map = compose(
       {props.showMarkers && props.locations.map((location, i) => {
         
         location.location = location.location || {};
-
         return (<Marker
           key={i.toString().concat(location.lat)}
           position={location.location}
@@ -78,6 +79,7 @@ const Map = compose(
 
       {props.clickable && <Marker position={selectedLocation} icon={WarningMarkerIcon} clickable={false}/>}
 
+      {props.circlePosition && <Circle center={props.circlePosition} radius={CIRCLE_RADIUS} options={{fillOpacity: 0}}/>}
     </GoogleMap>
   )
 });
@@ -110,7 +112,8 @@ class MapWrapper extends Component {
         showMarkers={this.props.showMarkers}
         locations={this.state.locations}
         zoom={this.props.zoom}
-        clickable={this.props.clickable}/>
+        clickable={this.props.clickable}
+        circlePosition={this.props.circlePosition}/>
     )
   }
 }
@@ -121,6 +124,7 @@ MapWrapper.propTypes = {
   showMarkers: PropTypes.bool,
   zoom: PropTypes.number,
   clickable: PropTypes.func, // Makes it possible to click on the map, moving a marker, and adding a callback
+  circlePosition: PropTypes.object,
 }
 
 MapWrapper.defaultProps = {

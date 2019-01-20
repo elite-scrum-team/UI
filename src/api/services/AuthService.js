@@ -55,7 +55,7 @@ export default class AuthService {
             if(response.isError === false) {
                 UserAction.setUserData(data)(store.dispatch);
                 data = UserAction.getUserData(store.getState());
-                this.hasUserData = true;
+                AuthService.hasUserData = true;
             }
             !callback || callback(response.isError, data);
         });
@@ -93,8 +93,9 @@ export default class AuthService {
 
     static isAuthenticated () {
         const isAuthenticated = typeof TOKEN.get() !== 'undefined';
-        if(!isAuthenticated && this.hasUserData) {
+        if(!isAuthenticated && AuthService.hasUserData) {
             UserAction.clearUserData()(store.dispatch);
+            AuthService.hasUserData = false;
         }
         return isAuthenticated;
     }

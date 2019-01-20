@@ -1,6 +1,14 @@
 import Fetch from './helpers/http';
 import { METHODS } from './helpers/config';
 
+const filterToParams = (filters) => (filters
+  ? Object.keys(filters).map(key => {
+      return filters[key] instanceof Array
+        ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
+        : `${key}=${filters[key]}&`;
+    }).join('')
+  : '')
+
 export default {
   // Here will all the API methods be
 
@@ -9,13 +17,7 @@ export default {
     return new Fetch(
       METHODS.get,
       '/warning?' +
-        (filters
-          ? Object.keys(filters).map(key => {
-              return filters[key] instanceof Array
-                ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
-                : `${key}=${filters[key]}&`;
-            }).join('')
-          : '')
+      filterToParams(filters)
     );
   },
 
@@ -25,6 +27,10 @@ export default {
 
   getWarningContent: id => {
     return new Fetch(METHODS.get, '/warning/content/'.concat(id));
+  },
+
+  getWarningsClose: (lat, lng, filters) => {
+    return new Fetch(METHODS.get, `/warning/close/${lat}/${lng}?`.concat(filterToParams(filters)));
   },
 
   createWarning: data => {

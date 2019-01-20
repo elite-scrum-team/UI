@@ -6,7 +6,17 @@ import store from '../../store/store'
 export default class WarningService {
 
     static getWarnings = async (orderBy = null, filters = {}, callback) => {
-        const response = API.getWarnings(filters).response();
+        let response = null;
+
+        // Checks if warnings should be fetched by location
+        if(filters && filters.location) {
+            const location = filters.location;
+            delete filters.location;
+            response = API.getWarningsClose(location.lat, location.lng, filters).response();
+        } else {
+            response = API.getWarnings(filters).response();
+        }
+
         return response.then((data) => {
             data = data || [];
 
