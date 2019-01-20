@@ -3,7 +3,7 @@ import * as EventAction from '../../store/actions/EventAction';
 import store from '../../store/store'
 
 // and all the methods will return a promise
-export default class WarningService {
+export default class eventService {
 
     static getEvents = async (orderBy = null, callback) => {
         const response = API.getAllEvents().response();
@@ -21,7 +21,7 @@ export default class WarningService {
                 }
             }
 
-            // WarningAction.setWarningPost(data)(store.dispatch);
+
             data = data.map(EventAction.createEventPost);
 
             !callback || callback(response.isError, data);
@@ -30,7 +30,7 @@ export default class WarningService {
     };
 
     static getEvent = async (id, callback) => {
-        // Check store if warning exist.
+        // Check store if event exist.
         let event = EventAction.getEventById(id)(store.getState());
 
         if(event) {
@@ -41,7 +41,7 @@ export default class WarningService {
             const response = API.getEventById(id).response();
             return response.then(async (data) => {
                 await EventAction.setEventById(id, data)(store.dispatch);
-                warning = EventAction.getEventById(id)(store.getState());
+                event = EventAction.getEventById(id)(store.getState());
                 !callback || callback(response.isError, event);
             });
         }
@@ -63,7 +63,7 @@ export default class WarningService {
                 }
             }
 
-            // WarningAction.setWarningPost(data)(store.dispatch);
+
             data = data.map(EventAction.createEventPost);
 
             !callback || callback(response.isError, data);
