@@ -34,7 +34,7 @@ const Sidebar = (props) => {
                 classes= {{
                     paper: classes.root,
                 }}>
-                <SearchContent {...props} detail={props.detail} />
+                <SearchContent {...props}/>
             </Drawer>
         </div>
     )

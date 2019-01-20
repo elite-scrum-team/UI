@@ -8,7 +8,7 @@ import GeoService from '../../api/services/GeoService';
 import LocationService from '../../api/services/LocationService';
 
 // Material UI components
-import Paper from '@material-ui/core/Paper';
+
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 
@@ -20,7 +20,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Navigation from '../../components/navigation/Navigation';
 import Map from '../../components/miscellaneous/Map';
 import Sidebar from './components/Sidebar';
-import InfoModule from './components/InfoModule';
 import SearchContent from './components/SearchContent';
 import SmallDetail from './components/SmallDetail'
 
@@ -150,10 +149,10 @@ class Discover extends Component {
         const location = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        } 
+        }
         this.setState({});
         this.mapGoTo(location);
-        
+
         this.setState({isLoading: true, currentLocation: location, search: {}, zoom: 15});
         const filters = {
           ...filter,
@@ -183,7 +182,7 @@ class Discover extends Component {
       this.setState({isLoading: true});
 
       const filters = {};
-      
+
       if(value === SEARCH_SECTION) {
         filters.excludeStatus = [0, 1, 4, 5];
         this.getWarningsWithMunicipality(filters);
@@ -237,7 +236,7 @@ class Discover extends Component {
                     isLoading={this.state.isLoading}
                     detail={this.detail}
                     municipalities={this.state.municipalities}
-                    onLocation={(e) => this.getWarningsWithLocation()}
+                    onLocation={() => this.getWarningsWithLocation()}
             />
                   :
                   <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
