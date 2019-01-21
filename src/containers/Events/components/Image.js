@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
@@ -35,7 +34,7 @@ const Image = (props) => {
            <GridList className={classes.container}>
                {props.image.map((e,index) =>(
                    <GridListTile key={e.id} cols={(index%3 === 0) ? 2 : 1} rows={(index%3 === 0) ? 2 : 1}>
-                   <img src={e.fileURL} />
+                   <img src={e.fileURL} alt='representation'/>
                    </GridListTile>
                ))
                }

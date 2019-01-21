@@ -25,6 +25,7 @@ const drawerWidth = 450;
 const styles = (theme) => ({
     root: {
         position: 'relative',
+        transition: 'all 0.5s ease',
     },
     container: {
         padding: '0 10px',
@@ -76,6 +77,16 @@ const styles = (theme) => ({
             gridTemplateColumns: '1fr',
         }
     },
+    oneRow: {
+        '@media only screen and (max-width: 1300px)': {
+            gridTemplateColumns: '1fr',
+        }
+    },
+    toColumn: {
+        '@media only screen and (max-width: 1450px)': {
+            flexDirection: 'column',
+        }
+    },
     dropDown: {
         width: '80vw',
         maxWidth: 250,
@@ -100,6 +111,7 @@ class Events extends Component {
 
     componentDidMount() {
         EventService.getEvents(null, (isError, data) => {
+            console.log(data);
             if(isError === false) {
                 this.setState({events: data});
             }
@@ -119,14 +131,12 @@ class Events extends Component {
         })
     };
 
-
     onMunicipalityChange =  (event) => {
         this.setState({selectedMunicipality: event});
 
         if(event) {
             this.setState({isLoading: true});
             EventService.getEventsByMunicipality(event.value, null, (isError, data) => {
-                console.log(data);
                 if(isError === false) {
                     this.setState({events: data});
                 }
@@ -159,21 +169,26 @@ class Events extends Component {
                         </Typography>
                     </div>
                 </div>
-                <Hidden implementation='js' mdUp={this.state.detail !== null}>
+                <Hidden implementation='js' smDown={this.state.detail !== null}>
                     <div className={classNames(classes.container)}>
                         {this.state.isLoading ? <CircularProgress className={classes.progress} /> :
 
                             this.state.events && this.state.events.length > 0 ?
 
-                                    <div className={classes.paper}>
+                                    <div className={classNames(classes.paper, this.state.detail !== null ? classes.oneRow : '')}>
                                         {this.state.events.map((value) => (
                                             <EventItem
+                                                className={this.state.detail !== null ? classes.toColumn : ''}
                                                 key={value.id}
                                                 imageLeft
+                                                viewingDetail={this.state.detail !== null}
                                                 title={value.title}
                                                 image={value.images && value.images.length > 0 ? value.images[0] : null}
                                                 description={value.description}
                                                 date={value.createdAt}
+                                                municipality={value.municipality}
+                                                city={value.city}
+                                                street={value.street}
                                                 onClick={this.onItemClick(value)}
                                             />
                                         ))}
@@ -183,16 +198,16 @@ class Events extends Component {
                         }
                     </div>
                 </Hidden>
-                {this.state.detail ?
+                
                     <Fragment>
                         <Hidden implementation='js' smDown>
-                            <Sidebar event={this.state.detail} close={this.onItemClick(null)}/>
+                            <Sidebar open={this.state.detail !== null} event={this.state.detail} close={this.onItemClick(null)}/>
                         </Hidden>
-                        <Hidden implementation='js' mdUp>
+                        {this.state.detail && <Hidden implementation='js' mdUp>
                             <DetailCard event={this.state.detail} close={this.onItemClick(null)}/>
-                        </Hidden>
+                        </Hidden>}
                     </Fragment>
-                    : null}
+                  
             </div>
 
             </Navigation>

@@ -36,8 +36,7 @@ const styles = makeStyles({
 
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row-reverse',
+        
     },
     imageWrapper: {
         maxWidth: 56,

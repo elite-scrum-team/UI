@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 // Material UI components
 import Drawer from '@material-ui/core/Drawer';
+
 // Icons
 
 // Project components
@@ -14,7 +15,7 @@ const styles = makeStyles({
     root: {
         width: drawerWidth,
         borderRight: 'none',
-        marginTop: 28,
+        marginTop: 32,
     },
 
 });
@@ -25,9 +26,9 @@ const Sidebar = props => {
 
     return (
         <div className={classes.root}>
-
             <Drawer
-                variant='permanent'
+                open={props.open}
+                variant='persistent'
                 classes={{
                     root: classes.cover,
                     paper: classes.root,

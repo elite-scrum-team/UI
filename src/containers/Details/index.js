@@ -19,6 +19,7 @@ import ImageGrid from '../../components/layout/ImageGrid';
 import ActionModule from '../../components/layout/ActionModule';
 import FeedModule from '../../components/layout/FeedModule';
 
+
 const styles = {
   root: {
     maxWidth: 1100,
@@ -140,8 +141,6 @@ class Details extends Component {
         this.setState({ items: data });
       });
     });
-
-    console.log('Contract: ', newContract);
   };
 
   addItem = item => {

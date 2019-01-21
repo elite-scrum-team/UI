@@ -21,6 +21,7 @@ import Details from './containers/Details';
 import Dashboard from './containers/Dashboard';
 import CreateNews from './containers/CreateNews';
 import Events from './containers/Events';
+import Statistics from './containers/Statistics';
 
 // pointless comment
 // The user needs to be authorized (logged in) to access these routes
@@ -72,6 +73,7 @@ class App extends Component {
                                 <Route exact path={URLS.login} component={LogIn} />
                                 <Route exact path={URLS.events} component={Events} />
                                 <Route exact path={URLS.createnews.concat(':id?')} component={CreateNews} />
+                                <PrivateRoute exact path={URLS.statistics} component={Statistics} />
                                 <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
                                 <EmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                             </Switch>

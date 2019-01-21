@@ -44,6 +44,10 @@ class ActionModule extends Component {
 
   };
 
+  componentDidMount() {
+    this.toggleDeleteOption();
+  };
+
   checkContract = () => {
     return this.props.contracts
       ? this.props.contracts.find(e => e.groupId)
@@ -66,30 +70,26 @@ class ActionModule extends Component {
     }
   };
 
-    toggleDeleteOption = async () => {
-        this.setState({userData: await AuthService.getUserData()});
-        if (this.state.userData !== null) {
+  toggleDeleteOption = async () => {
+      this.setState({userData: await AuthService.getUserData()});
+      if (this.state.userData !== null) {
 
-            if (this.state.userData.roles && this.state.userData.roles.groups){
-                for (let i = 0; i < this.state.userData.roles.groups.length; i++){
-                    if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
-                        this.setState({municipalityEmployee: true});
-                    }
-                }
-            }
+          if (this.state.userData.roles && this.state.userData.roles.groups){
+              for (let i = 0; i < this.state.userData.roles.groups.length; i++){
+                  if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
+                      this.setState({municipalityEmployee: true});
+                  }
+              }
+          }
 
-            console.log(this.props.status);
+          console.log(this.props.status);
 
-            if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
-                this.setState({ownWarning: true});
-            }
-        }
+          if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
+              this.setState({ownWarning: true});
+          }
+      }
 
-    };
-
-    componentDidMount() {
-        this.toggleDeleteOption();
-    };
+  };
 
   handleSub = value => {
     this.setState({subscribeDialogOpen: false,
@@ -123,7 +123,7 @@ class ActionModule extends Component {
             </ListItem>
             <Divider />
 
-            {(AuthService.isEmployee(this.props.selectedGroup.municipalityId) && (
+            {(AuthService.isEmployee(this.props.municipalitiyId) && (
               <Fragment>
                 <ListItem
                   button

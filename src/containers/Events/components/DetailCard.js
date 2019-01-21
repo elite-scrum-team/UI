@@ -21,13 +21,13 @@ const styles = makeStyles({
         minHeight: 200,
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: 20,
+        paddingTop: 32,
         paddingBottom: 100,
 
         '@media only screen and (max-width: 960px)': {
             position: 'absolute',
             top: 0, left: 0, right: 0,
-
+            paddingTop: 0,
         }
     },
     avslutt: {
@@ -36,26 +36,29 @@ const styles = makeStyles({
         flexDirection: 'row',
         width: '90%',
         paddingTop: 10
+    },
+    closeBtn: {
+        height: '100%',
     }
 });
 
 const DetailCard = (props) => {
     // Styling
     const classes = styles();
-    const event = props.event;
+    const event = props.event || {};
 
     return (
         <div className={classNames(classes.root, props.className)}>
             <div className={classes.avslutt}>
-                <IconButton onClick={() => props.close(null)}>
+                <IconButton className={classes.closeBtn} onClick={() => props.close(null)}>
                     <Clear/>
                 </IconButton>
             </div>
             <Typography variant='h3'>
                 {event.title}
             </Typography>
-            <InformationCard {...props}/>
-            {event.images.length > 0 ? <Image image={event.image}/> : null}
+            <InformationCard event={event}/>
+            {event.images && event.images.length > 0 ? <Image image={event.image}/> : null}
             <Typography>
                 {event.description}
             </Typography>

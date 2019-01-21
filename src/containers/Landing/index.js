@@ -9,14 +9,12 @@ import LocationService from '../../api/services/LocationService';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 
 // Icons
 import Logo from '../../assets/img/HverdagsHeltLogo.png';
-import LogoIcon from '../../components/miscellaneous/Logo';
 
 // Project components
+import Navigation from '../../components/navigation/Navigation';
 import Functions from './components/Functions';
 import Tutorial from './components/Tutorial';
 import Quote from './components/Quote';
@@ -147,48 +145,40 @@ class Landing extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <div className={classes.root}>
-                
-                <div className={classes.top}>
-                    <div className={classes.nav}>
-                        <div className={classes.logoWrapper}><IconButton><LogoIcon className={classes.SVGLogo}/></IconButton></div>
-                        {AuthService.isAuthenticated() ?
-                            <Button variant='text' size='small' color='inherit' onClick={this.logOut}>Logg ut</Button>
-                            :
-                            <Button variant='text' size='small' color='inherit' onClick={() => this.goTo(URLS.login)}>Logg inn</Button>
-                        }
-                        
-                    </div>
-                    <div className='pl-10 pr-10'>
-                        <div className={classes.imageWrapper}>
-                            <img className={classes.logo} src={Logo} alt='HverdagsHeltLogo' />
-                        </div>
-                        <div className={classes.textWrapper}>
-                            <Typography className={classes.text} variant='h3' color='inherit' align='center'>
-                            Varsle din kommune om dine kommunale problemer
-                            </Typography>
+            <Navigation noShadow>
+                <div className={classes.root}>
+                    <div className={classes.top}>
+                        <div className='pl-10 pr-10'>
+                            <div className={classes.imageWrapper}>
+                                <img className={classes.logo} src={Logo} alt='HverdagsHeltLogo' />
+                            </div>
+                            <div className={classes.textWrapper}>
+                                <Typography className={classes.text} variant='h3' color='inherit' align='center'>
+                                Varsle din kommune om dine kommunale problemer
+                                </Typography>
+                            </div>
                         </div>
                     </div>
+                    <div className={classes.contentWrapper}>
+                        <Functions
+                            municipalities={this.state.municipalities}
+                            onMunicipalitySelected={this.onMunicipalitySelected}
+                            goTo={this.goTo}
+                            searchByLocation={this.searchByLocation}
+                            />
+                        <Tutorial />
+                        <Quote />
+                        <Starter goTo={this.goTo} />
+                    </div>
+                    <MessageDialog
+                        open={this.state.isGeoCodingError}
+                        onClose={() => this.setState({isGeoCodingError: false})}
+                        title='Kunne ikke hente din lokasjon'
+                        content='Vi kunne dessverre ikke hente lokasjonen din. Aksepter forespørselen om å dele lokasjon eller sjekk instillingene dine.'
+                        error={true}
+                    />
                 </div>
-                <div className={classes.contentWrapper}>
-                    <Functions
-                        municipalities={this.state.municipalities}
-                        onMunicipalitySelected={this.onMunicipalitySelected}
-                        goTo={this.goTo}
-                        searchByLocation={this.searchByLocation}
-                        />
-                    <Tutorial />
-                    <Quote />
-                    <Starter goTo={this.goTo} />
-                </div>
-                <MessageDialog
-                    open={this.state.isGeoCodingError}
-                    onClose={() => this.setState({isGeoCodingError: false})}
-                    title='Kunne ikke hente din lokasjon'
-                    content='Vi kunne dessverre ikke hente lokasjonen din. Aksepter forespørselen om å dele lokasjon eller sjekk instillingene dine.'
-                    error={true}
-                />
-            </div>
+            </Navigation>
         )
     }
 }
