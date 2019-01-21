@@ -8,7 +8,6 @@ import Divider from '@material-ui/core/Divider';
 
 // Service import
 import WarningService from "../../api/services/WarningService";
-import AuthService from '../../api/services/AuthService'
 import ContractService from '../../api/services/ContractService';
 
 // Icons
@@ -184,7 +183,6 @@ class Details extends Component {
                     contract={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
-                    municipalityId={this.state.municipalityId}
                     status={this.state.status}
                   />
                 </Paper>

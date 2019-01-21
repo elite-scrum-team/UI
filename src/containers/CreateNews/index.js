@@ -195,7 +195,6 @@ class CreateNews extends Component {
     };
 
     componentDidMount () {
-        const id = this.getNewsId();
       if (this.getNewsId() === null){
 
       }
