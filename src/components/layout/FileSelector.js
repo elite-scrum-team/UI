@@ -1,68 +1,65 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import IconButton from '@material-ui/core/IconButton'
-
+import IconButton from '@material-ui/core/IconButton';
 
 // Material UI components
-import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
+import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate';
 
 // Icons
 
 // Project components
 
 const styles = makeStyles({
-    root: {
-
-    },
-
+  root: {}
 });
 
-const FileSelector = (props) => {
-    // State
+const FileSelector = props => {
+  // Styling
+  const classes = styles();
 
+  let onImageChange = event => {
+    // Check if image is uploaded
+    if (!event.target.files || !event.target.files[0]) {
+      return;
+    }
 
-    // Styling
-    const classes = styles();
+    const file = event.target.files[0];
 
-    let onImageChange = (event) => {
-        // Check if image is uploaded
-        if (!event.target.files || !event.target.files[0]) {
-            return;
-        }
-
-        const file = event.target.files[0];
-
-        // Function for reading and adding an image
-        let reader = new FileReader();
-        reader.onload = (e) => {
-
-            !props.onChange || props.onChange(e.target.result, file);
-        };
-
-        reader.readAsDataURL(file);
-
+    // Function for reading and adding an image
+    let reader = new FileReader();
+    reader.onload = e => {
+      !props.onChange || props.onChange(e.target.result, file);
     };
 
-    return (
-        <div className={classes.root}>
-            <div className={classes.right}>
-                <input
-                    accept="image/*"
-                    className={classes.input}
-                    style={{display: 'none'}}
-                    id="upload-button"
-                    multiple
-                    type="file"
-                    onChange={onImageChange}
-                />
-                <label htmlFor="upload-button">
-                    <IconButton color="primary" aria-label="Add" component="span" className={classes.button}>
-                        <AddPhotoAlternate className={classes.bookmark} color='action'/>
-                    </IconButton>
-                </label>
-            </div>
-        </div>
-    )
+    reader.readAsDataURL(file);
+
+    event.target.value = '';
+  };
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.right}>
+        <input
+          accept='image/*'
+          className={classes.input}
+          style={{ display: 'none' }}
+          id='upload-button'
+          type='file'
+          onChange={onImageChange}
+        />
+        <label htmlFor='upload-button'>
+          <IconButton
+            color='primary'
+            aria-label='Add'
+            component='span'
+            className={classes.button}
+          >
+            <AddPhotoAlternate className={classes.bookmark} color='action' />
+          </IconButton>
+        </label>
+      </div>
+    </div>
+  );
 };
 
-export default (FileSelector);
+export default FileSelector;
