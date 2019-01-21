@@ -26,7 +26,10 @@ const styles = {
     }
 };
 
+
 class ActionModule extends Component {
+
+
     state = {
         deleteDialogOpen: false,
         statusDialogOpen: false,
@@ -35,8 +38,8 @@ class ActionModule extends Component {
         statusMsg: '',
         companyId: '',
         contractDesc: '',
-
-        ownWarning: true,
+        ownWarning: false,
+        userData: null,
     };
 
     handleNewStatus = (value) => {
@@ -44,13 +47,25 @@ class ActionModule extends Component {
         this.props.updateStatus(value);
     };
 
-    handleToggle = (name) => (event) => {
+    handleToggle = (name) => () => {
         this.setState({[name]: !this.state[name]});
     };
 
     handleNewContract = (value) => {
         this.setState({contractDialogOpen: false});
         this.props.updateContract(value);
+    };
+
+    loggo = async () => {
+        this.setState({userData: await AuthService.getUserData()});
+        console.log(this.state.userData);
+        console.log(this.state.userData.id);
+        //console.log(this.props.warningUserId);
+
+    };
+
+    componentDidMount() {
+        this.loggo();
     };
 
     render() {

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
 // Material UI components
@@ -68,7 +67,7 @@ const styles = {
             marginBottom: '20px',
         },
     },
-}
+};
 
 let d = new Date();
 let date =  d.getFullYear() + '-' +
@@ -116,7 +115,7 @@ class CreateNews extends Component {
 
     mapClickCallback = (data) => {
         this.setState({location: data});
-    }
+    };
 
     onImageChange = (event) => {
 
@@ -134,7 +133,7 @@ class CreateNews extends Component {
             };
 
             reader.readAsDataURL(file);
-        }
+        };
 
         if (event.target.files && event.target.files[0]) {
             this.setState({image: null, imageFile: null});
@@ -249,5 +248,7 @@ class CreateNews extends Component {
         )
     }
 }
+
+
 
 export default withStyles(styles)(CreateNews);

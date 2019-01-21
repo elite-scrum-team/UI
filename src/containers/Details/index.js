@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 
 // Service import
 import WarningService from "../../api/services/WarningService";
+import AuthService from '../../api/services/AuthService'
 
 // Icons
 
@@ -17,6 +18,7 @@ import WarningDetails from "../../components/layout/WarningDetails";
 import ImageGrid from '../../components/layout/ImageGrid';
 import ActionModule from '../../components/layout/ActionModule';
 import FeedModule from '../../components/layout/FeedModule';
+import Button from "../../../node_modules/@material-ui/core/Button/Button";
 
 const styles = {
     root: {
@@ -75,8 +77,9 @@ class Details extends Component {
         // Get id
         const id = this.getWarningId();
 
-        console.log(id);
+        // ActionModule.handleToggle();
 
+        console.log(AuthService.getUserData());
         this.setState({id: id, isLoading: true});
 
         // Get warning
@@ -105,6 +108,7 @@ class Details extends Component {
                 // The warning does not exist, go to frontpage
                 this.props.history.push(URLS.home);
             }
+            console.log(e.userId);
 
         });
 
@@ -138,6 +142,11 @@ class Details extends Component {
         this.setState({items});
     };
 
+    loggo = async () => {
+        const userData = await AuthService.getUserData();
+        console.log(userData);
+    };
+
     render() {
         const {classes} = this.props;
         return (
@@ -167,6 +176,7 @@ class Details extends Component {
                                     updateStatus={this.changeStatus}
                                     updateContract={this.changeContract}
                                     municipalityId={this.state.municipalityId}
+                                    warningUserId={this.state.userId}
                                 />
                             </Paper>
                         </div>
@@ -179,6 +189,7 @@ class Details extends Component {
                     </div>
                 </div>
                 }
+                <Button onClick={this.loggo}>efef</Button>
             </Navigation>
         )
     }
