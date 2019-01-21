@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 
 // Service import
-import WarningService from "../../api/services/WarningService";
+import WarningService from '../../api/services/WarningService';
 import ContractService from '../../api/services/ContractService';
 
 // Icons
@@ -95,7 +95,7 @@ class Details extends Component {
           municipalityId: e.municipalityId,
           contracts: e.contracts,
           city: e.city,
-          street: e.street,
+          street: e.street
         });
         this.setState({ isLoading: false });
 
@@ -151,6 +151,12 @@ class Details extends Component {
     this.setState({ items });
   };
 
+  onCommentCreated = () => {
+    WarningService.getWarningItems(this.getWarningId()).then(data => {
+      this.setState({ items: data });
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -188,7 +194,11 @@ class Details extends Component {
                 </Paper>
               </div>
               <div>
-                <FeedModule id={this.state.id} items={this.state.items} />
+                <FeedModule
+                  id={this.state.id}
+                  items={this.state.items}
+                  onCommentCreated={this.onCommentCreated}
+                />
               </div>
             </div>
           </div>
