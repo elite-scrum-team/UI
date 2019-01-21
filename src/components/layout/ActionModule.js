@@ -70,7 +70,7 @@ class ActionModule extends Component {
         this.setState({userData: await AuthService.getUserData()});
         if (this.state.userData !== null) {
 
-            if (this.state.userData.roles.groups !== null){
+            if (this.state.userData.roles && this.state.userData.roles.groups){
                 for (let i = 0; i < this.state.userData.roles.groups.length; i++){
                     if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
                         this.setState({municipalityEmployee: true});
