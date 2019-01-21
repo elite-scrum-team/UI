@@ -78,8 +78,6 @@ class Details extends Component {
     // Get id
     const id = this.getWarningId();
 
-    console.log(id);
-
     this.setState({ id: id, isLoading: true });
 
     // Get warning
@@ -99,8 +97,6 @@ class Details extends Component {
           contracts: e.contracts
         });
         this.setState({ isLoading: false });
-
-        console.log(e.userId);
 
         // Get warning content (comments, statuses, contracts)
         await WarningService.getWarningItems(id).then(data => {
@@ -154,11 +150,6 @@ class Details extends Component {
     this.setState({ items });
   };
 
-    loggo = async () => {
-        const userData = await AuthService.getUserData();
-        console.log(userData);
-    };
-
   render() {
     const { classes } = this.props;
     return (
@@ -185,6 +176,7 @@ class Details extends Component {
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
                     updateContract={this.changeContract}
+                    municipalityId={this.state.municipalityId}
                     contract={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}

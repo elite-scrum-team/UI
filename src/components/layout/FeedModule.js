@@ -51,6 +51,7 @@ const FeedModule = props => {
                 key={item.data.id}
                 breadtext={item.data.comment}
                 date={item.data.createdAt}
+                companyName={item.data.name}
               />
             );
           } else {

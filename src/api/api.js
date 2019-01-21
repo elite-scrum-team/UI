@@ -38,7 +38,7 @@ export default {
   },
 
   commentOnWarning: (warningId, image, comment) => {
-    return new Fetch(METHODS.post, '/comment', {
+    return new Fetch(METHODS.post, '/warning/comment', {
       warningId: warningId,
       image: image,
       comment: comment
