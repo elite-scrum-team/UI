@@ -113,7 +113,7 @@ class Events extends Component {
         });
     }
 
-    click = (item) => {
+    onItemClick = (item) => () => {
         this.setState({
             detail: item
         })
@@ -159,7 +159,7 @@ class Events extends Component {
                         </Typography>
                     </div>
                 </div>
-                <Hidden implementation='js' mdUp={this.state.detail === null}>
+                <Hidden implementation='js' mdUp={this.state.detail !== null}>
                     <div className={classNames(classes.container)}>
                         {this.state.isLoading ? <CircularProgress className={classes.progress} /> :
 
@@ -174,7 +174,7 @@ class Events extends Component {
                                                 image={value.images && value.images.length > 0 ? value.images[0] : null}
                                                 description={value.description}
                                                 date={value.createdAt}
-                                                onClick={() => this.click(value)}
+                                                onClick={this.onItemClick(value)}
                                             />
                                         ))}
                                     </div>
@@ -186,10 +186,10 @@ class Events extends Component {
                 {this.state.detail ?
                     <Fragment>
                         <Hidden implementation='js' smDown>
-                            <Sidebar event={this.state.detail} close={this.click}/>
+                            <Sidebar event={this.state.detail} close={this.onItemClick(null)}/>
                         </Hidden>
                         <Hidden implementation='js' mdUp>
-                            <DetailCard event={this.state.detail} close={this.click}/>
+                            <DetailCard event={this.state.detail} close={this.onItemClick(null)}/>
                         </Hidden>
                     </Fragment>
                     : null}
