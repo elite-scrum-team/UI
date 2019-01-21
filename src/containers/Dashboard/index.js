@@ -186,7 +186,6 @@ class Dashboard extends Component {
           });
         });
     
-        console.log('Contract: ', newContract);
       };
 
     render() {
