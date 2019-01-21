@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import classNames from 'classnames';
 
 // Services
 import LocationService from '../../api/services/LocationService';
@@ -8,6 +9,7 @@ import EventService from '../../api/services/EventService';
 // Material UI components
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Hidden from '@material-ui/core/Hidden';
 
 // Icons
 
@@ -15,14 +17,28 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Navigation from '../../components/navigation/Navigation';
 import EventItem from './components/EventItem';
 import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
+import Sidebar from "./components/Sidebar";
+import DetailCard from './components/DetailCard';
+
+const drawerWidth = 450;
 
 const styles = (theme) => ({
     root: {
+        position: 'relative',
+    },
+    container: {
         padding: '0 10px',
         paddingTop: 24,
         maxWidth: 1300,
         margin: 'auto',
         paddingBottom: 100,
+    },
+    mLeft: {
+        marginLeft: drawerWidth,
+
+        '@media only screen and (max-width: 960px)': {
+            marginLeft: 0,
+        }
     },
     top: {
         padding: '10px 10px 0 10px',
@@ -70,6 +86,22 @@ const styles = (theme) => ({
     }
 });
 
+let fakeNews = {
+
+    title: "title",
+        fromTime: Date.now(),
+    toTime : Date.now(),
+    description: "this is a drsc",
+    link: "www.www.www",
+    image: [{fileURL: "https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg", id: 0},{fileURL: "https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg", id : 1}
+    ,{fileURL: "http://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg" ,id : 2},],
+    location: {
+    street: "123 street"
+},
+};
+
+
+
 class Events extends Component {
 
     state = {
@@ -78,7 +110,8 @@ class Events extends Component {
         municipalities: [],
         selectedMunicipality: null,
         events: [],
-    }
+        detail: fakeNews
+    };
 
     componentDidMount() {
         EventService.getEvents(null, (isError, data) => {
@@ -95,6 +128,13 @@ class Events extends Component {
         });
     }
 
+    click = (item) => {
+        this.setState({
+            detail: item
+        })
+    };
+
+
     onMunicipalityChange =  (event) => {
         this.setState({selectedMunicipality: event});
 
@@ -108,19 +148,22 @@ class Events extends Component {
                 this.setState({isLoading: false});
             });
         }
-    }
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Navigation>
+            <div className={classNames(classes.root,{[classes.mLeft] : this.state.detail !== null})}>
+
+
                 <div className={classes.top}>
                     <div className={classes.topContent}>
                         <div className='mt-10'>
                             <Typography variant='h4' color='inherit'>Nyheter</Typography>
                         </div>
                         <div className='mt-10'>
-                            <SearchableDropdown 
+                            <SearchableDropdown
                                 className={classes.dropDown}
                                 placeholder='Søk etter kommune'
                                 onChange={this.onMunicipalityChange}
@@ -131,24 +174,41 @@ class Events extends Component {
                         </Typography>
                     </div>
                 </div>
-                <div className={classes.root}>
-                    {this.state.isLoading ? <CircularProgress className={classes.progress} /> :
-                        this.state.events && this.state.events.length > 0 ?
-                        <div className={classes.paper}>
-                            {this.state.events.map((value) => (
-                                <EventItem
-                                    key={value.id}
-                                    imageLeft
-                                    title={value.title}
-                                    image={value.images && value.images.length > 0 ? value.images[0] : null}
-                                    description={value.description}
-                                    date={value.createdAt}/>
-                            ))}
-                        </div>
-                        :
-                        <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
-                    }
-                </div>
+                <Hidden implementation='js' mdUp={this.state.detail === null}>
+                    <div className={classNames(classes.container)}>
+                        {this.state.isLoading ? <CircularProgress className={classes.progress} /> :
+
+                            this.state.events && this.state.events.length > 0 ?
+
+                                    <div className={classes.paper}>
+                                        {this.state.events.map((value) => (
+                                            <EventItem
+                                                key={value.id}
+                                                imageLeft
+                                                title={value.title}
+                                                image={value.images && value.images.length > 0 ? value.images[0] : null}
+                                                description={value.description}
+                                                date={value.createdAt}
+                                            />
+                                        ))}
+                                    </div>
+                            :
+                            <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
+                        }
+                    </div>
+                </Hidden>
+                {this.state.detail ?
+                    <Fragment>
+                        <Hidden implementation='js' smDown>
+                            <Sidebar event={this.state.detail} close={this.click}/>
+                        </Hidden>
+                        <Hidden implementation='js' mdUp>
+                            <DetailCard event={this.state.detail} close={this.click}/>
+                        </Hidden>
+                    </Fragment>
+                    : null}
+            </div>
+
             </Navigation>
         )
     }
