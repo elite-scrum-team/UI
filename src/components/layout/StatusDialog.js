@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 // Project components
 import MessageDialog from '../miscellaneous/MessageDialog';
-import statusLabels from '../../utils/warningUtils'
+import statusLabelsWithNumbers from '../../utils/warningUtils'
 
 
 const styles = {
@@ -61,7 +61,7 @@ class StatusDialog extends Component{
         dialogOpen: this.props.open,
         newStatus: -1,
         statusMsg: '',
-        statusNames: statusLabels
+        statusNames: statusLabelsWithNumbers
     };
 
 
@@ -109,11 +109,11 @@ class StatusDialog extends Component{
                             }}
                         >
                             {
-                                this.state.statusNames.statusLabels.map((item, index)=>{
+                                this.state.statusNames.statusLabelsWithNumbers.map((item)=>{
                                     return(
-                                        <MenuItem className={classes.item} key={index} value={index}>
-                                            <div className={classNames(classes.sidebar, statusStyles[index])} />
-                                            {item}
+                                        <MenuItem className={classes.item} key={item.number} value={item.number}>
+                                            <div className={classNames(classes.sidebar, statusStyles[item.number -1])} />
+                                            {item.label}
                                         </MenuItem>
                                     )})
                             }

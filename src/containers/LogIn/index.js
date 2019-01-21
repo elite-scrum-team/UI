@@ -44,7 +44,7 @@ class LogIn extends Component {
   state = {
     isSignIn: true,
     isLoading: false,
-    errorMessage: "",
+    errorMessage: '',
   };
 
   componentDidMount() {
@@ -61,7 +61,7 @@ class LogIn extends Component {
 
   goTo = (page) => {
     this.props.history.push(page);
-  }
+  };
 
   logIn = (email, password) => event => {
     event.preventDefault();

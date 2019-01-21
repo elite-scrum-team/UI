@@ -100,6 +100,8 @@ class Details extends Component {
         });
         this.setState({ isLoading: false });
 
+        console.log(e.userId);
+
         // Get warning content (comments, statuses, contracts)
         await WarningService.getWarningItems(id).then(data => {
           this.setState({ items: data });
@@ -113,7 +115,7 @@ class Details extends Component {
 
   changeStatus = newStatus => {
     console.log(this.state);
-    const status = newStatus.status + 1;
+    const status = newStatus.status;
 
     WarningService.createStatus(
       this.getWarningId(),
@@ -183,9 +185,11 @@ class Details extends Component {
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
                     updateContract={this.changeContract}
-                    municipalityId={this.state.municipalityId}
                     contract={this.state.contracts}
                     company={this.state.company}
+                    userId={this.state.userId}
+                    municipalityId={this.state.municipalityId}
+                    status={this.state.status}
                   />
                 </Paper>
               </div>

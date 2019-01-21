@@ -16,6 +16,9 @@ import DescriptionStep from "../../components/layout/InputStep";
 import MapStep from "../../components/layout/MapStep";
 import SinglePictureStep from "./components/SinglePictureStep";
 import DurationStep from "./components/DurationStep";
+import WarningService from "../../api/services/WarningService";
+import URLS from "../../URLS";
+import ConfirmDialog from "../CreateWarning/components/ConfirmDialog";
 
 const styles = {
     root: {},
@@ -155,7 +158,47 @@ class CreateNews extends Component {
     setEndDate = (data) => {
         this.setState({toDate:  data});
         console.log(this.state.toDate);
+    };
 
+    handleToggle = (name) => (event) => {
+        this.setState({[name]: !this.state[name]});
+    }
+
+    getNewsId = () => this.props.match.params.id;
+
+    createNews = () => {
+        // Do nothing if already loading
+        if(this.state.isLoading) {
+            return;
+        }
+
+        // News object to send
+        const news = {
+            title: this.state.title,
+            description: this.state.description,
+            link: this.state.link,
+            location: this.state.location,
+            fromDate: this.state.fromDate,
+            toDate: this.state.toDate,
+            image: this.state.imageFile,
+        }
+
+        this.setState({isSending: true});
+        WarningService.createWarning(news, (isError, data) => {
+            console.log(data);
+            if(isError) {
+                this.setState({isError: true, isSending: false, confirmDialogOpen: false});
+            } else {
+                this.props.history.push(URLS.createnews);
+            }
+        });
+    };
+
+    componentDidMount () {
+        const id = this.getNewsId();
+      if (this.getNewsId() === null){
+
+      }
     };
 
 
@@ -240,6 +283,11 @@ class CreateNews extends Component {
                                 >
                                     Send inn
                                 </Button>
+                                <ConfirmDialog
+                                    open={this.state.confirmDialogOpen}
+                                    //onSubmit={this.createNews()}
+                                    isLoading={this.state.isSending}
+                                    closeConfirmDialogCallback={this.handleToggle('confirmDialogOpen')}/>
                             </div>
                         </div>
                     </Paper>

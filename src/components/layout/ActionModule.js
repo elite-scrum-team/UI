@@ -35,7 +35,8 @@ class ActionModule extends Component {
     companyId: '',
     contractDesc: '',
 
-    ownWarning: true,
+    ownWarning: false,
+    municipalityEmployee: false,
     userData: null,
 
   };
@@ -62,16 +63,29 @@ class ActionModule extends Component {
     }
   };
 
-    loggo = async () => {
+    toggleDeleteOption = async () => {
         this.setState({userData: await AuthService.getUserData()});
-        console.log(this.state.userData);
-        console.log(this.state.userData.id);
-        //console.log(this.props.warningUserId);
+        if (this.state.userData !== null) {
+
+            if (this.state.userData.roles.groups !== null){
+                for (let i = 0; i < this.state.userData.roles.groups.length; i++){
+                    if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
+                        this.setState({municipalityEmployee: true});
+                    }
+                }
+            }
+
+            console.log(this.props.status);
+
+            if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
+                this.setState({ownWarning: true});
+            }
+        }
 
     };
 
     componentDidMount() {
-        this.loggo();
+        this.toggleDeleteOption();
     };
 
   render() {
