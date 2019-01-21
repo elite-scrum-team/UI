@@ -169,7 +169,6 @@ class Discover extends Component {
           location,
           excludeStatus: EXCLUDE_STATUSES,
         };
-        console.log("FILTERS: ", filters);
         this.getWarnings(filters)
       }, (error) => {
         this.setState({isGeoCodingError: true, isLoading: false});
@@ -220,10 +219,16 @@ class Discover extends Component {
 
       if(value === SEARCH_SECTION) {
         filters.excludeStatus = EXCLUDE_STATUSES;
+
+        filters.municipality = this.state.municipalityId ? this.state.municipalityId :
+          this.state.municipalities && this.state.municipalities.length > 0 ? this.state.municipalities[0].value
+            : null;
+
         this.getWarningsWithMunicipality(filters);
       } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
         filters.useUserId = true;
         this.getWarnings(filters);
+        this.setState({circlePosition: null});
       }
     };
 

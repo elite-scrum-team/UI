@@ -8,6 +8,10 @@ export default class WarningService {
     static getWarnings = async (orderBy = null, filters = {}, callback) => {
         let response = null;
 
+        if(!filters.dateSort) {
+            filters.dateSort = 'DESC';
+        }
+
         // Checks if warnings should be fetched by location
         if(filters && filters.location) {
             const location = filters.location;
