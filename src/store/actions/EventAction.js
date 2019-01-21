@@ -39,6 +39,8 @@ export const createEventPost = (event) => {
         id: event.id,
         title: event.title,
         createdAt: event.createdAt,
+        toTime: event.toTime,
+        fromTime: event.fromTime,
         description : event.description,
         location : location,
         images: images,
