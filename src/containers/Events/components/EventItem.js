@@ -23,7 +23,7 @@ const styles = makeStyles({
         cursor: 'pointer',
         backgroundColor: 'white',
         minHeight: 200,
-        
+
 
         '@media only screen and (max-width: 600px)': {
             flexDirection: 'column',
@@ -39,14 +39,14 @@ const styles = makeStyles({
         flexDirection: 'row-reverse',
     },
     detailWrapper: {
-        
+
     },
     content: {
         margin: 24,
         backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'column',
-        
+
         // justifyContent: 'space-between',
     },
     image: {
@@ -98,7 +98,7 @@ const EventItem = (props) => {
     // Styling
     const classes = styles();
 
-    const momentObject = props.date ? moment(props.date) : null
+    const momentObject = props.date ? moment(props.date) : null;
     const date = momentObject ? momentObject.calendar() : 'Ukjent';
     const time = momentObject ? momentObject.format('HH:mm') : 'Ukjent';
 
@@ -120,7 +120,7 @@ const EventItem = (props) => {
                         <div className={classes.fade} />
                     </div>
                     <div className={classes.middle} />
-                    
+
                 </div>
             </div>
         </Paper>

@@ -86,21 +86,6 @@ const styles = (theme) => ({
     }
 });
 
-let fakeNews = {
-
-    title: "title",
-        fromTime: Date.now(),
-    toTime : Date.now(),
-    description: "this is a drsc",
-    link: "http://www.www.www",
-    image: [{fileURL: "https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg", id: 0},{fileURL: "https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg", id : 1}
-    ,{fileURL: "http://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg" ,id : 2},],
-    location: {
-    street: "123 street"
-},
-};
-
-
 
 class Events extends Component {
 
@@ -110,7 +95,7 @@ class Events extends Component {
         municipalities: [],
         selectedMunicipality: null,
         events: [],
-        detail: fakeNews
+        detail: null
     };
 
     componentDidMount() {

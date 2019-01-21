@@ -66,8 +66,8 @@ const IconCarry = (props) =>{
 const DetailCard = (props) => {
     const event = props.event;
 
-    const fromTime = moment(event.fromTime).format('h:mm:ss');
-    const toTime = moment(event.toTime).format('h:mm:ss');
+    const fromTime = moment(event.fromTime).format('HH:mm:ss');
+    const toTime = moment(event.toTime).format('HH:mm:ss');
     const time = `${fromTime} - ${toTime}`;
 
     const fromDate = moment(event.fromTime).format('MMMM Do YYYY');
