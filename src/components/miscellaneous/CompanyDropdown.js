@@ -9,17 +9,15 @@ import * as UserAction from '../../store/actions/UserAction';
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem";
+import Typography from '@material-ui/core/Typography';
 
 // Icons
 
 // Project components
 
 const styles = {
-    root: {
-
-    },
     label: {
-        color: "#fff"
+        color: "#fff",
     },
     formControl: {
         selectTextColor: "#fff"
@@ -39,19 +37,18 @@ const styles = {
     },
     dropArrow: {
         fill: '#fff',
+    },
+    toFront: {
+        zIndex: 30000,
     }
-
 };
 
 class CompanyDropdown extends Component {
 
-    state={
-        selected: "",
-    };
-
     handleChange = (name) => (event) => {
-        this.setState({[name]: event.target.value});
-        this.props.changeGroup(event.target.value);
+        if(this.props.onChange) {
+            this.props.onChange(event.target.value);
+        }
     };
 
     render() {
@@ -62,19 +59,19 @@ class CompanyDropdown extends Component {
                     <Select
                         className={classes.selection}
                         autoWidth={true}
-                        value={this.state.selected}
-                        name="company"
-                        displayEmpty
+                        value={this.props.selectedGroup}
                         inputProps={{
                             classes: {
                                 icon: classes.dropArrow,
+                                selectMenu: classes.toFront,
+                                select: classes.toFront,
                             },
                         }}
                         onChange={this.handleChange('selected')}
                     >
-                        <MenuItem value="" disabled>
-                            Selskaper
-                        </MenuItem>
+                        <div className='p-10'>
+                            <Typography variant='body2'>Mine grupper</Typography>
+                        </div>
                         {this.props.companies.map(e =>
                             <MenuItem key={e.id} value={e}>
                                 {e.name}
@@ -89,6 +86,7 @@ class CompanyDropdown extends Component {
 
 const mapStoreToProps = (state) => ({
     companies: UserAction.getUserData(state).roles.groups,
+    selectedGroup: UserAction.getCurrentGroup(state) || {},
 });
 
 export default connect(mapStoreToProps)(withStyles(styles)(CompanyDropdown));

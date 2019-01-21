@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 // Icons
 
 // Project components
-import WarningItem from './WarningItem';
+import WarningItem from '../../../components/layout/WarningItem';
 
 const styles = makeStyles({
     root: {

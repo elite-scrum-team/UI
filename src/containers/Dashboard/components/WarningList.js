@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 // Icons
 
 // Project components
-import WarningItem from './WarningItem';
+import WarningItem from '../../../components/layout/WarningItem';
 
 
 const styles = makeStyles({
@@ -23,7 +23,11 @@ const WarningList = props => {
   const classes = styles();
 
   const warnings = props.items || [];
-  console.log(warnings);
+
+  const onClick = (e, value) => {
+    props.mountWarningCallback(value.id);
+    props.goTo(URLS.dashboard.concat(value.id));
+  }
 
   return (
     <div className={classes.root}>
@@ -31,11 +35,12 @@ const WarningList = props => {
         <WarningItem
           key={value.id || index}
           id={value.id}
-          onClick={() => props.goTo(URLS.dashboard.concat(value.id))}
-          title={value.category.name}
-          status={value.status.type}
+          onClick={(e) => onClick(e, value)}
+          title={value.category ? value.category.name : 'Ukjent varsel'}
+          status={value.status ? value.status.type : 0}
           description={value.description}
-          mountWarningCallback={(e) => props.mountWarningCallback(e)}
+          image={value.images && value.images.length > 0 ? value.images[0] : null}
+          posted={value.createdAt}
         />
       ))}
       {warnings.length === 0 && (

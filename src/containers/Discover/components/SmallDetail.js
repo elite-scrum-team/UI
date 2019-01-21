@@ -25,6 +25,11 @@ const drawerWidth = 450;
 const styles = makeStyles({
     root: {
         width: drawerWidth,
+
+        '@media only screen and (max-width: 800px)': {
+            width: '100%',
+            marginTop: 48,
+        }
     },
     flex: {
         paddingTop:'30px',
@@ -57,6 +62,8 @@ const SmallDetail = (props) => {
     let statusClasses = warningUtils.getAllStatusClasses;
     statusClasses = statusClasses.map((s) => s());
     statusClasses = statusClasses[statusCode];
+
+    console.log("DRAWER");
 
     return (
         <div className={classes.root}>

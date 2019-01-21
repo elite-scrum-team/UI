@@ -20,6 +20,12 @@ a {
   text-decoration: none;
 }
 
+@media only screen and (max-width: 800px) {
+  body {
+    background-color: white;
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 4px;

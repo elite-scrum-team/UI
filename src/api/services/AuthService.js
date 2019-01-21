@@ -6,6 +6,9 @@ import store from '../../store/store'
 // The userservice will do user related things,
 // and all the methods will return a promise
 export default class AuthService {
+
+    static hasUserData = false;
+
     static createUser = (email, password, callback) => {
         // Trim and uncapitalize email
         email = email.trim().toLowerCase();
@@ -38,16 +41,34 @@ export default class AuthService {
     };
 
     static getUserData = (callback) => {
+        const userData = UserAction.getUserData(store.getState());
+
+        // Check if userData is in the store
+        if(userData.id) {
+            !callback || callback(false, userData);
+            return Promise.resolve(userData);
+        }
+
+        // Otherwise fetch from server
         const response = AUTH.getUserData().response();
         return response.then((data) => {
             if(response.isError === false) {
                 UserAction.setUserData(data)(store.dispatch);
                 data = UserAction.getUserData(store.getState());
+                AuthService.hasUserData = true;
             }
             !callback || callback(response.isError, data);
             return data;
         });
     };
+
+    static setCurrentGroup = (groupObject) => {
+        UserAction.setCurrentGroup(groupObject)(store.dispatch);
+    }
+
+    static getCurrentGroup = () => {
+        return UserAction.getCurrentGroup(store.getState());
+    }
 
     static isEmployee (municipalityId = null) {
         const roles = UserAction.getUserData(store.getState()).roles;
@@ -72,7 +93,12 @@ export default class AuthService {
     }
 
     static isAuthenticated () {
-        return typeof TOKEN.get() !== 'undefined'
+        const isAuthenticated = typeof TOKEN.get() !== 'undefined';
+        if(!isAuthenticated && AuthService.hasUserData) {
+            UserAction.clearUserData()(store.dispatch);
+            AuthService.hasUserData = false;
+        }
+        return isAuthenticated;
     }
 
     static logOut() {

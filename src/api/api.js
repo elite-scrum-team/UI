@@ -1,66 +1,116 @@
-import Fetch from "./helpers/http";
-import {METHODS} from "./helpers/config";
+import Fetch from './helpers/http';
+import { METHODS } from './helpers/config';
+
+const filterToParams = (filters) => (filters
+  ? Object.keys(filters).map(key => {
+      return filters[key] instanceof Array
+        ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
+        : `${key}=${filters[key]}&`;
+    }).join('')
+  : '')
 
 export default {
-    // Here will all the API methods be
+  // Here will all the API methods be
 
-    // --- WARNINGS ---
-    getWarnings: (filters)=>{
-        console.log("FILTERS: ", filters);
-        return new Fetch(METHODS.get, '/warning?' + (filters ?
-            Object.keys(filters).map(key => {
-                return filters[key] instanceof Array 
-                    ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
-                    : `${key}=${filters[key]}&`
-             }) : ''))
-    },
+  // --- WARNINGS ---
+  getWarnings: filters => {
+    return new Fetch(
+      METHODS.get,
+      '/warning?' +
+      filterToParams(filters)
+    );
+  },
 
-    getWarning: (id) =>{
-        return new Fetch(METHODS.get, `/warning/${id}`)
-    },
+  getWarning: id => {
+    return new Fetch(METHODS.get, `/warning/${id}`);
+  },
 
-    getWarningContent: (id) => {
-        return new Fetch(METHODS.get, '/warning/content/'.concat(id));
-    },
+  getWarningContent: id => {
+    return new Fetch(METHODS.get, '/warning/content/'.concat(id));
+  },
 
-    createWarning: (data) =>{
-        return new Fetch(METHODS.post, '/warning', data)
-    },
+  getWarningsClose: (lat, lng, filters) => {
+    return new Fetch(METHODS.get, `/warning/close/${lat}/${lng}?`.concat(filterToParams(filters)));
+  },
 
-    commentOnWarning : (warningId, image , comment) =>{
-        return new Fetch(METHODS.post, '/comment', {warningId: warningId, image: image, comment: comment})
-    },
+  createWarning: data => {
+    return new Fetch(METHODS.post, '/warning', data);
+  },
 
-    addWarningImage: (id, image) => {
-        return new Fetch(METHODS.post, '/warning/image', {warningId: id, image: image});
-    },
+  commentOnWarning: (warningId, image, comment) => {
+    return new Fetch(METHODS.post, '/comment', {
+      warningId: warningId,
+      image: image,
+      comment: comment
+    });
+  },
 
-    addStatus: (data) => {
-        return new Fetch(METHODS.post, '/warning/status', {warningId: data.warningId, type: data.type, description: data.description});
-    },
+  addWarningImage: (id, image) => {
+    return new Fetch(METHODS.post, '/warning/image', {
+      warningId: id,
+      image: image
+    });
+  },
 
-    // --- CATEGORIES ---
-    getCategories : () => {
-        return new Fetch(METHODS.get, '/warning/category');
-    },
+  addStatus: data => {
+    return new Fetch(METHODS.post, '/warning/status', {
+      warningId: data.warningId,
+      type: data.type,
+      description: data.description
+    });
+  },
 
-    // --- CONTRACTS ---
-    createContract : (warningId, groupId, description) =>{
-        return new Fetch(METHODS.post, '/warning/contract', {warningId: warningId, groupId: groupId, description: description})
-    },
+  // --- CATEGORIES ---
+  getCategories: () => {
+    return new Fetch(METHODS.get, '/warning/category');
+  },
 
-    getContracts : () =>{
-        return new Fetch(METHODS.get, '/warning/contract')
-    },
+  // --- CONTRACTS ---
+  createContract: (warningId, groupId, description) => {
+    return new Fetch(METHODS.post, '/warning/contract', {
+      warningId: warningId,
+      groupId: groupId,
+      comment: description
+    });
+  },
 
-    // --- MUNICIPALITIES ---
-    getMunicipalities: () => {
-        return new Fetch(METHODS.get, '/location/municipality');
-    },
+  getContracts: () => {
+    return new Fetch(METHODS.get, '/warning/contract');
+  },
 
-    // --- COMPANIES ---
-    getAllCompanies: () => {
-        return new Fetch(METHODS.get, '/user/groups?onlyCompanies=true');
-    }
+  // --- MUNICIPALITIES ---
+  getMunicipalities: () => {
+    return new Fetch(METHODS.get, '/location/municipality');
+  },
 
-}
+  // --- COMPANIES ---
+  getAllCompanies: () => {
+    return new Fetch(METHODS.get, '/user/group?onlyCompanies=true');
+  },
+    // --- EVENTS ---
+
+  getAllEvents: () =>{
+    return new Fetch(METHODS.get, '/event')
+  },
+  getEventById: (id) =>{
+      return new Fetch(METHODS.get, '/event/'.concat(id))
+  },
+  getMunicipalityEvent: (municipalityId) =>{
+      return new Fetch(METHODS.get, '/event/municipality/'.concat(municipalityId))
+  },
+  createEvent: (data) => {
+      return new Fetch(METHODS.post, '/event', data);
+  },
+  updateEvent: (id, data) =>{
+      return new Fetch(METHODS.put, '/event/'.concat(id), data);
+  },
+  addEventImage: (id, image) =>{
+      return new Fetch(METHODS.post, '/event/image', {
+          eventId: id,
+          image: image
+      });
+  },
+  getEventContent: id => {
+      return new Fetch(METHODS.get, '/event/content/'.concat(id));
+  },
+};

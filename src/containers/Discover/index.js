@@ -78,12 +78,14 @@ class Discover extends Component {
             lat: 63.428322,
             lng: 10.392774,
         },
+        circlePosition: null, // The position on the map a circle will be drawn
+
         search: null,
         items: [],
         detail: false, // Should show warning details
         item: {}, // The warning detail item
 
-        zoom: 15, // Default zoom on map
+        // zoom: 15, // Default zoom on map
         municipalities: [], // Municipalities in search bar
         municipalityId: null,
       };
@@ -130,7 +132,7 @@ class Discover extends Component {
     }
 
     getWarningsWithMunicipality = (filter) => {
-      this.setState({isLoading: true});
+      this.setState({isLoading: true, circlePosition: null});
       let filters = {};
       if(this.state.municipalityId) {
         filters = {
@@ -143,45 +145,72 @@ class Discover extends Component {
     }
 
     getWarningsWithLocation = (filter) => {
+
       GeoService.getGeoLocation((position) => {
         // Got position
         const location = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        } 
-        this.setState({});
+        }
         this.mapGoTo(location);
-        
-        this.setState({isLoading: true, currentLocation: location, search: {}, zoom: 15});
+
+        this.setState({
+          isLoading: true, 
+          currentLocation: location,
+          circlePosition: location,
+          search: null,
+        });
         const filters = {
           ...filter,
-          lat: location.lat,
-          lng: location.lng,
+          location,
           excludeStatus: [0, 4, 5]
         };
         this.getWarnings(filters)
       });
     }
 
-    getWarnings = (filters) => {
+    getWarnings = (filters, willGoTo=true) => {
       WarningService.getWarnings({createdAt: true}, filters, (isError, data) => {
         if(isError === false) {
-          console.log(data);
           this.setState({items: data.map(e => ({...e, onClick: () => this.detail(e)}))});
-          if(data && data.length > 0 && data[0].location) {
-            this.mapGoTo(data[0].location);
-            this.setState({currentLocation: data[0].location});
-          }
+          this.handleNewData(data, willGoTo);
         }
         this.setState({isLoading: false});
       });
     };
 
+    // Will move the center of tha map to a data based position
+    handleNewData = (data, willGoTo = true) => {
+      if(!data || data.length === 0 || willGoTo === false) {
+        return;
+      }
+
+      // if data only contains one position, go directly to that position
+      if(data.length === 1 && data[0].location) {
+        this.mapGoTo(data[0].location);
+        return;
+      }
+
+      // Calculate bounds for all positions
+      const bounds = new window.google.maps.LatLngBounds();
+
+      // Create latLng object and extend bounds
+      const locations = data.filter(w => w.location)
+      .map(w => new window.google.maps.LatLng(w.location.lat, w.location.lng));
+      locations.forEach(latLng => {
+        bounds.extend(latLng);
+      });
+
+      if(this.map) {
+        this.map.fitBounds(bounds);
+      }
+    }
+
     onSectionChange = (value) => {
       this.setState({isLoading: true});
 
       const filters = {};
-      
+
       if(value === SEARCH_SECTION) {
         filters.excludeStatus = [0, 1, 4, 5];
         this.getWarningsWithMunicipality(filters);
@@ -235,7 +264,7 @@ class Discover extends Component {
                     isLoading={this.state.isLoading}
                     detail={this.detail}
                     municipalities={this.state.municipalities}
-                    onLocation={(e) => this.getWarningsWithLocation()}
+                    onLocation={this.getWarningsWithLocation}
             />
                   :
                   <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
@@ -247,10 +276,12 @@ class Discover extends Component {
             <div className={classes.root}>
               <Map
                   onZoomChanged={this.handleChange('zoom', true)}
-                  zoom={this.state.zoom}
+                  zoom={15}
                   map={this.setMapRef}
                   locations={this.state.items}
                   defaultCenter={this.state.currentLocation}
+                  circlePosition={this.state.circlePosition}
+                  showMarkers={true}
               />
             </div>
           </Hidden>
@@ -258,17 +289,21 @@ class Discover extends Component {
           {!this.state.showMap &&
             <Hidden implementation='js' mdUp>
               <div className={classes.content}>
-                <SearchContent
-                  searchValue={this.state.search}
-                  items={this.state.items}
-                  onSubmit={this.onSearch}
-                  onSectionChange={this.onSectionChange}
-                  isLoading={this.state.isLoading}
-                  detail={this.detail}
-                  municipalities={this.state.municipalities}
-                  onLocation={this.getWarningsWithLocation}
-                />
-
+              {!this.state.detail
+                  ?
+                  <SearchContent
+                    searchValue={this.state.search}
+                    items={this.state.items}
+                    onSubmit={this.onSearch}
+                    onSectionChange={this.onSectionChange}
+                    isLoading={this.state.isLoading}
+                    detail={this.detail}
+                    municipalities={this.state.municipalities}
+                    onLocation={this.getWarningsWithLocation}
+                  />
+                  :
+                  <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
+              }
               </div>
             </Hidden>
           }

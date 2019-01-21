@@ -82,7 +82,6 @@ class StatusDialog extends Component{
     render() {
         // Styling
         const {classes, open} = this.props;
-        //const statusStyles = [classes.acknowledged, classes.progress, classes.done, classes.rejected];
 
         return (
             <div className={classes.root}>

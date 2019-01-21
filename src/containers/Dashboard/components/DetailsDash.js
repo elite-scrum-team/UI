@@ -21,7 +21,7 @@ import URLS from "../../../URLS";
 const styles = makeStyles({
     root: {
         '@media only screen and (min-width: 601px)': {
-            marginLeft: 340,
+            marginLeft: 460,
         },
         '@media only screen and (max-width: 600px)': {
             marginLeft: 15,
@@ -82,7 +82,7 @@ const DetailsDash = (props) => {
                 <img className={classes.img}
                     src={LogoImage}
                     alt={'Hverdagshelt logo'}
-                    title={'Hverdagshelt logo'}/>
+                />
             </div>
         )
     };
@@ -116,7 +116,9 @@ const DetailsDash = (props) => {
                             <ActionModule
                                 className={classes.actionMod}
                                 updateStatus={props.changeStatus}
-                                updateContract={props.changeContract}/>
+                                updateContract={props.changeContract}
+                                contracts={props.state.contracts}
+                            />
                         </Paper>
                     </div>
                     <div>
