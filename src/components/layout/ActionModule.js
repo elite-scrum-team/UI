@@ -20,6 +20,7 @@ import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
+import SubscribeDialog from "./SubscribeDialog";
 
 const styles = {
   root: {}
@@ -30,6 +31,8 @@ class ActionModule extends Component {
     deleteDialogOpen: false,
     statusDialogOpen: false,
     contractDialogOpen: false,
+    subscribeDialogOpen: false,
+    subscribed: false,
     newStatus: -1,
     statusMsg: '',
     companyId: '',
@@ -60,6 +63,11 @@ class ActionModule extends Component {
     }
   };
 
+  handleSub = value => {
+    this.setState({subscribeDialogOpen: false,
+                          subscribed: value});
+  };
+
   render() {
     // Styling
     const { classes } = this.props;
@@ -81,7 +89,9 @@ class ActionModule extends Component {
               </div>
             )}
             <ListItem button dense>
-              <ListItemText primary='Varsle meg ved endringer' />
+              <ListItemText primary='Varsle meg ved endringer'
+                            onClick={() => this.setState({ subscribeDialogOpen: true })}
+              />
             </ListItem>
             <Divider />
 
@@ -138,6 +148,12 @@ class ActionModule extends Component {
           open={this.state.contractDialogOpen}
           onClose={this.handleToggle('contractDialogOpen')}
           submitContract={this.handleNewContract}
+        />
+        <SubscribeDialog
+          open={this.state.subscribeDialogOpen}
+          onClose={this.handleToggle('subscribeDialogOpen')}
+          submitSubscribe={this.handleSub}
+          subscribed={this.state.subscribed}
         />
       </div>
     );
