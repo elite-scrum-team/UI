@@ -118,6 +118,9 @@ const DetailsDash = (props) => {
                                 updateStatus={props.changeStatus}
                                 updateContract={props.changeContract}
                                 contracts={props.state.contracts}
+                                municipalityId={props.state.municipalityId}
+                                status={props.state.status}
+
                             />
                         </Paper>
                     </div>

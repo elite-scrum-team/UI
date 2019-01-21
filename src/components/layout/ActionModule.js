@@ -35,7 +35,10 @@ class ActionModule extends Component {
     companyId: '',
     contractDesc: '',
 
-    ownWarning: true
+    ownWarning: false,
+    municipalityEmployee: false,
+    userData: null,
+
   };
 
   checkContract = () => {
@@ -59,6 +62,31 @@ class ActionModule extends Component {
       this.props.updateContract(value);
     }
   };
+
+    toggleDeleteOption = async () => {
+        this.setState({userData: await AuthService.getUserData()});
+        if (this.state.userData !== null) {
+
+            if (this.state.userData.roles.groups !== null){
+                for (let i = 0; i < this.state.userData.roles.groups.length; i++){
+                    if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
+                        this.setState({municipalityEmployee: true});
+                    }
+                }
+            }
+
+            console.log(this.props.status);
+
+            if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
+                this.setState({ownWarning: true});
+            }
+        }
+
+    };
+
+    componentDidMount() {
+        this.toggleDeleteOption();
+    };
 
   render() {
     // Styling

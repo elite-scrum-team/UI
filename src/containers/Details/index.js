@@ -7,7 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 
 // Service import
-import WarningService from '../../api/services/WarningService';
+import WarningService from "../../api/services/WarningService";
+import AuthService from '../../api/services/AuthService'
 import ContractService from '../../api/services/ContractService';
 
 // Icons
@@ -109,7 +110,8 @@ class Details extends Component {
   }
 
   changeStatus = newStatus => {
-    const status = newStatus.status + 1;
+    console.log(this.state);
+    const status = newStatus.status;
 
     WarningService.createStatus(
       this.getWarningId(),
@@ -177,6 +179,9 @@ class Details extends Component {
                     municipalityId={this.state.municipalityId}
                     contract={this.state.contracts}
                     company={this.state.company}
+                    userId={this.state.userId}
+                    municipalityId={this.state.municipalityId}
+                    status={this.state.status}
                   />
                 </Paper>
               </div>
