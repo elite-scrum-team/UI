@@ -103,7 +103,7 @@ const EventItem = (props) => {
     const time = momentObject ? momentObject.format('HH:mm') : 'Ukjent';
 
     return (
-        <Paper className={classNames(classes.root, props.imageLeft ? '' : classes.reverse)}>
+        <Paper className={classNames(classes.root, props.imageLeft ? '' : classes.reverse)} onClick={props.onClick}>
             <div className={classNames(classes.imageWrapper, props.imageLeft ? classes.fixedSize : classes.grow)}>
                 <img className={classes.image} src={props.image} alt={props.title} />
             </div>
