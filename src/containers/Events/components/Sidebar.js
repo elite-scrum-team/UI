@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/styles';
 
 // Material UI components
 import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import Clear from '@material-ui/icons/Clear';
 // Icons
 
 // Project components

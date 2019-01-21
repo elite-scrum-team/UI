@@ -6,7 +6,6 @@ import classNames from 'classnames';
 // Material UI components
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar'
 // Icons
 
 // Project components

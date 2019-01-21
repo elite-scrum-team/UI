@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import moment from 'moment'
@@ -16,7 +15,13 @@ import TimeIcon from '@material-ui/icons/AccessTime';
 
 // Project components
 
-
+const relocate = (link) =>{
+    if(link.includes('http://') || link.includes('https://')){
+        window.open(link)
+    }else{
+        window.open('http://'.concat(link));
+    }
+};
 
 const styles = makeStyles({
     root: {
@@ -70,7 +75,6 @@ const DetailCard = (props) => {
     // Styling
     const classes = styles();
 
-
     return (
         <div className={classNames(classes.root, props.className)}>
             <div className={classNames(classes.icons)}>
@@ -91,9 +95,8 @@ const DetailCard = (props) => {
                 }
                 <IconCarry first={event.location.street} second={<LocationIcon/>}/>
             </div>
-            <Chip  label="Besøk nettsiden" onClick={() => console.log("ree")}>
+            <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
 
-            </Chip>
         </div>
     )
 };

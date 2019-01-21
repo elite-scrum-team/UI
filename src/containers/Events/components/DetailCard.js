@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
@@ -48,7 +47,7 @@ const DetailCard = (props) => {
     return (
         <div className={classNames(classes.root, props.className)}>
             <div className={classes.avslutt}>
-                <IconButton className={{}}>
+                <IconButton onClick={() => props.close(null)}>
                     <Clear/>
                 </IconButton>
             </div>
