@@ -159,7 +159,7 @@ class Events extends Component {
                         </Typography>
                     </div>
                 </div>
-                <Hidden implementation='js' mdUp={this.state.detail === null}>
+                <Hidden implementation='js' mdUp={this.state.detail !== null}>
                     <div className={classNames(classes.container)}>
                         {this.state.isLoading ? <CircularProgress className={classes.progress} /> :
 
