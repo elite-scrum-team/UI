@@ -34,6 +34,9 @@ const styles = makeStyles({
     height: 60,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  name: {
+    color: 'darkGrey',
   }
 });
 
@@ -48,7 +51,7 @@ const CompanyBox = props => {
       <div className={classes.messageText}>
         <div>
           <Typography className={classes.companymessage} variant='body2'>
-            {props.companyName} har blitt tildelt denne oppgaven.
+            <span className={classes.name}>{props.companyName}</span> har blitt tildelt denne oppgaven.
           </Typography>
           <Typography color='textSecondary' variant='caption'>
             {props.breadtext}
