@@ -12,6 +12,8 @@ import Chip from '@material-ui/core/Chip';
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
 import TimeIcon from '@material-ui/icons/AccessTime';
+import BankIcon from '@material-ui/icons/AccountBalance';
+import LocationCity from '@material-ui/icons/LocationCity';
 
 // Project components
 import Map from "../miscellaneous/Map";
@@ -32,7 +34,7 @@ const styles = makeStyles({
         position: 'relative',
         paddingLeft: 16,
     },
-    mr: {marginRight: 10},
+    mr: {marginRight: 13},
     content: {
         height: '100%',
         width: '100%',
@@ -121,12 +123,20 @@ const WarningDetails = (props) =>  {
                                 </div>
                             </div>
                             <div>
-                                <div className={classNames(classes.flex, 'mb-10')}>
-                                    <Typography className={classes.mr} variant='caption'>{props.municipality} kommune</Typography>
+                                {props.municipality && <div className={classNames(classes.flex, 'mb-10')}>
+                                    <Typography className={classes.mr} variant='caption' align='right' noWrap>{props.municipality} kommune</Typography>
+                                    <BankIcon />
+                                </div>}
+                                {props.city && <div className={classNames(classes.flex, 'mb-10')}>
+                                    <Typography className={classes.mr} variant='caption' align='right'>{props.city}</Typography>
+                                    <LocationCity />
+                                </div>}
+                                {props.street && <div className={classNames(classes.flex, 'mb-10')}>
+                                    <Typography className={classes.mr} variant='caption' align='right'>{props.street}</Typography>
                                     <LocationIcon />
-                                </div>
-                                <div className={classes.flex}>
-                                    <Typography className={classes.mr} variant='caption'>{time}</Typography>
+                                </div>}
+                                <div className={classNames(classes.flex, 'mb-10')}>
+                                    <Typography className={classes.mr} variant='caption' align='right'>{time}</Typography>
                                     <TimeIcon />
                                 </div>
                             </div>

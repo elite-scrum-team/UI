@@ -22,7 +22,7 @@ import FeedModule from '../../components/layout/FeedModule';
 
 const styles = {
   root: {
-    maxWidth: 1000,
+    maxWidth: 1100,
     margin: 'auto',
     paddingTop: 16,
     paddingBottom: 100
@@ -94,7 +94,9 @@ class Details extends Component {
           municipality: e.municipality,
           userId: e.userId,
           municipalityId: e.municipalityId,
-          contracts: e.contracts
+          contracts: e.contracts,
+          city: e.city,
+          street: e.street,
         });
         this.setState({ isLoading: false });
 
@@ -165,6 +167,8 @@ class Details extends Component {
                 description={this.state.description}
                 location={this.state.location}
                 municipality={this.state.municipality}
+                city={this.state.city}
+                street={this.state.street}
               />
               <Divider />
               <ImageGrid images={this.state.images} />

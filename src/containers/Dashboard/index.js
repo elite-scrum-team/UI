@@ -94,6 +94,7 @@ class Dashboard extends Component {
             this.setState({isLoading: true});
             WarningService.getWarning(id, (isError, e) => {
                 if (isError === false) {
+                    console.log("Warning: ", e);
                     this.setState({
                         title: e.category.name,
                         posted: e.createdAt,
@@ -106,6 +107,8 @@ class Dashboard extends Component {
                         userId: e.userId,
                         municipalityId: e.municipalityId,
                         contracts: e.contracts,
+                        city: e.city,
+                        street: e.street,
                         showWarning: true,
                     });
 

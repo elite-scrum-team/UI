@@ -38,6 +38,7 @@ const styles = makeStyles({
         alignItems: 'center'
     },
     image: {
+       marginTop: 30,
        width: '100%',
        height: 'auto',
        maxWidth: 400,

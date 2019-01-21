@@ -104,6 +104,8 @@ const DetailsDash = (props) => {
                     description={props.state.description}
                     location={props.state.location}
                     municipality={props.state.municipality}
+                    city={props.state.city}
+                    street={props.state.street}
                 />
                 <ImageGrid
                     images={props.state.images}
