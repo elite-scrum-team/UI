@@ -21,6 +21,7 @@ import Map from '../../components/miscellaneous/Map';
 import Sidebar from './components/Sidebar';
 import SearchContent from './components/SearchContent';
 import SmallDetail from './components/SmallDetail'
+import MessageDialog from '../../components/miscellaneous/MessageDialog';
 
 // External imports
 import queryString from 'query-string'
@@ -67,12 +68,15 @@ const styles = theme => ({
 const SEARCH_SECTION = 0;
 const USER_SECTION = 1;
 
+const EXCLUDE_STATUSES = [0, 4, 5];
+
 class Discover extends Component {
 
     constructor() {
       super();
       this.state = {
         isLoading: true,
+        isGeoCodingError: false, // Can not get location
         showMap: false,
         currentLocation: { // Start location on map
             lat: 63.428322,
@@ -110,7 +114,7 @@ class Discover extends Component {
         this.setState({municipalities: isError ? [] : data.map(m => ({value: m.id, label: m.name}))});
 
         if(this.state.municipalityId) {
-          this.getWarningsWithMunicipality({excludeStatus: [0, 4, 5]});
+          this.getWarningsWithMunicipality({excludeStatus: EXCLUDE_STATUSES});
         } else {
           this.getWarningsWithLocation();
         }
@@ -136,7 +140,7 @@ class Discover extends Component {
       let filters = {};
       if(this.state.municipalityId) {
         filters = {
-          ...filters,
+          ...filter,
           municipality: this.state.municipalityId,
         }
       }
@@ -163,9 +167,12 @@ class Discover extends Component {
         const filters = {
           ...filter,
           location,
-          excludeStatus: [0, 4, 5]
+          excludeStatus: EXCLUDE_STATUSES,
         };
+        console.log("FILTERS: ", filters);
         this.getWarnings(filters)
+      }, (error) => {
+        this.setState({isGeoCodingError: true, isLoading: false});
       });
     }
 
@@ -212,7 +219,7 @@ class Discover extends Component {
       const filters = {};
 
       if(value === SEARCH_SECTION) {
-        filters.excludeStatus = [0, 1, 4, 5];
+        filters.excludeStatus = EXCLUDE_STATUSES;
         this.getWarningsWithMunicipality(filters);
       } else if(value === USER_SECTION && AuthService.isAuthenticated()) {
         filters.useUserId = true;
@@ -264,7 +271,7 @@ class Discover extends Component {
                     isLoading={this.state.isLoading}
                     detail={this.detail}
                     municipalities={this.state.municipalities}
-                    onLocation={this.getWarningsWithLocation}
+                    onLocation={() => this.getWarningsWithLocation()}
             />
                   :
                   <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
@@ -299,7 +306,7 @@ class Discover extends Component {
                     isLoading={this.state.isLoading}
                     detail={this.detail}
                     municipalities={this.state.municipalities}
-                    onLocation={this.getWarningsWithLocation}
+                    onLocation={() => this.getWarningsWithLocation()}
                   />
                   :
                   <SmallDetail nextdetail={() =>{ this.setState({detail: false, loadingDetail:true})}} item={this.state.item} goTo={this.goTo}/>
@@ -312,6 +319,13 @@ class Discover extends Component {
               {this.state.showMap ? <CloseIcon /> : <MapIcon />}
             </Fab>
           </Hidden>
+          <MessageDialog
+            open={this.state.isGeoCodingError}
+            onClose={() => this.setState({isGeoCodingError: false})}
+            title='Kunne ikke hente din lokasjon'
+            content='Vi kunne dessverre ikke hente lokasjonen din. Aksepter forespørselen om å dele lokasjon eller sjekk instillingene dine.'
+            error={true}
+          />
         </Navigation>
       );
     }

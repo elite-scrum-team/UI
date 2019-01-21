@@ -77,8 +77,6 @@ class Details extends Component {
     // Get id
     const id = this.getWarningId();
 
-    console.log(id);
-
     this.setState({ id: id, isLoading: true });
 
     // Get warning
@@ -111,7 +109,6 @@ class Details extends Component {
   }
 
   changeStatus = newStatus => {
-    console.log(this.state);
     const status = newStatus.status + 1;
 
     WarningService.createStatus(
