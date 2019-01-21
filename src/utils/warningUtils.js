@@ -60,6 +60,12 @@ export default {
     //MÅ STÅ I RIKTIG REKKEFØLGE
     statusLabels: ['Anerkjent', 'Arbeid påbegynt','Ferdig','Avslått'],
 
+    //Brukt i dialog for statusendring
+    statusLabelsWithNumbers: [  {number: 1, label: 'Anerkjent'},
+                                {number: 2, label: 'Arbeid påbegynt'},
+                                {number: 3, label: 'Ferdig'},
+                                {number: 4, label: 'Avslått'}],
+
 
     getStatusClasses: (statusCode) => makeStyles({
         color: statusColorStyles[statusCode],

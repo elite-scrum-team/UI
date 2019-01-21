@@ -104,6 +104,8 @@ const DetailsDash = (props) => {
                     description={props.state.description}
                     location={props.state.location}
                     municipality={props.state.municipality}
+                    city={props.state.city}
+                    street={props.state.street}
                 />
                 <ImageGrid
                     images={props.state.images}
@@ -118,6 +120,9 @@ const DetailsDash = (props) => {
                                 updateStatus={props.changeStatus}
                                 updateContract={props.changeContract}
                                 contracts={props.state.contracts}
+                                municipalityId={props.state.municipalityId}
+                                status={props.state.status}
+
                             />
                         </Paper>
                     </div>

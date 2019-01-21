@@ -26,6 +26,7 @@ const styles = makeStyles({
     root: {
         backgroundColor: 'white',
         minHeight: 600,
+        paddingBottom: 100,
     },
     loginButton: {
         display: 'block',

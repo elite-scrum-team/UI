@@ -21,6 +21,7 @@ import Functions from './components/Functions';
 import Tutorial from './components/Tutorial';
 import Quote from './components/Quote';
 import Starter from './components/Starter';
+import MessageDialog from '../../components/miscellaneous/MessageDialog';
 
 const styles = {
     root: {
@@ -103,6 +104,7 @@ const styles = {
 class Landing extends Component {
 
     state = {
+        isGeoCodingError: false, // Can not get location
         municipalities: [],
     }
 
@@ -122,6 +124,9 @@ class Landing extends Component {
     searchByLocation = () => {
         GeoService.getGeoLocation((position) => {
             this.props.history.push(URLS.discover);
+        },
+        (error) => {
+            this.setState({isGeoCodingError: true});
         });
     }
 
@@ -176,6 +181,13 @@ class Landing extends Component {
                     <Quote />
                     <Starter goTo={this.goTo} />
                 </div>
+                <MessageDialog
+                    open={this.state.isGeoCodingError}
+                    onClose={() => this.setState({isGeoCodingError: false})}
+                    title='Kunne ikke hente din lokasjon'
+                    content='Vi kunne dessverre ikke hente lokasjonen din. Aksepter forespørselen om å dele lokasjon eller sjekk instillingene dine.'
+                    error={true}
+                />
             </div>
         )
     }

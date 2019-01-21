@@ -90,9 +90,11 @@ class Dashboard extends Component {
             this.setState({showWarning: false })
         }
         else {
+
             this.setState({isLoading: true});
             WarningService.getWarning(id, (isError, e) => {
                 if (isError === false) {
+                    console.log("Warning: ", e);
                     this.setState({
                         title: e.category.name,
                         posted: e.createdAt,
@@ -100,8 +102,14 @@ class Dashboard extends Component {
                         statusMessage: e.status ? e.status.description : '',
                         description: e.description,
                         location: e.location,
+                        images: e.images,
+                        municipality: e.municipality,
+                        userId: e.userId,
+                        municipalityId: e.municipalityId,
+                        contracts: e.contracts,
+                        city: e.city,
+                        street: e.street,
                         showWarning: true,
-                        contracts: e.contracts
                     });
 
                     WarningService.getWarningItems(id)
@@ -163,7 +171,7 @@ class Dashboard extends Component {
     };
 
     changeStatus = (newStatus) => {
-        const status = newStatus.status + 1;
+        const status = newStatus.status;
 
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
@@ -186,7 +194,6 @@ class Dashboard extends Component {
           });
         });
     
-        console.log('Contract: ', newContract);
       };
 
     render() {
