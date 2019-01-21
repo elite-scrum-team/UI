@@ -95,7 +95,7 @@ class StatusDialog extends Component{
                     open={open}
                 >
                     {/*<FormControl className={classes.formControl}>*/}
-                        <InputLabel htmlFor="status-simple">Hvis du velger å slette varslingen vil den ikke fjernes fra databasen, men gjort usynlig for vanlige brukere.</InputLabel>
+                        <InputLabel htmlFor='status-simple'>Hvis du velger å slette varslingen vil den ikke fjernes fra databasen, men gjort usynlig for vanlige brukere.</InputLabel>
                         {/*<Select*/}
                             {/*value={this.state.newStatus}*/}
                             {/*onChange={this.handleChange('newStatus')}*/}
@@ -118,13 +118,13 @@ class StatusDialog extends Component{
                     {/*</FormControl>*/}
                     <br/>
                     <TextField
-                        id="filled-email-input"
-                        label="Statusmelding"
+                        id='filled-email-input'
+                        label='Statusmelding'
                         className={classes.textField}
-                        type="StatusMessage"
-                        name="StatusMessage"
-                        autoComplete="statusMsg"
-                        margin="normal"
+                        type='StatusMessage'
+                        name='StatusMessage'
+                        autoComplete='statusMsg'
+                        margin='normal'
                         onChange={this.handleChange('statusMsg')}
                     />
                 </MessageDialog>

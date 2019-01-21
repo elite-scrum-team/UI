@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/styles';
 import {useState} from 'react';
 
@@ -50,12 +51,12 @@ const DurationStep = (props) => {
     // Styling
     const classes = styles();
 
-    const handleStartChange = name => event => {
+    const handleStartChange = () => event => {
         props.setStartTimeCallback(event.target.value);
         setPeriod({from: event.target.value})
     };
 
-    const handleEndChange = name => event => {
+    const handleEndChange = () => event => {
         props.setEndTimeCallback(event.target.value);
         setPeriod({to: event.target.value})
 
@@ -118,6 +119,11 @@ const DurationStep = (props) => {
             </div>
         </div>
     )
-}
+};
+
+DurationStep.propTypes = {
+    setStartTimeCallback: PropTypes.func,
+    setEndTimeCallback: PropTypes.func,
+};
 
 export default (DurationStep);

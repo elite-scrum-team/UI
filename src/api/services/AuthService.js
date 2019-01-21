@@ -38,7 +38,7 @@ export default class AuthService {
             !callback || callback(response.isError, data);
             return data;
         });
-    }
+    };
 
     static getUserData = (callback) => {
         const userData = UserAction.getUserData(store.getState());
@@ -58,8 +58,9 @@ export default class AuthService {
                 AuthService.hasUserData = true;
             }
             !callback || callback(response.isError, data);
+            return data;
         });
-    }
+    };
 
     static setCurrentGroup = (groupObject) => {
         UserAction.setCurrentGroup(groupObject)(store.dispatch);
@@ -78,7 +79,7 @@ export default class AuthService {
         }
     }
 
-    static isCompany (companyId = null) {
+    static isCompany () {
         const roles = UserAction.getUserData(store.getState()).roles || {};
         const groups = roles.groups || [];
 
