@@ -96,10 +96,6 @@ class ActionModule extends Component {
             subscribed: value});
     };
 
-    componentDidMount() {
-        this.toggleDeleteOption();
-    };
-
   render() {
     // Styling
     const { classes } = this.props;

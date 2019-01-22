@@ -54,6 +54,13 @@ const styles = makeStyles({
 
         // justifyContent: 'space-between',
     },
+    imageWrapper: {
+      /*   height: 200,
+
+        '@media only screen and (max-width: 1300)': {
+            height: 'auto',
+        } */
+    },
     image: {
         width: '100%',
         height: '100%',
@@ -73,9 +80,12 @@ const styles = makeStyles({
         flexGrow: 1,
     },
     fixedSize: {
-      /*   minWidth: NORMAL_WIDTH,
-        width: NORMAL_WIDTH,
-        maxWidth: NORMAL_WIDTH, */
+        minWidth: NORMAL_WIDTH,
+        minHeight: 230,
+        maxHeight: 230,
+        overflow: 'hidden',
+        //width: NORMAL_WIDTH,
+        //maxWidth: NORMAL_WIDTH,
 
         '@media only screen and (max-width: 600px)': {
             width: '100%',
