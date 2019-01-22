@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -85,31 +85,37 @@ const Map = compose(
 });
 
 
-const MapWrapper = (props) => {
+class MapWrapper extends Component {
 
-  const [locations, setLocations] = useState([]);
+  state = {
+    locations: [],
+  }
 
-  useCallback(() => {
-    setLocations(locations);
-  }, [props.locations]);
-
-  const onMapMounted = (map) => {
-    if(props.map && map) {
-      props.map(map);
+  componentDidUpdate(prevProps) {
+    if(prevProps.locations !== this.props.locations) {
+      this.setState({locations: this.props.locations});
     }
   }
 
-  return (
-    <Map
-      {...props}
-      onMapMounted={onMapMounted}
-      defaultCenter={props.defaultCenter || {}}
-      showMarkers={props.showMarkers}
-      locations={props.locations}
-      zoom={props.zoom}
-      clickable={props.clickable}
-      circlePosition={props.circlePosition}/>
-  )
+  onMapMounted = (map) => {
+    if(this.props.map && map) {
+      this.props.map(map);
+    }
+  }
+
+  render() {
+    return (
+      <Map
+        {...this.props}
+        onMapMounted={this.onMapMounted}
+        defaultCenter={this.props.defaultCenter || {}}
+        showMarkers={this.props.showMarkers}
+        locations={this.state.locations}
+        zoom={this.props.zoom}
+        clickable={this.props.clickable}
+        circlePosition={this.props.circlePosition}/>
+    )
+  }
 }
 
 MapWrapper.propTypes = {
