@@ -123,7 +123,7 @@ class ActionModule extends Component {
             </ListItem>
             <Divider />
 
-            {(AuthService.isEmployee(this.props.municipalitiyId) && (
+            {(AuthService.isEmployee(this.props.municipalityId) && (
               <Fragment>
                 <ListItem
                   button
