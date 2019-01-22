@@ -2,6 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import warningUtils from '../../utils/warningUtils';
 
+// Services
+import AuthService from '../../api/services/AuthService';
+
 // Material UI components
 // Icons
 
@@ -22,7 +25,7 @@ const FeedModule = props => {
 
   return (
     <div className={classes.root}>
-      <CommentBox id={props.id} onCommentCreated={props.onCommentCreated} />
+      {AuthService.isAuthenticated() && <CommentBox id={props.id} onCommentCreated={props.onCommentCreated} />}
       {props.items &&
         props.items.map((item, index) => {
           if (item.type === 'statuses') {

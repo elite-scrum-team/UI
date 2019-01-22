@@ -14,14 +14,14 @@ const styles = makeStyles({
         backgroundColor: 'white',
         height: 300,
         maxHeight: 300,
-        paddingBottom: 20,
+        margin: '20px 0 20px 0',
         width: '90%'
     },
     container:{
         height: 300,
     },
     image: {
-
+        width: '100%'
     }
 });
 
@@ -31,15 +31,7 @@ const Image = (props) => {
 
     return (
         <div className={classNames(classes.root, props.className)}>
-           <GridList className={classes.container}>
-               {props.image.map((e,index) =>(
-                   <GridListTile key={e.id} cols={(index%3 === 0) ? 2 : 1} rows={(index%3 === 0) ? 2 : 1}>
-                   <img src={e.fileURL} alt='representation'/>
-                   </GridListTile>
-               ))
-               }
-
-           </GridList>
+            <img src={props.image[0]} alt={props.image[0]} className={classes.image}/>
         </div>
     )
 };

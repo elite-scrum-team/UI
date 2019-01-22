@@ -34,6 +34,7 @@ function Register(props) {
           <Input
             id="email"
             name="email"
+            fullWidth
             value={email}
             onChange={e => setEmail(e.target.value)}
             autoComplete="email"
@@ -41,7 +42,7 @@ function Register(props) {
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="password">Passord</InputLabel>
+          {/* <InputLabel htmlFor="password">Passord</InputLabel>
           <Input
             id="password"
             name="password"
@@ -58,7 +59,7 @@ function Register(props) {
             value={confirm}
             onChange={e => SetConfirm(e.target.value)}
             type='password'
-          />
+          /> */}
           <FormHelperText error={props.errorMessasge !== null}>
             {props.errorMessage}
           </FormHelperText>

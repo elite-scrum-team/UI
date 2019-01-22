@@ -77,6 +77,7 @@ class Details extends Component {
   componentDidMount() {
     // Get id
     const id = this.getWarningId();
+    console.log(this.getWarningId());
 
     this.setState({ id: id, isLoading: true });
 
@@ -96,7 +97,7 @@ class Details extends Component {
           municipalityId: e.municipalityId,
           contracts: e.contracts,
           city: e.city,
-          street: e.street
+          street: e.street,
         });
         this.setState({ isLoading: false });
 
@@ -184,10 +185,11 @@ class Details extends Component {
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
                     updateContract={this.changeContract}
-                    contract={this.state.contracts}
+                    contracts={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
                     status={this.state.status}
+                    municipalityId={this.state.municipalityId}
                   />
                 </Paper>
               </div>

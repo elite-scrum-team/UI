@@ -113,7 +113,7 @@ class Navigation extends Component {
 
     state = {
         showSidebar: false,
-    }
+    };
 
     activeURI = () => this.props.match.path;
 
@@ -133,12 +133,8 @@ class Navigation extends Component {
     };
 
     goToHome = () => {
-        if(this.props.match.url === URLS.discover) {
-            this.goTo(URLS.home);
-        } else {
-            this.goTo(URLS.discover);
-        }
-    }
+        this.goTo(URLS.home);
+    };
 
     toggleSidebar = () => {
         this.setState({showSidebar: !this.state.showSidebar});
@@ -168,20 +164,29 @@ class Navigation extends Component {
                                     className={classes.companyDropdown}/>
                             }
                         </div>
-                        <Hidden implementation='js' xsDown>
+                        <Hidden implementation='js' smDown>
                             <div className={classes.flex}>
+                                <URIButton
+                                    goTo={this.goTo}
+                                    to={URLS.discover}
+                                    active={this.activeURI() === URLS.discover}
+                                    label='Kart' />
                                 <URIButton
                                     goTo={this.goTo}
                                     to={URLS.events}
                                     active={this.activeURI() === URLS.events}
                                     label='Nyheter' />
-                                {AuthService.isCompanyOrEmployee() &&
+                                {AuthService.isEmployee() &&
                                     <Fragment>
                                         <URIButton
                                             active={this.activeURI() === URLS.statistics}
                                             goTo={this.goTo}
                                             to={URLS.statistics}
                                             label='Statistikk' />
+                                    </Fragment>
+                                }
+                                {AuthService.isCompanyOrEmployee() &&
+                                    <Fragment>
                                         <URIButton
                                             active={this.activeURI() === URLS.dashboard}
                                             goTo={this.goTo}
@@ -213,7 +218,7 @@ class Navigation extends Component {
                             </div>
                         </Hidden>
 
-                        <Hidden implementation='js' smUp>
+                        <Hidden implementation='js' mdUp>
                             <IconButton className={classes.menuButton} onClick={this.toggleSidebar}><MenuIcon/></IconButton>
 
                             <Drawer
