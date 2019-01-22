@@ -106,6 +106,8 @@ const styles = makeStyles({
     icon: {
         marginRight: 10,
         padding: 0,
+        height: 20,
+        width: 20,
     },
     ellipsis: {
         position: 'relative',

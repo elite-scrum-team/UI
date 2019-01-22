@@ -70,8 +70,8 @@ const SidebarContent = (props) => {
         <Fragment>
             <div className={classes.root}>
                 <ActionLink onClick={() => goTo(URLS.createwarning)} label='Ny varsel' />
-                <ActionLink onClick={() => goTo(URLS.events)} label='Nyheter'/>
-                <ActionLink onClick={() => goTo(URLS.discover)} label='Discover' />
+                <ActionLink onClick={() => goTo(URLS.events)} label='Arrangementer'/>
+                <ActionLink onClick={() => goTo(URLS.discover)} label='Kart' />
                 {AuthService.isCompanyOrEmployee() &&
                     <Fragment>
                         <ActionLink onClick={() => goTo(URLS.statistics)} label='Statistikk'/>

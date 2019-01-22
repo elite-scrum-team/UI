@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -24,7 +24,7 @@ const Map = compose(
   }),
   withScriptjs,
   withGoogleMap
-)((props) => {
+)(React.memo((props) => {
 
   // State
   const [selectedLocation, setSelectedLocation] = useState({lat: 0, lng: 0});
@@ -82,10 +82,10 @@ const Map = compose(
       {props.circlePosition && <Circle center={props.circlePosition} radius={CIRCLE_RADIUS} options={{fillOpacity: 0, strokeOpacity: 0.1}}/>}
     </GoogleMap>
   )
-});
+}));
 
 
-class MapWrapper extends Component {
+class MapWrapper extends PureComponent {
 
   state = {
     locations: [],
@@ -106,7 +106,6 @@ class MapWrapper extends Component {
   render() {
     return (
       <Map
-        {...this.props}
         onMapMounted={this.onMapMounted}
         defaultCenter={this.props.defaultCenter || {}}
         showMarkers={this.props.showMarkers}
