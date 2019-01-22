@@ -18,7 +18,8 @@ import Map from '../../../components/miscellaneous/Map';
 const styles = makeStyles({
     root: {
        height:'auto',
-        width: 'auto'
+        width: 'auto',
+
     },
     wrapper:{
         display: 'flex',
@@ -81,11 +82,9 @@ const DetailCard = (props) => {
                         <Clear/>
                     </IconButton>
                 </div>
-
                 <Typography variant='h3' className={classes.text} noWrap={false}>
                     {event.title}
                     </Typography>
-
                 {event.images && event.images.length > 0 ? <Image image={event.images}/> : null}
             <InformationCard event={event}/>
             <div className={classes.endOfText}>
