@@ -15,7 +15,10 @@ const styles = theme => ({
     },
     submit: {
         marginTop: theme.spacing.unit * 3
-    }
+    },
+    label: {
+        fontSize: 30
+    },
 });
 
 function Change(props) {
@@ -29,7 +32,7 @@ function Change(props) {
                 className={classes.form}
                 onSubmit={props.pass(password, confirm)}
             >
-                <FormLabel>Endring av passord</FormLabel>
+                <FormLabel classes={{root: classes.label}}>Endring av passord</FormLabel>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Nytt passord</InputLabel>
                     <Input

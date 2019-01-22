@@ -64,7 +64,7 @@ const SidebarContent = (props) => {
 
     const goTo = (page) => {
         props.history.push(page);
-    }
+    };
 
     return (
         <Fragment>
@@ -76,6 +76,11 @@ const SidebarContent = (props) => {
                     <Fragment>
                         <ActionLink onClick={() => goTo(URLS.statistics)} label='Statistikk'/>
                         <ActionLink onClick={() => goTo(URLS.dashboard)} label='Dashboard'/>
+                    </Fragment>
+                }
+                {AuthService.isAuthenticated() &&
+                    <Fragment>
+                        <ActionLink onClick={() => goTo(URLS.profile)} label='Instillinger'/>
                     </Fragment>
                 }
                 {AuthService.isAuthenticated() ?

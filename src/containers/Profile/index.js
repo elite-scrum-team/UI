@@ -10,7 +10,6 @@ import Paper from "@material-ui/core/Paper";
 import AuthService from "../../api/services/AuthService";
 
 // External imports
-import queryString from 'query-string'
 
 // Project Components
 import Profile from "./components/Profile";
@@ -69,18 +68,14 @@ class MyProfile extends Component {
 
         // Change password
         this.setState({ isLoading: true });
-        AuthService.changePassword(password, this.state.id, (isError, data) => {
+        AuthService.changePassword(password, (isError, data) => {
             if (isError) {
                 this.setState({
-                    errorMessage: "the email address alrealy exists"
+                    errorMessage: "unauthorized"
                 });
                 console.log(data);
-            } else {
-                const queryParams = queryString.parse(this.props.location.search);
-                const urls = queryParams.redirect ? queryParams.redirect : URLS.discover;
-                this.props.history.push(urls);
-                this.setState({isLoading: false});
             }
+            this.setState({isLoading: false});
         });
     };
 
