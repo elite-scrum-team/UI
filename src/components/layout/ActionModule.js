@@ -138,7 +138,7 @@ class ActionModule extends Component {
                 <Divider light />
               </Fragment>
             )) ||
-              (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
+              (this.props.constracts && (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
                 <Fragment>
                   <ListItem
                     button
@@ -149,7 +149,7 @@ class ActionModule extends Component {
                   </ListItem>
                   <Divider light />
                 </Fragment>
-              ))}
+              )))}
           </List>
         </div>
         <DeleteDialog
