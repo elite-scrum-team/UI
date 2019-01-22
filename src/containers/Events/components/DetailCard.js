@@ -15,12 +15,17 @@ import MapStep from '../../../components/layout/MapStep';
 
 const styles = makeStyles({
     root: {
+       height:'auto',
+        width: 'auto'
+    },
+    wrapper:{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'white',
         minHeight: 200,
         overflow: 'auto',
+        marginTop:60,
 
         '@media only screen and (max-width: 960px)': {
             position: 'absolute',
@@ -36,6 +41,7 @@ const styles = makeStyles({
     },
     endOfText:{
         width:'80%',
+        marginBottom: 30
     },
 });
 
@@ -46,6 +52,7 @@ const DetailCard = (props) => {
 
     return (
         <div className={classNames(classes.root)}>
+            <div className={classes.wrapper}>
             <div className={classes.avslutt}>
                 <IconButton className={classes.closeBtn} onClick={() => props.close(null)}>
                     <Clear/>
@@ -60,6 +67,7 @@ const DetailCard = (props) => {
             <Typography>
                 {event.description}
             </Typography>
+            </div>
             </div>
         </div>
     )
