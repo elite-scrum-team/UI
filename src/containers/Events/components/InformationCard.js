@@ -94,7 +94,8 @@ const DetailCard = (props) => {
                         <IconCarry first={toDate} second={<CalendarIcon/>}/>
                     </div>
                 }
-                <IconCarry first={location.street} second={<LocationIcon/>}/>
+                <Divider/>
+                <IconCarry first={event.city} second={<LocationIcon/>}/>
             </div>
             <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
 

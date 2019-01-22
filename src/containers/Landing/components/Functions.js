@@ -21,7 +21,7 @@ import SearchableDropdown from '../../../components/miscellaneous/SearchableDrop
 
 const styles = makeStyles({
     content: {
-        paddingTop: 24,
+        paddingTop: 70,
 
         margin: 'auto',
         display: 'flex',
@@ -71,13 +71,13 @@ const warningTheme = createMuiTheme({
           main: '#b73a3a',
           contrastText: 'white',
       },
-      
+
     },
     typography: {
       useNextVariants: true,
     },
   });
-  
+
 
 const Functions = (props) => {
 
@@ -86,12 +86,6 @@ const Functions = (props) => {
 
     return (
         <div className={classes.content}>
-            <div className={classes.buttonWrapper}>
-                <MuiThemeProvider theme={warningTheme}>
-                <Button className={classNames(classes.button)} onClick={() => props.goTo(URLS.createwarning)} variant='contained' size='large' color='primary'>Send varsel<FeedbackIcon className='ml-5' /></Button>
-                </MuiThemeProvider>
-                <Button className={classes.button} onClick={() => props.goTo(URLS.login.concat('?register=true'))} variant='contained' size='large' color='primary'><PersonIcon className='mr-5'/> Registrer</Button>
-            </div>
             <div className='mt-50'>
                 <Typography variant='h6'>Søk etter varlser i din kommune</Typography>
             </div>

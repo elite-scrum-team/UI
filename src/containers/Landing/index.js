@@ -20,6 +20,7 @@ import Tutorial from './components/Tutorial';
 import Quote from './components/Quote';
 import Starter from './components/Starter';
 import MessageDialog from '../../components/miscellaneous/MessageDialog';
+import Button from "../../../node_modules/@material-ui/core/Button/Button";
 
 const styles = {
     root: {
@@ -38,10 +39,12 @@ const styles = {
     top: {
         position: 'relative',
         backgroundColor: '#009688',
-        width: '100%',
+        width: '100vw',
         minHeight: 200,
         zIndex: 99,
-        paddingBottom: 40,
+
+        paddingTop: 80,
+        paddingBottom: 180,
 
         display: 'flex',
         flexDirection: 'column',
@@ -49,7 +52,7 @@ const styles = {
 
         '@media only screen and (max-width: 600px)': {
             paddingTop: 42,
-            paddingBottom: 22,
+            paddingBottom: 82,
             minHeight: 125,
         }
     },
@@ -61,7 +64,8 @@ const styles = {
     },
     textWrapper: {
         color: 'white',
-        maxWidth: 700,  
+        maxWidth: 700,
+        marginBottom: 30,
     },
     text: {
         '@media only screen and (max-width: 800px)': {
@@ -96,6 +100,17 @@ const styles = {
         minHeight: 50,
         width: 50,
         height: 50,
+    },
+    warning: {
+        color: 'white',
+        borderColor: 'white',
+        borderWidth: 2,
+        margin: '0 auto',
+    },
+    warningWrapper: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
     }
 }
 
@@ -153,9 +168,12 @@ class Landing extends Component {
                                 <img className={classes.logo} src={Logo} alt='HverdagsHeltLogo' />
                             </div>
                             <div className={classes.textWrapper}>
-                                <Typography className={classes.text} variant='h3' color='inherit' align='center'>
+                                <Typography className={classes.text} variant='h4' color='inherit' align='center'>
                                 Varsle din kommune om dine kommunale problemer
                                 </Typography>
+                            </div>
+                            <div className={classes.warningWrapper}>
+                                <Button className={classes.warning} variant='outlined' color='inherit' size='large'>Send varsel</Button>
                             </div>
                         </div>
                     </div>
