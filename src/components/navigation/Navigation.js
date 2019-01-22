@@ -110,7 +110,7 @@ class Navigation extends Component {
 
     state = {
         showSidebar: false,
-    }
+    };
 
     activeURI = () => this.props.match.path;
 
@@ -135,7 +135,7 @@ class Navigation extends Component {
         } else {
             this.goTo(URLS.discover);
         }
-    }
+    };
 
     toggleSidebar = () => {
         this.setState({showSidebar: !this.state.showSidebar});
@@ -176,13 +176,23 @@ class Navigation extends Component {
                                             goTo={this.goTo}
                                             to={URLS.dashboard}
                                             label='Dashboard' />
+                               }
+                                {AuthService.isAuthenticated() &&
+                                <URIButton
+                                    active={this.activeURI() === URLS.profile}
+                                    goTo={this.goTo}
+                                    to={URLS.profile}
+                                    label='Instillinger'/>
                                 }
                                 <div>
                                     {AuthService.isAuthenticated()?
-                                    <Button
-                                        className={classes.logInButton}
-                                        size='small'
-                                        onClick={this.logOut}>Logg ut</Button>
+                                        <Fragment>
+
+                                            <Button
+                                                className={classes.logInButton}
+                                                size='small'
+                                                onClick={this.logOut}>Logg ut</Button>
+                                        </Fragment>
                                     :
                                     <Button
                                         className={classes.logInButton}

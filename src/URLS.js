@@ -8,4 +8,5 @@ export default {
     dashboard: '/dashboard/',
     events: '/events/',
     createnews: '/createnews',
+    profile: '/profile',
 };
