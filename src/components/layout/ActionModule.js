@@ -76,7 +76,7 @@ class ActionModule extends Component {
 
           if (this.state.userData.roles && this.state.userData.roles.groups){
               for (let i = 0; i < this.state.userData.roles.groups.length; i++){
-                  if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
+                  if (this.state.userData.roles.groups[i].municipalityId === this.props.municipalityId){
                       this.setState({municipalityEmployee: true});
                   }
               }
