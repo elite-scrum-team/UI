@@ -123,6 +123,6 @@ const SmallDetail = (props) => {
             </Drawer>
         </div>
     )
-}
+};
 
 export default (SmallDetail);
