@@ -151,7 +151,7 @@ class ActionModule extends Component {
                 <Divider light />
               </Fragment>
             )) ||
-              (this.props.constracts && (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
+              (this.props.contracts && (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
                 <Fragment>
                   <ListItem
                     button
