@@ -77,6 +77,7 @@ class Details extends Component {
   componentDidMount() {
     // Get id
     const id = this.getWarningId();
+    console.log(this.getWarningId());
 
     this.setState({ id: id, isLoading: true });
 

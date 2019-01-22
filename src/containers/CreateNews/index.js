@@ -148,7 +148,7 @@ class CreateNews extends Component {
     };
 
     handleClickDelete = () => {
-        this.setState({image: null, imageFile: null});
+        this.setState({image: [], imageFile: []});
     };
 
     setStartDate = (data) => {
@@ -163,8 +163,6 @@ class CreateNews extends Component {
     handleToggle = (name) => (event) => {
         this.setState({[name]: !this.state[name]});
     }
-
-    getNewsId = () => this.props.match.params.id;
 
     createNews = () => {
         // Do nothing if already loading
@@ -195,11 +193,15 @@ class CreateNews extends Component {
         });
     };
 
-    componentDidMount () {
-      if (this.getNewsId() === null){
+    getNewsId = () => this.props.match.params.id;
 
-      }
-      console.log(this.state.image);
+    componentDidMount () {
+      //   console.log(this.getNewsId());
+      //   const id = this.getNewsId();
+      // if (this.getNewsId() === null){
+      //
+      // }
+      // console.log(this.state.image);
     };
 
 

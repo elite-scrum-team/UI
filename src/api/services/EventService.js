@@ -71,7 +71,12 @@ export default class eventService {
         });
     };
 
-    //data object is going to contain details and possible images.
+    static updateEvent = (item ,callback) => {
+
+    };
+
+
+        //data object is going to contain details and possible images.
     static createEvent = (item ,callback) => {
         // Split images and other data
         const images = item.image;
