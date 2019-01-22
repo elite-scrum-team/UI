@@ -75,7 +75,6 @@ const DetailCard = (props) => {
     // Styling
     const classes = styles();
 
-    console.log(event);
     return (
         <div className={classNames(classes.root, props.className)}>
             <div className={classNames(classes.icons)}>

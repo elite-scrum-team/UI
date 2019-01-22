@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
+import Lodash from 'lodash'
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +12,7 @@ import InformationCard from './InformationCard'
 import Image from './Image'
 import IconButton from "@material-ui/core/IconButton";
 import Clear from "../../../../node_modules/@material-ui/icons/Clear";
-import MapStep from '../../../components/layout/MapStep';
+import Map from '../../../components/miscellaneous/Map';
 
 const styles = makeStyles({
     root: {
@@ -33,16 +34,24 @@ const styles = makeStyles({
             paddingTop: 0,
         }
     },
-    avslutt: {
-        width: '90%',
-    },
-    closeBtn: {
-        right:0
-    },
     endOfText:{
-        width:'80%',
-        marginBottom: 30
+        width:'90%',
+        marginBottom: 30,
+        display:'flex',
+        justifyContent: 'flex-end'
     },
+    close:{
+        width:'90%',
+        display:'flex',
+        justifyContent: 'flex-end'
+    },
+    mapContainer: {
+        width: '90%',
+        height: 250,
+        maxWidth: '450px',
+        maxHeight: '350px',
+        marginBottom: 50,
+    }
 });
 
 const DetailCard = (props) => {
@@ -50,24 +59,36 @@ const DetailCard = (props) => {
     const classes = styles();
     const event = props.event || {};
 
+    const loc = [];
+
+    loc[0] = event;
+
     return (
         <div className={classNames(classes.root)}>
             <div className={classes.wrapper}>
-            <div className={classes.avslutt}>
-                <IconButton className={classes.closeBtn} onClick={() => props.close(null)}>
-                    <Clear/>
-                </IconButton>
-            </div>
-            <Typography variant='h3' className={classes.down}>
-                {event.title}
-            </Typography>
-            {event.images && event.images.length > 0 ? <Image image={event.images}/> : null}
+                <div className={classes.close}>
+                    <IconButton onClick={() => props.close(null)}>
+                        <Clear/>
+                    </IconButton>
+                </div>
+                <Typography variant='h3' className={classes.down} noWrap={false}>
+                    {event.title}
+                    </Typography>
+
+                {event.images && event.images.length > 0 ? <Image image={event.images}/> : null}
             <InformationCard event={event}/>
             <div className={classes.endOfText}>
             <Typography>
                 {event.description}
             </Typography>
             </div>
+                <div className={classes.mapContainer}>
+                    {
+                        (!Lodash.isEmpty(loc[0])) ?  <Map defaultCenter={event.location} zoom={13} locations={loc} showMarkers={true} /> :null
+                    }
+
+                </div>
+
             </div>
         </div>
     )

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames'
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
 
@@ -53,7 +52,7 @@ const MapStep = (props) => {
 
 
     return (
-        <div className={classNames(classes.root, props.className)}>
+        <div className={classes.root}>
             <div className={classes.right}>
                 <div className={classes.mapContainer}>
                     <Map
