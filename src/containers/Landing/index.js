@@ -173,7 +173,7 @@ class Landing extends Component {
                                 </Typography>
                             </div>
                             <div className={classes.warningWrapper}>
-                                <Button className={classes.warning} variant='outlined' color='inherit' size='large'>Send varsel</Button>
+                                <Button onClick={() => this.goTo(URLS.createwarning)} className={classes.warning} variant='outlined' color='inherit' size='large'>Send varsel</Button>
                             </div>
                         </div>
                     </div>

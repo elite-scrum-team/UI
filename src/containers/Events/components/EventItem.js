@@ -160,10 +160,10 @@ const EventItem = (props) => {
                         <div className={classes.flex}><CalendarIcon className={classes.icon} /><Typography variant='body2'>{date}</Typography></div>
                         <div className={classes.flex}><LocationIcon className={classes.icon} /><Typography variant='body2'>{props.street}</Typography></div>
                     </div>
-                    <div className={classes.ellipsis}>
+                    {/* <div className={classes.ellipsis}>
                         <Typography  variant='subtitle2' noWrap={false}>{props.description}</Typography>
                         <div className={classes.fade} />
-                    </div>
+                    </div> */}
                     <div className={classes.middle} />
 
                 </div>

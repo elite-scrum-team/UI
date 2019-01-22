@@ -168,8 +168,13 @@ class Navigation extends Component {
                                     className={classes.companyDropdown}/>
                             }
                         </div>
-                        <Hidden implementation='js' xsDown>
+                        <Hidden implementation='js' smDown>
                             <div className={classes.flex}>
+                                <URIButton
+                                    goTo={this.goTo}
+                                    to={URLS.discover}
+                                    active={this.activeURI() === URLS.discover}
+                                    label='Kart' />
                                 <URIButton
                                     goTo={this.goTo}
                                     to={URLS.events}
@@ -213,7 +218,7 @@ class Navigation extends Component {
                             </div>
                         </Hidden>
 
-                        <Hidden implementation='js' smUp>
+                        <Hidden implementation='js' mdUp>
                             <IconButton className={classes.menuButton} onClick={this.toggleSidebar}><MenuIcon/></IconButton>
 
                             <Drawer

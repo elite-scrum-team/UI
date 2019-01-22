@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import URLS from '../../../URLS';
+// import { createMuiTheme} from '@material-ui/core/styles';
 import SearchBarStyles from './SearchBarStyles';
-import classNames from 'classnames';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PersonIcon from '@material-ui/icons/Person';
+/* import FeedbackIcon from '@material-ui/icons/Feedback';
+import PersonIcon from '@material-ui/icons/Person'; */
 
 // Project components
 import SearchableDropdown from '../../../components/miscellaneous/SearchableDropdown';
@@ -64,7 +61,7 @@ const styles = makeStyles({
         color: 'red',
     }
 });
-
+/* 
 const warningTheme = createMuiTheme({
     palette: {
       primary: {
@@ -76,7 +73,7 @@ const warningTheme = createMuiTheme({
     typography: {
       useNextVariants: true,
     },
-  });
+  }); */
 
 
 const Functions = (props) => {
