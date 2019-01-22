@@ -61,7 +61,6 @@ const DetailCard = (props) => {
                 {event.description}
             </Typography>
             </div>
-        <MapStep className={classes.endOfText}/>
         </div>
     )
 };
