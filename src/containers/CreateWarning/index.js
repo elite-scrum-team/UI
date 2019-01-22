@@ -210,7 +210,8 @@ class CreateWarning extends Component {
             [].forEach.call(event.target.files, readImage)
         }
 
-        console.log(this.state.images)
+        console.log(this.state.images);
+        console.log(this.state.imageFiles);
     }
 
     setCategory = (data) => {

@@ -74,13 +74,13 @@ class ActionModule extends Component {
       this.setState({userData: await AuthService.getUserData()});
       if (this.state.userData !== null) {
 
-          if (this.state.userData.roles && this.state.userData.roles.groups){
-              for (let i = 0; i < this.state.userData.roles.groups.length; i++){
-                  if (this.state.userData.roles.groups[i].municipalityId === this.props.municipalityId){
-                      this.setState({municipalityEmployee: true});
-                  }
-              }
-          }
+            if (this.state.userData.roles){
+                for (let i = 0; i < this.state.userData.roles.groups.length; i++){
+                    if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
+                        this.setState({municipalityEmployee: true});
+                    }
+                }
+            }
 
           console.log(this.props.status);
 
@@ -91,10 +91,14 @@ class ActionModule extends Component {
 
   };
 
-  handleSub = value => {
-    this.setState({subscribeDialogOpen: false,
-                          subscribed: value});
-  };
+    handleSub = value => {
+        this.setState({subscribeDialogOpen: false,
+            subscribed: value});
+    };
+
+    componentDidMount() {
+        this.toggleDeleteOption();
+    };
 
   render() {
     // Styling
