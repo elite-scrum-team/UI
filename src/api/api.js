@@ -117,5 +117,16 @@ export default {
   },
   getEventContent: id => {
     return new Fetch(METHODS.get, '/event/content/'.concat(id));
-  }
+  },
+
+    // --- InterestGroup ---
+
+    subscribeToAWarning: (warningId) =>{
+      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId),null, {})
+    },
+
+    unSubscribeToAWarning: (warningId) =>{
+        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),null, {})
+    }
+
 };

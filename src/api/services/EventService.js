@@ -21,7 +21,6 @@ export default class eventService {
                 }
             }
 
-
             data = data.map(EventAction.createEventPost);
 
             !callback || callback(response.isError, data);
