@@ -6,7 +6,7 @@ import SearchBarStyles from './SearchBarStyles';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';

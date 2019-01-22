@@ -53,6 +53,7 @@ const styles = makeStyles({
     },
     tab: {
         height: 50,
+    },
     margin: {
         marginTop: 14,
     },
