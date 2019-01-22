@@ -133,11 +133,7 @@ class Navigation extends Component {
     };
 
     goToHome = () => {
-        if(this.props.match.url === URLS.discover) {
-            this.goTo(URLS.home);
-        } else {
-            this.goTo(URLS.discover);
-        }
+        this.goTo(URLS.home);
     };
 
     toggleSidebar = () => {

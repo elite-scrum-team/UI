@@ -72,7 +72,6 @@ export default class AuthService {
 
     static isEmployee (municipalityId = null) {
         const roles = UserAction.getUserData(store.getState()).roles;
-        console.log(roles, municipalityId);
         if(municipalityId) {
             return roles.groups.filter(e  => e.municipalityId === municipalityId).length > 0
         } else {

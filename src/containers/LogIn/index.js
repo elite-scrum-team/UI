@@ -18,6 +18,8 @@ import AuthService from "../../api/services/AuthService";
 import queryString from 'query-string'
 
 // Project Components
+import MessageDialog from '../../components/miscellaneous/MessageDialog';
+
 const styles = theme => ({
   main: {
     width: "auto",
@@ -45,6 +47,7 @@ class LogIn extends Component {
     isSignIn: true,
     isLoading: false,
     errorMessage: '',
+    showEmailMessage: false,
   };
 
   componentDidMount() {
@@ -110,9 +113,11 @@ class LogIn extends Component {
           errorMessage: "the email address alrealy exists"
         });
       } else {
-        const queryParams = queryString.parse(this.props.location.search);
+        /* const queryParams = queryString.parse(this.props.location.search);
         const urls = queryParams.redirect ? queryParams.redirect : URLS.discover;
-        this.props.history.push(urls);
+        this.props.history.push(urls); */
+        this.setState({showEmailMessage: true});
+        
       }
       this.setState({ isLoading: false });
     });
@@ -145,6 +150,12 @@ class LogIn extends Component {
             )}
           </Paper>
         </main>
+        <MessageDialog
+          open={this.state.showEmailMessage}
+          onClose={() => this.setState({showEmailMessage: false})}
+          title='Sjekk din email'
+          content='Vi har sendt et innloggingspassord på email. Bruk den for å logge inn, og eventuelt endre passordet når du kommer inn.'
+          />
       </div>
     );
   }
