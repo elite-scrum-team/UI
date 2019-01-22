@@ -46,6 +46,7 @@ const DetailCard = (props) => {
     // Styling
     const classes = styles();
     const event = props.event || {};
+    console.log(props.event)
 
     return (
         <div className={classNames(classes.root, props.className)}>
@@ -58,7 +59,7 @@ const DetailCard = (props) => {
                 {event.title}
             </Typography>
             <InformationCard event={event}/>
-            {event.images && event.images.length > 0 ? <Image image={event.image}/> : null}
+            {event.images && event.images.length > 0 ? <Image image={event.images}/> : null}
             <Typography>
                 {event.description}
             </Typography>

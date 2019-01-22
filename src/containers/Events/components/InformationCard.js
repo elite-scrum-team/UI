@@ -27,11 +27,11 @@ const styles = makeStyles({
     root: {
         display: 'flex',
         backgroundColor: 'white',
-        minHeight: '95vh',
         flexDirection: 'row',
         marginTop: 20,
         width: '90%',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        padding:'70px 0 70px 0'
     },
     icons: {
         display: 'flex',
@@ -65,7 +65,6 @@ const IconCarry = (props) =>{
 
 const DetailCard = (props) => {
     const event = props.event;
-    const location = event.location || {};
 
     const fromTime = moment(event.fromTime).format('HH:mm:ss');
     const toTime = moment(event.toTime).format('HH:mm:ss');
@@ -94,7 +93,8 @@ const DetailCard = (props) => {
                         <IconCarry first={toDate} second={<CalendarIcon/>}/>
                     </div>
                 }
-                <IconCarry first={location.street} second={<LocationIcon/>}/>
+                <Divider/>
+                <IconCarry first={event.city} second={<LocationIcon/>}/>
             </div>
             <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
 

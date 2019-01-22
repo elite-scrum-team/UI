@@ -33,8 +33,8 @@ const Image = (props) => {
         <div className={classNames(classes.root, props.className)}>
            <GridList className={classes.container}>
                {props.image.map((e,index) =>(
-                   <GridListTile key={e.id} cols={(index%3 === 0) ? 2 : 1} rows={(index%3 === 0) ? 2 : 1}>
-                   <img src={e.fileURL} alt='representation'/>
+                   <GridListTile key={index} cols={(index%3 === 0) ? 2 : 1} rows={(index%3 === 0) ? 2 : 1}>
+                   <img src={e} alt='representation'/>
                    </GridListTile>
                ))
                }
