@@ -11,6 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
 import TimeIcon from '@material-ui/icons/AccessTime';
+import BankIcon from '@material-ui/icons/AccountBalance';
 
 
 // Project components
@@ -25,18 +26,15 @@ const relocate = (link) =>{
 
 const styles = makeStyles({
     root: {
-        display: 'flex',
         backgroundColor: 'white',
-        flexDirection: 'row',
         marginTop: 20,
         width: '90%',
-        justifyContent: 'space-evenly',
-        padding:'70px 0 70px 0'
+        padding:'70px 0 70px 0',
     },
     icons: {
         display: 'flex',
         flexDirection: 'column',
-        paddingRight:30
+        marginRight:30
     },
     info: {
         display: 'flex',
@@ -44,7 +42,7 @@ const styles = makeStyles({
         alignItems:'center'
     },
     mr:{
-        paddingRight: 10
+        marginRight: 10
     }
 }
 );
@@ -77,6 +75,7 @@ const DetailCard = (props) => {
     // Styling
     const classes = styles();
 
+    console.log(event);
     return (
         <div className={classNames(classes.root, props.className)}>
             <div className={classNames(classes.icons)}>
@@ -96,7 +95,8 @@ const DetailCard = (props) => {
                     </div>
                 }
                 <Divider/>
-                <IconCarry first={location} second={<LocationIcon/>}/>
+                <IconCarry first={location} second={<BankIcon/>}/>
+                <IconCarry first={event.street} second={<LocationIcon/>}/>
             </div>
             <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
 
