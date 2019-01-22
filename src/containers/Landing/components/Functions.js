@@ -21,8 +21,8 @@ import SearchableDropdown from '../../../components/miscellaneous/SearchableDrop
 
 const styles = makeStyles({
     content: {
-        paddingTop: 70,
-
+        paddingTop: 50,
+        paddingBottom: 50,
         margin: 'auto',
         display: 'flex',
         flexDirection: 'column',
@@ -102,14 +102,14 @@ const Functions = (props) => {
                     eller
                 </Typography>
             <div className='mt-15'>
-                <Fab
+                <Button
+                    variant='extendedFab'
                     onClick={props.searchByLocation}
                     size='medium'
-                    variant='extended'
                     color='primary'>
                     <LocationIcon className='mr-5'/>
                     Søk med min posisjon
-                </Fab>
+                </Button>
             </div>
         </div>
     )
