@@ -113,7 +113,7 @@ class Navigation extends Component {
 
     state = {
         showSidebar: false,
-    }
+    };
 
     activeURI = () => this.props.match.path;
 
@@ -138,7 +138,7 @@ class Navigation extends Component {
         } else {
             this.goTo(URLS.discover);
         }
-    }
+    };
 
     toggleSidebar = () => {
         this.setState({showSidebar: !this.state.showSidebar});
@@ -180,13 +180,17 @@ class Navigation extends Component {
                                     to={URLS.events}
                                     active={this.activeURI() === URLS.events}
                                     label='Nyheter' />
-                                {AuthService.isCompanyOrEmployee() &&
+                                {AuthService.isEmployee() &&
                                     <Fragment>
                                         <URIButton
                                             active={this.activeURI() === URLS.statistics}
                                             goTo={this.goTo}
                                             to={URLS.statistics}
                                             label='Statistikk' />
+                                    </Fragment>
+                                }
+                                {AuthService.isCompanyOrEmployee() &&
+                                    <Fragment>
                                         <URIButton
                                             active={this.activeURI() === URLS.dashboard}
                                             goTo={this.goTo}

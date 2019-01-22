@@ -44,16 +44,6 @@ class ActionModule extends Component {
 
   };
 
-  componentDidMount() {
-    this.toggleDeleteOption();
-  };
-
-  checkContract = () => {
-    return this.props.contracts
-      ? this.props.contracts.find(e => e.groupId)
-      : false;
-  };
-
   handleNewStatus = value => {
     this.setState({ statusDialogOpen: false });
     this.props.updateStatus(value);
@@ -94,6 +84,10 @@ class ActionModule extends Component {
     handleSub = value => {
         this.setState({subscribeDialogOpen: false,
             subscribed: value});
+    };
+
+    componentDidMount() {
+        this.toggleDeleteOption();
     };
 
   render() {
@@ -144,7 +138,7 @@ class ActionModule extends Component {
                 <Divider light />
               </Fragment>
             )) ||
-              (this.checkContract() && (
+              (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
                 <Fragment>
                   <ListItem
                     button
