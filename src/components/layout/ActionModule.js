@@ -44,12 +44,6 @@ class ActionModule extends Component {
 
   };
 
-  checkContract = () => {
-    return this.props.contracts
-      ? this.props.contracts.find(e => e.groupId)
-      : false;
-  };
-
   handleNewStatus = value => {
     this.setState({ statusDialogOpen: false });
     this.props.updateStatus(value);
@@ -66,11 +60,11 @@ class ActionModule extends Component {
     }
   };
 
-    toggleDeleteOption = async () => {
-        this.setState({userData: await AuthService.getUserData()});
-        if (this.state.userData !== null) {
+  toggleDeleteOption = async () => {
+      this.setState({userData: await AuthService.getUserData()});
+      if (this.state.userData !== null) {
 
-            if (this.state.userData.roles && this.state.userData.roles.groups){
+            if (this.state.userData.roles){
                 for (let i = 0; i < this.state.userData.roles.groups.length; i++){
                     if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
                         this.setState({municipalityEmployee: true});
@@ -78,23 +72,23 @@ class ActionModule extends Component {
                 }
             }
 
-            console.log(this.props.status);
+          console.log(this.props.status);
 
-            if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
-                this.setState({ownWarning: true});
-            }
-        }
+          if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
+              this.setState({ownWarning: true});
+          }
+      }
 
+  };
+
+    handleSub = value => {
+        this.setState({subscribeDialogOpen: false,
+            subscribed: value});
     };
 
     componentDidMount() {
         this.toggleDeleteOption();
     };
-
-  handleSub = value => {
-    this.setState({subscribeDialogOpen: false,
-                          subscribed: value});
-  };
 
   render() {
     // Styling
@@ -123,7 +117,7 @@ class ActionModule extends Component {
             </ListItem>
             <Divider />
 
-            {(AuthService.isEmployee(this.props.selectedGroup.municipalityId) && (
+            {(AuthService.isEmployee(this.props.municipalityId) && (
               <Fragment>
                 <ListItem
                   button
@@ -144,7 +138,7 @@ class ActionModule extends Component {
                 <Divider light />
               </Fragment>
             )) ||
-              (this.checkContract() && (
+              (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
                 <Fragment>
                   <ListItem
                     button

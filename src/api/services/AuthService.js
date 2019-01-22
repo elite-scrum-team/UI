@@ -64,18 +64,20 @@ export default class AuthService {
 
     static setCurrentGroup = (groupObject) => {
         UserAction.setCurrentGroup(groupObject)(store.dispatch);
-    }
+    };
 
     static getCurrentGroup = () => {
         return UserAction.getCurrentGroup(store.getState());
-    }
+    };
 
     static isEmployee (municipalityId = null) {
         const roles = UserAction.getUserData(store.getState()).roles;
+        console.log(roles, municipalityId);
         if(municipalityId) {
-            return roles.groups.filter(e  => e.municipalitiyId === municipalityId)
+            return roles.groups.filter(e  => e.municipalityId === municipalityId).length > 0
         } else {
-            return roles.groups.length > 0 ? roles.groups[0] : false;
+            const municipalities =  roles.groups.filter(e => e.municipalityId !== null);
+            return municipalities.length > 0 ? municipalities[0] : false;
         }
     }
 
@@ -83,13 +85,21 @@ export default class AuthService {
         const roles = UserAction.getUserData(store.getState()).roles || {};
         const groups = roles.groups || [];
 
-        return groups.filter(g => !g.municipalitiyId).length > 0;
+        return groups.filter(g => !g.municipalityId).length > 0;
     }
 
     static isCompanyOrEmployee() {
         const roles = UserAction.getUserData(store.getState()).roles || {};
         const groups = roles.groups || [];
         return groups.length > 0;
+    }
+
+    static isSelectedGroup(groupIds) {
+        const selectedGroup = AuthService.getCurrentGroup();
+        if(!selectedGroup || !groupIds) {
+            return false;
+        }
+        return groupIds.filter(gIds => gIds === selectedGroup.id).length > 0;
     }
 
     static isAuthenticated () {

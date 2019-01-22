@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 
 // Service import
-import WarningService from "../../api/services/WarningService";
+import WarningService from '../../api/services/WarningService';
 import ContractService from '../../api/services/ContractService';
 
 // Icons
@@ -18,6 +18,7 @@ import WarningDetails from '../../components/layout/WarningDetails';
 import ImageGrid from '../../components/layout/ImageGrid';
 import ActionModule from '../../components/layout/ActionModule';
 import FeedModule from '../../components/layout/FeedModule';
+
 
 const styles = {
   root: {
@@ -95,7 +96,7 @@ class Details extends Component {
           municipalityId: e.municipalityId,
           contracts: e.contracts,
           city: e.city,
-          street: e.street,
+          street: e.street
         });
         this.setState({ isLoading: false });
 
@@ -140,8 +141,6 @@ class Details extends Component {
         this.setState({ items: data });
       });
     });
-
-    console.log('Contract: ', newContract);
   };
 
   addItem = item => {
@@ -149,6 +148,12 @@ class Details extends Component {
     const items = Object.assign([], this.state.items);
     items.push(item);
     this.setState({ items });
+  };
+
+  onCommentCreated = () => {
+    WarningService.getWarningItems(this.getWarningId()).then(data => {
+      this.setState({ items: data });
+    });
   };
 
   render() {
@@ -179,8 +184,7 @@ class Details extends Component {
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
                     updateContract={this.changeContract}
-                    municipalityId={this.state.municipalityId}
-                    contract={this.state.contracts}
+                    contracts={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
                     status={this.state.status}
@@ -188,7 +192,11 @@ class Details extends Component {
                 </Paper>
               </div>
               <div>
-                <FeedModule id={this.state.id} items={this.state.items} />
+                <FeedModule
+                  id={this.state.id}
+                  items={this.state.items}
+                  onCommentCreated={this.onCommentCreated}
+                />
               </div>
             </div>
           </div>

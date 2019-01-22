@@ -9,4 +9,5 @@ export default {
     events: '/events/',
     createnews: '/createnews',
     profile: '/profile',
+    statistics: '/statistic',
 };

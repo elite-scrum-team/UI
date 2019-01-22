@@ -22,7 +22,7 @@ const FeedModule = props => {
 
   return (
     <div className={classes.root}>
-      <CommentBox id={props.id} />
+      <CommentBox id={props.id} onCommentCreated={props.onCommentCreated} />
       {props.items &&
         props.items.map((item, index) => {
           if (item.type === 'statuses') {
@@ -36,13 +36,14 @@ const FeedModule = props => {
                 statustekst={warningUtils.statusNames[item.data.type]}
               />
             );
-          } else if (item.type === 'comment') {
+          } else if (item.type === 'comments') {
             return (
               <CommentSection
                 key={item.data.id}
                 username={item.data.username}
-                breadtext={item.data.breadtext}
-                commentDate={item.data.commentDate}
+                breadtext={item.data.content}
+                commentDate={item.data.createdAt}
+                image={item.data.fileURL}
               />
             );
           } else if (item.type === 'contracts') {

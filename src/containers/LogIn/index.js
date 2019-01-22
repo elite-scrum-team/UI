@@ -53,6 +53,12 @@ class LogIn extends Component {
       this.props.history.replace(URLS.discover);
     }
 
+    // If in query params, init register
+    const queryParams = queryString.parse(this.props.location.search);
+    if(queryParams.register) {
+      this.setState({isSignIn: false});
+    }
+
   }
 
   changeTab = value => {

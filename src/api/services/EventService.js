@@ -74,8 +74,8 @@ export default class eventService {
     //data object is going to contain details and possible images.
     static createEvent = (item ,callback) => {
         // Split images and other data
-        const images = item.images;
-        delete item.images;
+        const images = item.image;
+        delete item.image;
 
         // Create event
         const response = API.createEvent(item).response();
@@ -86,8 +86,8 @@ export default class eventService {
                     // Upload images to server
                     await API.addEventImage(data.id, images[index]).response(true)
                         .then((imageData) => {
-                            if(data.images instanceof Array && imageData) {
-                                data.images.push(imageData.image);
+                            if(data.image instanceof Array && imageData) {
+                                data.image.push(imageData.image);
                             }
                         })
                 }

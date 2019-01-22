@@ -35,6 +35,9 @@ const styles = {
     main: {
         marginTop: 48,
     },
+    noShadow: {
+        boxShadow: 'none',
+    },
     leftMargin: {
       left: 450,
       width: 'auto',
@@ -145,7 +148,9 @@ class Navigation extends Component {
         const {classes} = this.props;
         return (
             <Fragment>
-                <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
+                <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '',
+                    this.props.noShadow ? classes.noShadow : '')}
+                        position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div className={classes.leftSection} >
                             <div className={classes.logoWrapper}>
@@ -163,36 +168,51 @@ class Navigation extends Component {
                                     className={classes.companyDropdown}/>
                             }
                         </div>
-                        <Hidden implementation='js' xsDown>
+                        <Hidden implementation='js' smDown>
                             <div className={classes.flex}>
+                                <URIButton
+                                    goTo={this.goTo}
+                                    to={URLS.discover}
+                                    active={this.activeURI() === URLS.discover}
+                                    label='Kart' />
                                 <URIButton
                                     goTo={this.goTo}
                                     to={URLS.events}
                                     active={this.activeURI() === URLS.events}
                                     label='Nyheter' />
+                                {AuthService.isEmployee() &&
+                                    <Fragment>
+                                        <URIButton
+                                            active={this.activeURI() === URLS.statistics}
+                                            goTo={this.goTo}
+                                            to={URLS.statistics}
+                                            label='Statistikk' />
+                                    </Fragment>
+                                }
                                 {AuthService.isCompanyOrEmployee() &&
+                                    <Fragment>
                                         <URIButton
                                             active={this.activeURI() === URLS.dashboard}
                                             goTo={this.goTo}
                                             to={URLS.dashboard}
                                             label='Dashboard' />
+                                    </Fragment>
                                }
                                 {AuthService.isAuthenticated() &&
-                                <URIButton
-                                    active={this.activeURI() === URLS.profile}
-                                    goTo={this.goTo}
-                                    to={URLS.profile}
-                                    label='Instillinger'/>
+                                    <Fragment>
+                                        <URIButton
+                                            active={this.activeURI() === URLS.profile}
+                                            goTo={this.goTo}
+                                            to={URLS.profile}
+                                            label='Instillinger'/>
+                                    </Fragment>
                                 }
                                 <div>
                                     {AuthService.isAuthenticated()?
-                                        <Fragment>
-
-                                            <Button
-                                                className={classes.logInButton}
-                                                size='small'
-                                                onClick={this.logOut}>Logg ut</Button>
-                                        </Fragment>
+                                    <Button
+                                        className={classes.logInButton}
+                                        size='small'
+                                        onClick={this.logOut}>Logg ut</Button>
                                     :
                                     <Button
                                         className={classes.logInButton}
@@ -211,7 +231,7 @@ class Navigation extends Component {
                             </div>
                         </Hidden>
 
-                        <Hidden implementation='js' smUp>
+                        <Hidden implementation='js' mdUp>
                             <IconButton className={classes.menuButton} onClick={this.toggleSidebar}><MenuIcon/></IconButton>
 
                             <Drawer
@@ -244,6 +264,8 @@ Navigation.propTypes = {
     classes: PropTypes.object,
     children: PropTypes.node,
     isLoading: PropTypes.bool,
+    sidebar: PropTypes.bool, // Adds leftMargin to the entire navbar
+    noShadow: PropTypes.bool, // Disables appbar shadow
 };
 
 export default withStyles(styles)(withRouter(Navigation));

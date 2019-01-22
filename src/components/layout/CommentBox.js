@@ -58,7 +58,9 @@ class CommentBox extends Component {
     this.setState({ [name]: event.target.value });
   };
 
-  submitComment = () => {
+  submitComment = event => {
+    event.preventDefault();
+
     const comment = this.state.comment;
     const image = this.state.file;
 
@@ -73,7 +75,10 @@ class CommentBox extends Component {
       (isError, data) => {
         if (isError) {
         } else {
-          this.setState({ comment: null, file: null, image: null });
+          this.setState({ comment: '', file: null, image: null });
+          if (this.props.onCommentCreated) {
+            this.props.onCommentCreated();
+          }
         }
       }
     );
@@ -86,17 +91,19 @@ class CommentBox extends Component {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
-        <TextField
-          id='filled-multiline-static'
-          label='Skriv en kommentar...'
-          multiline
-          fullWidth
-          rows='2'
-          className={classes.textField}
-          value={this.state.comment}
-          onChange={this.handleChange('comment')}
-          variant='filled'
-        />
+        <form onSubmit={this.submitComment}>
+          <TextField
+            id='filled-multiline-static'
+            label='Skriv en kommentar...'
+            multiline
+            fullWidth
+            rows='2'
+            className={classes.textField}
+            value={this.state.comment}
+            onChange={this.handleChange('comment')}
+            variant='filled'
+          />
+        </form>
         {this.state.image && (
           <div className={classes.imageWrapper}>
             <img

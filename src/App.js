@@ -22,6 +22,7 @@ import Dashboard from './containers/Dashboard';
 import CreateNews from './containers/CreateNews';
 import Events from './containers/Events';
 import Profile from './containers/Profile';
+import Statistics from './containers/Statistics';
 
 // pointless comment
 // The user needs to be authorized (logged in) to access these routes
@@ -37,6 +38,20 @@ const EmployeeRoute = ({ component: Component, ...rest }) => {
       />
     );
 };
+
+const CompEmployeeRoute = ({ component: Component, ...rest }) => {
+    return (
+        <Route
+            {...rest}
+            render={(props) => (
+                (AuthService.isAuthenticated() && AuthService.isCompanyOrEmployee())?
+                    <Component {...props} /> :
+                    <Redirect to={URLS.login} />
+            )}
+        />
+    );
+};
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
@@ -74,8 +89,9 @@ class App extends Component {
                                 <Route exact path={URLS.events} component={Events} />
                                 <Route exact path={URLS.createnews.concat(':id?')} component={CreateNews} />
                                 <Route exact path={URLS.profile} component={Profile}/>
+                                <EmployeeRoute exact path={URLS.statistics} component={Statistics} />
                                 <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
-                                <EmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
+                                <CompEmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                             </Switch>
                         </MuiThemeProvider>
                     </BrowserRouter>
