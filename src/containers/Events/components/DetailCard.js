@@ -46,7 +46,6 @@ const DetailCard = (props) => {
     // Styling
     const classes = styles();
     const event = props.event || {};
-    console.log(props.event)
 
     return (
         <div className={classNames(classes.root, props.className)}>
