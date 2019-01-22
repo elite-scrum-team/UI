@@ -8,6 +8,10 @@ export default {
         return new Fetch(METHODS.post, '/auth/register', {email: email, password: password}, null, false);
     },
 
+    changePassword: (token, password) => {
+        return new Fetch(METHODS.post, '/auth/change', { password: password}, null, true);
+    },
+
     token: (email, password) => {
         return new Fetch(METHODS.post, '/auth/login', {email: email, password: password}, null, false);
     },

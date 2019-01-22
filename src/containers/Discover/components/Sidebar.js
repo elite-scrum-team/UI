@@ -14,11 +14,11 @@ const drawerWidth = 450;
 const styles = makeStyles({
     root: {
         width: drawerWidth,
-        borderRight: 'none',
-
         '@media only screen and (max-width: 600px)': {
             width: '100%',
-        }
+        },
+        borderRight: '0',
+        boxShadow: '0px 5px 5px rgba(0,0,0,0.2) ',
     },
     progress: {
         display: 'block',

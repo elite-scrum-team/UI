@@ -13,7 +13,7 @@ import WarningItem from '../../../components/layout/WarningItem';
 
 const styles = makeStyles({
     root: {
-        padding: '10px 4px',
+        padding: '6px 6px',
     }
 });
 
@@ -35,7 +35,7 @@ const WarningList = (props) => {
                     image={value.images && value.images.length > 0 ? value.images[0] : null}
                     posted={value.createdAt}/>
             ))}
-            {warnings.length === 0 && <Typography variant='subtitle1' align='center'>Ingen varsel å vise</Typography>}
+            {warnings.length === 0 && <Typography variant='subtitle2' align='center'>Ingen varsel å vise</Typography>}
         </div>
     );
 };

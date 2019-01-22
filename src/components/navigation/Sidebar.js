@@ -19,11 +19,11 @@ import Divider from '@material-ui/core/Divider';
 
 const styles = makeStyles({
     root: {
-        marginTop: 48,
+        marginTop: 50,
         zIndex: 100,
     },
     item: {
-        height: 46,
+        height: 50,
         color: 'var(--tihlde-blaa)',
     },
     companyButton: {
@@ -64,7 +64,7 @@ const SidebarContent = (props) => {
 
     const goTo = (page) => {
         props.history.push(page);
-    }
+    };
 
     return (
         <Fragment>
@@ -76,6 +76,11 @@ const SidebarContent = (props) => {
                     <Fragment>
                         <ActionLink onClick={() => goTo(URLS.statistics)} label='Statistikk'/>
                         <ActionLink onClick={() => goTo(URLS.dashboard)} label='Dashboard'/>
+                    </Fragment>
+                }
+                {AuthService.isAuthenticated() &&
+                    <Fragment>
+                        <ActionLink onClick={() => goTo(URLS.profile)} label='Instillinger'/>
                     </Fragment>
                 }
                 {AuthService.isAuthenticated() ?

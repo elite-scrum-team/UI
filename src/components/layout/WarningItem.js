@@ -21,7 +21,7 @@ const styles = makeStyles({
         width: '100%',
         position: 'relative',
         padding: 14,
-        marginBottom: 4,
+        marginBottom: 6,
     },
     statusBar: {
         position: 'absolute',
