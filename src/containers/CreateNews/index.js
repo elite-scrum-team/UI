@@ -16,9 +16,9 @@ import DescriptionStep from "../../components/layout/InputStep";
 import MapStep from "../../components/layout/MapStep";
 import SinglePictureStep from "./components/SinglePictureStep";
 import DurationStep from "./components/DurationStep";
-import WarningService from "../../api/services/WarningService";
+import EventService from '../../api/services/EventService';
 import URLS from "../../URLS";
-import ConfirmDialog from "../CreateWarning/components/ConfirmDialog";
+import ConfirmDialog from "./components/ConfirmDialog";
 
 const styles = {
     root: {},
@@ -95,8 +95,8 @@ class CreateNews extends Component {
         location: null,
         fromDate: date,
         toDate: date,
-        image: null,
-        imageFile: null,
+        image: [],
+        imageFile: [],
     };
 
     setTitle = (data) => {
@@ -139,7 +139,7 @@ class CreateNews extends Component {
         };
 
         if (event.target.files && event.target.files[0]) {
-            this.setState({image: null, imageFile: null});
+            this.setState({image: [], imageFile: []});
             [].forEach.call(event.target.files, readImage);
         }
 
@@ -178,18 +178,19 @@ class CreateNews extends Component {
             description: this.state.description,
             link: this.state.link,
             location: this.state.location,
-            fromDate: this.state.fromDate,
-            toDate: this.state.toDate,
+            fromTime: this.state.fromDate,
+            toTime: this.state.toDate,
             image: this.state.imageFile,
         }
 
         this.setState({isSending: true});
-        WarningService.createWarning(news, (isError, data) => {
+        console.log(news);
+        EventService.createEvent(news, (isError, data) => {
             console.log(data);
             if(isError) {
                 this.setState({isError: true, isSending: false, confirmDialogOpen: false});
             } else {
-                this.props.history.push(URLS.createnews);
+                this.props.history.push(URLS.events);
             }
         });
     };
@@ -280,12 +281,13 @@ class CreateNews extends Component {
                             <div className={classes.bottom}>
                                 <Button variant="contained" size={'large'} color='primary'
                                         className={classes.registerButton}
-                                >
+                                        onClick={this.handleToggle('confirmDialogOpen')}
+                                        disabled={!this.state.title || !this.state.description || !this.state.location}>
                                     Send inn
                                 </Button>
                                 <ConfirmDialog
                                     open={this.state.confirmDialogOpen}
-                                    //onSubmit={this.createNews()}
+                                    onSubmit={() => this.createNews()}
                                     isLoading={this.state.isSending}
                                     closeConfirmDialogCallback={this.handleToggle('confirmDialogOpen')}/>
                             </div>

@@ -15,6 +15,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Navigation from '../../components/navigation/Navigation';
 import EventItem from './components/EventItem';
 import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
+import Button from "@material-ui/core/Button";
+import URLS from "../../URLS";
+import AuthService from "../../api/services/AuthService";
 
 const styles = (theme) => ({
     root: {
@@ -29,6 +32,15 @@ const styles = (theme) => ({
         minHeight: 125,
         backgroundColor: theme.palette.primary.main,
         color: 'white',
+    },
+    employeeTools: {
+        padding: '10px 10px 10px 40px',
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        minHeight: 30,
+        backgroundColor: theme.palette.primary.main,
+        color: 'gray',
     },
     topContent: {
         maxWidth: 1300,
@@ -78,36 +90,58 @@ class Events extends Component {
         municipalities: [],
         selectedMunicipality: null,
         events: [],
+        isEmployee: false,
+        userData: null,
     }
+
+    toggleEmployeeOptions = async () => {
+        this.setState({userData: await AuthService.getUserData()});
+        if (this.state.userData !== null) {
+            if (this.state.userData.group) {
+                for (let i = 0; i < this.state.userData.group.length; i++) {
+                    if (this.state.userData.group[i].municipalitiy) {
+                        this.setState({isEmployee: true});
+                        return;
+                    }
+                }
+            }
+        }
+    };
 
     componentDidMount() {
         EventService.getEvents(null, (isError, data) => {
-            if(isError === false) {
+            if (isError === false) {
                 this.setState({events: data});
             }
             this.setState({isLoading: false});
         });
 
         LocationService.getMunicipalities((isError, data) => {
-            if(isError === false) {
+            if (isError === false) {
                 this.setState({municipalities: data.map(m => ({value: m.id, label: m.name}))});
             }
         });
+        this.toggleEmployeeOptions();
     }
 
-    onMunicipalityChange =  (event) => {
+    onMunicipalityChange = (event) => {
         this.setState({selectedMunicipality: event});
 
-        if(event) {
+        if (event) {
             this.setState({isLoading: true});
             EventService.getEventsByMunicipality(event.value, null, (isError, data) => {
                 console.log(data);
-                if(isError === false) {
+                if (isError === false) {
                     this.setState({events: data});
                 }
                 this.setState({isLoading: false});
             });
         }
+    }
+
+
+    goTo = (page) => {
+        this.props.history.push(page);
     }
 
     render() {
@@ -120,7 +154,7 @@ class Events extends Component {
                             <Typography variant='h4' color='inherit'>Nyheter</Typography>
                         </div>
                         <div className='mt-10'>
-                            <SearchableDropdown 
+                            <SearchableDropdown
                                 className={classes.dropDown}
                                 placeholder='Søk etter kommune'
                                 onChange={this.onMunicipalityChange}
@@ -132,22 +166,29 @@ class Events extends Component {
                     </div>
                 </div>
                 <div className={classes.root}>
-                    {this.state.isLoading ? <CircularProgress className={classes.progress} /> :
+                    {this.state.isLoading ? <CircularProgress className={classes.progress}/> :
                         this.state.events && this.state.events.length > 0 ?
-                        <div className={classes.paper}>
-                            {this.state.events.map((value) => (
-                                <EventItem
-                                    key={value.id}
-                                    imageLeft
-                                    title={value.title}
-                                    image={value.images && value.images.length > 0 ? value.images[0] : null}
-                                    description={value.description}
-                                    date={value.createdAt}/>
-                            ))}
-                        </div>
-                        :
-                        <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
+                            <div className={classes.paper}>
+                                {this.state.events.map((value) => (
+                                    <EventItem
+                                        key={value.id}
+                                        imageLeft
+                                        title={value.title}
+                                        image={value.images && value.images.length > 0 ? value.images[0] : null}
+                                        description={value.description}
+                                        date={value.createdAt}/>
+                                ))}
+                            </div>
+                            :
+                            <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
                     }
+                </div>
+                <div hidden={!this.state.isEmployee} className={classes.employeeTools}>
+                    <Button variant="contained" size={'large'} color='secondary'
+                            className={classes.registerButton}
+                            onClick={() => this.goTo(URLS.createnews)}>
+                        Registrer nyhet
+                    </Button>
                 </div>
             </Navigation>
         )

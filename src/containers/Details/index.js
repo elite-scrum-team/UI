@@ -176,7 +176,6 @@ class Details extends Component {
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
                     updateContract={this.changeContract}
-                    municipalityId={this.state.municipalityId}
                     contract={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
