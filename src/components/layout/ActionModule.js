@@ -94,6 +94,10 @@ class ActionModule extends Component {
 
   };
 
+  componentDidMount () {
+      this.toggleDeleteOption();
+  }
+
     handleSub = value => {
         this.setState({subscribeDialogOpen: false,
             subscribed: value});

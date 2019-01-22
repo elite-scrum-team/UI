@@ -70,7 +70,7 @@ const SinglePictureStep = (props) => {
                     </IconButton>
                 </label>
             </div>
-            {props.image &&
+            {props.image[0] &&
             <div className={classes.imageDiv}>
                 <img className={classes.image} id="target" src={props.image} alt='warningvisual'/>
                 <Fab className={classes.deleteImg}
@@ -82,6 +82,6 @@ const SinglePictureStep = (props) => {
             }
         </div>
     )
-}
+};
 
 export default (SinglePictureStep);
