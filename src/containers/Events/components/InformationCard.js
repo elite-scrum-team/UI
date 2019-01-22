@@ -72,6 +72,8 @@ const DetailCard = (props) => {
 
     const fromDate = moment(event.fromTime).format('MMMM Do YYYY');
     const toDate = moment(event.toTime).format('MMMM Do YYYY');
+
+    const location = event.city ? event.city : "Ukjent Kommune";
     // Styling
     const classes = styles();
 
@@ -94,7 +96,7 @@ const DetailCard = (props) => {
                     </div>
                 }
                 <Divider/>
-                <IconCarry first={event.city} second={<LocationIcon/>}/>
+                <IconCarry first={location} second={<LocationIcon/>}/>
             </div>
             <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
 
