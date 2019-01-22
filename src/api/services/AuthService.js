@@ -75,7 +75,8 @@ export default class AuthService {
         if(municipalityId) {
             return roles.groups.filter(e  => e.municipalityId === municipalityId)
         } else {
-            return roles.groups.length > 0 ? roles.groups[0] : false;
+            const municipalities =  roles.groups.filter(e => e.municipalityId !== null);
+            return municipalities.length > 0 ? municipalities[0] : false;
         }
     }
 
