@@ -199,6 +199,7 @@ class CreateNews extends Component {
       if (this.getNewsId() === null){
 
       }
+      console.log(this.state.image);
     };
 
 

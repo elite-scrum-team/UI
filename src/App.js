@@ -38,6 +38,20 @@ const EmployeeRoute = ({ component: Component, ...rest }) => {
     );
 };
 
+const CompEmployeeRoute = ({ component: Component, ...rest }) => {
+    return (
+        <Route
+            {...rest}
+            render={(props) => (
+                (AuthService.isAuthenticated() && AuthService.isCompanyOrEmployee())?
+                    <Component {...props} /> :
+                    <Redirect to={URLS.login} />
+            )}
+        />
+    );
+};
+
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
       <Route
@@ -73,9 +87,9 @@ class App extends Component {
                                 <Route exact path={URLS.login} component={LogIn} />
                                 <Route exact path={URLS.events} component={Events} />
                                 <Route exact path={URLS.createnews.concat(':id?')} component={CreateNews} />
-                                <PrivateRoute exact path={URLS.statistics} component={Statistics} />
+                                <EmployeeRoute exact path={URLS.statistics} component={Statistics} />
                                 <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
-                                <EmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
+                                <CompEmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                             </Switch>
                         </MuiThemeProvider>
                     </BrowserRouter>

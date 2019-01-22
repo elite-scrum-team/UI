@@ -137,12 +137,9 @@ class Discover extends Component {
 
     getWarningsWithMunicipality = (filter) => {
       this.setState({isLoading: true, circlePosition: null});
-      let filters = {};
+      let filters = {...filter};
       if(this.state.municipalityId) {
-        filters = {
-          ...filter,
-          municipality: this.state.municipalityId,
-        }
+        filters.municipality = this.state.municipalityId;
       }
 
       this.getWarnings(filters);
@@ -197,6 +194,10 @@ class Discover extends Component {
         return;
       }
 
+      if(!window.google) {
+        return;
+      }
+
       // Calculate bounds for all positions
       const bounds = new window.google.maps.LatLngBounds();
 
@@ -217,12 +218,18 @@ class Discover extends Component {
 
       const filters = {};
 
+      console.log("HEllo");
+
       if(value === SEARCH_SECTION) {
         filters.excludeStatus = EXCLUDE_STATUSES;
 
         filters.municipality = this.state.municipalityId ? this.state.municipalityId :
           this.state.municipalities && this.state.municipalities.length > 0 ? this.state.municipalities[0].value
             : null;
+
+        if(!filters.municipality) {
+          delete filters.municipality;
+        }
 
         this.getWarningsWithMunicipality(filters);
       } else if(value === USER_SECTION && AuthService.isAuthenticated()) {

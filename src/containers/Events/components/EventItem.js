@@ -54,6 +54,13 @@ const styles = makeStyles({
 
         // justifyContent: 'space-between',
     },
+    imageWrapper: {
+      /*   height: 200,
+
+        '@media only screen and (max-width: 1300)': {
+            height: 'auto',
+        } */
+    },
     image: {
         width: '100%',
         height: '100%',
@@ -73,9 +80,12 @@ const styles = makeStyles({
         flexGrow: 1,
     },
     fixedSize: {
-      /*   minWidth: NORMAL_WIDTH,
-        width: NORMAL_WIDTH,
-        maxWidth: NORMAL_WIDTH, */
+        minWidth: NORMAL_WIDTH,
+        minHeight: 230,
+        maxHeight: 230,
+        overflow: 'hidden',
+        //width: NORMAL_WIDTH,
+        //maxWidth: NORMAL_WIDTH,
 
         '@media only screen and (max-width: 600px)': {
             width: '100%',
@@ -150,10 +160,10 @@ const EventItem = (props) => {
                         <div className={classes.flex}><CalendarIcon className={classes.icon} /><Typography variant='body2'>{date}</Typography></div>
                         <div className={classes.flex}><LocationIcon className={classes.icon} /><Typography variant='body2'>{props.street}</Typography></div>
                     </div>
-                    <div className={classes.ellipsis}>
+                    {/* <div className={classes.ellipsis}>
                         <Typography  variant='subtitle2' noWrap={false}>{props.description}</Typography>
                         <div className={classes.fade} />
-                    </div>
+                    </div> */}
                     <div className={classes.middle} />
 
                 </div>

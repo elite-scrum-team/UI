@@ -19,6 +19,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import warningUtils from "../../../utils/warningUtils";
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 450;
 
@@ -46,6 +47,12 @@ const styles = makeStyles({
        
        display: 'block',
        margin: 'auto',
+    },
+    margin: {
+        marginTop: 14,
+    },
+    buttonWrapper: {
+        width: "50%"
     }
 });
 
@@ -91,7 +98,19 @@ const SmallDetail = (props) => {
                     <TextCard text={props.item.status.description} gray/>
                     {props.item.images && props.item.images.length > 0 ?
                         <img className={classes.image} src={props.item.images[0]} alt={props.item.category.name}/> : null }
+
+                    <div className={classes.buttonWrapper}>
+                        <Button variant="outlined" color="primary"
+                                className={classes.margin} onClick={() => props.goTo(URLS.details.concat(props.item.id))}
+                                fullWidth
+                        >
+
+                            Les mer
+                        </Button>
+                    </div>
+
                 </div>
+
                 </div>
                 }
             </Drawer>

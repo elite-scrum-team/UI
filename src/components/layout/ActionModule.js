@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 // Service
 import AuthService from '../../api/services/AuthService';
@@ -21,6 +22,7 @@ import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
 import SubscribeDialog from "./SubscribeDialog";
+import URLS from "../../URLS";
 
 const styles = {
   root: {}
@@ -38,20 +40,11 @@ class ActionModule extends Component {
     companyId: '',
     contractDesc: '',
 
+    deleteOption: false,
     ownWarning: false,
     municipalityEmployee: false,
     userData: null,
 
-  };
-
-  componentDidMount() {
-    this.toggleDeleteOption();
-  };
-
-  checkContract = () => {
-    return this.props.contracts
-      ? this.props.contracts.find(e => e.groupId)
-      : false;
   };
 
   handleNewStatus = value => {
@@ -59,7 +52,16 @@ class ActionModule extends Component {
     this.props.updateStatus(value);
   };
 
-  handleToggle = name => event => {
+  handleDeleteStatus = value => {
+    this.handleNewStatus(value);
+    this.goTo(URLS.home);
+  };
+
+    goTo = (page) => {
+        this.props.history.push(page);
+    };
+
+  handleToggle = name => () => {
     this.setState({ [name]: !this.state[name] });
   };
 
@@ -76,28 +78,29 @@ class ActionModule extends Component {
 
             if (this.state.userData.roles){
                 for (let i = 0; i < this.state.userData.roles.groups.length; i++){
-                    if (this.state.userData.roles.groups[i].municipalitiyId === this.props.municipalityId){
-                        this.setState({municipalityEmployee: true});
+                    console.log(this.state.userData.roles.groups[i].municipalityId + '\n' + this.props.municipalityId);
+                    if (this.state.userData.roles.groups[i].municipalityId === this.props.municipalityId){
+                        this.setState({deleteOption: true});
                     }
                 }
             }
 
           console.log(this.props.status);
 
-          if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
-              this.setState({ownWarning: true});
+          if (this.props.userId === this.state.userData.id && this.props.status === 0){
+              this.setState({deleteOption: true});
           }
       }
 
   };
 
+  componentDidMount () {
+      this.toggleDeleteOption();
+  }
+
     handleSub = value => {
         this.setState({subscribeDialogOpen: false,
             subscribed: value});
-    };
-
-    componentDidMount() {
-        this.toggleDeleteOption();
     };
 
   render() {
@@ -109,7 +112,7 @@ class ActionModule extends Component {
         <div>
           <Typography variant={'h6'}>Actions:</Typography>
           <List component='nav' className={classes.root} dense>
-            {this.state.ownWarning && (
+            {this.state.deleteOption && (
               <div>
                 <ListItem
                   button
@@ -148,7 +151,7 @@ class ActionModule extends Component {
                 <Divider light />
               </Fragment>
             )) ||
-              (this.checkContract() && (
+              (this.props.constracts && (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
                 <Fragment>
                   <ListItem
                     button
@@ -159,13 +162,13 @@ class ActionModule extends Component {
                   </ListItem>
                   <Divider light />
                 </Fragment>
-              ))}
+              )))}
           </List>
         </div>
         <DeleteDialog
           open={this.state.deleteDialogOpen}
           onClose={this.handleToggle('deleteDialogOpen')}
-          submitStatus={this.handleNewStatus}
+          submitStatus={this.handleDeleteStatus}
           cancel={this.cancelDialog}
           statusNames={statusLabels}
         />
@@ -199,4 +202,4 @@ const mapStoreToProps = state => ({
   selectedGroup: UserAction.getUserData(state).selectedGroup || {},
 });
 
-export default connect(mapStoreToProps)(withStyles(styles)(ActionModule));
+export default connect(mapStoreToProps)(withStyles(styles)(withRouter(ActionModule)));
