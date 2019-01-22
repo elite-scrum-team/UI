@@ -19,13 +19,13 @@ export default function reducer(state = initialState, action) {
         case actions.SET_USER_DATA: {
 
             const groups = action.payload.group ? action.payload.group.map(g => (
-                {name: g.name, id: g.id, municipalitiyId: g.municipalitiy }
+                {name: g.name, id: g.id, municipalityId: g.municipalitiy }
             )) : [];
 
             // Set default selected group
             let selectedGroup = null;
             if(state.selectedGroup === null && groups.length > 0) {
-                selectedGroup = groups.find(e => e.municipalitiyId !== null) || groups[0];
+                selectedGroup = groups.find(e => e.municipalityId !== null) || groups[0];
             }
 
             return {
