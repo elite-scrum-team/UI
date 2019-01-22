@@ -5,7 +5,6 @@ import Lodash from 'lodash'
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden'
 // Icons
 import Clear from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,8 +17,7 @@ import Map from '../../../components/miscellaneous/Map';
 const styles = makeStyles({
     root: {
        height:'auto',
-        width: 'auto',
-
+        width: 'auto'
     },
     wrapper:{
         display: 'flex',
