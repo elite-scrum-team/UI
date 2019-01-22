@@ -48,6 +48,12 @@ const styles = makeStyles({
        display: 'block',
        margin: 'auto',
     },
+    tabs: {
+        height: 50,
+    },
+    tab: {
+        height: 50,
+    },
     margin: {
         marginTop: 14,
     },
@@ -84,11 +90,12 @@ const SmallDetail = (props) => {
                 <div>
                 <AppBar position='static' color='secondary'>
                     <Tabs
+                        className={classes.tabs}
                         value={0}
                         centered={true}
                         variant='fullWidth'>
-                        <Tab label='Gå tilbake' onClick={() => props.nextdetail()}/>
-                        <Tab label='Les mer' onClick={() => props.goTo(URLS.details.concat(props.item.id))}/>
+                        <Tab className={classes.tab} label='Gå tilbake' onClick={() => props.nextdetail()}/>
+                        <Tab className={classes.tab} label='Les mer' onClick={() => props.goTo(URLS.details.concat(props.item.id))}/>
                     </Tabs>
                 </AppBar>
                 <div className={classes.flex}>
@@ -116,6 +123,6 @@ const SmallDetail = (props) => {
             </Drawer>
         </div>
     )
-}
+};
 
 export default (SmallDetail);

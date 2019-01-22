@@ -29,11 +29,11 @@ import Sidebar from './Sidebar';
 
 const styles = {
     appbar: {
-        height: 48,
+
         zIndex: 1299,
     },
     main: {
-        marginTop: 48,
+        marginTop: 50,
     },
     noShadow: {
         boxShadow: 'none',

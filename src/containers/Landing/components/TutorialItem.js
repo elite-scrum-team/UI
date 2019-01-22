@@ -14,7 +14,7 @@ const styles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '22px 0',
+        padding: '40px 0',
 
         '@media only screen and (max-width: 600px)': {
             flexDirection: 'column',
@@ -28,11 +28,12 @@ const styles = makeStyles({
         }
     },
     image: {
-        width: 175,
-        height: 175,
+        width: 250,
+        maxWidth: '100%',
+        height: 'auto',
     },
     description: {
-        maxWidth: 360,
+        maxWidth: 550,
     }
 });
 
@@ -44,8 +45,9 @@ const TutorialItem = (props) => {
         <div className={classNames(classes.item, props.reverse ? classes.reverse : '')}>
             <img className={classes.image} src={props.image} alt='Problem' />
             <div className={classes.description}>
-                <Typography variant='h6'>{props.title}</Typography>
-                <Typography variant='subtitle2'>{props.description}</Typography>
+                <Typography variant='h5'>{props.title}</Typography>
+                <br />
+                <Typography variant='subtitle1'>{props.description}</Typography>
             </div>
         </div>
     )

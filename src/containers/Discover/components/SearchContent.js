@@ -36,10 +36,19 @@ const styles = makeStyles({
     progress: {
         display: 'block',
         margin: 'auto',
-        marginTop: 12,
+        marginTop: 50,
     },
     search: {
         width: '100%',
+    },
+    tabs: {
+        height: 50,
+    },
+    tab: {
+        height: 50,
+    },
+    alternate: {
+        marginTop: 50,
     }
 });
 
@@ -66,12 +75,13 @@ const SearchContent = (props) => {
         <div className={classes.root}>
             <AppBar position='sticky' color='secondary'>
                 <Tabs
+                    className={classes.tabs}
                     value={section}
                     onChange={(e, val) => changeSection(val)}
                     centered={true}
                     variant='fullWidth'>
-                    <Tab label='Søk varsler' value={0}/>
-                    <Tab label='Mine varsler' value={1}/>
+                    <Tab className={classes.tab} label='Søk varsler' value={0}/>
+                    <Tab className={classes.tab} label='Mine varsler' value={1}/>
                 </Tabs>
             </AppBar>
             {section === 0 &&
@@ -88,7 +98,7 @@ const SearchContent = (props) => {
             }
 
             {section === 1 &&
-            <div>
+            <div className={classes.alternate}>
                 {AuthService.isAuthenticated() ?
                     <div>
                         {props.isLoading ? <CircularProgress className={classes.progress}/> : props.detail ?

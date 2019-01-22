@@ -15,6 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 // Project components
 import FileSelector from './FileSelector';
+import AuthService from "../../api/services/AuthService";
 
 const styles = {
   root: {
@@ -51,7 +52,10 @@ class CommentBox extends Component {
   state = {
     file: null,
     image: null,
-    comment: ''
+    comment: '',
+
+    commentingEnabled: false,
+      userData: null,
   };
 
   handleChange = name => event => {
@@ -83,9 +87,25 @@ class CommentBox extends Component {
       }
     );
   };
+
   removeImage = () => {
     this.setState({ file: null, image: null });
   };
+
+    toggleCommenting = async () => {
+        this.setState({userData: await AuthService.getUserData()});
+        if (this.state.userData !== null) {
+            if (this.state.userData.id){
+            console.log(this.state.userData);
+            this.setState({commentingEnabled: true})
+          }
+        }
+    };
+
+    componentDidMount () {
+      this.toggleCommenting();
+    };
+
 
   render() {
     const { classes } = this.props;
@@ -93,6 +113,7 @@ class CommentBox extends Component {
       <Paper className={classes.root}>
         <form onSubmit={this.submitComment}>
           <TextField
+            disabled={1}
             id='filled-multiline-static'
             label='Skriv en kommentar...'
             multiline

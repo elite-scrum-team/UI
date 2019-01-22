@@ -15,7 +15,7 @@ const styles = makeStyles({
   root: {
     width: drawerWidth,
     borderRight: 'none',
-    marginTop: 48
+    marginTop: 50
   }
 });
 

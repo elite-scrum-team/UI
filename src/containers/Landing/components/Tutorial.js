@@ -13,12 +13,16 @@ import SolvedIcon from '../../../assets/img/Solved.png';
 import TutorialItem from './TutorialItem';
 
 const styles = {
+    wrapper: {
+        backgroundColor: '#fcfcfc',
+        paddingTop: 50,
+        paddingBottom: 50,
+    },
     root: {
         display: 'block',
         margin: 'auto',
-        maxWidth: 600,
-        padding: 12,
-        marginTop: 48,
+        maxWidth: 1000,
+        padding: 50,
     },
 }
 
@@ -27,9 +31,10 @@ class Tutorial extends Component {
     render() {
         const {classes} = this.props;
         return (
+            <div className={classes.wrapper}>
             <div className={classes.root}>
                 <div className='mb-30'>
-                    <Typography variant='h4' align='center'>Hvordan fungerer det?</Typography>
+                    <Typography variant='h3' align='center'>Hvordan fungerer det?</Typography>
                 </div>
                 <TutorialItem
                     image={ProblemIcon}
@@ -47,7 +52,7 @@ class Tutorial extends Component {
                     title='Se på at kommunen løser problemet'
                     description='Med en gang kommunen observerer problemet vil de løse problemet så kjapt som mulig.'
                 />
-            </div>
+                </div></div>
         )
     }
 }

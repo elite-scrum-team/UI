@@ -19,11 +19,11 @@ import Divider from '@material-ui/core/Divider';
 
 const styles = makeStyles({
     root: {
-        marginTop: 48,
+        marginTop: 50,
         zIndex: 100,
     },
     item: {
-        height: 46,
+        height: 50,
         color: 'var(--tihlde-blaa)',
     },
     companyButton: {
