@@ -5,13 +5,14 @@ import Lodash from 'lodash'
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden'
 // Icons
+import Clear from "@material-ui/icons/Clear";
+import IconButton from "@material-ui/core/IconButton";
 
 // Project components
 import InformationCard from './InformationCard'
 import Image from './Image'
-import IconButton from "@material-ui/core/IconButton";
-import Clear from "../../../../node_modules/@material-ui/icons/Clear";
 import Map from '../../../components/miscellaneous/Map';
 
 const styles = makeStyles({
@@ -43,7 +44,10 @@ const styles = makeStyles({
     close:{
         width:'90%',
         display:'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        '@media only screen and (max-width: 960px)': {
+            width:'95%',
+        }
     },
     mapContainer: {
         width: '90%',
@@ -51,6 +55,12 @@ const styles = makeStyles({
         maxWidth: '450px',
         maxHeight: '350px',
         marginBottom: 50,
+    },
+    text:{
+        '@media only screen and (max-width: 960px)': {
+            fontSize:35,
+            justifyContent: 'center'
+        }
     }
 });
 
@@ -71,7 +81,8 @@ const DetailCard = (props) => {
                         <Clear/>
                     </IconButton>
                 </div>
-                <Typography variant='h3' className={classes.down} noWrap={false}>
+
+                <Typography variant='h3' className={classes.text} noWrap={false}>
                     {event.title}
                     </Typography>
 
