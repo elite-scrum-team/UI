@@ -73,7 +73,7 @@ const warningTheme = createMuiTheme({
     typography: {
       useNextVariants: true,
     },
-  }); */
+}); */
 
 
 const Functions = (props) => {
