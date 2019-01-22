@@ -28,6 +28,7 @@ const styles = makeStyles({
         minHeight: 200,
         maxWidth: '100%',
         overflow: 'hidden',
+        flexDirection: 'column',
 
         '@media only screen and (max-width: 600px)': {
             flexDirection: 'column',
@@ -72,9 +73,9 @@ const styles = makeStyles({
         flexGrow: 1,
     },
     fixedSize: {
-        minWidth: NORMAL_WIDTH,
+      /*   minWidth: NORMAL_WIDTH,
         width: NORMAL_WIDTH,
-        maxWidth: NORMAL_WIDTH,
+        maxWidth: NORMAL_WIDTH, */
 
         '@media only screen and (max-width: 600px)': {
             width: '100%',

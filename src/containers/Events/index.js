@@ -82,14 +82,22 @@ const styles = (theme) => ({
     },
     paper: {
         display: 'grid',
-        gridTemplateColumns: '50% 50%',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr',
         gridGap: '12px',
+
+        '@media only screen and (max-width: 1200px)': {
+            gridTemplateColumns: '1fr 1fr',
+        },
 
         '@media only screen and (max-width: 1000px)': {
             gridTemplateColumns: '1fr',
         }
     },
     oneRow: {
+        '@media only screen and (max-width: 1600px)': {
+            gridTemplateColumns: '1fr 1fr',
+        },
+
         '@media only screen and (max-width: 1300px)': {
             gridTemplateColumns: '1fr',
         }

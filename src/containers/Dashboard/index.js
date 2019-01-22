@@ -150,7 +150,7 @@ class Dashboard extends Component {
 
         // Add municipality filter is exists, if not group filter
         if (selectedGroup.municipalityId !== null){
-            extraFilter.municipality = selectedGroup.municipalitiyId;
+            extraFilter.municipality = selectedGroup.municipalityId;
         }else{
             extraFilter.groupId = selectedGroup.id;
         }
