@@ -258,6 +258,7 @@ class Dashboard extends Component {
                                     showWarning={this.state.showWarning}
                                     changeStatus={this.changeStatus}
                                     changeContract={this.changeContract}
+                                    contracts={this.state.contracts}
                                     onCommentCreated={this.onCommentCreated}
                                     warningId={this.state.id}
                                 />

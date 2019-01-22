@@ -47,16 +47,6 @@ class ActionModule extends Component {
 
   };
 
-  componentDidMount() {
-    this.toggleDeleteOption();
-  };
-
-  checkContract = () => {
-    return this.props.contracts
-      ? this.props.contracts.find(e => e.groupId)
-      : false;
-  };
-
   handleNewStatus = value => {
     this.setState({ statusDialogOpen: false });
     this.props.updateStatus(value);
@@ -136,7 +126,7 @@ class ActionModule extends Component {
             </ListItem>
             <Divider />
 
-            {(AuthService.isEmployee(this.props.municipalitiyId) && (
+            {(AuthService.isEmployee(this.props.municipalityId) && (
               <Fragment>
                 <ListItem
                   button
@@ -157,7 +147,7 @@ class ActionModule extends Component {
                 <Divider light />
               </Fragment>
             )) ||
-              (this.checkContract() && (
+              (AuthService.isSelectedGroup(this.props.contracts.map(c => c.groupId)) && (
                 <Fragment>
                   <ListItem
                     button

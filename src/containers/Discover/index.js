@@ -197,6 +197,10 @@ class Discover extends Component {
         return;
       }
 
+      if(!window.google) {
+        return;
+      }
+
       // Calculate bounds for all positions
       const bounds = new window.google.maps.LatLngBounds();
 
@@ -299,7 +303,7 @@ class Discover extends Component {
           </Hidden>
 
           {!this.state.showMap &&
-            <Hidden implementation='js' mdUp>
+            <Hidden implementation='js' lgUp>
               <div className={classes.content}>
               {!this.state.detail
                   ?
@@ -319,7 +323,7 @@ class Discover extends Component {
               </div>
             </Hidden>
           }
-          <Hidden implementation='js' mdUp>
+          <Hidden implementation='js' lgUp>
             <Fab className={classes.fabBtn} color='primary' onClick={this.toggleChange('showMap')}>
               {this.state.showMap ? <CloseIcon /> : <MapIcon />}
             </Fab>

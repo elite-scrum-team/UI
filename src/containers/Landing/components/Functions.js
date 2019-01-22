@@ -1,27 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import URLS from '../../../URLS';
+// import { createMuiTheme} from '@material-ui/core/styles';
 import SearchBarStyles from './SearchBarStyles';
-import classNames from 'classnames';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PersonIcon from '@material-ui/icons/Person';
+/* import FeedbackIcon from '@material-ui/icons/Feedback';
+import PersonIcon from '@material-ui/icons/Person'; */
 
 // Project components
 import SearchableDropdown from '../../../components/miscellaneous/SearchableDropdown';
 
 const styles = makeStyles({
     content: {
-        paddingTop: 24,
+        paddingTop: 70,
 
         margin: 'auto',
         display: 'flex',
@@ -64,20 +61,20 @@ const styles = makeStyles({
         color: 'red',
     }
 });
-
+/* 
 const warningTheme = createMuiTheme({
     palette: {
       primary: {
           main: '#b73a3a',
           contrastText: 'white',
       },
-      
+
     },
     typography: {
       useNextVariants: true,
     },
-  });
-  
+  }); */
+
 
 const Functions = (props) => {
 
@@ -86,12 +83,6 @@ const Functions = (props) => {
 
     return (
         <div className={classes.content}>
-            <div className={classes.buttonWrapper}>
-                <MuiThemeProvider theme={warningTheme}>
-                <Button className={classNames(classes.button)} onClick={() => props.goTo(URLS.createwarning)} variant='contained' size='large' color='primary'>Send varsel<FeedbackIcon className='ml-5' /></Button>
-                </MuiThemeProvider>
-                <Button className={classes.button} onClick={() => props.goTo(URLS.login.concat('?register=true'))} variant='contained' size='large' color='primary'><PersonIcon className='mr-5'/> Registrer</Button>
-            </div>
             <div className='mt-50'>
                 <Typography variant='h6'>Søk etter varlser i din kommune</Typography>
             </div>

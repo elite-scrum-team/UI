@@ -58,7 +58,7 @@ const DetailCard = (props) => {
                 {event.title}
             </Typography>
             <InformationCard event={event}/>
-            {event.images && event.images.length > 0 ? <Image image={event.image}/> : null}
+            {event.images && event.images.length > 0 ? <Image image={event.images}/> : null}
             <Typography>
                 {event.description}
             </Typography>
