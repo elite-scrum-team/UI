@@ -36,7 +36,7 @@ const styles = makeStyles({
 
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        
     },
     imageWrapper: {
         maxWidth: 56,
@@ -51,6 +51,9 @@ const styles = makeStyles({
         marginLeft: 12,
         display: 'flex',
         justifyContent: 'space-between',
+    },
+    grow: {
+        flexGrow: 1,
     }
 });
 
@@ -72,16 +75,15 @@ const WarningItem = (props) => {
                     <Typography variant='caption' align='right'>{time}</Typography>
                 </div>
                 <div className={classes.content}>
-                    <div>
+                    <div className={classes.grow}>
                         <Typography variant='body2' align='left'>{props.description}</Typography>
                     </div>
-                    <div>
-                        {props.image &&
+                    {props.image && <div>
+                        
                         <div className={classes.imageWrapper}>
                             <img className={classes.image} src={props.image} alt={props.title} />
                         </div>
-                        }
-                    </div>
+                    </div>}
                 </div>
             </Paper>
         </ButtonBase>

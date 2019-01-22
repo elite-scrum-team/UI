@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -79,43 +79,37 @@ const Map = compose(
 
       {props.clickable && <Marker position={selectedLocation} icon={WarningMarkerIcon} clickable={false}/>}
 
-      {props.circlePosition && <Circle center={props.circlePosition} radius={CIRCLE_RADIUS} options={{fillOpacity: 0}}/>}
+      {props.circlePosition && <Circle center={props.circlePosition} radius={CIRCLE_RADIUS} options={{fillOpacity: 0, strokeOpacity: 0.1}}/>}
     </GoogleMap>
   )
 });
 
 
-class MapWrapper extends Component {
+const MapWrapper = (props) => {
 
-  state = {
-    locations: [],
-  }
+  const [locations, setLocations] = useState([]);
 
-  componentDidUpdate(prevProps) {
-    if(prevProps.locations !== this.props.locations) {
-      this.setState({locations: this.props.locations});
+  useCallback(() => {
+    setLocations(locations);
+  }, [props.locations]);
+
+  const onMapMounted = (map) => {
+    if(props.map && map) {
+      props.map(map);
     }
   }
 
-  onMapMounted = (map) => {
-    if(this.props.map && map) {
-      this.props.map(map);
-    }
-  }
-
-  render() {
-    return (
-      <Map
-        {...this.props}
-        onMapMounted={this.onMapMounted}
-        defaultCenter={this.props.defaultCenter || {}}
-        showMarkers={this.props.showMarkers}
-        locations={this.state.locations}
-        zoom={this.props.zoom}
-        clickable={this.props.clickable}
-        circlePosition={this.props.circlePosition}/>
-    )
-  }
+  return (
+    <Map
+      {...props}
+      onMapMounted={onMapMounted}
+      defaultCenter={props.defaultCenter || {}}
+      showMarkers={props.showMarkers}
+      locations={props.locations}
+      zoom={props.zoom}
+      clickable={props.clickable}
+      circlePosition={props.circlePosition}/>
+  )
 }
 
 MapWrapper.propTypes = {

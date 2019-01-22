@@ -1,24 +1,23 @@
 import Fetch from './helpers/http';
 import { METHODS } from './helpers/config';
 
-const filterToParams = (filters) => (filters
-  ? Object.keys(filters).map(key => {
-      return filters[key] instanceof Array
-        ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
-        : `${key}=${filters[key]}&`;
-    }).join('')
-  : '')
+const filterToParams = filters =>
+  filters
+    ? Object.keys(filters)
+        .map(key => {
+          return filters[key] instanceof Array
+            ? filters[key].flatMap(it => `${key}[]=${it}&`).join('')
+            : `${key}=${filters[key]}&`;
+        })
+        .join('')
+    : '';
 
 export default {
   // Here will all the API methods be
 
   // --- WARNINGS ---
   getWarnings: filters => {
-    return new Fetch(
-      METHODS.get,
-      '/warning?' +
-      filterToParams(filters)
-    );
+    return new Fetch(METHODS.get, '/warning?' + filterToParams(filters));
   },
 
   getWarning: id => {
@@ -30,7 +29,10 @@ export default {
   },
 
   getWarningsClose: (lat, lng, filters) => {
-    return new Fetch(METHODS.get, `/warning/close/${lat}/${lng}?`.concat(filterToParams(filters)));
+    return new Fetch(
+      METHODS.get,
+      `/warning/close/${lat}/${lng}?`.concat(filterToParams(filters))
+    );
   },
 
   createWarning: data => {
@@ -41,7 +43,7 @@ export default {
     return new Fetch(METHODS.post, '/warning/comment', {
       warningId: warningId,
       image: image,
-      comment: comment
+      content: comment
     });
   },
 
@@ -87,30 +89,33 @@ export default {
   getAllCompanies: () => {
     return new Fetch(METHODS.get, '/user/group?onlyCompanies=true');
   },
-    // --- EVENTS ---
+  // --- EVENTS ---
 
-  getAllEvents: () =>{
-    return new Fetch(METHODS.get, '/event')
+  getAllEvents: () => {
+    return new Fetch(METHODS.get, '/event');
   },
-  getEventById: (id) =>{
-      return new Fetch(METHODS.get, '/event/'.concat(id))
+  getEventById: id => {
+    return new Fetch(METHODS.get, '/event/'.concat(id));
   },
-  getMunicipalityEvent: (municipalityId) =>{
-      return new Fetch(METHODS.get, '/event/municipality/'.concat(municipalityId))
+  getMunicipalityEvent: municipalityId => {
+    return new Fetch(
+      METHODS.get,
+      '/event/municipality/'.concat(municipalityId)
+    );
   },
-  createEvent: (data) => {
-      return new Fetch(METHODS.post, '/event', data);
+  createEvent: data => {
+    return new Fetch(METHODS.post, '/event', data);
   },
-  updateEvent: (id, data) =>{
-      return new Fetch(METHODS.put, '/event/'.concat(id), data);
+  updateEvent: (id, data) => {
+    return new Fetch(METHODS.put, '/event/'.concat(id), data);
   },
-  addEventImage: (id, image) =>{
-      return new Fetch(METHODS.post, '/event/image', {
-          eventId: id,
-          image: image
-      });
+  addEventImage: (id, image) => {
+    return new Fetch(METHODS.post, '/event/image', {
+      eventId: id,
+      image: image
+    });
   },
   getEventContent: id => {
-      return new Fetch(METHODS.get, '/event/content/'.concat(id));
-  },
+    return new Fetch(METHODS.get, '/event/content/'.concat(id));
+  }
 };

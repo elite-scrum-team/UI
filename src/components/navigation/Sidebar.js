@@ -23,7 +23,7 @@ const styles = makeStyles({
         zIndex: 100,
     },
     item: {
-        height: 56,
+        height: 46,
         color: 'var(--tihlde-blaa)',
     },
     companyButton: {
@@ -47,7 +47,7 @@ const ActionLink = (props) => {
         <Fragment>
             <ListItem className={classNames(classes.item, props.className)} button color='inherit' onClick={props.onClick}>
                 <Grid container direction='column' wrap='nowrap' alignItems='center' justify='space-between'>
-                    <Typography variant='h5' align='center' color='inherit'>{props.label}</Typography>
+                    <Typography variant='subtitle1' align='center' color='inherit'>{props.label}</Typography>
                 </Grid>
             </ListItem>
             <Divider className={classes.divider}/>
@@ -69,10 +69,14 @@ const SidebarContent = (props) => {
     return (
         <Fragment>
             <div className={classes.root}>
+                <ActionLink onClick={() => goTo(URLS.createwarning)} label='Ny varsel' />
                 <ActionLink onClick={() => goTo(URLS.events)} label='Nyheter'/>
                 <ActionLink onClick={() => goTo(URLS.discover)} label='Discover' />
-                {AuthService.isCompanyOrEmployee() && 
-                    <ActionLink onClick={() => goTo(URLS.dashboard)} label='Dashboard'/>
+                {AuthService.isCompanyOrEmployee() &&
+                    <Fragment>
+                        <ActionLink onClick={() => goTo(URLS.statistics)} label='Statistikk'/>
+                        <ActionLink onClick={() => goTo(URLS.dashboard)} label='Dashboard'/>
+                    </Fragment>
                 }
                 {AuthService.isAuthenticated() ?
                     <ActionLink onClick={props.logOut} label='Logg ut'/>

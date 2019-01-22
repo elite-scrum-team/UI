@@ -79,7 +79,7 @@ const Starter = (props) => {
                 </Typography>
                 <div className={classes.buttonWrapper}>
                     <Button className={classes.button} onClick={() => props.goTo(URLS.createwarning)} variant='outlined' size='large' color='inherit'>Send varsel<FeedbackIcon className='ml-5' /></Button>
-                    <Button className={classes.button} onClick={() => props.goTo(URLS.login)} variant='outlined' size='large' color='inherit'><PersonIcon className='mr-5'/>Registrer</Button>
+                    <Button className={classes.button} onClick={() => props.goTo(URLS.login.concat('?register=true'))} variant='outlined' size='large' color='inherit'><PersonIcon className='mr-5'/>Registrer</Button>
                 </div>
                 <div>
                     <Button variant='contained' color='secondary' onClick={scrollToTop}>Se varsler i din kommune</Button>

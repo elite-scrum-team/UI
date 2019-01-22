@@ -39,10 +39,14 @@ export const createEventPost = (event) => {
         id: event.id,
         title: event.title,
         createdAt: event.createdAt,
+        toTime: event.toTime,
+        fromTime: event.fromTime,
         description : event.description,
         location : location,
         images: images,
         municipalityId: event.location && event.location.municipality ? event.location.municipality.id : null,
         municipality: event.location && event.location.municipality ? event.location.municipality.name : 'Ukjent',
+        city: event.location ? event.location.city : null,
+        street: event.location ? event.location.street : null,
     }
 };

@@ -35,6 +35,9 @@ const styles = {
     main: {
         marginTop: 48,
     },
+    noShadow: {
+        boxShadow: 'none',
+    },
     leftMargin: {
       left: 450,
       width: 'auto',
@@ -145,7 +148,9 @@ class Navigation extends Component {
         const {classes} = this.props;
         return (
             <Fragment>
-                <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '')} position='fixed' color='primary'>
+                <AppBar className={classNames(classes.appbar, this.props.sidebar ? classes.leftMargin : '',
+                    this.props.noShadow ? classes.noShadow : '')}
+                        position='fixed' color='primary'>
                     <Toolbar className={classes.navContent} variant='dense'>
                         <div className={classes.leftSection} >
                             <div className={classes.logoWrapper}>
@@ -171,11 +176,18 @@ class Navigation extends Component {
                                     active={this.activeURI() === URLS.events}
                                     label='Nyheter' />
                                 {AuthService.isCompanyOrEmployee() &&
+                                    <Fragment>
+                                        <URIButton
+                                            active={this.activeURI() === URLS.statistics}
+                                            goTo={this.goTo}
+                                            to={URLS.statistics}
+                                            label='Statistikk' />
                                         <URIButton
                                             active={this.activeURI() === URLS.dashboard}
                                             goTo={this.goTo}
                                             to={URLS.dashboard}
                                             label='Dashboard' />
+                                    </Fragment>
                                 }
                                 <div>
                                     {AuthService.isAuthenticated()?
@@ -234,6 +246,8 @@ Navigation.propTypes = {
     classes: PropTypes.object,
     children: PropTypes.node,
     isLoading: PropTypes.bool,
+    sidebar: PropTypes.bool, // Adds leftMargin to the entire navbar
+    noShadow: PropTypes.bool, // Disables appbar shadow
 };
 
 export default withStyles(styles)(withRouter(Navigation));

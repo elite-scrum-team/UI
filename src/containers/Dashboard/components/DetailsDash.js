@@ -104,6 +104,8 @@ const DetailsDash = (props) => {
                     description={props.state.description}
                     location={props.state.location}
                     municipality={props.state.municipality}
+                    city={props.state.city}
+                    street={props.state.street}
                 />
                 <ImageGrid
                     images={props.state.images}
@@ -120,7 +122,6 @@ const DetailsDash = (props) => {
                                 contracts={props.state.contracts}
                                 municipalityId={props.state.municipalityId}
                                 status={props.state.status}
-
                             />
                         </Paper>
                     </div>
@@ -128,6 +129,7 @@ const DetailsDash = (props) => {
                         <FeedModule
                             id={props.state.id}
                             items={props.state.warningItems}
+                            onCommentCreated={props.onCommentCreated}
                         />
                     </div>
                 </div>

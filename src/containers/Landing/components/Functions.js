@@ -90,7 +90,7 @@ const Functions = (props) => {
                 <MuiThemeProvider theme={warningTheme}>
                 <Button className={classNames(classes.button)} onClick={() => props.goTo(URLS.createwarning)} variant='contained' size='large' color='primary'>Send varsel<FeedbackIcon className='ml-5' /></Button>
                 </MuiThemeProvider>
-                <Button className={classes.button} onClick={() => props.goTo(URLS.login)} variant='contained' size='large' color='primary'><PersonIcon className='mr-5'/> Registrer</Button>
+                <Button className={classes.button} onClick={() => props.goTo(URLS.login.concat('?register=true'))} variant='contained' size='large' color='primary'><PersonIcon className='mr-5'/> Registrer</Button>
             </div>
             <div className='mt-50'>
                 <Typography variant='h6'>Søk etter varlser i din kommune</Typography>

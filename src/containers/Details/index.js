@@ -7,8 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 
 // Service import
-import WarningService from "../../api/services/WarningService";
-import AuthService from '../../api/services/AuthService'
+import WarningService from '../../api/services/WarningService';
 import ContractService from '../../api/services/ContractService';
 
 // Icons
@@ -20,9 +19,10 @@ import ImageGrid from '../../components/layout/ImageGrid';
 import ActionModule from '../../components/layout/ActionModule';
 import FeedModule from '../../components/layout/FeedModule';
 
+
 const styles = {
   root: {
-    maxWidth: 1000,
+    maxWidth: 1100,
     margin: 'auto',
     paddingTop: 16,
     paddingBottom: 100
@@ -94,7 +94,9 @@ class Details extends Component {
           municipality: e.municipality,
           userId: e.userId,
           municipalityId: e.municipalityId,
-          contracts: e.contracts
+          contracts: e.contracts,
+          city: e.city,
+          street: e.street
         });
         this.setState({ isLoading: false });
 
@@ -139,8 +141,6 @@ class Details extends Component {
         this.setState({ items: data });
       });
     });
-
-    console.log('Contract: ', newContract);
   };
 
   addItem = item => {
@@ -148,6 +148,12 @@ class Details extends Component {
     const items = Object.assign([], this.state.items);
     items.push(item);
     this.setState({ items });
+  };
+
+  onCommentCreated = () => {
+    WarningService.getWarningItems(this.getWarningId()).then(data => {
+      this.setState({ items: data });
+    });
   };
 
   render() {
@@ -165,6 +171,8 @@ class Details extends Component {
                 description={this.state.description}
                 location={this.state.location}
                 municipality={this.state.municipality}
+                city={this.state.city}
+                street={this.state.street}
               />
               <Divider />
               <ImageGrid images={this.state.images} />
@@ -179,13 +187,16 @@ class Details extends Component {
                     contract={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
-                    municipalityId={this.state.municipalityId}
                     status={this.state.status}
                   />
                 </Paper>
               </div>
               <div>
-                <FeedModule id={this.state.id} items={this.state.items} />
+                <FeedModule
+                  id={this.state.id}
+                  items={this.state.items}
+                  onCommentCreated={this.onCommentCreated}
+                />
               </div>
             </div>
           </div>

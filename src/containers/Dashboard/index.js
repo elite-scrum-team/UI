@@ -37,7 +37,7 @@ class Dashboard extends Component {
 
     state = {
         isLoading: false,
-        listIsLoading: true,
+        listIsLoading: false,
 
         id: null,
         title: null,
@@ -64,15 +64,20 @@ class Dashboard extends Component {
     getWarningId = () => this.props.match.params.id;
 
     componentDidMount() {
-        this.setState({isLoading: true});
+        this.setState({isLoading: true, listIsLoading: true});
         AuthService.getUserData((isError, data) => {
             if(isError === false) {
                 // Get id
                 const id = this.getWarningId();
                 this.setState({id: id});
+
+                const currentGroup = AuthService.getCurrentGroup();
                 
-                this.onSectionChange(NEW_SECTION);
-                
+                if(currentGroup) {
+                    this.onSectionChange(NEW_SECTION);
+                } else {
+                    this.setState({listIsLoading: false});
+                }
             } else {
                 //this.props.history.push(URLS.home);
             }
@@ -94,7 +99,9 @@ class Dashboard extends Component {
             this.setState({isLoading: true});
             WarningService.getWarning(id, (isError, e) => {
                 if (isError === false) {
+                    console.log("Warning: ", e);
                     this.setState({
+                        id: e.id,
                         title: e.category.name,
                         posted: e.createdAt,
                         status: e.status ? e.status.type : 0,
@@ -106,6 +113,8 @@ class Dashboard extends Component {
                         userId: e.userId,
                         municipalityId: e.municipalityId,
                         contracts: e.contracts,
+                        city: e.city,
+                        street: e.street,
                         showWarning: true,
                     });
 
@@ -131,16 +140,19 @@ class Dashboard extends Component {
 
     onSectionChange = (value) => {
 
-        const extraFilter = {};
+        const extraFilter = {dateSort: 'ASC'};
 
         // Add group filters
         const selectedGroup = AuthService.getCurrentGroup();
-        if(selectedGroup !== null){
-            if (selectedGroup.municipalityId !== null){
-                extraFilter.municipality = selectedGroup.municipalitiyId;
-            }else{
-                extraFilter.groupId = selectedGroup.id;
-            }
+        if(!selectedGroup) {
+            return;
+        }
+
+        // Add municipality filter is exists, if not group filter
+        if (selectedGroup.municipalityId !== null){
+            extraFilter.municipality = selectedGroup.municipalitiyId;
+        }else{
+            extraFilter.groupId = selectedGroup.id;
         }
 
         if(value === NEW_SECTION) {
@@ -191,8 +203,13 @@ class Dashboard extends Component {
           });
         });
     
-        console.log('Contract: ', newContract);
-      };
+    };
+
+    onCommentCreated = () => {
+        WarningService.getWarningItems(this.getWarningId()).then(data => {
+          this.setState({ warningItems: data });
+        });
+    };
 
     render() {
         const {classes} = this.props;
@@ -217,7 +234,7 @@ class Dashboard extends Component {
                             />
                         </Hidden>
                         {!this.state.showWarning &&
-                        <Hidden implementation='js' smUp>
+                        <Hidden implementation='js' mdUp>
                             <SearchContent className={classes.sidebar}
                                 searchValue={this.state.search}
                                 items={this.state.items}
@@ -241,6 +258,8 @@ class Dashboard extends Component {
                                     showWarning={this.state.showWarning}
                                     changeStatus={this.changeStatus}
                                     changeContract={this.changeContract}
+                                    onCommentCreated={this.onCommentCreated}
+                                    warningId={this.state.id}
                                 />
                             }
                         </div>

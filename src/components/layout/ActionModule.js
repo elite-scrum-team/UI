@@ -20,6 +20,7 @@ import DeleteDialog from './DeleteDialog';
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
+import SubscribeDialog from "./SubscribeDialog";
 
 const styles = {
   root: {}
@@ -30,6 +31,8 @@ class ActionModule extends Component {
     deleteDialogOpen: false,
     statusDialogOpen: false,
     contractDialogOpen: false,
+    subscribeDialogOpen: false,
+    subscribed: false,
     newStatus: -1,
     statusMsg: '',
     companyId: '',
@@ -39,6 +42,10 @@ class ActionModule extends Component {
     municipalityEmployee: false,
     userData: null,
 
+  };
+
+  componentDidMount() {
+    this.toggleDeleteOption();
   };
 
   checkContract = () => {
@@ -63,9 +70,9 @@ class ActionModule extends Component {
     }
   };
 
-    toggleDeleteOption = async () => {
-        this.setState({userData: await AuthService.getUserData()});
-        if (this.state.userData !== null) {
+  toggleDeleteOption = async () => {
+      this.setState({userData: await AuthService.getUserData()});
+      if (this.state.userData !== null) {
 
             if (this.state.userData.roles){
                 for (let i = 0; i < this.state.userData.roles.groups.length; i++){
@@ -75,13 +82,18 @@ class ActionModule extends Component {
                 }
             }
 
-            console.log(this.props.status);
+          console.log(this.props.status);
 
-            if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
-                this.setState({ownWarning: true});
-            }
-        }
+          if ((this.props.userId === this.state.userData.id && this.props.status === 0) || this.state.municipalityEmployee){
+              this.setState({ownWarning: true});
+          }
+      }
 
+  };
+
+    handleSub = value => {
+        this.setState({subscribeDialogOpen: false,
+            subscribed: value});
     };
 
     componentDidMount() {
@@ -109,11 +121,13 @@ class ActionModule extends Component {
               </div>
             )}
             <ListItem button dense>
-              <ListItemText primary='Varsle meg ved endringer' />
+              <ListItemText primary='Varsle meg ved endringer'
+                            onClick={() => this.setState({ subscribeDialogOpen: true })}
+              />
             </ListItem>
             <Divider />
 
-            {(AuthService.isEmployee(this.props.selectedGroup.municipalityId) && (
+            {(AuthService.isEmployee(this.props.municipalitiyId) && (
               <Fragment>
                 <ListItem
                   button
@@ -166,6 +180,12 @@ class ActionModule extends Component {
           open={this.state.contractDialogOpen}
           onClose={this.handleToggle('contractDialogOpen')}
           submitContract={this.handleNewContract}
+        />
+        <SubscribeDialog
+          open={this.state.subscribeDialogOpen}
+          onClose={this.handleToggle('subscribeDialogOpen')}
+          submitSubscribe={this.handleSub}
+          subscribed={this.state.subscribed}
         />
       </div>
     );

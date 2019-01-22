@@ -12,7 +12,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // Icons
 
 // Project components
-import SearchBar from './SearchBar';
 import WarningList from './WarningList';
 import StatusTabs from './StatusTabs';
 
@@ -58,16 +57,7 @@ const SearchContent = props => {
 
     return (
         <div className={classes.root}>
-            <StatusTabs value={section} onChange={handleSectionChange}/>
-            {section === 0 && (
-                <div>
-                    <SearchBar
-                        value={props.searchValue}
-                        onChange={props.onChange}
-                        onSubmit={props.onSubmit}
-                    />
-                </div>
-            )}  
+            <StatusTabs value={section} onChange={handleSectionChange}/>  
             {props.isLoading ?
                 <CircularProgress className={classes.progress}/> :
                 <WarningList mountWarningCallback={(e) => props.mountWarningCallback(e)} items={props.items}

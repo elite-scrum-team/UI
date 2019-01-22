@@ -1,13 +1,17 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import classNames from 'classnames';
 
 // Services
 import LocationService from '../../api/services/LocationService';
 import EventService from '../../api/services/EventService';
+import AuthService from "../../api/services/AuthService";
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Hidden from '@material-ui/core/Hidden';
+import Button from "@material-ui/core/Button";
 
 // Icons
 
@@ -15,17 +19,30 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Navigation from '../../components/navigation/Navigation';
 import EventItem from './components/EventItem';
 import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
-import Button from "@material-ui/core/Button";
+import Sidebar from "./components/Sidebar";
+import DetailCard from './components/DetailCard';
 import URLS from "../../URLS";
-import AuthService from "../../api/services/AuthService";
+
+const drawerWidth = 450;
 
 const styles = (theme) => ({
     root: {
+        position: 'relative',
+        transition: 'all 0.5s ease',
+    },
+    container: {
         padding: '0 10px',
         paddingTop: 24,
         maxWidth: 1300,
         margin: 'auto',
         paddingBottom: 100,
+    },
+    mLeft: {
+        marginLeft: drawerWidth,
+
+        '@media only screen and (max-width: 960px)': {
+            marginLeft: 0,
+        }
     },
     top: {
         padding: '10px 10px 0 10px',
@@ -72,6 +89,16 @@ const styles = (theme) => ({
             gridTemplateColumns: '1fr',
         }
     },
+    oneRow: {
+        '@media only screen and (max-width: 1300px)': {
+            gridTemplateColumns: '1fr',
+        }
+    },
+    toColumn: {
+        '@media only screen and (max-width: 1450px)': {
+            flexDirection: 'column',
+        }
+    },
     dropDown: {
         width: '80vw',
         maxWidth: 250,
@@ -81,6 +108,7 @@ const styles = (theme) => ({
         margin: 'auto',
     }
 });
+
 
 class Events extends Component {
 
@@ -92,6 +120,7 @@ class Events extends Component {
         events: [],
         isEmployee: false,
         userData: null,
+        detail: null
     }
 
     toggleEmployeeOptions = async () => {
@@ -110,6 +139,7 @@ class Events extends Component {
 
     componentDidMount() {
         EventService.getEvents(null, (isError, data) => {
+            console.log(data);
             if (isError === false) {
                 this.setState({events: data});
             }
@@ -124,6 +154,12 @@ class Events extends Component {
         this.toggleEmployeeOptions();
     }
 
+    onItemClick = (item) => () => {
+        this.setState({
+            detail: item
+        })
+    };
+
     onMunicipalityChange = (event) => {
         this.setState({selectedMunicipality: event});
 
@@ -137,7 +173,7 @@ class Events extends Component {
                 this.setState({isLoading: false});
             });
         }
-    }
+    };
 
 
     goTo = (page) => {
@@ -148,40 +184,67 @@ class Events extends Component {
         const {classes} = this.props;
         return (
             <Navigation>
-                <div className={classes.top}>
-                    <div className={classes.topContent}>
-                        <div className='mt-10'>
-                            <Typography variant='h4' color='inherit'>Nyheter</Typography>
-                        </div>
-                        <div className='mt-10'>
-                            <SearchableDropdown
-                                className={classes.dropDown}
-                                placeholder='Søk etter kommune'
-                                onChange={this.onMunicipalityChange}
-                                options={this.state.municipalities}/>
-                        </div>
-                        <Typography className={classes.locationHeader} variant='h6' color='inherit'>
-                            {this.state.selectedMunicipality ? this.state.selectedMunicipality.label : 'Alle kommuner'}
-                        </Typography>
-                    </div>
-                </div>
-                <div className={classes.root}>
-                    {this.state.isLoading ? <CircularProgress className={classes.progress}/> :
-                        this.state.events && this.state.events.length > 0 ?
-                            <div className={classes.paper}>
-                                {this.state.events.map((value) => (
-                                    <EventItem
-                                        key={value.id}
-                                        imageLeft
-                                        title={value.title}
-                                        image={value.images && value.images.length > 0 ? value.images[0] : null}
-                                        description={value.description}
-                                        date={value.createdAt}/>
-                                ))}
+                <div className={classNames(classes.root, {[classes.mLeft]: this.state.detail !== null})}>
+
+
+                    <div className={classes.top}>
+                        <div className={classes.topContent}>
+                            <div className='mt-10'>
+                                <Typography variant='h4' color='inherit'>Nyheter</Typography>
                             </div>
-                            :
-                            <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
-                    }
+                            <div className='mt-10'>
+                                <SearchableDropdown
+                                    className={classes.dropDown}
+                                    placeholder='Søk etter kommune'
+                                    onChange={this.onMunicipalityChange}
+                                    options={this.state.municipalities}/>
+                            </div>
+                            <Typography className={classes.locationHeader} variant='h6' color='inherit'>
+                                {this.state.selectedMunicipality ? this.state.selectedMunicipality.label : 'Alle kommuner'}
+                            </Typography>
+                        </div>
+                    </div>
+                    <Hidden implementation='js' smDown={this.state.detail !== null}>
+                        <div className={classNames(classes.container)}>
+                            {this.state.isLoading ? <CircularProgress className={classes.progress}/> :
+
+                                this.state.events && this.state.events.length > 0 ?
+
+                                    <div
+                                        className={classNames(classes.paper, this.state.detail !== null ? classes.oneRow : '')}>
+                                        {this.state.events.map((value) => (
+                                            <EventItem
+                                                className={this.state.detail !== null ? classes.toColumn : ''}
+                                                key={value.id}
+                                                imageLeft
+                                                viewingDetail={this.state.detail !== null}
+                                                title={value.title}
+                                                image={value.images && value.images.length > 0 ? value.images[0] : null}
+                                                description={value.description}
+                                                date={value.createdAt}
+                                                municipality={value.municipality}
+                                                city={value.city}
+                                                street={value.street}
+                                                onClick={this.onItemClick(value)}
+                                            />
+                                        ))}
+                                    </div>
+                                    :
+                                    <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
+                            }
+                        </div>
+                    </Hidden>
+
+                    <Fragment>
+                        <Hidden implementation='js' smDown>
+                            <Sidebar open={this.state.detail !== null} event={this.state.detail}
+                                     close={this.onItemClick(null)}/>
+                        </Hidden>
+                        {this.state.detail && <Hidden implementation='js' mdUp>
+                            <DetailCard event={this.state.detail} close={this.onItemClick(null)}/>
+                        </Hidden>}
+                    </Fragment>
+
                 </div>
                 <div hidden={!this.state.isEmployee} className={classes.employeeTools}>
                     <Button variant="contained" size={'large'} color='secondary'
@@ -190,6 +253,7 @@ class Events extends Component {
                         Registrer nyhet
                     </Button>
                 </div>
+
             </Navigation>
         )
     }
