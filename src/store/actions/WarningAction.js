@@ -5,6 +5,7 @@ export const actions = {
     SET_WARNING_BY_ID: 'SET_WARNING_BY_ID',
     SET_WARNING_ITEMS: 'SET_WARNING_ITEMS',
     SET_WARNING_ITEM: 'SET_WARNING_ITEM',
+    UPDATE_WARNING: 'UPDATE_WARNING',
     ADD_WARNING_ITEM: 'ADD_WARNING_ITEM',
 };
 
@@ -34,6 +35,8 @@ export const setWarningItem = (id, data) =>
 export const addWarningItem = (id, data) =>
     dispatch => dispatch({type: actions.ADD_WARNING_ITEM, payload: data, id: id});
 
+export const updateWarningItem = (id, data) => 
+    dispatch => dispatch({type: actions.UPDATE_WARNING, payload: data, id: id});
 
 // --- SELECTORS ---
 const getWarningPostState = (state) => state.warning;
