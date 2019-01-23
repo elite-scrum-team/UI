@@ -24,9 +24,6 @@ import Assignment from '@material-ui/icons/Assignment';
 import Sms from '@material-ui/icons/Sms';
 import Edit from '@material-ui/icons/Edit';
 
-
-
-
 // Project components
 import DeleteDialog from './DeleteDialog';
 import EditCategoryDialog from './EditCategoryDialog';
