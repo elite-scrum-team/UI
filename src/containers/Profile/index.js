@@ -5,6 +5,8 @@ import URLS from "../../URLS";
 
 // Material UI components
 import Paper from "@material-ui/core/Paper";
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 
 // Service import
 import AuthService from "../../api/services/AuthService";
@@ -14,8 +16,27 @@ import AuthService from "../../api/services/AuthService";
 // Project Components
 import Profile from "./components/Profile";
 import Navigation from "../../components/navigation/Navigation";
+import MessageDialog from "../../components/miscellaneous/MessageDialog";
 
 const styles = theme => ({
+    top: {
+        width: '100%',
+        minHeight: 75,
+        backgroundColor: theme.palette.primary.main,
+    },
+    topContent: {
+        maxWidth: 1000,
+        display: 'block',
+        margin: 'auto',
+        padding: '18px 6px 0 6px',
+        color: 'white',
+    },
+    flex: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexDirection: 'row-reverse',
+    },
     main: {
         width: "auto",
         display: "block", // Fix IE 11 issue.
@@ -34,7 +55,7 @@ const styles = theme => ({
         alignItems: "center",
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
             .spacing.unit * 3}px`
-    }
+    },
 });
 
 class MyProfile extends Component {
@@ -42,7 +63,8 @@ class MyProfile extends Component {
         isSignIn: true,
         isLoading: false,
         errorMessage: '',
-        id: '',
+        userData: {},
+        showChangedPasswordMessage: false,
     };
 
     componentDidMount() {
@@ -50,7 +72,11 @@ class MyProfile extends Component {
         if(!AuthService.isAuthenticated()) {
             this.props.history.replace(URLS.login);
         } else {
-            this.setState({ id: AuthService.getUserData() });
+            AuthService.getUserData((isError, data) => {
+                if(isError === false) {
+                    this.setState({userData: data});
+                }
+            });
         }
 
     }
@@ -71,9 +97,11 @@ class MyProfile extends Component {
         AuthService.changePassword(password, (isError, data) => {
             if (isError) {
                 this.setState({
-                    errorMessage: "unauthorized"
+                    errorMessage: "Something went wrong"
                 });
                 console.log(data);
+            } else {
+                this.setState({showChangedPasswordMessage: true})
             }
             this.setState({isLoading: false});
         });
@@ -81,8 +109,22 @@ class MyProfile extends Component {
 
     render() {
         const { classes } = this.props;
+        
+        const email = (this.state.userData ? this.state.userData.email : '') || '';
+
         return (
             <Navigation>
+                <div className={classes.top}>
+                    <div className={classes.topContent}>
+                        {this.state.userData &&
+                        <div className={classes.flex}>
+                            <Typography variant='body2' align='right' color='inherit'>
+                                {email}
+                            </Typography>
+                            <Avatar className='mr-10'>{(email.length > 0 ? email[0] : 'A').toUpperCase()}</Avatar>
+                        </div>}
+                    </div>
+                </div>
                 <main className={classes.main}>
                     <Paper className={classes.paper}>
                         <Profile
@@ -91,6 +133,12 @@ class MyProfile extends Component {
                         />
                     </Paper>
                 </main>
+                <MessageDialog
+                    open={this.state.showChangedPasswordMessage}
+                    onClose={() => this.setState({showChangedPasswordMessage: false})}
+                    title='Passord forandret'
+                    content='Ditt passord er nå forandret, neste gang du logger inn må du bruke ditt nye passord.'
+                />
             </Navigation>
         );
     }

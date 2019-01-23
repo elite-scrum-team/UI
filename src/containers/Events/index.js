@@ -198,7 +198,7 @@ class Events extends Component {
                     <div className={classes.top}>
                         <div className={classes.topContent}>
                             <div className='mt-10'>
-                                <Typography variant='h4' color='inherit'>Nyheter</Typography>
+                                <Typography variant='h4' color='inherit'>Arrangmenter</Typography>
                             </div>
                             <div className='mt-10'>
                                 <SearchableDropdown

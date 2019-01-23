@@ -1,5 +1,4 @@
 import API from "../api";
-import AUTH from "../auth";
 
 // and all the methods will return a promise
 export default class InterestGroupService {

@@ -119,14 +119,14 @@ export default {
     return new Fetch(METHODS.get, '/event/content/'.concat(id));
   },
 
-    // --- InterestGroup ---
+    // --- InterestGroup ---  method, url, data = null, args = {}, withAuth = true
 
     subscribeToAWarning: (warningId) =>{
-      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId),null, {})
+      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId), {}, {}, true)
     },
 
     unSubscribeToAWarning: (warningId) =>{
-        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),null, {})
+        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),{}, {}, true)
     }
 
 };
