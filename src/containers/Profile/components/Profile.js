@@ -23,14 +23,20 @@ const styles = theme => ({
 
 function Change(props) {
     const { classes } = props;
-    const [password, setPassword] = useState("");
-    const [confirm, SetConfirm] = useState("");
+    let [password, setPassword] = useState("");
+    let [confirm, setConfirm] = useState("");
 
     return (
         <div>
             <form
                 className={classes.form}
-                onSubmit={props.pass(password, confirm)}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    props.pass(password, confirm, () => {
+                        setConfirm('');
+                        setPassword('')
+                    })(e);
+                }}
             >
                 <FormLabel classes={{root: classes.label}}>Endring av passord</FormLabel>
                 <FormControl margin="normal" required fullWidth>
@@ -49,7 +55,7 @@ function Change(props) {
                         id="confirm"
                         name="confirm"
                         value={confirm}
-                        onChange={e => SetConfirm(e.target.value)}
+                        onChange={e => setConfirm(e.target.value)}
                         type='password'
                     />
                     <FormHelperText error={props.errorMessasge !== null}>
