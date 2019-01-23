@@ -119,9 +119,10 @@ export default {
     return new Fetch(METHODS.get, '/event/content/'.concat(id));
   },
 
-    // --- InterestGroup ---  method, url, data = null, args = {}, withAuth = true
+    // --- InterestGroup ---
 
     subscribeToAWarning: (warningId) =>{
+      console.log(warningId);
       return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId), {}, {}, true)
     },
 
