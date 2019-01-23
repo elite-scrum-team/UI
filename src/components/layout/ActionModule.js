@@ -129,8 +129,10 @@ class ActionModule extends Component {
             subscribed: value});
         console.log(this.props.warnId);
         if(value){
+            console.log(value);
             InterestGroupService.subscribe(this.props.warnId);
         }else{
+            console.log(value);
             InterestGroupService.unsubscribe(this.props.warnId);
         }
     };
@@ -167,7 +169,9 @@ class ActionModule extends Component {
                   </div>
               )}
             <ListItem button dense>
-              <ListItemText primary='Varsle meg ved endringer'
+              <ListItemText
+                    primary={(!this.state.subscribed && 'Varsle meg ved endringer') ||
+                    (this.state.subscribed && 'Skru av varsel')}
                             onClick={() => this.setState({ subscribeDialogOpen: true })}
               />
             </ListItem>
