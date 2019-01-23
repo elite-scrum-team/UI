@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { withStyles } from '@material-ui/styles';
-import {ListItemIcon, Typography} from '@material-ui/core';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import React, {Component, Fragment} from 'react';
+import {withStyles} from '@material-ui/styles';
+import {Typography} from '@material-ui/core';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Service
@@ -40,56 +40,56 @@ const styles = {
 };
 
 class ActionModule extends Component {
-  state = {
-    deleteDialogOpen: false,
-    editCategoryDialogOpen: false,
-    statusDialogOpen: false,
-    contractDialogOpen: false,
-    subscribeDialogOpen: false,
-    subscribed: false,
-    newStatus: -1,
-    statusMsg: '',
-    companyId: '',
-    contractDesc: '',
+    state = {
+        deleteDialogOpen: false,
+        editCategoryDialogOpen: false,
+        statusDialogOpen: false,
+        contractDialogOpen: false,
+        subscribeDialogOpen: false,
+        subscribed: false,
+        newStatus: -1,
+        statusMsg: '',
+        companyId: '',
+        contractDesc: '',
 
-    deleteOption: false,
-    editCategoryOption: false,
-    ownWarning: false,
-    municipalityEmployee: false,
-    userData: null,
-    categories: [],
-    newCategory: null,
-  };
+        deleteOption: false,
+        editCategoryOption: false,
+        ownWarning: false,
+        municipalityEmployee: false,
+        userData: null,
+        categories: [],
+        newCategory: null,
+    };
 
-  handleNewStatus = value => {
-    this.setState({ statusDialogOpen: false });
-    this.props.updateStatus(value);
-  };
+    handleNewStatus = value => {
+        this.setState({statusDialogOpen: false});
+        this.props.updateStatus(value);
+    };
 
-  handleDeleteStatus = value => {
-    this.handleNewStatus(value);
-    this.goTo(URLS.home);
-  };
+    handleDeleteStatus = value => {
+        this.handleNewStatus(value);
+        this.goTo(URLS.home);
+    };
 
     goTo = (page) => {
         this.props.history.push(page);
     };
 
-  handleToggle = name => () => {
-    this.setState({ [name]: !this.state[name] });
-    console.log(this.state.categories);
-  };
+    handleToggle = name => () => {
+        this.setState({[name]: !this.state[name]});
+        console.log(this.state.categories);
+    };
 
-  handleNewContract = value => {
-    this.setState({ contractDialogOpen: false });
-    if(this.props.updateContract) {
-      this.props.updateContract(value);
-    }
-  };
+    handleNewContract = value => {
+        this.setState({contractDialogOpen: false});
+        if (this.props.updateContract) {
+            this.props.updateContract(value);
+        }
+    };
 
-  newCategoryClick = (data) => {
-      this.setState({newCategory: data});
-  };
+    newCategoryClick = (data) => {
+        this.setState({newCategory: data});
+    };
 
     updateCategory = () => {
         if (this.state.newCategory === null){
@@ -112,14 +112,14 @@ class ActionModule extends Component {
         this.setState({userData: await AuthService.getUserData()});
         if (this.state.userData !== null) {
 
-            if (this.state.userData.roles){
-                for (let i = 0; i < this.state.userData.roles.groups.length; i++){
+            if (this.state.userData.roles) {
+                for (let i = 0; i < this.state.userData.roles.groups.length; i++) {
                     console.log(this.state.userData.roles.groups[i].municipalityId + '\n' + this.props.municipalityId);
-                    if (this.state.userData.roles.groups[i].municipalityId === this.props.municipalityId){
+                    if (this.state.userData.roles.groups[i].municipalityId === this.props.municipalityId) {
                         this.setState({deleteOption: true, editCategoryOption: true});
                         CategoryService.getCategories((isError, data) => {
                             console.log(data);
-                            if(isError) {
+                            if (isError) {
                                 console.log('Error fetching categories');
                             } else {
                                 this.setState({categories: data});
@@ -130,19 +130,19 @@ class ActionModule extends Component {
                 }
             }
 
-          console.log(this.props.status);
+            console.log(this.props.status);
 
-          if (this.props.userId === this.state.userData.id && this.props.status === 0){
-              this.setState({deleteOption: true});
-          }
-      }
+            if (this.props.userId === this.state.userData.id && this.props.status === 0) {
+                this.setState({deleteOption: true});
+            }
+        }
 
-  };
+    };
 
-  componentDidMount () {
-      this.setState({subscribed: this.props.isSubscribed});
-      this.toggleOptions();
-  }
+    componentDidMount() {
+        this.setState({subscribed: this.props.isSubscribed});
+        this.toggleOptions();
+    }
 
     handleSub = value => {
         this.setState({subscribeDialogOpen: false,
@@ -308,8 +308,8 @@ ActionModule.propTypes = {
 };
 
 const mapStoreToProps = state => ({
-  companies: UserAction.getUserData(state).roles.groups,
-  selectedGroup: UserAction.getUserData(state).selectedGroup || {},
+    companies: UserAction.getUserData(state).roles.groups,
+    selectedGroup: UserAction.getUserData(state).selectedGroup || {},
 });
 
 export default connect(mapStoreToProps)(withStyles(styles)(withRouter(ActionModule)));

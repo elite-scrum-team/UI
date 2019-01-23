@@ -54,7 +54,7 @@ const CategoryItem = (props) => {
     const setCategoryClick = (data) => {
         props.newCategoryClick(data);
         console.log(props.newCategory);
-    }
+    };
 
     return (
         <div>
