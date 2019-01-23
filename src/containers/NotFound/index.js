@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 // Project components
 import Navigation from '../../components/navigation/Navigation';
 import URLS from '../../URLS';
-import Dinosaur from '../../assets/img/dinosaur.jpg';
+import Dinosaur from '../../assets/img/dinosaur.png';
 
 const styles = theme => ({
   root: {},
@@ -67,7 +67,7 @@ class NotFound extends Component {
             <Paper className={classes.paper}>
               <Typography
                 component='h2'
-                variant='display4'
+                variant='h1'
                 className={classes.text}
               >
                 404
@@ -76,12 +76,12 @@ class NotFound extends Component {
                 <img className={classes.image} src={Dinosaur} alt='dinosaur' />
               </div>
               <Typography
-                variant='subheading'
+                variant='subtitle1'
                 gutterBottom
                 className={classes.text}
-                noWrap='true'
+                noWrap
               >
-                Oops! This Page Could Not Be Found
+                Oops! This Page Was Eaten By An Evil Dinosaur
               </Typography>
               <Button
                 variant='contained'
@@ -89,7 +89,7 @@ class NotFound extends Component {
                 className={classes.back}
                 onClick={this.goToHome}
               >
-                Oh no!!!
+                Oh no!!! Go back!
               </Button>
             </Paper>
           </main>
