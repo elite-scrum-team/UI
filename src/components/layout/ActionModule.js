@@ -18,11 +18,13 @@ import Divider from '@material-ui/core/Divider';
 
 // Project components
 import DeleteDialog from './DeleteDialog';
+import EditCategoryDialog from './EditCategoryDialog';
 import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
 import SubscribeDialog from "./SubscribeDialog";
 import URLS from "../../URLS";
+import CategoryService from "../../api/services/CategoryService";
 
 const styles = {
   root: {}
@@ -31,6 +33,7 @@ const styles = {
 class ActionModule extends Component {
   state = {
     deleteDialogOpen: false,
+    editCategoryDialogOpen: false,
     statusDialogOpen: false,
     contractDialogOpen: false,
     subscribeDialogOpen: false,
@@ -41,10 +44,12 @@ class ActionModule extends Component {
     contractDesc: '',
 
     deleteOption: false,
+    editCategoryOption: false,
     ownWarning: false,
     municipalityEmployee: false,
     userData: null,
-
+    categories: [],
+    newCategory: null,
   };
 
   handleNewStatus = value => {
@@ -63,6 +68,7 @@ class ActionModule extends Component {
 
   handleToggle = name => () => {
     this.setState({ [name]: !this.state[name] });
+    console.log(this.state.categories);
   };
 
   handleNewContract = value => {
@@ -72,7 +78,15 @@ class ActionModule extends Component {
     }
   };
 
-  toggleDeleteOption = async () => {
+  newCategoryClick = (data) => {
+      this.setState({newCategory: data});
+  };
+
+    updateCategory = () => {
+        
+    };
+
+  toggleOptions = async () => {
       this.setState({userData: await AuthService.getUserData()});
       if (this.state.userData !== null) {
 
@@ -80,7 +94,16 @@ class ActionModule extends Component {
                 for (let i = 0; i < this.state.userData.roles.groups.length; i++){
                     console.log(this.state.userData.roles.groups[i].municipalityId + '\n' + this.props.municipalityId);
                     if (this.state.userData.roles.groups[i].municipalityId === this.props.municipalityId){
-                        this.setState({deleteOption: true});
+                        this.setState({deleteOption: true, editCategoryOption: true});
+                        CategoryService.getCategories((isError, data) => {
+                            console.log(data);
+                            if(isError) {
+                                console.log('Error fetching categories');
+                            } else {
+                                this.setState({categories: data});
+                            }
+                            this.setState({isLoading: false});
+                        });
                     }
                 }
             }
@@ -95,7 +118,7 @@ class ActionModule extends Component {
   };
 
   componentDidMount () {
-      this.toggleDeleteOption();
+      this.toggleOptions();
   }
 
     handleSub = value => {
@@ -123,6 +146,17 @@ class ActionModule extends Component {
                 <Divider />
               </div>
             )}
+              {this.state.editCategoryOption && (
+                  <div>
+                      <ListItem
+                          button
+                          onClick={() => this.setState({ editCategoryDialogOpen: true })}
+                      >
+                          <ListItemText primary='Endre kategori' />
+                      </ListItem>
+                      <Divider />
+                  </div>
+              )}
             <ListItem button dense>
               <ListItemText primary='Varsle meg ved endringer'
                             onClick={() => this.setState({ subscribeDialogOpen: true })}
@@ -172,6 +206,17 @@ class ActionModule extends Component {
           cancel={this.cancelDialog}
           statusNames={statusLabels}
         />
+          <EditCategoryDialog
+              open={this.state.editCategoryDialogOpen}
+              onClose={this.handleToggle('editCategoryDialogOpen')}
+              //submitEdit={}
+              categories={this.state.categories}
+              newCategory={this.state.newCategory}
+              cancel={this.cancelDialog}
+              statusNames={statusLabels}
+              newCategoryClick={(category) => this.newCategoryClick(category)}
+              updateCategory={() => this.updateCategory()}
+          />
         <StatusDialog
           open={this.state.statusDialogOpen}
           onClose={this.handleToggle('statusDialogOpen')}

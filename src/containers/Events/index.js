@@ -245,7 +245,7 @@ class Events extends Component {
 
                     <Fragment>
                         <Hidden implementation='js' smDown>
-                            <Sidebar open={this.state.detail !== null} event={this.state.detail}
+                            <Sidebar goTo={(page) => this.goTo(page)} open={this.state.detail !== null} event={this.state.detail}
                                      close={this.onItemClick(null)}/>
                         </Hidden>
                         {this.state.detail && <Hidden implementation='js' mdUp>
