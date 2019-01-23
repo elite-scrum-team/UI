@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, PureComponent } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -100,7 +100,7 @@ class MapWrapper extends PureComponent {
 
   state = {
     locations: [],
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if(prevProps.locations !== this.props.locations) {
@@ -112,7 +112,7 @@ class MapWrapper extends PureComponent {
     if(this.props.map && map) {
       this.props.map(map);
     }
-  }
+  };
 
   render() {
     return (
