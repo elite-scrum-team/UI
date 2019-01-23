@@ -38,6 +38,7 @@ class Dashboard extends Component {
     state = {
         isLoading: false,
         listIsLoading: false,
+        isSubscribed: false,
 
         id: null,
         title: null,
@@ -114,6 +115,7 @@ class Dashboard extends Component {
                         municipalityId: e.municipalityId,
                         contracts: e.contracts,
                         city: e.city,
+                        isSubscribed: e.isSubscribed,
                         street: e.street,
                         showWarning: true,
                     });
