@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/styles';
 
 // Material UI components
-import TextField from '@material-ui/core/TextField';
 import InputLabel from "@material-ui/core/InputLabel";
 
 // Icons
 
 // Project components
 import MessageDialog from '../miscellaneous/MessageDialog';
-import statusLabels from '../../utils/warningUtils';
 import EditCategoryList from './EditCategoryList';
 
 

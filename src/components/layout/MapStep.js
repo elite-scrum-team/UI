@@ -54,9 +54,9 @@ const MapStep = (props) => {
         props.mapMarkerCallback(data);
     };
 
-    const markMap = (location) => {
+    /*const markMap = (location) => {
         setSelectedLocation({lat: location.lat(), lng: location.lng()});
-    };
+    };*/
 
     return (
         <div className={classes.root}>

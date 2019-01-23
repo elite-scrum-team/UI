@@ -25,13 +25,6 @@ export default function reducer(state = initialState, action) {
                 }}
         }
 
-        case actions.SET_WARNING_ITEMS: {
-            return {
-                ...state,
-                warningItems: keyBy(action.payload, action.id),
-            }
-        }
-
         case actions.SET_WARNING_ITEM: {
             return {
                 ...state,

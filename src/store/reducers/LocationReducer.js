@@ -1,6 +1,6 @@
 import {actions} from '../actions/LocationAction';
 
-const initialState = {
+export const initialState = {
     municipalities: [],
 };
 

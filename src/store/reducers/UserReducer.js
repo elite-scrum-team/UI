@@ -1,6 +1,6 @@
 import {actions} from '../actions/UserAction';
 
-const initialState = {
+export const initialState = {
     id: null,
     email: null,
     isAdmin: false,
@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action) {
 
             return {
                 ...state,
-                ...action.payload,
+                ...(action.payload || {}),
                 roles: {
                     groups: groups
                 },
@@ -50,7 +50,6 @@ export default function reducer(state = initialState, action) {
                 isAdmin: false,
                 group: [],
                 roles: {
-                    municipalities: [],
                     groups: [],
                 },
                 selectedGroup: null,
