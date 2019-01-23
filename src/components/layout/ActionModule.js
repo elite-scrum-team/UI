@@ -3,10 +3,12 @@ import { withStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Service
 import AuthService from '../../api/services/AuthService';
 import * as UserAction from '../../store/actions/UserAction';
+import InterestGroupService from '../../api/services/InterestGroupService'
 
 // Material UI components
 import List from '@material-ui/core/List';
@@ -95,12 +97,19 @@ class ActionModule extends Component {
   };
 
   componentDidMount () {
+      this.setState({subscribed: this.props.isSubscribed});
       this.toggleDeleteOption();
   }
 
     handleSub = value => {
         this.setState({subscribeDialogOpen: false,
             subscribed: value});
+        console.log(this.props.warnId);
+        if(value){
+            InterestGroupService.subscribe(this.props.warnId);
+        }else{
+            InterestGroupService.unsubscribe(this.props.warnId);
+        }
     };
 
   render() {
@@ -195,7 +204,15 @@ class ActionModule extends Component {
   }
 }
 
-ActionModule.propTypes = {};
+ActionModule.propTypes = {
+    warnId: PropTypes.string,
+    updateStatus: PropTypes.func,
+    updateContract: PropTypes.func,
+    isSubscribed: PropTypes.bool,
+    contracts: PropTypes.array,
+    municipalityId: PropTypes.string,
+    status: PropTypes.number,
+};
 
 const mapStoreToProps = state => ({
   companies: UserAction.getUserData(state).roles.groups,

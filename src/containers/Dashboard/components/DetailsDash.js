@@ -117,8 +117,10 @@ const DetailsDash = (props) => {
                         <Paper elevation={1} className='p-30'>
                             <ActionModule
                                 className={classes.actionMod}
+                                warnId={props.state.id}
                                 updateStatus={props.changeStatus}
                                 updateContract={props.changeContract}
+                                isSubscribed={props.state.isSubscribed}
                                 contracts={props.state.contracts}
                                 municipalityId={props.state.municipalityId}
                                 status={props.state.status}

@@ -122,11 +122,12 @@ export default {
     // --- InterestGroup ---
 
     subscribeToAWarning: (warningId) =>{
-      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId),null, {})
+      console.log(warningId);
+      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId), {}, {}, true)
     },
 
     unSubscribeToAWarning: (warningId) =>{
-        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),null, {})
+        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),{}, {}, true)
     }
 
 };
