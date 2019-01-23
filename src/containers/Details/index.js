@@ -18,7 +18,6 @@ import WarningDetails from '../../components/layout/WarningDetails';
 import ImageGrid from '../../components/layout/ImageGrid';
 import ActionModule from '../../components/layout/ActionModule';
 import FeedModule from '../../components/layout/FeedModule';
-import DetailsDash from "../Dashboard/components/DetailsDash";
 
 
 const styles = {
