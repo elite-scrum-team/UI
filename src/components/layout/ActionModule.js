@@ -152,21 +152,20 @@ class ActionModule extends Component {
         <div>
           <Typography variant={'h6'}>Actions:</Typography>
           <List component='nav' className={classes.root} dense>
-            {this.state.deleteOption && (
-              <div>
+              <ListItem button dense>
+                  <ListItemIcon>
+                      {(!this.state.subscribed && <Notifications/>)
+                      ||
+                      (this.state.subscribed && <NotificationsOff/>)}
+                  </ListItemIcon>
+                  <ListItemText
+                      primary={(!this.state.subscribed && 'Varsle meg ved endringer') ||
+                      (this.state.subscribed && 'Skru av varsel')}
+                      onClick={() => this.setState({ subscribeDialogOpen: true })}
+                  />
+              </ListItem>
+              <Divider />
 
-                <ListItem
-                  button
-                  onClick={() => this.setState({ deleteDialogOpen: true })}>
-                    <ListItemIcon>
-                        <Delete/>
-                    </ListItemIcon>
-                    <ListItemText primary='Slett varsel' />
-
-                </ListItem>
-                <Divider />
-              </div>
-            )}
               {this.state.editCategoryOption && (
                   <div>
                       <ListItem
@@ -181,19 +180,7 @@ class ActionModule extends Component {
                       <Divider />
                   </div>
               )}
-            <ListItem button dense>
-                <ListItemIcon>
-                    {(!this.state.subscribed && <Notifications/>)
-                    ||
-                    (this.state.subscribed && <NotificationsOff/>)}
-                </ListItemIcon>
-              <ListItemText
-                    primary={(!this.state.subscribed && 'Varsle meg ved endringer') ||
-                    (this.state.subscribed && 'Skru av varsel')}
-                            onClick={() => this.setState({ subscribeDialogOpen: true })}
-              />
-            </ListItem>
-            <Divider />
+
 
             {(AuthService.isEmployee(this.props.municipalityId) && (
               <Fragment>
@@ -238,6 +225,21 @@ class ActionModule extends Component {
                   <Divider light />
                 </Fragment>
               )))}
+              {this.state.deleteOption && (
+                  <div>
+
+                      <ListItem
+                          button
+                          onClick={() => this.setState({ deleteDialogOpen: true })}>
+                          <ListItemIcon>
+                              <Delete/>
+                          </ListItemIcon>
+                          <ListItemText primary='Slett varsel' />
+
+                      </ListItem>
+                      <Divider />
+                  </div>
+              )}
           </List>
         </div>
         <DeleteDialog
