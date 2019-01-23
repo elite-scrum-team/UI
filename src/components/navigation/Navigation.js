@@ -115,7 +115,7 @@ class Navigation extends Component {
         showSidebar: false,
     };
 
-    activeURI = () => this.props.match.path;
+    activeURI = () => this.props.match.url;
 
     goTo = (page) => {
         this.props.history.push(page);
@@ -175,7 +175,7 @@ class Navigation extends Component {
                                     goTo={this.goTo}
                                     to={URLS.events}
                                     active={this.activeURI() === URLS.events}
-                                    label='Nyheter' />
+                                    label='Arrangmenter' />
                                 {AuthService.isEmployee() &&
                                     <Fragment>
                                         <URIButton
