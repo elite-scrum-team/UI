@@ -37,6 +37,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "jest": {},
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -44,7 +45,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.7.0",
     "faker": "^4.1.0",

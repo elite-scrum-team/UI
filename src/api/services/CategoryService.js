@@ -26,4 +26,20 @@ export default class CategoryService {
             return data;
         });
     }
+
+    static getCategory = (id, callback) => {
+        const category = CategoryAction.getCategoryById(id)(store.getState());
+
+        if(category) {
+            !callback || callback(false, category);
+            return Promise.resolve(category);
+        }
+
+        // Fetch from server
+        const response = API.getCategoryById(id).response();
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
 }
