@@ -48,7 +48,7 @@ class StatusTabs extends Component {
           )}
           onClick={() => this.props.onChange(0)}
         >
-          Nytt
+          Nye
         </Button>
         <Button
           size='small'
