@@ -56,7 +56,7 @@ export default function reducer(state = initialState, action) {
 
         case actions.UPDATE_WARNING: {
             const warnings = Object.assign([], state.warning);
-            const warning = warning[action.id];
+            const warning = warnings[action.id];
 
             if(!warning) {
                 return;

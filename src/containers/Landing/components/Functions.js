@@ -61,20 +61,6 @@ const styles = makeStyles({
         color: 'red',
     }
 });
-/* 
-const warningTheme = createMuiTheme({
-    palette: {
-      primary: {
-          main: '#b73a3a',
-          contrastText: 'white',
-      },
-
-    },
-    typography: {
-      useNextVariants: true,
-    },
-}); */
-
 
 const Functions = (props) => {
 
