@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 
+// Service imports
+import EventService from '../../api/services/EventService';
+
 // Material UI components
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -16,9 +19,9 @@ import DescriptionStep from "../../components/layout/InputStep";
 import MapStep from "../../components/layout/MapStep";
 import SinglePictureStep from "./components/SinglePictureStep";
 import DurationStep from "./components/DurationStep";
-import EventService from '../../api/services/EventService';
 import URLS from "../../URLS";
 import ConfirmDialog from "./components/ConfirmDialog";
+import ConfirmEditDialog from "./components/ConfirmEditDialog";
 
 const styles = {
     root: {},
@@ -73,22 +76,25 @@ const styles = {
 };
 
 let d = new Date();
-let date =  d.getFullYear() + '-' +
-            ('0' + d.getMonth()+1).slice(-2) + '-' +
-            ('0' + d.getDate()).slice(-2) + 'T' +
-            ('0' + d.getHours()).slice(-2) + ':' +
-            ('0' + d.getMinutes()).slice(-2);
+let date = d.getFullYear() + '-' +
+    ('0' + d.getMonth() + 1).slice(-2) + '-' +
+    ('0' + d.getDate()).slice(-2) + 'T' +
+    ('0' + d.getHours()).slice(-2) + ':' +
+    ('0' + d.getMinutes()).slice(-2);
 
 class CreateNews extends Component {
 
     state = {
         isLoading: false,
+        editExisting: false,
+
         currentLocation: {
             lat: 63.428322,
             lng: 10.392774,
         },
 
         // User created data
+        id: null,
         title: '',
         description: '',
         link: '',
@@ -101,19 +107,15 @@ class CreateNews extends Component {
 
     setTitle = (data) => {
         this.setState({title: data});
-        console.log(this.state.title);
-
+        console.log(this.state);
     };
 
     setDescription = (data) => {
         this.setState({description: data});
-        console.log(this.state.description);
     };
 
     setLink = (data) => {
         this.setState({link: data});
-        console.log(this.state.link);
-
     };
 
     mapClickCallback = (data) => {
@@ -152,12 +154,11 @@ class CreateNews extends Component {
     };
 
     setStartDate = (data) => {
-        this.setState({fromDate:  data});
-        console.log(this.state.fromDate);
+        this.setState({fromDate: data});
     };
+
     setEndDate = (data) => {
-        this.setState({toDate:  data});
-        console.log(this.state.toDate);
+        this.setState({toDate: data});
     };
 
     handleToggle = (name) => (event) => {
@@ -166,7 +167,7 @@ class CreateNews extends Component {
 
     createNews = () => {
         // Do nothing if already loading
-        if(this.state.isLoading) {
+        if (this.state.isLoading) {
             return;
         }
 
@@ -185,7 +186,7 @@ class CreateNews extends Component {
         console.log(news);
         EventService.createEvent(news, (isError, data) => {
             console.log(data);
-            if(isError) {
+            if (isError) {
                 this.setState({isError: true, isSending: false, confirmDialogOpen: false});
             } else {
                 this.props.history.push(URLS.events);
@@ -193,18 +194,35 @@ class CreateNews extends Component {
         });
     };
 
+
     getNewsId = () => this.props.match.params.id;
 
-    componentDidMount () {
-      //   console.log(this.getNewsId());
-      //   const id = this.getNewsId();
-      // if (this.getNewsId() === null){
-      //
-      // }
-      // console.log(this.state.image);
+    componentDidMount() {
+        console.log(this.getNewsId());
+        const id = this.getNewsId();
+        if (this.getNewsId()) {
+            console.log(id);
+            EventService.getEvent(id, async (isError, e) => {
+                if (isError === false) {
+                    await this.setState({
+                        id: e.id,
+                        title: e.title,
+                        description: e.description,
+                        link: e.link,
+                        location: {
+                            lat: e.location.coordinate.coordinates[0],
+                            lng: e.location.coordinate.coordinates[1]
+                        },
+                        fromDate: e.fromTime.slice(0, 16),
+                        toDate: e.toTime.slice(0, 16),
+                        image: [e.images[0].fileURL],
+                    });
+                    console.log(e);
+                    this.setState({isLoading: false, editExisting: true});
+                }
+            });
+        }
     };
-
-
 
     render() {
         const {classes} = this.props;
@@ -215,7 +233,7 @@ class CreateNews extends Component {
                         <div className={classes.content}>
                             <div>
                                 <Typography className={classes.title} gutterBottom variant='h2' component='h2'>
-                                    Meld inn nyhet
+                                    {!this.getNewsId() ? 'Meld inn arrangement' : 'Rediger arrangement'}
                                 </Typography>
                             </div>
                             <Divider/>
@@ -224,7 +242,8 @@ class CreateNews extends Component {
                                   description={'Velg en tittel for hendelsen.'}/>
                             <div className={classes.right}>
                                 <DescriptionStep
-                                    setInputCallback={(e) => this.setTitle(e)} stepName={'Tittel'} rows={1}
+                                    existingInput={this.state.title} setInputCallback={(e) => this.setTitle(e)}
+                                    stepName={'Tittel'} rows={1}
                                 />
                             </div>
                             <Divider/>
@@ -233,6 +252,7 @@ class CreateNews extends Component {
                                   description={'Beskriv hendelsen kort og godt.'}/>
                             <div className={classes.right}>
                                 <DescriptionStep
+                                    existingInput={this.state.description}
                                     setInputCallback={(e) => this.setDescription(e)} stepName={'Beskrivelse'} rows={3}
                                 />
                             </div>
@@ -242,7 +262,8 @@ class CreateNews extends Component {
                                   description={'Gi en link til hendelsens offisielle hjemmeside.'}/>
                             <div className={classes.right}>
                                 <DescriptionStep
-                                    setInputCallback={(e) => this.setLink(e)} stepName={'Link'} rows={1}
+                                    existingInput={this.state.link} setInputCallback={(e) => this.setLink(e)}
+                                    stepName={'Link'} rows={1}
                                 />
                             </div>
                             <Divider/>
@@ -251,7 +272,9 @@ class CreateNews extends Component {
                                   description={'Velg hvor hendelsen foregår.'}/>
                             <div className={classes.mapRight}>
                                 <MapStep
-                                    location={this.state.currentLocation}
+                                    defaultLocation={this.state.currentLocation}
+                                    selectedLocation={this.state.location}
+                                    location={this.state.location === null ? this.state.currentLocation : this.state.location}
                                     mapMarkerCallback={(e) => this.mapClickCallback(e)}
                                 />
                             </div>
@@ -262,6 +285,9 @@ class CreateNews extends Component {
                             <div className={classes.right}>
                                 <DurationStep
                                     currentDate={date}
+                                    startTime={this.state.fromDate}
+                                    endTime={this.state.toDate}
+                                    printShit={() => this.printShit()}
                                     setStartTimeCallback={(e) => this.setStartDate(e)}
                                     setEndTimeCallback={(e) => this.setEndDate(e)}
                                 />
@@ -285,13 +311,24 @@ class CreateNews extends Component {
                                         className={classes.registerButton}
                                         onClick={this.handleToggle('confirmDialogOpen')}
                                         disabled={!this.state.title || !this.state.description || !this.state.location}>
-                                    Send inn
+                                    {!this.state.editExisting ? 'Send inn' : 'Rediger arrangement'}
                                 </Button>
-                                <ConfirmDialog
-                                    open={this.state.confirmDialogOpen}
-                                    onSubmit={() => this.createNews()}
-                                    isLoading={this.state.isSending}
-                                    closeConfirmDialogCallback={this.handleToggle('confirmDialogOpen')}/>
+
+                                {!this.state.editExisting ?
+                                    <ConfirmDialog
+                                        open={this.state.confirmDialogOpen}
+                                        onSubmit={() => this.createNews()}
+                                        isLoading={this.state.isSending}
+                                        closeConfirmDialogCallback={this.handleToggle('confirmDialogOpen')}/>
+                                    :
+                                    <ConfirmEditDialog
+                                        open={this.state.confirmDialogOpen}
+                                        onSubmit={() => this.editNews()}
+                                        isLoading={this.state.isSending}
+                                        closeConfirmDialogCallback={this.handleToggle('confirmDialogOpen')}/>
+                                }
+
+
                             </div>
                         </div>
                     </Paper>
@@ -300,7 +337,6 @@ class CreateNews extends Component {
         )
     }
 }
-
 
 
 export default withStyles(styles)(CreateNews);

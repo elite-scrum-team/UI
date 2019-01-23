@@ -54,6 +54,7 @@ class Details extends Component {
     isLoading: false,
     contracts: null,
     company: null,
+    isSubscribed: false,
 
     id: null,
     title: null,
@@ -98,6 +99,7 @@ class Details extends Component {
           contracts: e.contracts,
           city: e.city,
           street: e.street,
+          isSubscribed: e.isSubscribed
         });
         this.setState({ isLoading: false });
 
@@ -190,6 +192,7 @@ class Details extends Component {
                     userId={this.state.userId}
                     warnId={this.state.id}
                     status={this.state.status}
+                    isSubscribed={this.state.isSubscribed}
                     municipalityId={this.state.municipalityId}
                   />
                 </Paper>
