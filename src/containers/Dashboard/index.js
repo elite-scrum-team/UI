@@ -16,6 +16,7 @@ import WarningService from "../../api/services/WarningService";
 import Navigation from '../../components/navigation/Navigation';
 import DetailsDash from './components/DetailsDash';
 import SearchContent from "./components/SearchContent";
+import URLS from "../../URLS";
 
 const styles = {
     root: {
@@ -56,6 +57,7 @@ class Dashboard extends Component {
         statusChange: 1,
         search: '',
         warningItems: [],
+        currentSection: NEW_SECTION,
 
         items: [],
 
@@ -92,8 +94,9 @@ class Dashboard extends Component {
 
     mountWarning = (warningId) => {
         const id = warningId || this.getWarningId();
-        if(id == null) {
-            this.setState({showWarning: false })
+        if(warningId === null) {
+            this.setState({showWarning: false });
+            this.goTo(URLS.dashboard);
         }
         else {
 
@@ -130,6 +133,11 @@ class Dashboard extends Component {
         }
     };
 
+    changeCategory = (category) => {
+        this.setState({title: category});
+        this.onSectionChange(this.state.currentSection);
+    };
+
     getWarnings = (filters) => {
         this.setState({listIsLoading: true});
         WarningService.getWarnings(null, filters, (isError, data) => {
@@ -159,10 +167,14 @@ class Dashboard extends Component {
 
         if(value === NEW_SECTION) {
             this.getWarnings({...extraFilter, onlyStatus: [0]});
+            this.setState({currentSection: NEW_SECTION});
         } else if(value === ACTIVE_SECTION) {
             this.getWarnings({...extraFilter, onlyStatus: [1,2]});
+            this.setState({currentSection: ACTIVE_SECTION});
         } else if(value === DONE_SECTION) {
             this.getWarnings({...extraFilter, onlyStatus: [3,4]});
+            this.setState({currentSection: DONE_SECTION});
+
         }
     };
 
@@ -263,6 +275,7 @@ class Dashboard extends Component {
                                     contracts={this.state.contracts}
                                     onCommentCreated={this.onCommentCreated}
                                     warningId={this.state.id}
+                                    changeCategory={(category) => this.changeCategory(category)}
                                 />
                             }
                         </div>

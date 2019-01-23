@@ -18,6 +18,7 @@ import WarningDetails from '../../components/layout/WarningDetails';
 import ImageGrid from '../../components/layout/ImageGrid';
 import ActionModule from '../../components/layout/ActionModule';
 import FeedModule from '../../components/layout/FeedModule';
+import DetailsDash from "../Dashboard/components/DetailsDash";
 
 
 const styles = {
@@ -112,6 +113,10 @@ class Details extends Component {
     });
   }
 
+  changeCategory = (category) => {
+    this.setState({title: category});
+  };
+
   changeStatus = newStatus => {
     console.log(this.state);
     const status = newStatus.status;
@@ -191,6 +196,7 @@ class Details extends Component {
                     warnId={this.state.id}
                     status={this.state.status}
                     municipalityId={this.state.municipalityId}
+                    changeCategory={(category) => this.changeCategory(category)}
                   />
                 </Paper>
               </div>

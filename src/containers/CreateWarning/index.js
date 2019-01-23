@@ -134,6 +134,13 @@ class CreateWarning extends Component {
                 console.log("Error fetching categories");
             } else {
                 this.setState({categories: data});
+                for (let i = 0; i < this.state.categories.length; i++){
+                    console.log(this.state.categories[i]);
+                    if (this.state.categories[i].name === 'Annet'){
+                        console.log('greting');
+                        this.setState({category: this.state.categories[i]});
+                    }
+                }
             }
             this.setState({isLoading: false});
         });
@@ -156,7 +163,7 @@ class CreateWarning extends Component {
             location: this.state.location,
             categoryId: this.state.category.id,
             images: this.state.imageFiles,
-        }
+        };
 
         this.setState({isSending: true});
         WarningService.createWarning(warning, (isError, data) => {
@@ -167,11 +174,11 @@ class CreateWarning extends Component {
                 this.props.history.push(URLS.details.concat(data.id));
             }
         });
-    }
+    };
 
     handleToggle = (name) => (event) => {
         this.setState({[name]: !this.state[name]});
-    }
+    };
 
     handleClickDelete = index => {
         // Check if index is a valid index
@@ -203,7 +210,7 @@ class CreateWarning extends Component {
             };
 
             reader.readAsDataURL(file);
-        }
+        };
 
         // Read images
         if (event.target.files && event.target.files[0]) {
@@ -212,24 +219,24 @@ class CreateWarning extends Component {
 
         console.log(this.state.images);
         console.log(this.state.imageFiles);
-    }
+    };
 
     setCategory = (data) => {
         this.setState({category: data})
-    }
+    };
 
     mapClickCallback = (data) => {
         this.setState({location: data});
-    }
+    };
 
     setDescription = (data) => {
         this.setState({description: data});
         console.log(this.state.description);
-    }
+    };
 
     canSendWarning = () => {
         return this.state.category !== null && this.state.location !== null && this.state.description.length > 2;
-    }
+    };
 
     render() {
         const {classes} = this.props;
@@ -246,25 +253,7 @@ class CreateWarning extends Component {
                             </div>
                             <Divider/>
 
-                            <Step number={1} step={'Kategori'} description={'Velg den kategorien som passer best.'}/>
-                            <div className={classes.right}>
-                                <CategoryStep
-                                    categories={this.state.categories}
-                                    categoryCallback={(e) => this.setCategory(e)}
-                                />
-                            </div>
-                            <Divider/>
-
-                            <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
-                            <div className={classes.fillSection}>
-                                <MapStep
-                                    location={this.state.currentLocation}
-                                    mapMarkerCallback={(e) => this.mapClickCallback(e)}
-                                />
-                            </div>
-                            <Divider/>
-
-                            <Step number={3} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
+                            <Step number={1} step={'Beskrivelse'} description={'Lag en kort beskrivelse for problemet.'}/>
                             <div className={classes.right}>
                                 <DescriptionStep
                                     setInputCallback={(e) => this.setDescription(e)} stepName={'Beskrivelse'} rows={3}
@@ -272,7 +261,18 @@ class CreateWarning extends Component {
                             </div>
                             <Divider/>
 
-                            <Step number={4} step={'Bilde'}
+
+
+                            <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
+                            <div className={classes.fillSection}>
+                                <MapStep
+                                    selectedLocation={this.state.currentLocation}
+                                    mapMarkerCallback={(e) => this.mapClickCallback(e)}
+                                />
+                            </div>
+                            <Divider/>
+
+                            <Step number={3} step={'Bilde'}
                                 description={'Last opp eventuelle bilder som beskriver problemet.'}/>
                             <div className={classes.fillSection}>
                                 <PictureStep
@@ -281,6 +281,16 @@ class CreateWarning extends Component {
                                     handleClickDeleteCallback={(index) => this.handleClickDelete(index)}
                                 />
 
+                            </div>
+                            <Divider/>
+
+                            <Step number={4} step={'Kategori'} description={'Velg den kategorien som passer best.'}/>
+                            <div className={classes.right}>
+                                <CategoryStep
+                                    category={this.state.category}
+                                    categories={this.state.categories}
+                                    categoryCallback={(e) => this.setCategory(e)}
+                                />
                             </div>
                             <Divider/>
 

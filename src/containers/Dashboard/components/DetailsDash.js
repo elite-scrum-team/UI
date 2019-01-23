@@ -87,9 +87,7 @@ const DetailsDash = (props) => {
         )
     };
 
-    const goTo = page => {
-        console.log(props);
-        //props.history.push(page);
+    const goTo = (page) => {
         props.mountWarningCallback(null);
     };
 
@@ -124,6 +122,7 @@ const DetailsDash = (props) => {
                                 contracts={props.state.contracts}
                                 municipalityId={props.state.municipalityId}
                                 status={props.state.status}
+                                changeCategory={(category) => props.changeCategory(category)}
                             />
                         </Paper>
                     </div>

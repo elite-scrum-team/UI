@@ -1,8 +1,10 @@
 * {
   --done: rgb(119, 190, 119);
   --rejected: rgb(247, 114, 114);
-  --progress: rgb(248, 188, 76);
+  --progress: rgb(77, 166, 255);
+  --acknowledged: rgb(248, 188, 76);
   --inactive: rgb(175, 175, 175);
+
 
   font-family: 'Roboto', sans-serif;
 }

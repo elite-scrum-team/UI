@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import { useState } from 'react';
+import {makeStyles} from '@material-ui/styles';
+import {useState} from 'react';
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -16,8 +16,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 // Project components
 
 const styles = makeStyles({
-    root: {
-
+    root: {},
+    list: {
+        paddingBottom: 20,
     }
 });
 
@@ -25,30 +26,27 @@ const EditCategoryList = (props) => {
     // State
     const classes = styles();
     let categories = props.categories || [];
-    if(!(categories instanceof Array)) {
+    if (!(categories instanceof Array)) {
         categories = [];
     }
 
     return (
         <div>
-            <Card className={classes.card}>
-                <List>
-                    {categories.map(value =>
-                        <CategoryItem
-                            key={value.id}
-                            value={value}
-                            newCategory={props.newCategory}
-                            newCategoryClick={props.newCategoryClick}
-                        />
-                    )}
-                </List>
-            </Card>
+            <List className={classes.list}>
+                {categories.map(value =>
+                    <CategoryItem
+                        key={value.id}
+                        value={value}
+                        newCategory={props.newCategory}
+                        newCategoryClick={props.newCategoryClick}
+                    />
+                )}
+            </List>
         </div>
     )
 };
 
 export default (EditCategoryList);
-
 
 
 const CategoryItem = (props) => {

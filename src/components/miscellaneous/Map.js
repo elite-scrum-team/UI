@@ -124,7 +124,8 @@ class MapWrapper extends PureComponent {
         zoom={this.props.zoom}
         clickable={this.props.clickable}
         circlePosition={this.props.circlePosition}
-        defaultSelectedLocation={props.defaultSelectedLocation}/>
+        //defaultSelectedLocation={props.defaultSelectedLocation}
+      />
 
   )
   }
