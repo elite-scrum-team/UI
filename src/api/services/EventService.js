@@ -54,7 +54,6 @@ export default class eventService {
 
             if(!(data instanceof Array)) {
                 data = [];
-
             }
 
             // If orderby is provided, sort the data
@@ -63,7 +62,6 @@ export default class eventService {
                     data = data.sort((a, b) => (a[key] === b[key])? 0 : a[key] ? 1 : -1)
                 }
             }
-
 
             data = data.map(EventAction.createEventPost);
 
@@ -81,18 +79,12 @@ export default class eventService {
             if(!(images instanceof Array)){
                 Lodash.toArray(images);
             }
-            images.map(async (image) => {
-                await API.addEventImage(item.id, image).response(true)
-                    .then((imageData) =>{
-                        /*if(data.image instanceof Array && imageData){
-                            data.image.push(imageData.image)
-                        }*/
-                    })
-            })
+
         }
-        !callback || callback(response.isError, data);
-        return data;
+        !callback || callback(response.isError, item);
+        return Promise.resolve(item);
     };
+
 
     //data object is going to contain details and possible images.
     static createEvent = (item ,callback) => {
