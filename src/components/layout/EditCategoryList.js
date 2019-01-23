@@ -14,8 +14,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 // Project components
 
 const styles = makeStyles({
-    root: {
-
+    root: {},
+    list: {
+        paddingBottom: 20,
     }
 });
 
@@ -23,24 +24,22 @@ const EditCategoryList = (props) => {
     // State
     const classes = styles();
     let categories = props.categories || [];
-    if(!(categories instanceof Array)) {
+    if (!(categories instanceof Array)) {
         categories = [];
     }
 
     return (
         <div>
-            <Card className={classes.card}>
-                <List>
-                    {categories.map(value =>
-                        <CategoryItem
-                            key={value.id}
-                            value={value}
-                            newCategory={props.newCategory}
-                            newCategoryClick={props.newCategoryClick}
-                        />
-                    )}
-                </List>
-            </Card>
+            <List className={classes.list}>
+                {categories.map(value =>
+                    <CategoryItem
+                        key={value.id}
+                        value={value}
+                        newCategory={props.newCategory}
+                        newCategoryClick={props.newCategoryClick}
+                    />
+                )}
+            </List>
         </div>
     )
 };
@@ -55,7 +54,7 @@ const CategoryItem = (props) => {
     const setCategoryClick = (data) => {
         props.newCategoryClick(data);
         console.log(props.newCategory);
-    }
+    };
 
     return (
         <div>

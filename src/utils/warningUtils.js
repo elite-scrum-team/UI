@@ -5,7 +5,7 @@ export const statusColorStyles = [
         backgroundColor: 'var(--inactive)',
     },
     {
-        backgroundColor: 'var(--inactive)',
+        backgroundColor: 'var(--acknowledged)',
     },
     {
         backgroundColor: 'var(--progress)',
@@ -23,7 +23,7 @@ export const statusBGColorStyles = [
         border: '2px solid var(--inactive)',
     },
     {
-        border: '2px solid var(--inactive)',
+        border: '2px solid var(--acknowledged)',
     },
     {
         border: '2px solid var(--progress)',
@@ -41,7 +41,7 @@ export const statusTextColorStyles = [
         color: 'var(--inactive)',
     },
     {
-        color: 'var(--inactive)',
+        color: 'var(--acknowledged)',
     },
     {
         color: 'var(--progress)',
