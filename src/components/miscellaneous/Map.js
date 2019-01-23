@@ -1,4 +1,4 @@
-import React, { useState, PureComponent } from 'react';
+import React, { useState, useCallback, useEffect, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -27,13 +27,24 @@ const Map = compose(
 )(React.memo((props) => {
 
   // State
-  const [selectedLocation, setSelectedLocation] = useState({lat: 0, lng: 0});
+  const [selectedLocation, setSelectedLocation] = useState(props.defaultSelectedLocation || {lat: 0, lng: 0});
+  const [defaultLocation, setDefaultLocation] = useState(props.defaultCenter);
+
+  useEffect(() => {
+      setSelectedLocation(props.defaultSelectedLocation || {lat: 0, lng: 0});
+  }, [props.defaultSelectedLocation]);
+
+    useEffect(() => {
+        setDefaultLocation(props.defaultCenter || {lat: 0, lng: 0});
+        console.log(props.defaultCenter);
+    }, [props.defaultCenter]);
+
 
   return (
     <GoogleMap
       {...props}
       defaultZoom={props.zoom}
-      defaultCenter={{ lat: props.defaultCenter.lat, lng: props.defaultCenter.lng }}
+      center={ defaultLocation }
       defaultOptions = {{
           streetViewControl: false,
           scaleControl: false,
@@ -112,8 +123,10 @@ class MapWrapper extends PureComponent {
         locations={this.state.locations}
         zoom={this.props.zoom}
         clickable={this.props.clickable}
-        circlePosition={this.props.circlePosition}/>
-    )
+        circlePosition={this.props.circlePosition}
+        defaultSelectedLocation={props.defaultSelectedLocation}/>
+
+  )
   }
 }
 
@@ -124,6 +137,7 @@ MapWrapper.propTypes = {
   zoom: PropTypes.number,
   clickable: PropTypes.func, // Makes it possible to click on the map, moving a marker, and adding a callback
   circlePosition: PropTypes.object,
+    defaultSelectedLocation: PropTypes.object,
 }
 
 MapWrapper.defaultProps = {
