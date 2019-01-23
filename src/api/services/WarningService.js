@@ -64,12 +64,12 @@ export default class WarningService {
     //data object is going to contain details and possible images.
     static createWarning = (item ,callback) => {
         // Split images and other data
-        const images = item.images; 
+        const images = item.images;
         delete item.images;
 
         // Create warning
         const response = API.createWarning(item).response();
-        return response.then(async (data) => {  
+        return response.then(async (data) => {
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
                 for(var index in images) {
@@ -82,7 +82,7 @@ export default class WarningService {
                         })
                 }
             }
-            
+
             !callback || callback(response.isError, data);
             return data;
         });
@@ -97,7 +97,7 @@ export default class WarningService {
             !callback || callback(false, items);
             return Promise.resolve(items);
         }
-        
+
         // Get from database
         const response = API.getWarningContent(id).response();
         return response.then((data) => {
@@ -120,6 +120,7 @@ export default class WarningService {
         const statusObject = {warningId, type, description: description};
 
         const response = API.addStatus(statusObject).response();
+
         return response.then((data) => {
             !callback || callback(response.isError, data);
             return data;

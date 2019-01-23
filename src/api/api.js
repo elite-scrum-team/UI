@@ -118,6 +118,9 @@ export default {
   getEventContent: id => {
     return new Fetch(METHODS.get, '/event/content/'.concat(id));
   },
+    updateImageEvent: (id,image) =>{
+      return new Fetch(METHODS.put, '/event/image', {eventId: id, image: image}, {}, true)
+    },
 
     // --- InterestGroup ---
 
