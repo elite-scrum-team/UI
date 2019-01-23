@@ -1,7 +1,6 @@
 import API from "../api";
 import * as EventAction from '../../store/actions/EventAction';
-import store from '../../store/store'
-import Lodash from 'lodash'
+import store from '../../store/store';
 
 // and all the methods will return a promise
 export default class eventService {
