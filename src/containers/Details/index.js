@@ -188,6 +188,7 @@ class Details extends Component {
                     contracts={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
+                    warnId={this.state.id}
                     status={this.state.status}
                     municipalityId={this.state.municipalityId}
                   />

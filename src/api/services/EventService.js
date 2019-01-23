@@ -84,14 +84,14 @@ export default class eventService {
             images.map(async (image) => {
                 await API.addEventImage(item.id, image).response(true)
                     .then((imageData) =>{
-                        if(data.image instanceof Array && imageData){
+                        /*if(data.image instanceof Array && imageData){
                             data.image.push(imageData.image)
-                        }
+                        }*/
                     })
             })
         }
-
-
+        !callback || callback(response.isError, data);
+        return data;
     };
 
     //data object is going to contain details and possible images.

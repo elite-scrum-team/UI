@@ -16,6 +16,7 @@ import AuthService from "../../api/services/AuthService";
 // Project Components
 import Profile from "./components/Profile";
 import Navigation from "../../components/navigation/Navigation";
+import MessageDialog from "../../components/miscellaneous/MessageDialog";
 
 const styles = theme => ({
     top: {
@@ -63,6 +64,7 @@ class MyProfile extends Component {
         isLoading: false,
         errorMessage: '',
         userData: {},
+        showChangedPasswordMessage: false,
     };
 
     componentDidMount() {
@@ -95,9 +97,11 @@ class MyProfile extends Component {
         AuthService.changePassword(password, (isError, data) => {
             if (isError) {
                 this.setState({
-                    errorMessage: "unauthorized"
+                    errorMessage: "Something went wrong"
                 });
                 console.log(data);
+            } else {
+                this.setState({showChangedPasswordMessage: true})
             }
             this.setState({isLoading: false});
         });
@@ -129,6 +133,12 @@ class MyProfile extends Component {
                         />
                     </Paper>
                 </main>
+                <MessageDialog
+                    open={this.state.showChangedPasswordMessage}
+                    onClose={() => this.setState({showChangedPasswordMessage: false})}
+                    title='Passord forandret'
+                    content='Ditt passord er nå forandret, neste gang du logger inn må du bruke ditt nye passord.'
+                />
             </Navigation>
         );
     }
