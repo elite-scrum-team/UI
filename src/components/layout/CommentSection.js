@@ -40,6 +40,7 @@ const styles = makeStyles({
     right: 8
   },
   image: {
+    padding: 10,
     width: 300,
     height: 'auto',
     objectFit: 'cover',
