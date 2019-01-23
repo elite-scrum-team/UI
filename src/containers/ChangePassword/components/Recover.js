@@ -13,6 +13,9 @@ import Button from '@material-ui/core/Button';
 // Icons
 import SendIcon from '@material-ui/icons/Send';
 
+// Service import
+import AuthService from '../../../api/services/AuthService'
+
 // Project components
 
 const styles = makeStyles({
@@ -40,14 +43,22 @@ const styles = makeStyles({
      }
 });
 
-const handleEvent = (email) =>{
+const handleEvent = (email, errorMessage, setErrorMessage) =>{
     console.log(email);
     // ADD LOGIC HERE!
+    if (!email) {
+        setErrorMessage('Ingen email');
+        return;
+    }
+
+    // Reset password
+    AuthService.resetPassword(email)
 };
 
 const Recover = props => {
     // State
     const [value, setValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     // Styling
     const classes = styles();
@@ -75,7 +86,7 @@ const Recover = props => {
                 />
 
                 <div className={classNames(classes.container, classes.paddings)}>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={() => handleEvent(value)}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={() => handleEvent(value, errorMessage, setErrorMessage)}>
                         Send
                         <SendIcon/>
                     </Button>

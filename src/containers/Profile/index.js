@@ -88,7 +88,6 @@ class MyProfile extends Component {
     }
 
     change = (password, confirm, callback) => event => {
-        console.log("HELLO :D");
         event.preventDefault();
 
         // Check if password and confirmed password matches
