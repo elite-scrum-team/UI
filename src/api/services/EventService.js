@@ -90,8 +90,8 @@ export default class eventService {
                     })
             })
         }
-
-
+        !callback || callback(response.isError, data);
+        return data;
     };
 
     //data object is going to contain details and possible images.
