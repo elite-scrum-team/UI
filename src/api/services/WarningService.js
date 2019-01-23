@@ -92,7 +92,7 @@ export default class WarningService {
 
     static getWarningItems = (id, callback) => {
         // Check if items are in store
-        let items = WarningAction.getWarningItems(id)(store.getState());
+        let items = null; //WarningAction.getWarningItems(id)(store.getState());
 
         // If they already exist...return
         if(items) {
