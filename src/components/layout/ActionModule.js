@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/styles';
-import { Typography } from '@material-ui/core';
+import {ListItemIcon, Typography} from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -17,6 +17,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
 // Icons
+import Delete from '@material-ui/icons/Delete';
+import Notifications from '@material-ui/icons/Notifications';
+import NotificationsOff from '@material-ui/icons/NotificationsOff';
+import Assignment from '@material-ui/icons/Assignment';
+import Sms from '@material-ui/icons/Sms';
+import Edit from '@material-ui/icons/Edit';
+
+
+
 
 // Project components
 import DeleteDialog from './DeleteDialog';
@@ -148,11 +157,15 @@ class ActionModule extends Component {
           <List component='nav' className={classes.root} dense>
             {this.state.deleteOption && (
               <div>
+
                 <ListItem
                   button
-                  onClick={() => this.setState({ deleteDialogOpen: true })}
-                >
-                  <ListItemText primary='Slett varsel' />
+                  onClick={() => this.setState({ deleteDialogOpen: true })}>
+                    <ListItemIcon>
+                        <Delete/>
+                    </ListItemIcon>
+                    <ListItemText primary='Slett varsel' />
+
                 </ListItem>
                 <Divider />
               </div>
@@ -163,12 +176,20 @@ class ActionModule extends Component {
                           button
                           onClick={() => this.setState({ editCategoryDialogOpen: true })}
                       >
+                          <ListItemIcon>
+                              <Edit/>
+                          </ListItemIcon>
                           <ListItemText primary='Endre kategori' />
                       </ListItem>
                       <Divider />
                   </div>
               )}
             <ListItem button dense>
+                <ListItemIcon>
+                    {(!this.state.subscribed && <Notifications/>)
+                    ||
+                    (this.state.subscribed && <NotificationsOff/>)}
+                </ListItemIcon>
               <ListItemText
                     primary={(!this.state.subscribed && 'Varsle meg ved endringer') ||
                     (this.state.subscribed && 'Skru av varsel')}
@@ -179,12 +200,16 @@ class ActionModule extends Component {
 
             {(AuthService.isEmployee(this.props.municipalityId) && (
               <Fragment>
+
                 <ListItem
                   button
                   dense
                   divider
                   onClick={() => this.setState({ contractDialogOpen: true })}
                 >
+                    <ListItemIcon>
+                        <Assignment/>
+                    </ListItemIcon>
                   <ListItemText primary='Registrer kontrakt' />
                 </ListItem>
                 <Divider light />
@@ -193,6 +218,9 @@ class ActionModule extends Component {
                   dense
                   onClick={() => this.setState({ statusDialogOpen: true })}
                 >
+                    <ListItemIcon>
+                        <Sms/>
+                    </ListItemIcon>
                   <ListItemText primary='Ny status' />
                 </ListItem>
                 <Divider light />
@@ -205,6 +233,9 @@ class ActionModule extends Component {
                     dense
                     onClick={() => this.setState({ statusDialogOpen: true })}
                   >
+                      <ListItemIcon>
+                          <Sms/>
+                      </ListItemIcon>
                     <ListItemText primary='Ny status' />
                   </ListItem>
                   <Divider light />
