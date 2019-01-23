@@ -1,7 +1,6 @@
 import API from "../api";
 import * as EventAction from '../../store/actions/EventAction';
-import store from '../../store/store'
-import Lodash from 'lodash'
+import store from '../../store/store';
 
 // and all the methods will return a promise
 export default class eventService {
@@ -71,18 +70,29 @@ export default class eventService {
     };
 
     static updateEvent = (item ,callback) => {
-        const response = API.updateEvent(item.id, item);
-        if(item.images && !response.isError ){
-            const images = item.image;
-            delete item.image;
+        // Split images and other data
+        const images = item.image;
+        delete item.image;
 
-            if(!(images instanceof Array)){
-                Lodash.toArray(images);
+        // Update event
+        const response = API.updateEvent(item.id, item).response();
+        return response.then(async (data) => {
+            // Add images if no error
+            if(response.isError === false && images instanceof Array) {
+                for(let index in images) {
+                    // Upload images to server
+                    await API.updateImageEvent(data.id, images[index]).response(true)
+                        .then((imageData) => {
+                            if(data.image instanceof Array && imageData) {
+                                data.image.push(imageData.image);
+                            }
+                        })
+                }
             }
 
-        }
-        !callback || callback(response.isError, item);
-        return Promise.resolve(item);
+            !callback || callback(response.isError, data);
+            return data;
+        });
     };
 
 

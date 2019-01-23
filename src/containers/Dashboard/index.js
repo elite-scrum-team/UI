@@ -198,6 +198,16 @@ class Dashboard extends Component {
 
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
         .then((data) => {
+            // Remove item from list
+            if(status !== this.state.status) {
+                let items = Object.assign([], this.state.items);
+                const itemIndex = items.findIndex(e => e.id === this.getWarningId());
+                if(itemIndex !== -1) {
+                    items.splice(itemIndex, 1);
+                    this.setState({items: items});
+                }
+            }
+
             WarningService.getWarningItems(this.getWarningId())
             .then((itemData) => {
                 this.setState({warningItems: itemData, status: status});

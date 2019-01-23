@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect, PureComponent } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
 // Icons
 import WarningMarkerIcon from '../../assets/img/warningMarker.png';
-// import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
+import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
@@ -83,7 +83,7 @@ const Map = compose(
           position={location.location}
           clickable={location.onClick !== undefined}
           onClick={location.onClick ? () => location.onClick(location) : null}
-         // icon={WarningMarkerCircleIcon}
+          icon={WarningMarkerCircleIcon}
          />
         )
         })}
@@ -100,7 +100,7 @@ class MapWrapper extends PureComponent {
 
   state = {
     locations: [],
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if(prevProps.locations !== this.props.locations) {
@@ -112,7 +112,7 @@ class MapWrapper extends PureComponent {
     if(this.props.map && map) {
       this.props.map(map);
     }
-  }
+  };
 
   render() {
     return (
@@ -139,13 +139,13 @@ MapWrapper.propTypes = {
   clickable: PropTypes.func, // Makes it possible to click on the map, moving a marker, and adding a callback
   circlePosition: PropTypes.object,
     defaultSelectedLocation: PropTypes.object,
-}
+};
 
 MapWrapper.defaultProps = {
   locations: [],
   defaultCenter: {lat: 63.429748, lng: 10.393916},
   showMarkers: true,
   zoom: 8,
-}
+};
 
 export default (MapWrapper);

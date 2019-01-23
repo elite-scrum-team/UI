@@ -5,6 +5,10 @@
   --acknowledged: rgb(248, 188, 76);
   --inactive: rgb(175, 175, 175);
 
+  /*  PASSWORD VALIDATOR COLORS */
+  --pv-green: #78BA72;
+  --pv-red:#FF7E7E;
+  --pv-yellow: #FFE17E;
 
   font-family: 'Roboto', sans-serif;
 }

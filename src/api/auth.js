@@ -13,7 +13,7 @@ export default {
     },
 
     resetPassword: (email) => {
-        return new Fetch(METHODS.post, 'auth/forgot', { email: email}, null, false);
+        return new Fetch(METHODS.post, '/auth/forgot', { email: email}, null, false);
     },
 
     token: (email, password) => {

@@ -9,13 +9,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 // Icons
+import DeleteIcon from '@material-ui/icons/Delete';
 
 // Project components
 import FileSelector from './FileSelector';
-import AuthService from "../../api/services/AuthService";
 
 const styles = {
   root: {
@@ -54,7 +53,7 @@ class CommentBox extends Component {
     image: null,
     comment: '',
 
-      userData: null,
+    userData: null
   };
 
   handleChange = name => event => {

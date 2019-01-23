@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/styles';
-import {useState} from 'react';
+import React from 'react';
+import { makeStyles } from '@material-ui/styles';
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -47,6 +45,7 @@ const EditCategoryList = (props) => {
 };
 
 export default (EditCategoryList);
+
 
 
 const CategoryItem = (props) => {
