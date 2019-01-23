@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, PureComponent } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -100,7 +100,7 @@ class MapWrapper extends PureComponent {
 
   state = {
     locations: [],
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if(prevProps.locations !== this.props.locations) {
@@ -112,7 +112,7 @@ class MapWrapper extends PureComponent {
     if(this.props.map && map) {
       this.props.map(map);
     }
-  }
+  };
 
   render() {
     return (
@@ -124,7 +124,8 @@ class MapWrapper extends PureComponent {
         zoom={this.props.zoom}
         clickable={this.props.clickable}
         circlePosition={this.props.circlePosition}
-        defaultSelectedLocation={props.defaultSelectedLocation}/>
+        //defaultSelectedLocation={props.defaultSelectedLocation}
+      />
 
   )
   }
@@ -138,13 +139,13 @@ MapWrapper.propTypes = {
   clickable: PropTypes.func, // Makes it possible to click on the map, moving a marker, and adding a callback
   circlePosition: PropTypes.object,
     defaultSelectedLocation: PropTypes.object,
-}
+};
 
 MapWrapper.defaultProps = {
   locations: [],
   defaultCenter: {lat: 63.429748, lng: 10.393916},
   showMarkers: true,
   zoom: 8,
-}
+};
 
 export default (MapWrapper);
