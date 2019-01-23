@@ -35,7 +35,10 @@ import URLS from "../../URLS";
 import CategoryService from "../../api/services/CategoryService";
 
 const styles = {
-  root: {}
+  root: {
+    paddingLeft: 8,
+    paddingRight: 8,
+  }
 };
 
 class ActionModule extends Component {
@@ -188,7 +191,6 @@ class ActionModule extends Component {
                 <ListItem
                   button
                   dense
-                  divider
                   onClick={() => this.setState({ contractDialogOpen: true })}
                 >
                     <ListItemIcon>

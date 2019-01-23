@@ -182,7 +182,7 @@ class Details extends Component {
             </Paper>
             <div className={classes.content}>
               <div>
-                <Paper elevation={1} className='p-20'>
+                <Paper elevation={1} className='p-20 pr-10 pl-10'>
                   <ActionModule
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
