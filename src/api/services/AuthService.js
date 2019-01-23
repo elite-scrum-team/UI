@@ -119,4 +119,26 @@ export default class AuthService {
         TOKEN.remove();
         UserAction.clearUserData()(store.dispatch);
     }
+
+    static changePassword = (password, callback) => {
+        if (!AuthService.isAuthenticated()) {
+            !callback || callback(true, null);
+            return Promise.resolve(null);
+        }
+        const response = AUTH.changePassword(password).response();
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+        });
+    };
+
+    static resetPassword = (email, callback) => {
+        if (!email) {
+            !callback || callback(true, null);
+            return Promise.resolve(null);
+        }
+        const response = AUTH.resetPassword(email).response();
+        return response.then((data) => {
+            !callback || callback(response.isError, data);
+        });
+    };
 }

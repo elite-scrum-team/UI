@@ -29,11 +29,11 @@ import Sidebar from './Sidebar';
 
 const styles = {
     appbar: {
-        height: 48,
+
         zIndex: 1299,
     },
     main: {
-        marginTop: 48,
+        marginTop: 50,
     },
     noShadow: {
         boxShadow: 'none',
@@ -115,7 +115,7 @@ class Navigation extends Component {
         showSidebar: false,
     };
 
-    activeURI = () => this.props.match.path;
+    activeURI = () => this.props.match.url;
 
     goTo = (page) => {
         this.props.history.push(page);
@@ -175,7 +175,7 @@ class Navigation extends Component {
                                     goTo={this.goTo}
                                     to={URLS.events}
                                     active={this.activeURI() === URLS.events}
-                                    label='Nyheter' />
+                                    label='Arrangmenter' />
                                 {AuthService.isEmployee() &&
                                     <Fragment>
                                         <URIButton
@@ -192,6 +192,15 @@ class Navigation extends Component {
                                             goTo={this.goTo}
                                             to={URLS.dashboard}
                                             label='Dashboard' />
+                                    </Fragment>
+                               }
+                                {AuthService.isAuthenticated() &&
+                                    <Fragment>
+                                        <URIButton
+                                            active={this.activeURI() === URLS.profile}
+                                            goTo={this.goTo}
+                                            to={URLS.profile}
+                                            label='Instillinger'/>
                                     </Fragment>
                                 }
                                 <div>

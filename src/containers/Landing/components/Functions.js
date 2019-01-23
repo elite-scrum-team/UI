@@ -6,7 +6,7 @@ import SearchBarStyles from './SearchBarStyles';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
@@ -18,8 +18,8 @@ import SearchableDropdown from '../../../components/miscellaneous/SearchableDrop
 
 const styles = makeStyles({
     content: {
-        paddingTop: 70,
-
+        paddingTop: 50,
+        paddingBottom: 50,
         margin: 'auto',
         display: 'flex',
         flexDirection: 'column',
@@ -61,20 +61,6 @@ const styles = makeStyles({
         color: 'red',
     }
 });
-/* 
-const warningTheme = createMuiTheme({
-    palette: {
-      primary: {
-          main: '#b73a3a',
-          contrastText: 'white',
-      },
-
-    },
-    typography: {
-      useNextVariants: true,
-    },
-}); */
-
 
 const Functions = (props) => {
 
@@ -99,14 +85,14 @@ const Functions = (props) => {
                     eller
                 </Typography>
             <div className='mt-15'>
-                <Fab
+                <Button
+                    variant='extendedFab'
                     onClick={props.searchByLocation}
                     size='medium'
-                    variant='extended'
                     color='primary'>
                     <LocationIcon className='mr-5'/>
                     Søk med min posisjon
-                </Fab>
+                </Button>
             </div>
         </div>
     )

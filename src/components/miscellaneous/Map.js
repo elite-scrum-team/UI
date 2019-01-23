@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -24,7 +24,7 @@ const Map = compose(
   }),
   withScriptjs,
   withGoogleMap
-)((props) => {
+)(React.memo((props) => {
 
   // State
   const [selectedLocation, setSelectedLocation] = useState(props.defaultSelectedLocation || {lat: 0, lng: 0});
@@ -93,35 +93,41 @@ const Map = compose(
       {props.circlePosition && <Circle center={props.circlePosition} radius={CIRCLE_RADIUS} options={{fillOpacity: 0, strokeOpacity: 0.1}}/>}
     </GoogleMap>
   )
-});
+}));
 
 
-const MapWrapper = (props) => {
+class MapWrapper extends PureComponent {
 
-  const [locations, setLocations] = useState([]);
+  state = {
+    locations: [],
+  }
 
-  useCallback(() => {
-    setLocations(locations);
-  }, [props.locations]);
-
-  const onMapMounted = (map) => {
-    if(props.map && map) {
-      props.map(map);
+  componentDidUpdate(prevProps) {
+    if(prevProps.locations !== this.props.locations) {
+      this.setState({locations: this.props.locations});
     }
   }
 
-  return (
-    <Map
-      {...props}
-      onMapMounted={onMapMounted}
-      defaultCenter={props.defaultCenter || {}}
-      showMarkers={props.showMarkers}
-      locations={props.locations}
-      zoom={props.zoom}
-      clickable={props.clickable}
-      circlePosition={props.circlePosition}
-      defaultSelectedLocation={props.defaultSelectedLocation}/>
+  onMapMounted = (map) => {
+    if(this.props.map && map) {
+      this.props.map(map);
+    }
+  }
+
+  render() {
+    return (
+      <Map
+        onMapMounted={this.onMapMounted}
+        defaultCenter={this.props.defaultCenter || {}}
+        showMarkers={this.props.showMarkers}
+        locations={this.state.locations}
+        zoom={this.props.zoom}
+        clickable={this.props.clickable}
+        circlePosition={this.props.circlePosition}
+        defaultSelectedLocation={props.defaultSelectedLocation}/>
+
   )
+  }
 }
 
 MapWrapper.propTypes = {

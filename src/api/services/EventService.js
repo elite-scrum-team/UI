@@ -1,6 +1,7 @@
 import API from "../api";
 import * as EventAction from '../../store/actions/EventAction';
 import store from '../../store/store'
+import Lodash from 'lodash'
 
 // and all the methods will return a promise
 export default class eventService {
@@ -20,7 +21,6 @@ export default class eventService {
                     data = data.sort((a, b) => (a[key] === b[key])? 0 : a[key] ? 1 : -1)
                 }
             }
-
 
             data = data.map(EventAction.createEventPost);
 
@@ -63,7 +63,6 @@ export default class eventService {
                 }
             }
 
-
             data = data.map(EventAction.createEventPost);
 
             !callback || callback(response.isError, data);
@@ -72,11 +71,22 @@ export default class eventService {
     };
 
     static updateEvent = (item ,callback) => {
+        const response = API.updateEvent(item.id, item);
+        if(item.images && !response.isError ){
+            const images = item.image;
+            delete item.image;
 
+            if(!(images instanceof Array)){
+                Lodash.toArray(images);
+            }
+
+        }
+        !callback || callback(response.isError, item);
+        return Promise.resolve(item);
     };
 
 
-        //data object is going to contain details and possible images.
+    //data object is going to contain details and possible images.
     static createEvent = (item ,callback) => {
         // Split images and other data
         const images = item.image;

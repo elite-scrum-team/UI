@@ -15,8 +15,8 @@
     "mkdirp": "^0.5.1",
     "moment": "^2.23.0",
     "query-string": "^6.2.0",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
     "react-google-maps": "^9.4.5",
     "react-image-lightbox": "^5.1.0",
     "react-inlinesvg": "^0.8.3",
@@ -31,12 +31,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test ",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "jest": {},
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -44,9 +45,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
     "lodash": "^4.17.11",

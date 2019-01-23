@@ -106,6 +106,8 @@ const styles = makeStyles({
     icon: {
         marginRight: 10,
         padding: 0,
+        height: 20,
+        width: 20,
     },
     ellipsis: {
         position: 'relative',
@@ -140,6 +142,7 @@ const EventItem = (props) => {
     const momentObject = props.date ? moment(props.date) : null;
     const date = momentObject ? momentObject.format('DD/MM/YY') : 'Ukjent';
     const time = momentObject ? momentObject.format('HH:mm') : 'Ukjent';
+    console.log(props.image);
 
     return (
         <Paper className={classNames(classes.root, props.imageLeft ? '' : classes.reverse, props.className)} onClick={props.onClick}>

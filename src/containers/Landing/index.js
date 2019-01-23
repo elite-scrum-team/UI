@@ -39,7 +39,7 @@ const styles = {
     top: {
         position: 'relative',
         backgroundColor: '#009688',
-        width: '100vw',
+        width: '100%',
         minHeight: 200,
         zIndex: 99,
 
@@ -52,14 +52,14 @@ const styles = {
 
         '@media only screen and (max-width: 600px)': {
             paddingTop: 42,
-            paddingBottom: 82,
+            paddingBottom: 140,
             minHeight: 125,
         }
     },
     contentWrapper: {
         zIndex: 100,
         flexGrow: 1,
-        boxShadow: '0px -3px 2px 0px rgba(0,0,0,0.2)',
+        boxShadow: '0px -1px 1px 0px rgba(0,0,0,0.1)',
         backgroundColor: 'white',
     },
     textWrapper: {

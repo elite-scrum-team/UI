@@ -8,4 +8,5 @@ export const METHODS = {
     get: 'GET',
     put: 'PUT',
     patch: 'PATCH',
+    delete: 'DELETE'
 }

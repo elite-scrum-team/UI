@@ -1,6 +1,8 @@
 import API from "../api";
 import * as WarningAction from '../../store/actions/WarningAction';
 import store from '../../store/store'
+import CategoryService from './CategoryService';
+
 
 // and all the methods will return a promise
 export default class WarningService {
@@ -113,6 +115,25 @@ export default class WarningService {
         const object = {type, data};
 
         WarningAction.addWarningItem(id, object);
+    }
+
+    static updateWarning = (id, warningData, callback) => {
+        const response = API.updateWarning(id, warningData).response();
+        return response.then(async (data) => {
+            if(response.isError === false) {
+                // Check if category was provided, if so, get  category object, and add it to the store
+                if(warningData.categoryId) {
+                    const category = await CategoryService.getCategory(warningData.categoryId);
+                    data.category = category;
+                    if(category) {
+                        WarningAction.updateWarningItem(id, data)(store.dispatch);
+                    }
+                }
+            }
+
+            !callback || callback(response.isError, data);
+            return data;
+        });
     }
 
     // --- STATUS ---

@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
 // Material UI components
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+
 // Icons
 
 // Project components
