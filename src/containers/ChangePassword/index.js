@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import URLS from "../../URLS";
 
 // Material UI components
 
@@ -18,13 +19,14 @@ const styles = {
     ,
     wrapper:{
         display: 'grid',
-        gridTemplateColumns: '33% auto 33%',
+        gridTemplateColumns: '20% auto 20%',
         gridTemplateRows: '40% auto 20%',
         '@media only screen and (max-width: 600px)': {
             gridTemplateColumns: '100%',
             justifyItems:'center',
             padding:'5px'
         },
+        padding: 20,
     },
     card: {
         gridColumnStart:2,
@@ -53,7 +55,7 @@ class ChangePassword extends Component {
             <Navigation>
                 <div className={classes.root}>
                     <div className={classes.wrapper}>
-                        <Recover className={classes.card}/>
+                        <Recover className={classes.card} goToLogin={() => this.props.history.push(URLS.login)}/>
                     </div>
                 </div>
             </Navigation>

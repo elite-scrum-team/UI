@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/styles';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';
@@ -46,10 +46,14 @@ const styles = makeStyles({
 const DurationStep = (props) => {
     // State
     const [includePeriod, setInclude] = useState(true);
-    const [selectedPeriod, setPeriod] = useState({from: props.currentDate, to: props.currentDate});
+    const [selectedPeriod, setPeriod] = useState({from: props.startTime, to: props.endTime});
 
     // Styling
     const classes = styles();
+
+    useEffect(() => {
+        setPeriod({from: props.startTime, to: props.endTime});
+    }, [props.startTime]);
 
     const handleStartChange = () => event => {
         props.setStartTimeCallback(event.target.value);
@@ -85,7 +89,7 @@ const DurationStep = (props) => {
                             label="Fra"
                             type="datetime-local"
                             disabled={!includePeriod}
-                            defaultValue={props.currentDate}
+                            value={props.startTime}
                             className={classes.textField}
                             onChange={handleStartChange()}
                             InputLabelProps={{
@@ -99,7 +103,7 @@ const DurationStep = (props) => {
                             label="Til"
                             type="datetime-local"
                             disabled={!includePeriod}
-                            defaultValue={props.currentDate}
+                            value={props.endTime}
                             className={classes.textField}
                             onChange={handleEndChange()}
                             InputLabelProps={{

@@ -4,7 +4,8 @@ import { actions } from '../../store/actions/WarningAction';
 
 
 //MOCKDATA
-import warnings from './mock/warning'
+import warnings from './mock/warning';
+import warningItems from './mock/warningItems';
 
 describe('Article reducer', () => {
 
@@ -30,39 +31,31 @@ describe('Article reducer', () => {
             })
     });
 
-    it('running  SET_WARNING_ITEMS', ()=>{
-        expect(
-            reducer({warningItems: warnings}, {
-                type: actions.SET_WARNING_ITEMS,
-                payload: warnings,
-            })
-        ).toEqual({
-            warningItems : warnings
-        })
-    });
-
     it('running SET_WARNING_ITEM', ()=>{
         expect(
-            reducer({warningItems: warnings}, {
+            reducer({warningItems: {}}, {
                 type: actions.SET_WARNING_ITEM,
-                payload: warnings[2],
+                payload: warningItems,
                 id: 1
             })
         ).toEqual({
-            warningItems : warnings
+            warningItems: {
+                1: warningItems,
+            }
         })
     });
-
 
     it('running ADD_WARNING_ITEM', ()=>{
         expect(
-            reducer({warningItems: warnings}, {
+            reducer({warningItems: {}}, {
                 type: actions.ADD_WARNING_ITEM,
-                payload: warnings[2],
-                id: 1
+                payload: warningItems[0],
+                id: 2,
             })
         ).toEqual({
-            warningItems : warnings
+            warningItems : {
+                2: [warningItems[0]]
+            }
         })
     });
 

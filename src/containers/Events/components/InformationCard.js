@@ -12,6 +12,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
 import TimeIcon from '@material-ui/icons/AccessTime';
 import BankIcon from '@material-ui/icons/AccountBalance';
+import URLS from "../../../URLS";
 
 
 // Project components
@@ -98,6 +99,7 @@ const DetailCard = (props) => {
                 <IconCarry first={event.street} second={<LocationIcon/>}/>
             </div>
             <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
+            <Chip  label="Rediger" onClick={() => props.goTo(URLS.createnews.concat(event.id))}/>
 
         </div>
     )

@@ -25,14 +25,7 @@ export default function reducer(state = initialState, action) {
                 }}
         }
 
-        case action.SET_WARNING_ITEMS: {
-            return {
-                ...state,
-                warningItems: keyBy(action.payload, action.id),
-            }
-        }
-
-        case action.SET_WARNING_ITEM: {
+        case actions.SET_WARNING_ITEM: {
             return {
                 ...state,
                 warningItems: {
@@ -42,7 +35,7 @@ export default function reducer(state = initialState, action) {
             }
         }
 
-        case action.ADD_WARNING_ITEM: {
+        case actions.ADD_WARNING_ITEM: {
             const items = Object.assign([], state.warningItems[action.id]);
             items.unshift(action.payload);
             return {
@@ -50,6 +43,32 @@ export default function reducer(state = initialState, action) {
                 warningItems: {
                     ...state.warningItems,
                     [action.id]: items,
+                }
+            }
+        }
+
+        case actions.UPDATE_WARNING: {
+            const warnings = Object.assign([], state.warning);
+            const warning = warnings[action.id];
+
+            if(!warning) {
+                return;
+            }
+
+            // Update warning
+            const payload = action.payload || {};
+            if(payload.categoryId) {
+                warning.categoryId = payload.categoryId;
+            }
+            else if(payload.category) {
+                warning.category = payload.category;
+            }
+
+            return {
+                ...state,
+                warning: {
+                    ...warnings,
+                    [warning.id]: warning,
                 }
             }
         }

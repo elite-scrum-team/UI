@@ -4,6 +4,11 @@
   --progress: rgb(248, 188, 76);
   --inactive: rgb(175, 175, 175);
 
+  /*  PASSWORD VALIDATOR COLORS */
+  --pv-green: #78BA72;
+  --pv-red:#FF7E7E;
+  --pv-yellow: #FFE17E;
+
   font-family: 'Roboto', sans-serif;
 }
 
@@ -35,7 +40,7 @@ a {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: rgba(250, 250, 250); ; 
+  background: rgb(250, 250, 250);
   width: 4px;
   border-radius: 2px;
 }

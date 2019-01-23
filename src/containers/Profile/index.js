@@ -7,6 +7,7 @@ import URLS from "../../URLS";
 import Paper from "@material-ui/core/Paper";
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Service import
 import AuthService from "../../api/services/AuthService";
@@ -42,6 +43,7 @@ const styles = theme => ({
         display: "block", // Fix IE 11 issue.
         marginLeft: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 3,
+        minheight: 302.5,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
             width: 400,
             marginLeft: "auto",
@@ -54,8 +56,12 @@ const styles = theme => ({
         flexDirection: "column",
         alignItems: "center",
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
-            .spacing.unit * 3}px`
+            .spacing.unit * 3}px`,
+        minHeight: 262.5
     },
+    progress: {
+        margin: 100
+    }
 });
 
 class MyProfile extends Component {
@@ -81,7 +87,7 @@ class MyProfile extends Component {
 
     }
 
-    change = (password, confirm) => event => {
+    change = (password, confirm, callback) => event => {
         event.preventDefault();
 
         // Check if password and confirmed password matches
@@ -104,6 +110,7 @@ class MyProfile extends Component {
                 this.setState({showChangedPasswordMessage: true})
             }
             this.setState({isLoading: false});
+            !callback || callback();
         });
     };
 
@@ -127,10 +134,14 @@ class MyProfile extends Component {
                 </div>
                 <main className={classes.main}>
                     <Paper className={classes.paper}>
-                        <Profile
-                            pass={this.change}
-                            errorMessage={this.state.errorMessage}
-                        />
+                        {this.state.isLoading ? (
+                            <CircularProgress className={classes.progress} />
+                        ) : (
+                            <Profile
+                                pass={this.change}
+                                errorMessage={this.state.errorMessage}
+                            />
+                        )}
                     </Paper>
                 </main>
                 <MessageDialog

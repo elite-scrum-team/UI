@@ -1,6 +1,8 @@
 import API from "../api";
 import * as WarningAction from '../../store/actions/WarningAction';
 import store from '../../store/store'
+import CategoryService from './CategoryService';
+
 
 // and all the methods will return a promise
 export default class WarningService {
@@ -64,12 +66,12 @@ export default class WarningService {
     //data object is going to contain details and possible images.
     static createWarning = (item ,callback) => {
         // Split images and other data
-        const images = item.images; 
+        const images = item.images;
         delete item.images;
 
         // Create warning
         const response = API.createWarning(item).response();
-        return response.then(async (data) => {  
+        return response.then(async (data) => {
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
                 for(var index in images) {
@@ -82,7 +84,7 @@ export default class WarningService {
                         })
                 }
             }
-            
+
             !callback || callback(response.isError, data);
             return data;
         });
@@ -90,14 +92,14 @@ export default class WarningService {
 
     static getWarningItems = (id, callback) => {
         // Check if items are in store
-        let items = WarningAction.getWarningItems(id)(store.getState());
+        let items = null; //WarningAction.getWarningItems(id)(store.getState());
 
         // If they already exist...return
         if(items) {
             !callback || callback(false, items);
             return Promise.resolve(items);
         }
-        
+
         // Get from database
         const response = API.getWarningContent(id).response();
         return response.then((data) => {
@@ -115,11 +117,31 @@ export default class WarningService {
         WarningAction.addWarningItem(id, object);
     }
 
+    static updateWarning = (id, warningData, callback) => {
+        const response = API.updateWarning(id, warningData).response();
+        return response.then(async (data) => {
+            if(response.isError === false) {
+                // Check if category was provided, if so, get  category object, and add it to the store
+                if(warningData.categoryId) {
+                    const category = await CategoryService.getCategory(warningData.categoryId);
+                    data.category = category;
+                    if(category) {
+                        WarningAction.updateWarningItem(id, data)(store.dispatch);
+                    }
+                }
+            }
+
+            !callback || callback(response.isError, data);
+            return data;
+        });
+    }
+
     // --- STATUS ---
     static createStatus = (warningId, type, description, callback) => {
         const statusObject = {warningId, type, description: description};
 
         const response = API.addStatus(statusObject).response();
+
         return response.then((data) => {
             !callback || callback(response.isError, data);
             return data;

@@ -34,7 +34,7 @@ const InputStep = (props) => {
                 multiline
                 rows={props.rows}
                 fullWidth
-                value={props.multiline}
+                value={props.existingInput}
                 onChange={handleChange(props.stepName)}
                 margin='normal'
                 helperText=''
