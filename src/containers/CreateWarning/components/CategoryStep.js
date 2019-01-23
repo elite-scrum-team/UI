@@ -6,8 +6,6 @@ import {useState} from 'react';
 // Material UI components
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "../../../../node_modules/@material-ui/core/ListItemIcon/ListItemIcon";
-import FolderIcon from "../../../../node_modules/@material-ui/icons/Folder";
 import ListItemText from "@material-ui/core/ListItemText";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -16,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 
 
 // Icons
+import ListItemIcon from "../../../../node_modules/@material-ui/core/ListItemIcon/ListItemIcon";
+import FolderIcon from "../../../../node_modules/@material-ui/icons/Folder";
 
 // Project components
 
@@ -86,7 +86,7 @@ const CategoryList = (props) => {
     if(!(categories instanceof Array)) {
         categories = [];
     }
-    
+
     return (
         <div>
             <Card className={classes.card}>
@@ -104,7 +104,7 @@ const CategoryList = (props) => {
             </Card>
         </div>
     )
-}
+};
 
 const CategoryItem = (props) => {
 
@@ -113,7 +113,7 @@ const CategoryItem = (props) => {
         props.categoryCallback(data);
         props.changeCategoryCallback(data);
         props.handleCloseCallback();
-    }
+    };
 
     return (
         <div>
@@ -127,7 +127,7 @@ const CategoryItem = (props) => {
             </ListItem>
         </div>
     )
-}
+};
 
 
 export default (CategoryStep);

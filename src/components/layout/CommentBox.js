@@ -54,7 +54,6 @@ class CommentBox extends Component {
     image: null,
     comment: '',
 
-    commentingEnabled: false,
       userData: null,
   };
 
@@ -92,28 +91,12 @@ class CommentBox extends Component {
     this.setState({ file: null, image: null });
   };
 
-    toggleCommenting = async () => {
-        this.setState({userData: await AuthService.getUserData()});
-        if (this.state.userData !== null) {
-            if (this.state.userData.id){
-            console.log(this.state.userData);
-            this.setState({commentingEnabled: true})
-          }
-        }
-    };
-
-    componentDidMount () {
-      this.toggleCommenting();
-    };
-
-
   render() {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
         <form onSubmit={this.submitComment}>
           <TextField
-            disabled={1}
             id='filled-multiline-static'
             label='Skriv en kommentar...'
             multiline
