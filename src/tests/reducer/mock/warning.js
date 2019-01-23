@@ -13,7 +13,7 @@ module.exports =[
         images: []
     },
     {
-        id: 1,
+        id: 2,
         createdAt: Date.now(),
         category: "cat",
         status: 2,
@@ -26,7 +26,7 @@ module.exports =[
         images: []
     },
     {
-        id: 1,
+        id: 3,
         createdAt: Date.now(),
         category: "cat",
         status: 1,

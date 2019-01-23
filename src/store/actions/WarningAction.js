@@ -20,14 +20,6 @@ export const setWarningPost = (data) =>
 export const setWarningById = (id , data) =>
     dispatch => dispatch({type: actions.SET_WARNING_BY_ID, payload: createWarningPost(data), id: id});
 
-
-export const setWarningItems = (data) => 
-    dispatch => {
-        if(data instanceof Array) {
-            dispatch({type: actions.SET_WARNING_ITEMS, payload: data})
-        }
-    }
-
 export const setWarningItem = (id, data) => 
     dispatch => dispatch({type: actions.SET_WARNING_ITEM, payload: data, id: id});
 
