@@ -21,7 +21,6 @@ import SinglePictureStep from "./components/SinglePictureStep";
 import DurationStep from "./components/DurationStep";
 import URLS from "../../URLS";
 import ConfirmDialog from "./components/ConfirmDialog";
-import WarningService from "../../api/services/WarningService";
 import ConfirmEditDialog from "./components/ConfirmEditDialog";
 
 const styles = {

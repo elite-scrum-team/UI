@@ -15,7 +15,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 // Project components
 import FileSelector from './FileSelector';
-import AuthService from "../../api/services/AuthService";
 
 const styles = {
   root: {
