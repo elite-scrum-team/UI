@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import theme from '../../theme';
-import {timeData} from './helpers';
+import {timeData, getDateData} from './helpers';
 import classNames from 'classnames';
 
 // Service imports
 import LocationService from '../../api/services/LocationService';
-import AnalyticsService from '../../api/services/AnalyticsService';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
@@ -94,18 +93,24 @@ class Analytics extends Component {
         });
     }
 
-    onMunicipalityChange = (value) => {
-        this.setState({municipality: value});
+    onMunicipalityChange = async (value) => {
+        await this.setState({municipality: value});
 
-        this.mainDataDisplayer.reloadData(AnalyticsService.getCurrentDate());
-        this.numberDataDisplayer.reloadData(AnalyticsService.getCurrentDate());
+        const timeObject = getDateData(this.state.timeState);
+        const municipalityId = getDateData(this.state.municipality ? this.state.municipality.value : null);
+        console.log(municipalityId);
+        this.mainDataDisplayer.reloadData(timeObject, municipalityId);
+        this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
 
-    onTimeChange = (value) => {
-        this.setState({timeState: value});
+    onTimeChange = async (value) => {
+        await this.setState({timeState: value});
 
-        this.mainDataDisplayer.reloadData(value);
-        this.numberDataDisplayer.reloadData(value);
+        const timeObject = getDateData(this.state.timeState);
+        const municipalityId = getDateData(this.state.municipality ? this.state.municipality.value : null);
+        console.log(municipalityId);
+        this.mainDataDisplayer.reloadData(timeObject, municipalityId);
+        this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
 
     render() {
