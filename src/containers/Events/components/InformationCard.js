@@ -44,6 +44,9 @@ const styles = makeStyles({
     },
     mr:{
         marginRight: 10
+    },
+    buttonWrapper: {
+        marginTop: 14
     }
 }
 );
@@ -98,8 +101,10 @@ const DetailCard = (props) => {
                 <IconCarry first={location} second={<BankIcon/>}/>
                 <IconCarry first={event.street} second={<LocationIcon/>}/>
             </div>
-            <Chip  label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
-            <Chip  label="Rediger" onClick={() => props.goTo(URLS.createnews.concat(event.id))}/>
+            <div className={classes.buttonWrapper}>
+                <Chip  label="Besøk nettsiden" className={classes.mr} onClick={() => relocate(props.event.link)}/>
+                <Chip  label="Rediger"  onClick={() => props.goTo(URLS.createnews.concat(event.id))}/>
+            </div>
 
         </div>
     )
