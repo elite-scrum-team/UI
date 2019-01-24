@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import theme from '../../theme';
-import {timeData, getDateData} from './helpers';
+import {ALL, getDateData} from './helpers';
 import classNames from 'classnames';
 import moment from 'moment';
 
@@ -73,12 +73,11 @@ class Analytics extends Component {
     constructor() {
         super();
         this.state = {
-            timeState: timeData[0],
             municipalities: [],
             municipality: null,
 
-            fromDate: moment().subtract(7, 'days').toDate(),
-            toDate: moment().toDate(),
+            startDate: moment().subtract(7, 'days').toDate(),
+            endDate: moment().toDate(),
         };
 
         this.mainDataDisplayer = React.createRef();
@@ -87,49 +86,40 @@ class Analytics extends Component {
 
     componentDidMount() {
         this.fetchMunicipalities();
-        this.fetchData();
-    }
-
-    fetchData() {
-        const timeObject = getDateData(this.state.timeState.value);
-        const municipalityId = this.state.municipality ? this.state.municipality.value : null;
-
-        this.mainDataDisplayer.reloadData(timeObject, municipalityId);
-        this.numberDataDisplayer.reloadData(timeObject, municipalityId);
+        this.reloadData();
     }
 
     fetchMunicipalities() {
         LocationService.getMunicipalities((isError, data) => {
             if(isError === false) {
-                this.setState({municipalities: data.map(m => ({value: m.id, label: m.name}))});
+                const municipalityOptions = data.map(m => ({value: m.id, label: m.name}));
+                const allMunicipalitiesOption = {value: ALL, label: 'Alle kommuner'};
+                municipalityOptions.unshift(allMunicipalitiesOption);
+                this.setState({municipalities: municipalityOptions});
             }
         });
     }
 
     onMunicipalityChange = async (value) => {
-        await this.setState({municipality: value});
+        if(value && value.value === ALL) {
+            await this.setState({municipality: null});
+        } else {
+            await this.setState({municipality: value});
+        }
+        this.reloadData();
+    }
 
-        const timeObject = getDateData(this.state.timeState.value);
+    onDatesChange = async(startDate, endDate) => {
+        await this.setState({startDate: startDate, endDate: endDate});
+        this.reloadData();
+    }
+
+    reloadData = () => {
+        const timeObject = getDateData(this.state.startDate, this.state.endDate);
         const municipalityId = this.state.municipality ? this.state.municipality.value : null;
 
         this.mainDataDisplayer.reloadData(timeObject, municipalityId);
         this.numberDataDisplayer.reloadData(timeObject, municipalityId);
-    }
-
-    onTimeChange = async (value) => {
-        await this.setState({timeState: value});
-
-        const timeObject = getDateData(this.state.timeState.value);
-        const municipalityId = this.state.municipality ? this.state.municipality.value : null;
-
-        this.mainDataDisplayer.reloadData(timeObject, municipalityId);
-        this.numberDataDisplayer.reloadData(timeObject, municipalityId);
-    }
-
-    onDatesChange = async(timeObject) => {
-        this.setState(timeObject);
-        console.log(timeObject)
-        //this.setState({startDate: fromDate, endDate: toDate});
     }
 
     render() {
@@ -143,16 +133,11 @@ class Analytics extends Component {
                         </Typography>
                         <div className={classes.inputs}>
                             <DateRange
-                                startDate={this.state.fromDate}
-                                endDate={this.state.toDate}
+                                className={classes.input}
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
                                 onChange={this.onDatesChange}
                             />
-                            <SearchableDropdown
-                                className={classes.input}
-                                placeholder='Tid'
-                                value={this.state.timeState}
-                                options={timeData}
-                                onChange={this.onTimeChange}/>
                             <SearchableDropdown
                                 className={classNames(classes.input, 'ml-5')}
                                 placeholder='Søk etter kommune'

@@ -24,6 +24,7 @@
     "react": "^16.8.0-alpha.1",
     "react-chartjs-2": "^2.7.4",
     "react-chartkick": "^0.3.0",
+    "react-date-range": "^1.0.0-beta",
     "react-dom": "^16.8.0-alpha.1",
     "react-google-maps": "^9.4.5",
     "react-image-lightbox": "^5.1.0",
