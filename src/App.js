@@ -32,7 +32,7 @@ const EmployeeRoute = ({ component: Component, ...rest }) => {
         render={(props) => (
             (AuthService.isAuthenticated() && AuthService.isEmployee())?
                 <Component {...props} /> :
-                <Redirect to={URLS.login} />
+                <Redirect to={URLS.login.concat('?', rest.path? 'redirect='.concat(rest.path):'')}  />
         )}
       />
     );
@@ -87,7 +87,7 @@ class App extends Component {
                                 <Route exact path={URLS.login} component={LogIn} />
                                 <Route exact path={URLS.events} component={Events} />
                                 <Route exact path={URLS.createnews.concat(':id?')} component={CreateNews} />
-                                <EmployeeRoute exact path={URLS.statistics} component={Statistics} />
+                                <Route exact path={URLS.statistics} component={Statistics} />
                                 <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
                                 <CompEmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
                             </Switch>
