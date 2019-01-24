@@ -56,6 +56,7 @@ const styles = makeStyles({
         marginBottom: 50,
     },
     text:{
+        margin: 14,
         '@media only screen and (max-width: 960px)': {
             fontSize:35,
             justifyContent: 'center'
