@@ -17,6 +17,7 @@
     "moment": "^2.23.0",
     "query-string": "^6.2.0",
     "react": "^16.8.0-alpha.1",
+    "react-chartjs-2": "^2.7.4",
     "react-chartkick": "^0.3.0",
     "react-dom": "^16.8.0-alpha.1",
     "react-google-maps": "^9.4.5",
@@ -28,7 +29,8 @@
     "react-test-renderer": "^16.7.0",
     "recompose": "^0.30.0",
     "underscore": "^1.9.1",
-    "universal-cookie": "^3.0.7"
+    "universal-cookie": "^3.0.7",
+    "vue-chartjs": "^3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

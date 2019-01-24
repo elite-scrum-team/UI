@@ -7,6 +7,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import withStyles from "@material-ui/core/styles/withStyles";
+import PasswordValidator from '../../../components/miscellaneous/PasswordValidator';
 
 const styles = theme => ({
     form: {
@@ -48,6 +49,7 @@ function Change(props) {
                         onChange={e => setPassword(e.target.value)}
                         type='password'
                     />
+                    <PasswordValidator password={password}/>
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="confirm">Gjenta nytt passord</InputLabel>

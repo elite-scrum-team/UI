@@ -29,18 +29,16 @@ import NotFound from './containers/NotFound';
 // pointless comment
 // The user needs to be authorized (logged in) to access these routes
 const EmployeeRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        AuthService.isAuthenticated() && AuthService.isEmployee() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={URLS.login} />
-        )
-      }
-    />
-  );
+    return (
+      <Route
+        {...rest}
+        render={(props) => (
+            (AuthService.isAuthenticated() && AuthService.isEmployee())?
+                <Component {...props} /> :
+                <Redirect to={URLS.login.concat('?', rest.path? 'redirect='.concat(rest.path):'')}  />
+        )}
+      />
+    );
 };
 
 const CompEmployeeRoute = ({ component: Component, ...rest }) => {

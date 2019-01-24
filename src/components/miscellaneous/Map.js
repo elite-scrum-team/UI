@@ -38,8 +38,7 @@ const Map = compose(
         setDefaultLocation(props.defaultCenter || {lat: 0, lng: 0});
         console.log(props.defaultCenter);
     }, [props.defaultCenter]);
-
-
+  
   return (
     <GoogleMap
       {...props}
