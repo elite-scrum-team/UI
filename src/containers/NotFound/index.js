@@ -57,6 +57,7 @@ class NotFound extends Component {
   goToHome = () => {
     this.props.history.push(URLS.home);
   };
+  
   render() {
     const { classes } = this.props;
     return (

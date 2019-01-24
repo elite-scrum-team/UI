@@ -111,7 +111,7 @@ const CategoryList = (props) => {
 
 const CategoryItem = (props) => {
 
-    const classes = styles();
+    // const classes = styles();
 
     const setCategoryClick = (data) => {
         props.categoryCallback(data);

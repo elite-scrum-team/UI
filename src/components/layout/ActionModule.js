@@ -14,6 +14,7 @@ import InterestGroupService from '../../api/services/InterestGroupService'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 
 // Icons
@@ -37,7 +38,10 @@ import CategoryService from "../../api/services/CategoryService";
 import WarningService from "../../api/services/WarningService";
 
 const styles = {
-  root: {}
+  root: {
+    paddingLeft: 8,
+    paddingRight: 8,
+  }
 };
 
 class ActionModule extends Component {
@@ -203,7 +207,6 @@ class ActionModule extends Component {
                 <ListItem
                   button
                   dense
-                  divider
                   onClick={() => this.setState({ contractDialogOpen: true })}
                 >
                     <ListItemIcon>

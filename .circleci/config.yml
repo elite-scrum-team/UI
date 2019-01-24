@@ -31,3 +31,9 @@ jobs:
           docker build . --cache-from elitescrumteam/$IMAGE_NAME:latest -t elitescrumteam/$IMAGE_NAME:$TAG
           docker login -u $DOCKER_USER -p $DOCKER_PASS   
           docker push elitescrumteam/$IMAGE_NAME:$TAG
+
+deployment:
+  prod:
+    branch: master
+    heroku:
+      appname: hverdags-helt-app

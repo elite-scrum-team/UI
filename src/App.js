@@ -23,23 +23,22 @@ import CreateNews from './containers/CreateNews';
 import Events from './containers/Events';
 import Profile from './containers/Profile';
 import Statistics from './containers/Statistics';
+import Analytics from './containers/Analytics';
 import NotFound from './containers/NotFound';
 
 // pointless comment
 // The user needs to be authorized (logged in) to access these routes
 const EmployeeRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        AuthService.isAuthenticated() && AuthService.isEmployee() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={URLS.login} />
-        )
-      }
-    />
-  );
+    return (
+      <Route
+        {...rest}
+        render={(props) => (
+            (AuthService.isAuthenticated() && AuthService.isEmployee())?
+                <Component {...props} /> :
+                <Redirect to={URLS.login.concat('?', rest.path? 'redirect='.concat(rest.path):'')}  />
+        )}
+      />
+    );
 };
 
 const CompEmployeeRoute = ({ component: Component, ...rest }) => {
@@ -111,6 +110,11 @@ class App extends Component {
                   exact
                   path={URLS.statistics}
                   component={Statistics}
+                />
+                <Route
+                  exact
+                  path={URLS.statistics.concat('2')}
+                  component={Analytics}
                 />
                 <PrivateRoute
                   exact
