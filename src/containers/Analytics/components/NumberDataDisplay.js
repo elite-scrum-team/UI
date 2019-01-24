@@ -36,9 +36,16 @@ class NumberDataDisplay extends Component {
 
     state = {
         isLoading: false,
+
+        warningCountWeek: 0,
+        warningCountMonth: 0,
+        warningCountYear: 0,
+
+        warningFinishedYear: 0,
+        warningProgressYear: 0,
     }
 
-    reloadData(timeObject = {}, municipalityId = null) {
+    async reloadData(timeObject = {}, municipalityId = null) {
         // Set isLoading true,
         this.setState({isLoading: true});
 
@@ -46,11 +53,36 @@ class NumberDataDisplay extends Component {
 
         // Start fetching data
         const startDates = [timeObject.sevenDaysAgo, timeObject.thirtyDaysAgo, timeObject.oneYearAgo];
-        AnalyticsService.getWarningCountData(startDates, municipalityId, null,
+        await AnalyticsService.getWarningCountData(startDates, municipalityId, null,
             (isError, data) => {
                 console.log(data);
+                if(data && data.length === 3) {
+                    this.setState({
+                        warningCountWeek: data[0].count,
+                        warningCountMonth: data[1].count,
+                        warningCountYear: data[2].count,
+                    })
+                }
+                this.setState({isLoading: false});
+
+                
             }
-        )
+        );
+
+        await AnalyticsService.getWarningCountData([timeObject.oneYearAgo], municipalityId, 3,
+            (isError, data) => {
+                console.log(data);
+                if(data && data.length === 1) {
+                    this.setState({
+                        warningFinishedYear: data[0].count,
+                    })
+                }
+                this.setState({isLoading: false});
+
+                
+            }
+        );
+
 
         // Set isLoading false
         console.log(timeObject);
@@ -62,12 +94,12 @@ class NumberDataDisplay extends Component {
 
         return (
             <div className={classes.root}>
-                <NumberView isLoading={this.state.isLoading} number={27} label='warnings set "Finished" this month'/>
-                <NumberView isLoading={this.state.isLoading} number={23} label='warnings set "In progress" this year'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningFinishedYear} label='warnings set "Finished" this year'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningProgressYear} label='warnings set "In progress" this year'/>
                 <div />
-                <NumberView isLoading={this.state.isLoading} number={27} label='new warnings this year'/>
-                <NumberView isLoading={this.state.isLoading} number={23} label='new warnings this month'/>
-                <NumberView isLoading={this.state.isLoading} number={12} label='new warnings this week'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountYear} label='new warnings this year'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountMonth} label='new warnings this month'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountWeek} label='new warnings this week'/>
             </div>
         )
     }

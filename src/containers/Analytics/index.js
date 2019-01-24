@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 import theme from '../../theme';
 import {timeData, getDateData} from './helpers';
 import classNames from 'classnames';
+import moment from 'moment';
 
 // Service imports
 import LocationService from '../../api/services/LocationService';
@@ -15,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 // Project components
 import Navigation from '../../components/navigation/Navigation';
 import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
-
+import DateRange from '../../components/input/DateRange';
 import NumberDataDisplay from './components/NumberDataDisplay';
 import MainDataDisplay from './components/MainDataDisplay';
 
@@ -75,6 +76,9 @@ class Analytics extends Component {
             timeState: timeData[0],
             municipalities: [],
             municipality: null,
+
+            fromDate: moment().subtract(7, 'days').toDate(),
+            toDate: moment().toDate(),
         };
 
         this.mainDataDisplayer = React.createRef();
@@ -122,6 +126,12 @@ class Analytics extends Component {
         this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
 
+    onDatesChange = async(timeObject) => {
+        this.setState(timeObject);
+        console.log(timeObject)
+        //this.setState({startDate: fromDate, endDate: toDate});
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -132,6 +142,11 @@ class Analytics extends Component {
                             {this.state.municipality ? `Statistikk i ${this.state.municipality.label}` : 'Nasjonal Statistikk'}
                         </Typography>
                         <div className={classes.inputs}>
+                            <DateRange
+                                startDate={this.state.fromDate}
+                                endDate={this.state.toDate}
+                                onChange={this.onDatesChange}
+                            />
                             <SearchableDropdown
                                 className={classes.input}
                                 placeholder='Tid'
