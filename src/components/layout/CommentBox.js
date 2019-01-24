@@ -9,13 +9,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 // Icons
+import DeleteIcon from '@material-ui/icons/Delete';
 
 // Project components
 import FileSelector from './FileSelector';
-import AuthService from "../../api/services/AuthService";
 
 const styles = {
   root: {
@@ -54,8 +53,7 @@ class CommentBox extends Component {
     image: null,
     comment: '',
 
-    commentingEnabled: false,
-      userData: null,
+    userData: null
   };
 
   handleChange = name => event => {
@@ -92,28 +90,12 @@ class CommentBox extends Component {
     this.setState({ file: null, image: null });
   };
 
-    toggleCommenting = async () => {
-        this.setState({userData: await AuthService.getUserData()});
-        if (this.state.userData !== null) {
-            if (this.state.userData.id){
-            console.log(this.state.userData);
-            this.setState({commentingEnabled: true})
-          }
-        }
-    };
-
-    componentDidMount () {
-      this.toggleCommenting();
-    };
-
-
   render() {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
         <form onSubmit={this.submitComment}>
           <TextField
-            disabled={1}
             id='filled-multiline-static'
             label='Skriv en kommentar...'
             multiline

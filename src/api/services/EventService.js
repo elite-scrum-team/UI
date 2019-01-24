@@ -1,6 +1,6 @@
 import API from "../api";
 import * as EventAction from '../../store/actions/EventAction';
-import store from '../../store/store'
+import store from '../../store/store';
 
 // and all the methods will return a promise
 export default class eventService {
@@ -20,7 +20,6 @@ export default class eventService {
                     data = data.sort((a, b) => (a[key] === b[key])? 0 : a[key] ? 1 : -1)
                 }
             }
-
 
             data = data.map(EventAction.createEventPost);
 
@@ -63,7 +62,6 @@ export default class eventService {
                 }
             }
 
-
             data = data.map(EventAction.createEventPost);
 
             !callback || callback(response.isError, data);
@@ -72,11 +70,33 @@ export default class eventService {
     };
 
     static updateEvent = (item ,callback) => {
+        // Split images and other data
+        const images = item.image;
+        delete item.image;
 
+        // Update event
+        const response = API.updateEvent(item.id, item).response();
+        return response.then(async (data) => {
+            // Add images if no error
+            if(response.isError === false && images instanceof Array) {
+                for(let index in images) {
+                    // Upload images to server
+                    await API.updateImageEvent(data.id, images[index]).response(true)
+                        .then((imageData) => {
+                            if(data.image instanceof Array && imageData) {
+                                data.image.push(imageData.image);
+                            }
+                        })
+                }
+            }
+
+            !callback || callback(response.isError, data);
+            return data;
+        });
     };
 
 
-        //data object is going to contain details and possible images.
+    //data object is going to contain details and possible images.
     static createEvent = (item ,callback) => {
         // Split images and other data
         const images = item.image;

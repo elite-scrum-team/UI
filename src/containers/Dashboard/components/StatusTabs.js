@@ -8,11 +8,17 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
-    border: '2px solid '.concat(theme.palette.primary.main),
-    width: '100%'
+    display: 'flex',
+    borderBottom: '2px solid '.concat(theme.palette.primary.main),
+    borderTop: '2px solid '.concat(theme.palette.primary.main),
+    width: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
   },
   button: {
-    width: '33.1%',
+    boxSizing: 'border-box',
+    flexGrow: 1,
     borderRadius: 0
   },
   rightBorder: {
@@ -40,7 +46,7 @@ class StatusTabs extends Component {
     return (
       <div className={classes.root}>
         <Button
-          size='small'
+          size='medium'
           className={classNames(
             classes.button,
             classes.rightBorder,
@@ -48,10 +54,10 @@ class StatusTabs extends Component {
           )}
           onClick={() => this.props.onChange(0)}
         >
-          Nytt
+          Nye
         </Button>
         <Button
-          size='small'
+          size='medium'
           className={classNames(
             classes.button,
             classes.leftBorder,
@@ -63,7 +69,7 @@ class StatusTabs extends Component {
           Behandlet
         </Button>
         <Button
-          size='small'
+          size='medium'
           className={classNames(
             classes.button,
             classes.leftBorder,

@@ -198,7 +198,7 @@ class Events extends Component {
                     <div className={classes.top}>
                         <div className={classes.topContent}>
                             <div className='mt-10'>
-                                <Typography variant='h4' color='inherit'>Nyheter</Typography>
+                                <Typography variant='h4' color='inherit'>Arrangmenter</Typography>
                             </div>
                             <div className='mt-10'>
                                 <SearchableDropdown
@@ -245,7 +245,7 @@ class Events extends Component {
 
                     <Fragment>
                         <Hidden implementation='js' smDown>
-                            <Sidebar open={this.state.detail !== null} event={this.state.detail}
+                            <Sidebar goTo={(page) => this.goTo(page)} open={this.state.detail !== null} event={this.state.detail}
                                      close={this.onItemClick(null)}/>
                         </Hidden>
                         {this.state.detail && <Hidden implementation='js' mdUp>

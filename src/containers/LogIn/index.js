@@ -24,13 +24,16 @@ const styles = theme => ({
   main: {
     width: "auto",
     display: "block", // Fix IE 11 issue.
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    marginLeft: 6,
+    marginRight: 6,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 400,
       marginLeft: "auto",
       marginRight: "auto"
     }
+  },
+  content: {
+    width: '100%',
   },
   paper: {
     marginTop: theme.spacing.unit * 8,
@@ -133,7 +136,7 @@ class LogIn extends Component {
             {this.state.isLoading ? (
               <Progress />
             ) : (
-              <div>
+              <div className={classes.content}>
                 <Tabs onChange={this.changeTab} isSignIn={this.state.isSignIn}/>
                 {this.state.isSignIn ? (
                   <SignIn

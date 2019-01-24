@@ -21,6 +21,8 @@ const getCategoryState = (state) => state.category;
 
 export const getAllCategories = (state) =>  Object.values(getCategoryState(state).categories);
 
+export const getCategoryById = (id) => (state) => getCategoryState(state).categories[id];
+
 // --- Helper Methods ---
 const createCategory = (category) => ({
     ...category,

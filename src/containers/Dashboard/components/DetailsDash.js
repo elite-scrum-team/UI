@@ -87,9 +87,7 @@ const DetailsDash = (props) => {
         )
     };
 
-    const goTo = page => {
-        console.log(props);
-        //props.history.push(page);
+    const goTo = (page) => {
         props.mountWarningCallback(null);
     };
 
@@ -114,14 +112,17 @@ const DetailsDash = (props) => {
             <div className={classes.center}>
                 <div className={classes.content}>
                     <div>
-                        <Paper elevation={1} className='p-30'>
+                        <Paper elevation={1} className='p-20 pr-10 pl-10'>
                             <ActionModule
                                 className={classes.actionMod}
+                                warnId={props.state.id}
                                 updateStatus={props.changeStatus}
                                 updateContract={props.changeContract}
+                                isSubscribed={props.state.isSubscribed}
                                 contracts={props.state.contracts}
                                 municipalityId={props.state.municipalityId}
                                 status={props.state.status}
+                                changeCategory={(category) => props.changeCategory(category)}
                             />
                         </Paper>
                     </div>

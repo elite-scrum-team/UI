@@ -218,8 +218,6 @@ class Discover extends Component {
 
       const filters = {};
 
-      console.log("HEllo");
-
       if(value === SEARCH_SECTION) {
         filters.excludeStatus = EXCLUDE_STATUSES;
 
@@ -291,7 +289,7 @@ class Discover extends Component {
 
           </Hidden>
 
-          <Hidden implementation='js' smDown={!this.state.showMap}>
+          <Hidden implementation='css' smDown={!this.state.showMap}>
             <div className={classes.root}>
               <Map
                   onZoomChanged={this.handleChange('zoom', true)}

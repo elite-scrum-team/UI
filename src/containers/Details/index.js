@@ -54,6 +54,7 @@ class Details extends Component {
     isLoading: false,
     contracts: null,
     company: null,
+    isSubscribed: false,
 
     id: null,
     title: null,
@@ -98,6 +99,7 @@ class Details extends Component {
           contracts: e.contracts,
           city: e.city,
           street: e.street,
+          isSubscribed: e.isSubscribed
         });
         this.setState({ isLoading: false });
 
@@ -111,6 +113,10 @@ class Details extends Component {
       }
     });
   }
+
+  changeCategory = (category) => {
+    this.setState({title: category});
+  };
 
   changeStatus = newStatus => {
     console.log(this.state);
@@ -180,7 +186,7 @@ class Details extends Component {
             </Paper>
             <div className={classes.content}>
               <div>
-                <Paper elevation={1} className='p-20'>
+                <Paper elevation={1} className='p-20 pr-10 pl-10'>
                   <ActionModule
                     className={classes.actionMod}
                     updateStatus={this.changeStatus}
@@ -188,8 +194,11 @@ class Details extends Component {
                     contracts={this.state.contracts}
                     company={this.state.company}
                     userId={this.state.userId}
+                    warnId={this.state.id}
                     status={this.state.status}
+                    isSubscribed={this.state.isSubscribed}
                     municipalityId={this.state.municipalityId}
+                    changeCategory={(category) => this.changeCategory(category)}
                   />
                 </Paper>
               </div>

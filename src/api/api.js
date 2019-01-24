@@ -39,6 +39,10 @@ export default {
     return new Fetch(METHODS.post, '/warning', data);
   },
 
+  updateWarning: (id, data) => {
+    return new Fetch(METHODS.put, `/warning/${id}`, data);
+  },
+
   commentOnWarning: (warningId, image, comment) => {
     return new Fetch(METHODS.post, '/warning/comment', {
       warningId: warningId,
@@ -65,6 +69,10 @@ export default {
   // --- CATEGORIES ---
   getCategories: () => {
     return new Fetch(METHODS.get, '/warning/category');
+  },
+
+  getCategoryById: (id) => {
+    return new Fetch(METHODS.get, `/warning/category/${id}`);
   },
 
   // --- CONTRACTS ---
@@ -117,5 +125,20 @@ export default {
   },
   getEventContent: id => {
     return new Fetch(METHODS.get, '/event/content/'.concat(id));
-  }
+  },
+    updateImageEvent: (id,image) =>{
+      return new Fetch(METHODS.put, '/event/image', {eventId: id, image: image}, {}, true)
+    },
+
+    // --- InterestGroup ---
+
+    subscribeToAWarning: (warningId) =>{
+      console.log(warningId);
+      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId), {}, {}, true)
+    },
+
+    unSubscribeToAWarning: (warningId) =>{
+        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),{}, {}, true)
+    }
+
 };

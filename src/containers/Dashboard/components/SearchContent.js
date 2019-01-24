@@ -18,8 +18,11 @@ import StatusTabs from './StatusTabs';
 const styles = makeStyles({
     root: {
         minHeight: 400,
+        paddingBottom: 100,
         '@media only screen and (min-width: 601px)': {
-            width:450
+            width:450,
+            maxWidth: 450,
+            overflow: 'hidden',
         },
         '@media only screen and (max-width: 600px)': {
             width: '100%'

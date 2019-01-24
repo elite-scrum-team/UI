@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+// Material UI Components
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
+  root: {
+    width: '100%',
+  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing.unit
@@ -20,14 +26,14 @@ const styles = theme => ({
 function Register(props) {
   const { classes } = props;
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, SetConfirm] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirm, SetConfirm] = useState("");
 
   return (
-    <div>
+    <div className={classes.root}>
       <form
         className={classes.form}
-        onSubmit={props.reg(email, password, confirm)}
+        onSubmit={props.reg(email, '', '')}
       >
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="email">Email</InputLabel>
@@ -41,6 +47,7 @@ function Register(props) {
             autoFocus
           />
         </FormControl>
+        <Typography variant='caption' align='center'>Passord vil bli sendt på email.</Typography>
         <FormControl margin="normal" required fullWidth>
           {/* <InputLabel htmlFor="password">Passord</InputLabel>
           <Input

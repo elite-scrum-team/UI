@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 import React, { useState, useCallback, useEffect } from 'react';
+=======
+import React, { useState, useEffect, PureComponent } from 'react';
+>>>>>>> 99858b387226ea73c1519ac1f52f5f047b430527
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
 // Icons
 import WarningMarkerIcon from '../../assets/img/warningMarker.png';
-// import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
+import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
@@ -24,10 +28,21 @@ const Map = compose(
   }),
   withScriptjs,
   withGoogleMap
-)((props) => {
+)(React.memo((props) => {
 
   // State
-  const [selectedLocation, setSelectedLocation] = useState({lat: 0, lng: 0});
+  const [selectedLocation, setSelectedLocation] = useState(props.defaultSelectedLocation || {lat: 0, lng: 0});
+  const [defaultLocation, setDefaultLocation] = useState(props.defaultCenter);
+
+  useEffect(() => {
+      setSelectedLocation(props.defaultSelectedLocation || {lat: 0, lng: 0});
+  }, [props.defaultSelectedLocation]);
+
+    useEffect(() => {
+        setDefaultLocation(props.defaultCenter || {lat: 0, lng: 0});
+        console.log(props.defaultCenter);
+    }, [props.defaultCenter]);
+
 
   useCallback(() => {
     console.log('update');
@@ -37,7 +52,7 @@ const Map = compose(
     <GoogleMap
       {...props}
       defaultZoom={props.zoom}
-      defaultCenter={{ lat: props.defaultCenter.lat, lng: props.defaultCenter.lng }}
+      center={ defaultLocation }
       defaultOptions = {{
           streetViewControl: false,
           scaleControl: false,
@@ -76,7 +91,7 @@ const Map = compose(
           position={location.location}
           clickable={location.onClick !== undefined}
           onClick={location.onClick ? () => location.onClick(location) : null}
-         // icon={WarningMarkerCircleIcon}
+          icon={WarningMarkerCircleIcon}
          />
         )
         })}
@@ -86,34 +101,42 @@ const Map = compose(
       {props.circlePosition && <Circle center={props.circlePosition} radius={CIRCLE_RADIUS} options={{fillOpacity: 0, strokeOpacity: 0.1}}/>}
     </GoogleMap>
   )
-});
+}));
 
 
-const MapWrapper = (props) => {
+class MapWrapper extends PureComponent {
 
-  const [locations, setLocations] = useState([]);
+  state = {
+    locations: [],
+  };
 
-  useCallback(() => {
-    setLocations(locations);
-  }, [props.locations]);
-
-  const onMapMounted = (map) => {
-    if(props.map && map) {
-      props.map(map);
+  componentDidUpdate(prevProps) {
+    if(prevProps.locations !== this.props.locations) {
+      this.setState({locations: this.props.locations});
     }
   }
 
-  return (
-    <Map
-      {...props}
-      onMapMounted={onMapMounted}
-      defaultCenter={props.defaultCenter || {}}
-      showMarkers={props.showMarkers}
-      locations={props.locations}
-      zoom={props.zoom}
-      clickable={props.clickable}
-      circlePosition={props.circlePosition}/>
+  onMapMounted = (map) => {
+    if(this.props.map && map) {
+      this.props.map(map);
+    }
+  };
+
+  render() {
+    return (
+      <Map
+        onMapMounted={this.onMapMounted}
+        defaultCenter={this.props.defaultCenter || {}}
+        showMarkers={this.props.showMarkers}
+        locations={this.state.locations}
+        zoom={this.props.zoom}
+        clickable={this.props.clickable}
+        circlePosition={this.props.circlePosition}
+        //defaultSelectedLocation={props.defaultSelectedLocation}
+      />
+
   )
+  }
 }
 
 MapWrapper.propTypes = {
@@ -123,13 +146,14 @@ MapWrapper.propTypes = {
   zoom: PropTypes.number,
   clickable: PropTypes.func, // Makes it possible to click on the map, moving a marker, and adding a callback
   circlePosition: PropTypes.object,
-}
+    defaultSelectedLocation: PropTypes.object,
+};
 
 MapWrapper.defaultProps = {
   locations: [],
   defaultCenter: {lat: 63.429748, lng: 10.393916},
   showMarkers: true,
   zoom: 8,
-}
+};
 
 export default (MapWrapper);
