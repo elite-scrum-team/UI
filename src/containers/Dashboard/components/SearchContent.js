@@ -22,7 +22,7 @@ const styles = makeStyles({
         '@media only screen and (min-width: 601px)': {
             width:450,
             maxWidth: 450,
-            overflow: 'hidden',
+            overflowX: 'hidden',
         },
         '@media only screen and (max-width: 600px)': {
             width: '100%'
