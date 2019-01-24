@@ -83,32 +83,6 @@ class App extends Component {
     }
   }
 
-<<<<<<< HEAD
-    render() {
-        return (
-            <Provider store={store}>
-                <div className="App">
-                    <BrowserRouter >
-                        <MuiThemeProvider theme={theme}>
-                            <Switch>
-                                <Route exact path={URLS.details.concat(':id')} component={Details} />
-                                <Route exact path={URLS.recover} component={Recover} />
-                                <Route exact path={URLS.discover} component={Discover} />
-                                <Route exact path={URLS.home} component={Landing} />
-                                <Route exact path={URLS.login} component={LogIn} />
-                                <Route exact path={URLS.events} component={Events} />
-                                <Route exact path={URLS.createnews.concat(':id?')} component={CreateNews} />
-                                <Route exact path={URLS.statistics} component={Statistics} />
-                                <PrivateRoute exact path={URLS.createwarning} component={CreateWarning} />
-                                <CompEmployeeRoute exact path={URLS.dashboard.concat(':id?')} component={Dashboard} />
-                            </Switch>
-                        </MuiThemeProvider>
-                    </BrowserRouter>
-                </div>
-            </Provider>
-        );
-    }
-=======
   render() {
     return (
       <Provider store={store}>
@@ -160,7 +134,6 @@ class App extends Component {
       </Provider>
     );
   }
->>>>>>> 99858b387226ea73c1519ac1f52f5f047b430527
 }
 
 export default App;

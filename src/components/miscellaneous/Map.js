@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useState, useCallback, useEffect } from 'react';
-=======
 import React, { useState, useEffect, PureComponent } from 'react';
->>>>>>> 99858b387226ea73c1519ac1f52f5f047b430527
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -42,11 +38,6 @@ const Map = compose(
         setDefaultLocation(props.defaultCenter || {lat: 0, lng: 0});
         console.log(props.defaultCenter);
     }, [props.defaultCenter]);
-
-
-  useCallback(() => {
-    console.log('update');
-  }, [selectedLocation, setSelectedLocation]); 
   
   return (
     <GoogleMap
