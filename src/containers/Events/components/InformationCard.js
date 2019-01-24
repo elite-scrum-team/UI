@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/styles';
 import classNames from 'classnames';
 import moment from 'moment'
 
@@ -26,48 +26,39 @@ const relocate = (link) => {
 };
 
 const styles = makeStyles({
-    root: {
-        backgroundColor: 'white',
-        marginTop: 20,
-        width: '90%',
-        padding:'70px 0 70px 0',
-    },
-    icons: {
-        display: 'flex',
-        flexDirection: 'column',
-        marginRight:30
-    },
-    info: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems:'center'
-    },
-    mr:{
-        marginRight: 10
-    },
-    buttonWrapper: {
-        marginTop: 14
+        root: {
+            backgroundColor: 'white',
+            marginTop: 20,
+            width: '90%',
+            padding: '70px 0 70px 0',
+        },
+        icons: {
+            display: 'flex',
+            flexDirection: 'column',
+            marginRight: 30
+        },
+        info: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
+        mr: {
+            marginRight: 10
+        },
+        buttonWrapper: {
+            //marginTop: 14
+        }
     }
-}
 );
 
 const IconCarry = (props) => {
 
-    const classes = styles();
-    const canEdit = false;
-
-    // if (props.userData) {
-    //     for (let i = 0; i < props.userData.group.length; i++) {
-    //         if (props.userData.group[i].municipalitiy === props.event.municipalityId) {
-    //             console.log('greting')
-    //         }
-    //     }
-    // }
+    const classes = styles()
 
     return (
         <div className={classes.info}>
             <div className={classes.mr}>
-            {props.second}
+                {props.second}
             </div>
             <Typography> {props.first} </Typography>
         </div>
@@ -75,6 +66,24 @@ const IconCarry = (props) => {
 };
 
 const DetailCard = (props) => {
+
+    const [canEdit, setCanEdit] = useState(false);
+
+    useEffect(() => {
+        if (props.userData) {
+            if (props.userData.group) {
+                for (let i = 0; i < props.userData.group.length; i++) {
+                    if (props.userData.group[i].municipalitiy === props.event.municipalityId) {
+                        setCanEdit(true);
+                        return;
+                    }
+                }
+            }
+        }
+        setCanEdit(false);
+
+    }, [props.event]);
+
     const event = props.event;
 
     const fromTime = moment(event.fromTime).format('HH:mm:ss');
@@ -83,7 +92,6 @@ const DetailCard = (props) => {
 
     const fromDate = moment(event.fromTime).format('MMMM Do YYYY');
     const toDate = moment(event.toTime).format('MMMM Do YYYY');
-    console.log(props);
 
     const location = event.city ? event.city : "Ukjent Kommune";
     // Styling
@@ -93,39 +101,39 @@ const DetailCard = (props) => {
         <div className={classNames(classes.root, props.className)}>
             <div className={classNames(classes.icons)}>
                 {fromDate !== 'Invalid date' ?
-                <div>
-                    {(fromDate === toDate) ?
-                        <div>
-                            <IconCarry first={time} second={<TimeIcon/>}/>
-                            <IconCarry first={fromDate} second={<CalendarIcon/>}/>
-                        </div> :
-                        <div>
-                            <Typography>from: </Typography>
-                            <IconCarry first={fromTime} second={<TimeIcon/>}/>
-                            <IconCarry first={fromDate} second={<CalendarIcon/>}/>
-                            <Divider/>
-                            <Typography>To: </Typography>
-                            <IconCarry first={toTime} second={<TimeIcon/>}/>
-                            <IconCarry first={toDate} second={<CalendarIcon/>}/>
-                        </div>
-                    }
-                </div>
+                    <div>
+                        {(fromDate === toDate) ?
+                            <div>
+                                <IconCarry first={time} second={<TimeIcon/>}/>
+                                <IconCarry first={fromDate} second={<CalendarIcon/>}/>
+                            </div> :
+                            <div>
+                                <Typography>from: </Typography>
+                                <IconCarry first={fromTime} second={<TimeIcon/>}/>
+                                <IconCarry first={fromDate} second={<CalendarIcon/>}/>
+                                <Divider/>
+                                <Typography>To: </Typography>
+                                <IconCarry first={toTime} second={<TimeIcon/>}/>
+                                <IconCarry first={toDate} second={<CalendarIcon/>}/>
+                            </div>
+                        }
+                    </div>
                     :
                     <div>
                         <IconCarry first={'Pågående'} second={<CalendarIcon/>}/>
                     </div>
-                    }
+                }
                 <Divider/>
                 <IconCarry first={location} second={<BankIcon/>}/>
-                <IconCarry first={event.street === null ? event.street : 'Ukjent adresse'} second={<LocationIcon/>}/>
+                <IconCarry first={event.street !== 'null' ? event.street : 'Ukjent adresse'} second={<LocationIcon/>}/>
             </div>
             <div className={classes.buttonWrapper}>
-            {props.event.link !== '' &&
-            <Chip label="Besøk nettsiden" className={classes.mr} onClick={() => relocate(props.event.link)}/>
-            }
-            {props.event.link !== '' &&
-            <Chip label="Rediger" onClick={() => props.goTo(URLS.createnews.concat(event.id))}/>
-            }
+                {props.event.link !== '' &&
+                <Chip label="Besøk nettsiden" className={classes.mr} onClick={() => relocate(props.event.link)}/>
+                }
+                {canEdit &&
+                <Chip label="Rediger" onClick={() => props.goTo(URLS.createnews.concat(event.id))}/>
+                }
             </div>
 
         </div>

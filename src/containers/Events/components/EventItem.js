@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import classNames from 'classnames';
 import moment from 'moment';
 import theme from '../../../theme';
@@ -43,9 +43,7 @@ const styles = makeStyles({
     reverse: {
         flexDirection: 'row-reverse',
     },
-    detailWrapper: {
-
-    },
+    detailWrapper: {},
     content: {
         margin: 24,
         backgroundColor: 'white',
@@ -55,11 +53,11 @@ const styles = makeStyles({
         // justifyContent: 'space-between',
     },
     imageWrapper: {
-      /*   height: 200,
+        /*   height: 200,
 
-        '@media only screen and (max-width: 1300)': {
-            height: 'auto',
-        } */
+          '@media only screen and (max-width: 1300)': {
+              height: 'auto',
+          } */
     },
     image: {
         width: '100%',
@@ -124,7 +122,7 @@ const styles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        
+
         backgroundColor: theme.palette.primary.main,
     },
     placeholderImage: {
@@ -139,35 +137,59 @@ const EventItem = (props) => {
     // Styling
     const classes = styles();
 
-    const momentObject = props.date ? moment(props.date) : null;
-    const date = momentObject ? momentObject.format('DD/MM/YY') : 'Ukjent';
-    const time = momentObject ? momentObject.format('HH:mm') : 'Ukjent';
-    console.log(props.image);
+    const fromObject = props.fromTime ? moment(props.fromTime) : null;
+    const toObject = props.toTime ? moment(props.toTime) : null;
+
+    let date = null;
+
+    if (toObject !== null && fromObject !== null) {
+        if (fromObject.format('DD/MM/YY') === toObject.format('DD/MM/YY')) {
+            date = fromObject.format('DD/MM/YY');
+        }
+        else {
+            console.log(12);
+            date = fromObject.format('DD/MM/YY') + ' - ' + toObject.format('DD/MM/YY');
+            console.log('date: ' + date);
+        }
+    }
+    else {
+        date = 'Pågående';
+    }
+
+    const time = (fromObject && toObject) ? fromObject.format('HH:mm') : 'Pågående';
 
     return (
-        <Paper className={classNames(classes.root, props.imageLeft ? '' : classes.reverse, props.className)} onClick={props.onClick}>
+        <Paper className={classNames(classes.root, props.imageLeft ? '' : classes.reverse, props.className)}
+               onClick={props.onClick}>
             <div className={classNames(classes.imageWrapper,
-                    props.imageLeft ? classes.fixedSize : classes.grow,
-                    !props.image ? classes.placeholder : '', props.viewingDetail ? classes.notFixed : '')}>
-                {props.image ? <img className={classes.image} src={props.image} alt={props.title} />
-                :
-                    <img className={classes.placeholderImage} src={EventIcon} alt={props.title} />
+                props.imageLeft ? classes.fixedSize : classes.grow,
+                !props.image ? classes.placeholder : '', props.viewingDetail ? classes.notFixed : '')}>
+                {props.image ? <img className={classes.image} src={props.image} alt={props.title}/>
+                    :
+                    <img className={classes.placeholderImage} src={EventIcon} alt={props.title}/>
                 }
             </div>
             <div className={classNames(classes.detailWrapper, props.imageLeft ? classes.grow : classes.fixedSize)}>
                 <div className={classes.content}>
                     <Typography variant='h5'>{props.title}</Typography>
                     <div className={classes.details}>
-                        <div className={classes.flex}><TimeIcon className={classes.icon} /><Typography variant='body2'>{time}</Typography></div>
-                        <div className={classes.flex}><BankIcon className={classes.icon} /><Typography variant='body2'>{props.municipality}</Typography></div>
-                        <div className={classes.flex}><CalendarIcon className={classes.icon} /><Typography variant='body2'>{date}</Typography></div>
-                        <div className={classes.flex}><LocationIcon className={classes.icon} /><Typography variant='body2'>{props.street}</Typography></div>
+                        {time !== null &&
+                        <div className={classes.flex}><TimeIcon className={classes.icon}/><Typography
+                            variant='body2'>{time}</Typography></div>
+                        }
+                        <div className={classes.flex}><BankIcon className={classes.icon}/><Typography
+                            variant='body2'>{props.municipality}</Typography></div>
+                        <div className={classes.flex}><CalendarIcon className={classes.icon}/><Typography
+                            variant='body2'>{date}</Typography></div>
+                        <div className={classes.flex}><LocationIcon className={classes.icon}/><Typography
+                            variant='body2'>{props.street !== 'null' ? props.street : 'Ukjent adresse'}</Typography>
+                        </div>
                     </div>
                     {/* <div className={classes.ellipsis}>
                         <Typography  variant='subtitle2' noWrap={false}>{props.description}</Typography>
                         <div className={classes.fade} />
                     </div> */}
-                    <div className={classes.middle} />
+                    <div className={classes.middle}/>
 
                 </div>
             </div>
