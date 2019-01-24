@@ -55,10 +55,10 @@ export const statusTextColorStyles = [
 ];
 
 export default {
-    statusNames: ['Ikke behandlet', 'Behandlet', 'Pågående', 'Ferdig', 'Avslått'],
+    statusNames: ['Ikke behandlet', 'Under behandling', 'Pågående', 'Ferdig', 'Avslått'],
 
     //MÅ STÅ I RIKTIG REKKEFØLGE
-    statusLabels: ['Anerkjent', 'Arbeid påbegynt','Ferdig','Avslått'],
+    statusLabels: ['Anerkjent', 'Arbeid påbegynt','Ferdig','Avslå'],
 
     //Brukt i dialog for statusendring
     statusLabelsWithNumbers: [  {number: 1, label: 'Anerkjent'},

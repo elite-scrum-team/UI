@@ -83,7 +83,6 @@ class Analytics extends Component {
 
     componentDidMount() {
         this.fetchMunicipalities();
-
         this.fetchData();
     }
 
