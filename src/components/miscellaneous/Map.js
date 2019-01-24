@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import mapStyles from '../../assets/mapStyles.json';
 
@@ -29,6 +29,10 @@ const Map = compose(
   // State
   const [selectedLocation, setSelectedLocation] = useState({lat: 0, lng: 0});
 
+  useCallback(() => {
+    console.log('update');
+  }, [selectedLocation, setSelectedLocation]); 
+  
   return (
     <GoogleMap
       {...props}
