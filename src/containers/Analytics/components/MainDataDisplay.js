@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
+// Services
+import AnalyticsService from '../../../api/services/AnalyticsService';
+
 // Material UI components
 
 // Icons
@@ -32,16 +35,22 @@ class MainDataDisplay extends Component {
         isLoading: false,
     }
 
-    reloadData(time) {
+    reloadData(timeObject = {}, municipalityId = null) {
         // Set isLoading true,
         this.setState({isLoading: true});
 
-        // Convert time
+        console.log(municipalityId);
 
         // Start fetching data
+        AnalyticsService.getDistributionData(timeObject.startDate, timeObject.endDate,
+            municipalityId, timeObject.dateFormat,
+            (isError, data) => {
+                console.log(data);
+            }
+        )
 
         // Set isLoading false
-        console.log(time);
+        console.log(timeObject);
     }
 
     render() {
