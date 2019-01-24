@@ -23,6 +23,7 @@ const Sidebar = props => {
     // Styling
     const classes = styles();
 
+
     return (
         <div className={classes.root}>
             <Drawer

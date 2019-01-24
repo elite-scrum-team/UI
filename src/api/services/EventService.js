@@ -70,15 +70,21 @@ export default class eventService {
     };
 
     static updateEvent = (item ,callback) => {
+        console.log(1);
         // Split images and other data
         const images = item.image;
         delete item.image;
 
         // Update event
         const response = API.updateEvent(item.id, item).response();
+        console.log(response);
+
         return response.then(async (data) => {
+            console.log(2);
+
             // Add images if no error
             if(response.isError === false && images instanceof Array) {
+                console.log(3);
                 for(let index in images) {
                     // Upload images to server
                     await API.updateImageEvent(data.id, images[index]).response(true)
