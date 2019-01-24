@@ -23,6 +23,7 @@ import NotificationsOff from '@material-ui/icons/NotificationsOff';
 import Assignment from '@material-ui/icons/Assignment';
 import Sms from '@material-ui/icons/Sms';
 import Edit from '@material-ui/icons/Edit';
+import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 
 // Project components
 import DeleteDialog from './DeleteDialog';

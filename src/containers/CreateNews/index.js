@@ -180,7 +180,7 @@ class CreateNews extends Component {
             fromTime: this.state.fromDate,
             toTime: this.state.toDate,
             image: this.state.imageFile,
-        }
+        };
 
         this.setState({isSending: true});
         console.log(news);
@@ -192,6 +192,36 @@ class CreateNews extends Component {
                 this.props.history.push(URLS.events);
             }
         });
+    };
+
+    editNews = () => {
+        // Do nothing if already loading
+        if (this.state.isLoading) {
+            return;
+        }
+
+        // News object to send
+        const news = {
+            title: this.state.title,
+            description: this.state.description,
+            link: this.state.link,
+            location: this.state.location,
+            fromTime: this.state.fromDate,
+            toTime: this.state.toDate,
+            image: this.state.imageFile,
+        };
+
+        this.setState({isSending: true});
+        console.log(news);
+        EventService.update(news, (isError, data) => {
+            console.log(data);
+            if (isError) {
+                this.setState({isError: true, isSending: false, confirmDialogOpen: false});
+            } else {
+                this.props.history.push(URLS.events);
+            }
+        });
+
     };
 
 
