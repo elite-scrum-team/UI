@@ -52,7 +52,7 @@ const LineChartView = (props) => {
             <div className={classes.grow}>
                 <div className='w-100'>
                     {props.isLoading ? <CircularProgress className={classes.progress} /> :
-                    <LineChart data={{'2019-04-13': 2, '2019-04-14': 5, '2019-04-15': 4}} />
+                    <LineChart data={props.data || {}} />
                     }
                 </div>
             </div>

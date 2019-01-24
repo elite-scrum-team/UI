@@ -143,9 +143,11 @@ export default {
   },
 
   // --- ANALYTICS ---
-  getDistributions: (startDate, endDate, municipalityId, dateFormat) => {
-    return new Fetch(METHODS.get, `/warning/statistics/distribution/?warning=true&category=true&
-      startDate=${startDate}&endDate=${endDate}&dateFormat=${dateFormat}&`
-      + (municipalityId ? `municipality=${municipalityId}` : ''));
+  getDistributions: (filters) => {
+    return new Fetch(METHODS.get, `/warning/statistics/distribution/?warning=true&category=true&`.concat(filterToParams(filters)));
+  },
+
+  getCounts: (filters) => {
+    return new Fetch(METHODS.get, `/warning/statistics/count?`.concat(filterToParams(filters)))
   }
 };

@@ -52,7 +52,7 @@ const BarChartView = (props) => {
             <div className={classes.grow}>
                 <div className='w-100'>
                     {props.isLoading ? <CircularProgress className={classes.progress} /> :
-                        <ColumnChart data={{'Hull i vei': 2, 'Gatelys': 5, 'Noe': 4}} />
+                        <ColumnChart data={props.data || {}} />
                     }
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import moment from 'moment'
 
@@ -26,26 +26,29 @@ const relocate = (link) => {
 };
 
 const styles = makeStyles({
-        root: {
-            backgroundColor: 'white',
-            marginTop: 20,
-            width: '90%',
-            padding: '70px 0 70px 0',
-        },
-        icons: {
-            display: 'flex',
-            flexDirection: 'column',
-            marginRight: 30
-        },
-        info: {
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center'
-        },
-        mr: {
-            marginRight: 10
-        }
+    root: {
+        backgroundColor: 'white',
+        marginTop: 20,
+        width: '90%',
+        padding:'70px 0 70px 0',
+    },
+    icons: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginRight:30
+    },
+    info: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems:'center'
+    },
+    mr:{
+        marginRight: 10
+    },
+    buttonWrapper: {
+        marginTop: 14
     }
+}
 );
 
 const IconCarry = (props) => {
@@ -64,7 +67,7 @@ const IconCarry = (props) => {
     return (
         <div className={classes.info}>
             <div className={classes.mr}>
-                {props.second}
+            {props.second}
             </div>
             <Typography> {props.first} </Typography>
         </div>
@@ -116,12 +119,14 @@ const DetailCard = (props) => {
                 <IconCarry first={location} second={<BankIcon/>}/>
                 <IconCarry first={event.street === null ? event.street : 'Ukjent adresse'} second={<LocationIcon/>}/>
             </div>
+            <div className={classes.buttonWrapper}>
             {props.event.link !== '' &&
-            <Chip label="Besøk nettsiden" onClick={() => relocate(props.event.link)}/>
+            <Chip label="Besøk nettsiden" className={classes.mr} onClick={() => relocate(props.event.link)}/>
             }
             {props.event.link !== '' &&
             <Chip label="Rediger" onClick={() => props.goTo(URLS.createnews.concat(event.id))}/>
             }
+            </div>
 
         </div>
     )

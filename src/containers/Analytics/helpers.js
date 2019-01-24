@@ -12,23 +12,50 @@ export const timeData =
 ];
 
 export const getDateData = (value) => {
-    const endDate = moment().toISOString();
     let startDate = null;
-    let dateFormat = '%Y/%M/%D';
+    let dateFormat = '%Y-%m-%d';
+    let momentFormat = 'YYYY-MM-DD';
+    let allDates = {};
+
+    // Dates
+    const sevenDaysAgo = moment().subtract(7, 'days').format(momentFormat);
+    const thirtyDaysAgo = moment().subtract(30, 'days').format(momentFormat);
+    const oneYearAgo = moment().subtract(12, 'months').format(momentFormat);
+
+    let numberOfColumns = 7;
+    let attr = 'days';
+
     if(value === SEVEN_DAYS) {
-        startDate = moment().subtract(7, 'days');
-    } else if (value === THIRTY_DAYS) {
-        startDate = moment().subtract(30, 'days');
-    } else if(value === CUR_YEAR) {
-        startDate = moment().subtract(12, 'months');
-        dateFormat = '%Y/%M';
-    } else {
+        startDate = sevenDaysAgo;
+    }
+    else if (value === THIRTY_DAYS) {
+        numberOfColumns = 30;
+        startDate = thirtyDaysAgo;
+    }
+    else if(value === CUR_YEAR) {
+        numberOfColumns = 12;
+        attr = 'months';
+        startDate = oneYearAgo;
+        dateFormat = '%Y-%m';
+        momentFormat = 'YYYY-MM';
+    }
+    else {
         startDate = moment();
     }
 
+    // Initialize object with all wanted dates
+    const tempDate = moment(startDate);
+    for(let i = 0; i < numberOfColumns; i++) {
+        const curDate = tempDate.add(1, attr);
+        allDates[curDate.format(momentFormat)] = 0;
+    }
+
     return {
-        startDate: startDate.toISOString(),
-        endDate,
+        startDate,
         dateFormat,
+        allDates,
+        sevenDaysAgo,
+        thirtyDaysAgo,
+        oneYearAgo,
     }
 }
