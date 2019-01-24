@@ -266,7 +266,7 @@ class CreateWarning extends Component {
                             <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
                             <div className={classes.fillSection}>
                                 <MapStep
-                                    selectedLocation={this.state.currentLocation}
+                                    defaultLocation={this.state.currentLocation}
                                     mapMarkerCallback={(e) => this.mapClickCallback(e)}
                                 />
                             </div>

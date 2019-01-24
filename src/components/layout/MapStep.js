@@ -42,14 +42,13 @@ const MapStep = (props) => {
     const classes = styles();
 
     useEffect(() => {
-        setSelectedLocation(props.selectedLocation || props.defaultLocation);
-     }, [props.selectedLocation, props.defaultLocation]);
+        setSelectedLocation(props.defaultLocation);
+     }, [props.defaultLocation]);
 
     const onMapClick = (event) => {
         console.log(event);
         const locationObject = event.latLng;
         console.log(locationObject);
-        setSelectedLocation({lat: locationObject.lat(), lng: locationObject.lng()});
         const data = {lat: locationObject.lat(), lng: locationObject.lng() };
         props.mapMarkerCallback(data);
     };

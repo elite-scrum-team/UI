@@ -238,14 +238,14 @@ class Events extends Component {
                                         ))}
                                     </div>
                                     :
-                                    <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
+                                    <Typography variant='h6' align='center'>Ingen arrangementer å vise</Typography>
                             }
                         </div>
                     </Hidden>
 
                     <Fragment>
                         <Hidden implementation='js' smDown>
-                            <Sidebar goTo={(page) => this.goTo(page)} open={this.state.detail !== null} event={this.state.detail}
+                            <Sidebar goTo={(page) => this.goTo(page)} open={this.state.detail !== null} event={this.state.detail} userData={this.state.userData}
                                      close={this.onItemClick(null)}/>
                         </Hidden>
                         {this.state.detail && <Hidden implementation='js' mdUp>
@@ -258,7 +258,7 @@ class Events extends Component {
                     <Button variant="contained" size={'large'} color='secondary'
                             className={classes.registerButton}
                             onClick={() => this.goTo(URLS.createnews)}>
-                        Registrer nyhet
+                        Registrer arrangement
                     </Button>
                 </div>
 

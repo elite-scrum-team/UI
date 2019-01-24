@@ -246,6 +246,10 @@ class CreateNews extends Component {
                             lat: e.location.coordinate.coordinates[0],
                             lng: e.location.coordinate.coordinates[1]
                         },
+                        currentLocation: {
+                            lat: e.location.coordinate.coordinates[0],
+                            lng: e.location.coordinate.coordinates[1]
+                        },
                     });
                     if (e.fromTime !== null && e.toTime !== null) {
                         await this.setState({
