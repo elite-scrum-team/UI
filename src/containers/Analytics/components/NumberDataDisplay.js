@@ -45,8 +45,8 @@ class NumberDataDisplay extends Component {
         // Convert time
 
         // Start fetching data
-        AnalyticsService.getDistributionData(timeObject.startDate, timeObject.endDate,
-            municipalityId, timeObject.dateFormat,
+        const startDates = [timeObject.sevenDaysAgo, timeObject.thirtyDaysAgo, timeObject.oneYearAgo];
+        AnalyticsService.getWarningCountData(startDates, municipalityId, null,
             (isError, data) => {
                 console.log(data);
             }

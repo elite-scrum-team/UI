@@ -33,18 +33,39 @@ class MainDataDisplay extends Component {
 
     state = {
         isLoading: false,
+        warningDistributionData: {},
+        categoryDistributionData: {},
     }
 
     reloadData(timeObject = {}, municipalityId = null) {
         // Set isLoading true,
         this.setState({isLoading: true});
 
-        console.log(municipalityId);
+        console.log("Municipality: ", municipalityId);
 
         // Start fetching data
-        AnalyticsService.getDistributionData(timeObject.startDate, timeObject.endDate,
-            municipalityId, timeObject.dateFormat,
+        AnalyticsService.getDistributionData(timeObject.startDate, municipalityId, timeObject.dateFormat,
             (isError, data) => {
+                if(isError === false && data && data.warning && data.category) {
+                     // Configure warnign data
+                    const warningData = data.warning.reduce((acc, val) => {
+                        acc[val.date] = val.count;
+                        return acc;
+                    }, timeObject.allDates || {});
+
+                    // Configure category data
+                    const categoryData = data.category.reduce((acc, val) => {
+                        acc[val.name] = val.warnings;
+                        return acc;
+                    }, {});
+                    this.setState({
+                        warningDistributionData: warningData,
+                        categoryDistributionData: categoryData
+                    });
+                }
+               
+
+                this.setState({isLoading: false});
                 console.log(data);
             }
         )
@@ -59,8 +80,16 @@ class MainDataDisplay extends Component {
 
         return (
             <div className={classes.root}>
-                <LineChartView isLoading={this.state.isLoading} className={classNames(classes.grow, classes.mr)} label='Antall varsler over tid'/>
-                <BarChartView isLoading={this.state.isLoading} className={classNames(classes.grow, classes.ml)} label='Kategori distribusjon over tid' />
+                <LineChartView
+                    isLoading={this.state.isLoading}
+                    className={classNames(classes.grow, classes.mr)}
+                    label='Antall varsler over tid'
+                    data={this.state.warningDistributionData}/>
+                <BarChartView
+                    isLoading={this.state.isLoading}
+                    className={classNames(classes.grow, classes.ml)}
+                    label='Kategori distribusjon i perioden'
+                    data={this.state.categoryDistributionData} />
             </div>
         )
     }

@@ -1,6 +1,6 @@
-export const BASE_API_URL = 'http://35.228.12.13:80/api/v1';
+export const BASE_API_URL = '/api/v1'; //https://35.244.206.109
 
-export const TOKEN_HEADER_NAME = 'Authorization';
+export const TOKEN_HEADER_NAME = 'Authorization'
 export const TOKEN_COOKIE_ID = 'access_token';
 
 export const METHODS = {

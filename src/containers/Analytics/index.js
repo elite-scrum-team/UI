@@ -83,6 +83,16 @@ class Analytics extends Component {
 
     componentDidMount() {
         this.fetchMunicipalities();
+
+        this.fetchData();
+    }
+
+    fetchData() {
+        const timeObject = getDateData(this.state.timeState.value);
+        const municipalityId = this.state.municipality ? this.state.municipality.value : null;
+
+        this.mainDataDisplayer.reloadData(timeObject, municipalityId);
+        this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
 
     fetchMunicipalities() {
@@ -96,9 +106,9 @@ class Analytics extends Component {
     onMunicipalityChange = async (value) => {
         await this.setState({municipality: value});
 
-        const timeObject = getDateData(this.state.timeState);
-        const municipalityId = getDateData(this.state.municipality ? this.state.municipality.value : null);
-        console.log(municipalityId);
+        const timeObject = getDateData(this.state.timeState.value);
+        const municipalityId = this.state.municipality ? this.state.municipality.value : null;
+
         this.mainDataDisplayer.reloadData(timeObject, municipalityId);
         this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
@@ -106,9 +116,9 @@ class Analytics extends Component {
     onTimeChange = async (value) => {
         await this.setState({timeState: value});
 
-        const timeObject = getDateData(this.state.timeState);
-        const municipalityId = getDateData(this.state.municipality ? this.state.municipality.value : null);
-        console.log(municipalityId);
+        const timeObject = getDateData(this.state.timeState.value);
+        const municipalityId = this.state.municipality ? this.state.municipality.value : null;
+
         this.mainDataDisplayer.reloadData(timeObject, municipalityId);
         this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
