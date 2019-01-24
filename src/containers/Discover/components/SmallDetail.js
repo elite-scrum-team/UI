@@ -55,7 +55,7 @@ const styles = makeStyles({
         height: 50,
     },
     margin: {
-        marginTop: 14,
+        margin: 14,
     },
     buttonWrapper: {
         width: "50%"

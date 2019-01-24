@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-// import { createMuiTheme} from '@material-ui/core/styles';
 import SearchBarStyles from './SearchBarStyles';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
-/* import FeedbackIcon from '@material-ui/icons/Feedback';
-import PersonIcon from '@material-ui/icons/Person'; */
 
 // Project components
 import SearchableDropdown from '../../../components/miscellaneous/SearchableDropdown';
@@ -85,14 +82,14 @@ const Functions = (props) => {
                     eller
                 </Typography>
             <div className='mt-15'>
-                <Button
-                    variant='extendedFab'
+                <Fab
+                    variant='extended'
                     onClick={props.searchByLocation}
-                    size='medium'
+                    size='large'
                     color='primary'>
                     <LocationIcon className='mr-5'/>
                     Søk med min posisjon
-                </Button>
+                </Fab>
             </div>
         </div>
     )

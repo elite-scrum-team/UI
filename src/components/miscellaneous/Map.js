@@ -4,7 +4,7 @@ import mapStyles from '../../assets/mapStyles.json';
 
 // Icons
 import WarningMarkerIcon from '../../assets/img/warningMarker.png';
-// import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
+import WarningMarkerCircleIcon from '../../assets/img/warningMarker02.png';
 
 // External libraries
 import { compose, withProps } from 'recompose'
@@ -38,8 +38,7 @@ const Map = compose(
         setDefaultLocation(props.defaultCenter || {lat: 0, lng: 0});
         console.log(props.defaultCenter);
     }, [props.defaultCenter]);
-
-
+  
   return (
     <GoogleMap
       {...props}
@@ -83,7 +82,7 @@ const Map = compose(
           position={location.location}
           clickable={location.onClick !== undefined}
           onClick={location.onClick ? () => location.onClick(location) : null}
-         // icon={WarningMarkerCircleIcon}
+          icon={WarningMarkerCircleIcon}
          />
         )
         })}
