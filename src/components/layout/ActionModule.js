@@ -33,7 +33,6 @@ import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
 import SubscribeDialog from "./SubscribeDialog";
-import URLS from "../../URLS";
 import CategoryService from "../../api/services/CategoryService";
 import WarningService from "../../api/services/WarningService";
 
@@ -73,7 +72,7 @@ class ActionModule extends Component {
 
     handleDeleteStatus = value => {
         this.handleNewStatus(value);
-        this.goTo(URLS.home);
+        //this.goTo(URLS.home);
     };
 
     goTo = (page) => {

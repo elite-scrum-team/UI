@@ -58,6 +58,7 @@ class Dashboard extends Component {
         search: '',
         warningItems: [],
         currentSection: NEW_SECTION,
+        municipalityEmployee: true,
 
         items: [],
 
@@ -68,7 +69,7 @@ class Dashboard extends Component {
 
     componentDidMount() {
         this.setState({isLoading: true, listIsLoading: true});
-        AuthService.getUserData((isError, data) => {
+        AuthService.getUserData((isError) => {
             if(isError === false) {
                 // Get id
                 const id = this.getWarningId();
@@ -182,6 +183,11 @@ class Dashboard extends Component {
         if(selectedGroup) {
             AuthService.setCurrentGroup(selectedGroup);
             this.onSectionChange(NEW_SECTION);
+            if (selectedGroup.municipalityId === null){
+                this.setState({municipalityEmployee: false});
+            } else {
+                this.setState({municipalityEmployee: true});
+            }
         }
     };
 
@@ -197,7 +203,7 @@ class Dashboard extends Component {
         const status = newStatus.status;
 
         WarningService.createStatus(this.getWarningId(), status , newStatus.statusMsg)
-        .then((data) => {
+        .then(() => {
             // Remove item from list
             if(status !== this.state.status) {
                 let items = Object.assign([], this.state.items);
@@ -221,7 +227,7 @@ class Dashboard extends Component {
           warningId,
           newContract.companyId,
           newContract.description
-        ).then(data => {
+        ).then(() => {
           WarningService.getWarningItems(this.getWarningId()).then(data => {
             this.setState({ warningItems: data });
           });
@@ -246,6 +252,7 @@ class Dashboard extends Component {
                     <div>
                         <Hidden implementation='js' xsDown>
                             <Sidebar
+                                municipalityEmployee={this.state.municipalityEmployee}
                                 className={classes.sidebar}
                                 searchValue={this.state.search}
                                 items={this.state.items}
@@ -261,6 +268,7 @@ class Dashboard extends Component {
                         <Hidden implementation='js' mdUp>
                             <SearchContent className={classes.sidebar}
                                 searchValue={this.state.search}
+                                municipalityEmployee={this.state.municipalityEmployee}
                                 items={this.state.items}
                                 onSubmit={this.onSearch}
                                 isLoading={this.state.listIsLoading}
