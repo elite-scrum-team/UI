@@ -26,15 +26,19 @@ const ConfirmDialog = (props) => {
     // Styling
     const classes = styles();
 
+    const reg = [
+        {label: 'Send inn', action: props.onSubmit},
+        {label: 'Avbryt', action: props.closeConfirmDialogCallback}
+    ];
+
+    const load = [{label: ""}];
+
     return (
         <MessageDialog
             open={props.open}
             onClose={props.closeConfirmDialogCallback}
             title={!props.isLoading ? 'Vil du registrere denne saken?' : 'Laster opp saken...'}
-            actions={[
-                {label: 'Send inn', action: props.onSubmit},
-                {label: 'Avbryt', action: props.closeConfirmDialogCallback}
-            ]}
+            actions={!props.isLoading ? reg : load}
         >
             {!props.isLoading ?
                 <DialogContentText id="alert-dialog-description">

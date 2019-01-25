@@ -258,15 +258,15 @@ class Events extends Component {
                                         userData={this.state.userData}
                                         close={this.onItemClick(null)}/>
                         </Hidden>}
+                        <div hidden={!this.state.isEmployee} className={classes.employeeTools}>
+                            <Button variant="contained" size={'large'} color='secondary'
+                                    className={classes.registerButton}
+                                    onClick={() => this.goTo(URLS.createnews)}>
+                                Registrer arrangement
+                            </Button>
+                        </div>
                     </Fragment>
 
-                </div>
-                <div hidden={!this.state.isEmployee} className={classes.employeeTools}>
-                    <Button variant="contained" size={'large'} color='secondary'
-                            className={classes.registerButton}
-                            onClick={() => this.goTo(URLS.createnews)}>
-                        Registrer arrangement
-                    </Button>
                 </div>
 
             </Navigation>
