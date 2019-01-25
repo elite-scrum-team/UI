@@ -75,7 +75,6 @@ class Analytics extends Component {
         this.state = {
             municipalities: [],
             municipality: null,
-
             startDate: moment().subtract(7, 'days').toDate(),
             endDate: moment().toDate(),
         };
