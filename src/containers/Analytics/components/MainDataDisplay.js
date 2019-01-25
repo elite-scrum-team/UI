@@ -62,6 +62,11 @@ class MainDataDisplay extends Component {
                         warningDistributionData: warningData,
                         categoryDistributionData: categoryData
                     });
+                } else {
+                    this.setState({
+                        warningDistributionData: timeObject.allDates,
+                        categoryDistributionData: {},
+                    });
                 }
                
 
