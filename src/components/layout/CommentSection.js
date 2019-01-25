@@ -67,7 +67,7 @@ const CommentSection = props => {
           <div className={classes.userInfo}>
             <Avatar>A</Avatar>
             <Typography className={classes.userName}>
-              {props.username || 'Anonymous'}
+              {props.username || 'Anonym'}
             </Typography>
           </div>
           <Typography className={classes.commentText}>
