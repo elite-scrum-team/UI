@@ -191,7 +191,7 @@ class Navigation extends Component {
                                             active={this.activeURI() === URLS.dashboard}
                                             goTo={this.goTo}
                                             to={URLS.dashboard}
-                                            label='Dashboard' />
+                                            label='Dashbord' />
                                     </Fragment>
                                }
                                 {AuthService.isAuthenticated() &&
