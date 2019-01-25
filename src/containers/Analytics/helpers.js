@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+export const ALL = 'ALL_MUNICIPALITIES';
+
 export const SEVEN_DAYS = 0;
 export const THIRTY_DAYS = 1;
 export const CUR_YEAR = 2;
@@ -11,47 +13,42 @@ export const timeData =
     {value: CUR_YEAR, label: 'Dette året'},
 ];
 
-export const getDateData = (value) => {
-    let startDate = null;
+export const getDateData = (startDate, endDate) => {
     let dateFormat = '%Y-%m-%d';
     let momentFormat = 'YYYY-MM-DD';
     let allDates = {};
+    startDate = moment(startDate);
+    endDate = moment(endDate);
+
+    const diffInDays = endDate.diff(startDate, 'days');
 
     // Dates
     const sevenDaysAgo = moment().subtract(7, 'days').format(momentFormat);
     const thirtyDaysAgo = moment().subtract(30, 'days').format(momentFormat);
     const oneYearAgo = moment().subtract(12, 'months').format(momentFormat);
 
-    let numberOfColumns = 7;
+    let numberOfColumns = diffInDays;
+    console.log('DIFF IN DAYS: ', numberOfColumns);
     let attr = 'days';
 
-    if(value === SEVEN_DAYS) {
-        startDate = sevenDaysAgo;
-    }
-    else if (value === THIRTY_DAYS) {
-        numberOfColumns = 30;
-        startDate = thirtyDaysAgo;
-    }
-    else if(value === CUR_YEAR) {
+    if(diffInDays >= 90) {
         numberOfColumns = 12;
         attr = 'months';
-        startDate = oneYearAgo;
         dateFormat = '%Y-%m';
-        momentFormat = 'YYYY-MM';
-    }
-    else {
-        startDate = moment();
+        //momentFormat = 'YYYY-MM';
     }
 
     // Initialize object with all wanted dates
     const tempDate = moment(startDate);
+    allDates[tempDate.format(momentFormat)] = 0;
     for(let i = 0; i < numberOfColumns; i++) {
         const curDate = tempDate.add(1, attr);
         allDates[curDate.format(momentFormat)] = 0;
     }
 
     return {
-        startDate,
+        startDate: startDate.format(momentFormat),
+        endDate: endDate.add(1, 'days').format(momentFormat),
         dateFormat,
         allDates,
         sevenDaysAgo,

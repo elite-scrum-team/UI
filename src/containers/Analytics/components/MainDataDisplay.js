@@ -44,7 +44,7 @@ class MainDataDisplay extends Component {
         console.log("Municipality: ", municipalityId);
 
         // Start fetching data
-        AnalyticsService.getDistributionData(timeObject.startDate, municipalityId, timeObject.dateFormat,
+        AnalyticsService.getDistributionData(timeObject.startDate, timeObject.endDate, municipalityId, timeObject.dateFormat,
             (isError, data) => {
                 if(isError === false && data && data.warning && data.category) {
                      // Configure warnign data

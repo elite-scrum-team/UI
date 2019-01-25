@@ -16,12 +16,15 @@ import Typography from '@material-ui/core/Typography';
 const styles = makeStyles({
     root: {
         width: '100%',
+        
     },
     paper: {
         width: '100%',
         position: 'relative',
         padding: 14,
         marginBottom: 6,
+        maxHeight: 160,
+        overflow: 'hidden',
     },
     statusBar: {
         position: 'absolute',

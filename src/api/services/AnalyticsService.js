@@ -4,8 +4,8 @@ import moment from 'moment';
 // and all the methods will return a promise
 export default class AnalyticsService {
     
-    static getDistributionData = (startDate, municipality, dateFormat, callback) => {
-        const filters = {startDate, dateFormat};
+    static getDistributionData = (startDate, endDate, municipality, dateFormat, callback) => {
+        const filters = {startDate, endDate, dateFormat};
         if(municipality) {
             filters.municipality = municipality;
         }
