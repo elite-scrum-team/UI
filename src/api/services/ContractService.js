@@ -1,9 +1,17 @@
 import API from '../api';
-
-// and all the methods will return a promise
+/**
+ * @module
+ * ContractService - gets info about the contract with a company
+ */
 export default class ContractService {
-  // --- CONTRACT ---
-
+  /**
+   * Create a contract to a company on the warning
+   * @param {string} warningId - The id of current warning
+   * @param {string} groupId - The id of the company
+   * @param {string} description - Brief description when you create a new contract with a company
+   * @param {Function} callback - Provides isError and data as arguments
+   * @return A promise :D
+   */
   static createContract(warningId, groupId, description, callback) {
     const response = API.createContract(
       warningId,
@@ -15,7 +23,11 @@ export default class ContractService {
       return data;
     });
   }
-
+  /**
+   * Get all the companies can be chosen
+   * @param {Function} callback - Provides isError and data as arguments
+   * @return A promise :D
+   */
   static getAllCompanies(callback) {
     const response = API.getAllCompanies().response();
     return response.then(data => {
