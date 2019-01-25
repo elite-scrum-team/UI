@@ -36,24 +36,26 @@ class NumberDataDisplay extends Component {
 
     state = {
         isLoading: false,
+        isLoadingStatuses: false,
 
         warningCountWeek: 0,
         warningCountMonth: 0,
         warningCountYear: 0,
 
-        warningFinishedYear: 0,
-        warningProgressYear: 0,
+        warningFinishedCount: 0,
+        warningProgressCount: 0,
+        warningRejectedCount: 0,
     }
 
     async reloadData(timeObject = {}, municipalityId = null) {
         // Set isLoading true,
-        this.setState({isLoading: true});
+        this.setState({isLoading: true, isLoadingStatuses: true});
 
         // Convert time
 
         // Start fetching data
         const startDates = [timeObject.sevenDaysAgo, timeObject.thirtyDaysAgo, timeObject.oneYearAgo];
-        await AnalyticsService.getWarningCountData(startDates, municipalityId, null,
+        await AnalyticsService.getWarningCountData(startDates, timeObject.endDate, municipalityId, null,
             (isError, data) => {
                 console.log(data);
                 if(data && data.length === 3) {
@@ -62,19 +64,11 @@ class NumberDataDisplay extends Component {
                         warningCountMonth: data[1].count,
                         warningCountYear: data[2].count,
                     })
-                }
-                this.setState({isLoading: false});
-
-                
-            }
-        );
-
-        await AnalyticsService.getWarningCountData([timeObject.oneYearAgo], municipalityId, 3,
-            (isError, data) => {
-                console.log(data);
-                if(data && data.length === 1) {
+                } else if(data.length === 0) {
                     this.setState({
-                        warningFinishedYear: data[0].count,
+                        warningCountWeek: 0,
+                        warningCountMonth: 0,
+                        warningCountYear: 0,
                     })
                 }
                 this.setState({isLoading: false});
@@ -83,9 +77,39 @@ class NumberDataDisplay extends Component {
             }
         );
 
+        await this.getStatusData(timeObject.startDate, timeObject.endDate, municipalityId, 2, (isError, data) => {
+            console.log(isError, data);
+            if(isError === false && data) {
+                const result = data.length > 0 ? data[0] : {count: 0};
+                this.setState({warningProgressCount: result.count});
+            }
+        });
+
+        await this.getStatusData(timeObject.startDate, timeObject.endDate, municipalityId, 3, (isError, data) => {
+            if(isError === false && data) {
+                const result = data.length > 0 ? data[0] : {count: 0};
+                this.setState({warningFinishedCount: result.count});
+            }
+        });
+
+        await this.getStatusData(timeObject.startDate, timeObject.endDate, municipalityId, 4, (isError, data) => {
+            if(isError === false && data) {
+                const result = data.length > 0 ? data[0] : {count: 0};
+                this.setState({warningRejectedCount: result.count});
+            }
+            this.setState({isLoadingStatuses: false});
+        });
 
         // Set isLoading false
         console.log(timeObject);
+    }
+
+    getStatusData = (startDate, endDate, municipalityId = null, status, callback) => {
+        return AnalyticsService.getWarningCountData([startDate], endDate, municipalityId, status,
+            (isError, data) => {
+                !callback || callback(isError, data);
+            }
+        );
     }
 
     render() {
@@ -94,12 +118,12 @@ class NumberDataDisplay extends Component {
 
         return (
             <div className={classes.root}>
-                <NumberView isLoading={this.state.isLoading} number={this.state.warningFinishedYear} label='warnings set "Finished" this year'/>
-                <NumberView isLoading={this.state.isLoading} number={this.state.warningProgressYear} label='warnings set "In progress" this year'/>
-                <div />
-                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountYear} label='new warnings this year'/>
-                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountMonth} label='new warnings this month'/>
-                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountWeek} label='new warnings this week'/>
+                <NumberView isLoading={this.state.isLoadingStatuses} number={this.state.warningRejectedCount} label='varsler som er "Avslått"'/>
+                <NumberView isLoading={this.state.isLoadingStatuses} number={this.state.warningProgressCount} label='varsler som er "Pågående"'/>
+                <NumberView isLoading={this.state.isLoadingStatuses} number={this.state.warningFinishedCount} label='varsler som er "Ferdig"'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountYear} label='nye varsler siste 12 måneder'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountMonth} label='nye varsler siste måneden'/>
+                <NumberView isLoading={this.state.isLoading} number={this.state.warningCountWeek} label='nye varsler siste 7 dagene'/>
             </div>
         )
     }

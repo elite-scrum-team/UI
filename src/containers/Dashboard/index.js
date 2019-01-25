@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import classNames from 'classnames';
 
 // Service imports
 import AuthService from '../../api/services/AuthService';

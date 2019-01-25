@@ -45,11 +45,12 @@ export default class AnalyticsService {
    */
   static getWarningCountData = (
     startDates,
+    endDate,
     municipality,
     status = undefined,
     callback
   ) => {
-    const filters = { startDate: startDates };
+    const filters = { startDate: startDates, endDate: endDate };
     if (status) {
       filters.status = status;
     }
