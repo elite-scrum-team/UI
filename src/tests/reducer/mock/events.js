@@ -10,7 +10,7 @@ export default [
             fileURL: "https://hverdagshelt_image_bucket.storage.googleapis.com/a621ec10-1e87-11e9-9b4c-071fc226f6a5_Party.jpg",
             id: "2398273f-5cbb-45cd-a083-215f4ef7479b",
             updatedAt: "2019-01-22T20:52:39.000Z",
-        }]
+        }],
         link: "https://tihlde-nettside.herokuapp.com/arrangementer/5/",
         location: {
             city: "Trondheim",
@@ -22,11 +22,11 @@ export default [
                 id: "4dd2c0aa-9b39-40a8-9950-c0ae87c788b4",
                 name: "Trondheim",
                 updatedAt: "2019-01-16T08:20:02.000Z",
-            }
+            },
             municipalityId: "4dd2c0aa-9b39-40a8-9950-c0ae87c788b4",
             street: "Ole Aasveds veg 31",
             updatedAt: "2019-01-22T20:52:36.000Z",
-        }
+        },
         title: "Fest hjemme hos Anders!",
         toTime: "2019-01-31T20:00:00.000Z",
         updatedAt: "2019-01-22T20:52:36.000Z",

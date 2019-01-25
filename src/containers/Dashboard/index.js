@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import classNames from 'classnames';
 
 // Service imports
 import AuthService from '../../api/services/AuthService';
@@ -28,6 +29,23 @@ const styles = {
             marginTop: '48px',
         }
     },
+    skeletonRoot: {
+        display: 'grid',
+        gridTemplateColumns: '1fr 3fr',
+        marginLeft: 450,
+        gridGap: '20px',
+        padding: 40,
+    },
+    skeleton: {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        height: 200,
+    },
+    span: {
+        gridColumn: 'span 2',
+    },
+    height: {
+        height: 300,
+    }
 };
 
 const NEW_SECTION = 0;
@@ -295,6 +313,17 @@ class Dashboard extends Component {
                                     warningId={this.state.id}
                                     changeCategory={(category) => this.changeCategory(category)}
                                 />
+                            }
+                            {!this.state.showWarning &&
+                                <div className={classes.skeletonRoot}>
+                                    <div className={classNames(classes.skeleton, classes.span)} />
+                                    <div className={classes.skeleton}/>
+                                    <div>
+                                        <div className={classNames(classes.skeleton, classes.height)}>
+
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </Hidden>

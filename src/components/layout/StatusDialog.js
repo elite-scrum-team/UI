@@ -42,7 +42,7 @@ const styles = {
         backgroundColor: 'red',
     },
     acknowledged: {
-       backgroundColor: 'var(--inactive)',
+       backgroundColor: 'var(--acknowledged)',
     },
     progress: {
         backgroundColor: 'var(--progress)',
