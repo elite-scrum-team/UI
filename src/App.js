@@ -22,7 +22,6 @@ import Dashboard from './containers/Dashboard';
 import CreateNews from './containers/CreateNews';
 import Events from './containers/Events';
 import Profile from './containers/Profile';
-import Statistics from './containers/Statistics';
 import Analytics from './containers/Analytics';
 import NotFound from './containers/NotFound';
 
@@ -109,11 +108,6 @@ class App extends Component {
                 <EmployeeRoute
                   exact
                   path={URLS.statistics}
-                  component={Statistics}
-                />
-                <Route
-                  exact
-                  path={URLS.statistics.concat('2')}
                   component={Analytics}
                 />
                 <PrivateRoute

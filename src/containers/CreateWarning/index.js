@@ -98,7 +98,7 @@ const styles = {
     bottom: {
         paddingBottom: 30,
     }
-}
+};
 
 
 class CreateWarning extends Component {
@@ -136,7 +136,7 @@ class CreateWarning extends Component {
                 this.setState({categories: data});
                 for (let i = 0; i < this.state.categories.length; i++){
                     console.log(this.state.categories[i]);
-                    if (this.state.categories[i].name === 'Annet'){
+                    if (this.state.categories[i].name === 'Andre skader/mangler'){
                         console.log('greting');
                         this.setState({category: this.state.categories[i]});
                     }
@@ -176,7 +176,7 @@ class CreateWarning extends Component {
         });
     };
 
-    handleToggle = (name) => (event) => {
+    handleToggle = (name) => () => {
         this.setState({[name]: !this.state[name]});
     };
 
@@ -266,7 +266,7 @@ class CreateWarning extends Component {
                             <Step number={2} step={'Posisjon'} description={'Sett en markør der det gjelder.'}/>
                             <div className={classes.fillSection}>
                                 <MapStep
-                                    selectedLocation={this.state.currentLocation}
+                                    defaultLocation={this.state.currentLocation}
                                     mapMarkerCallback={(e) => this.mapClickCallback(e)}
                                 />
                             </div>

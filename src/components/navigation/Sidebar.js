@@ -75,7 +75,7 @@ const SidebarContent = (props) => {
                 {AuthService.isCompanyOrEmployee() &&
                     <Fragment>
                         <ActionLink onClick={() => goTo(URLS.statistics)} label='Statistikk'/>
-                        <ActionLink onClick={() => goTo(URLS.dashboard)} label='Dashboard'/>
+                        <ActionLink onClick={() => goTo(URLS.dashboard)} label='Dashbord'/>
                     </Fragment>
                 }
                 {AuthService.isAuthenticated() &&

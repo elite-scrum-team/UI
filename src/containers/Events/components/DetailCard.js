@@ -56,6 +56,7 @@ const styles = makeStyles({
         marginBottom: 50,
     },
     text:{
+        margin: 14,
         '@media only screen and (max-width: 960px)': {
             fontSize:35,
             justifyContent: 'center'
@@ -84,7 +85,7 @@ const DetailCard = (props) => {
                     {event.title}
                     </Typography>
                 {event.images && event.images.length > 0 ? <Image image={event.images}/> : null}
-            <InformationCard goTo={props.goTo} event={event}/>
+            <InformationCard goTo={props.goTo} event={event} userData={props.userData}/>
             <div className={classes.endOfText}>
             <Typography>
                 {event.description}

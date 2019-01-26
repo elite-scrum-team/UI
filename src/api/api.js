@@ -126,19 +126,28 @@ export default {
   getEventContent: id => {
     return new Fetch(METHODS.get, '/event/content/'.concat(id));
   },
-    updateImageEvent: (id,image) =>{
-      return new Fetch(METHODS.put, '/event/image', {eventId: id, image: image}, {}, true)
-    },
 
-    // --- InterestGroup ---
+  updateImageEvent: (id,image) =>{
+    return new Fetch(METHODS.put, '/event/image', {eventId: id, image: image}, {}, true)
+  },
 
-    subscribeToAWarning: (warningId) =>{
-      console.log(warningId);
-      return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId), {}, {}, true)
-    },
+  // --- InterestGroup ---
 
-    unSubscribeToAWarning: (warningId) =>{
-        return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),{}, {}, true)
-    }
+  subscribeToAWarning: (warningId) =>{
+    console.log(warningId);
+    return new Fetch(METHODS.post, '/interestGroup/subscribe/'.concat(warningId), {}, {}, true)
+  },
 
+  unSubscribeToAWarning: (warningId) =>{
+      return new Fetch(METHODS.delete, '/interestGroup/subscribe/'.concat(warningId),{}, {}, true)
+  },
+
+  // --- ANALYTICS ---
+  getDistributions: (filters) => {
+    return new Fetch(METHODS.get, `/warning/statistics/distribution/?warning=true&category=true&`.concat(filterToParams(filters)));
+  },
+
+  getCounts: (filters) => {
+    return new Fetch(METHODS.get, `/warning/statistics/count?`.concat(filterToParams(filters)))
+  }
 };

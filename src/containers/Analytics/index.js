@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import theme from '../../theme';
-import {timeData} from './helpers';
+import {ALL, getDateData} from './helpers';
 import classNames from 'classnames';
+import moment from 'moment';
 
 // Service imports
 import LocationService from '../../api/services/LocationService';
-import AnalyticsService from '../../api/services/AnalyticsService';
 
 // Material UI components
 import Typography from '@material-ui/core/Typography';
@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 // Project components
 import Navigation from '../../components/navigation/Navigation';
 import SearchableDropdown from '../../components/miscellaneous/SearchableDropdown';
-
+import DateRange from '../../components/input/DateRange';
 import NumberDataDisplay from './components/NumberDataDisplay';
 import MainDataDisplay from './components/MainDataDisplay';
 
@@ -73,9 +73,10 @@ class Analytics extends Component {
     constructor() {
         super();
         this.state = {
-            timeState: timeData[0],
             municipalities: [],
             municipality: null,
+            startDate: moment().subtract(7, 'days').toDate(),
+            endDate: moment().toDate(),
         };
 
         this.mainDataDisplayer = React.createRef();
@@ -84,28 +85,40 @@ class Analytics extends Component {
 
     componentDidMount() {
         this.fetchMunicipalities();
+        this.reloadData();
     }
 
     fetchMunicipalities() {
         LocationService.getMunicipalities((isError, data) => {
             if(isError === false) {
-                this.setState({municipalities: data.map(m => ({value: m.id, label: m.name}))});
+                const municipalityOptions = data.map(m => ({value: m.id, label: m.name}));
+                const allMunicipalitiesOption = {value: ALL, label: 'Alle kommuner'};
+                municipalityOptions.unshift(allMunicipalitiesOption);
+                this.setState({municipalities: municipalityOptions});
             }
         });
     }
 
-    onMunicipalityChange = (value) => {
-        this.setState({municipality: value});
-
-        this.mainDataDisplayer.reloadData(AnalyticsService.getCurrentDate());
-        this.numberDataDisplayer.reloadData(AnalyticsService.getCurrentDate());
+    onMunicipalityChange = async (value) => {
+        if(value && value.value === ALL) {
+            await this.setState({municipality: null});
+        } else {
+            await this.setState({municipality: value});
+        }
+        this.reloadData();
     }
 
-    onTimeChange = (value) => {
-        this.setState({timeState: value});
+    onDatesChange = async(startDate, endDate) => {
+        await this.setState({startDate: startDate, endDate: endDate});
+        this.reloadData();
+    }
 
-        this.mainDataDisplayer.reloadData(value);
-        this.numberDataDisplayer.reloadData(value);
+    reloadData = () => {
+        const timeObject = getDateData(this.state.startDate, this.state.endDate);
+        const municipalityId = this.state.municipality ? this.state.municipality.value : null;
+
+        this.mainDataDisplayer.reloadData(timeObject, municipalityId);
+        this.numberDataDisplayer.reloadData(timeObject, municipalityId);
     }
 
     render() {
@@ -118,12 +131,12 @@ class Analytics extends Component {
                             {this.state.municipality ? `Statistikk i ${this.state.municipality.label}` : 'Nasjonal Statistikk'}
                         </Typography>
                         <div className={classes.inputs}>
-                            <SearchableDropdown
+                            <DateRange
                                 className={classes.input}
-                                placeholder='Tid'
-                                value={this.state.timeState}
-                                options={timeData}
-                                onChange={this.onTimeChange}/>
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                onChange={this.onDatesChange}
+                            />
                             <SearchableDropdown
                                 className={classNames(classes.input, 'ml-5')}
                                 placeholder='Søk etter kommune'

@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 
 // Service imports
 import EventService from '../../api/services/EventService';
+import GeoService from '../../api/services/GeoService';
 
 // Material UI components
 import Typography from "@material-ui/core/Typography";
@@ -163,7 +164,7 @@ class CreateNews extends Component {
 
     handleToggle = (name) => (event) => {
         this.setState({[name]: !this.state[name]});
-    }
+    };
 
     createNews = () => {
         // Do nothing if already loading
@@ -180,7 +181,7 @@ class CreateNews extends Component {
             fromTime: this.state.fromDate,
             toTime: this.state.toDate,
             image: this.state.imageFile,
-        }
+        };
 
         this.setState({isSending: true});
         console.log(news);
@@ -192,6 +193,38 @@ class CreateNews extends Component {
                 this.props.history.push(URLS.events);
             }
         });
+    };
+
+    editNews = () => {
+        // Do nothing if already loading
+        if (this.state.isLoading) {
+            return;
+        }
+
+        // News object to send
+        const news = {
+            id: this.state.id,
+            title: this.state.title,
+            description: this.state.description,
+            link: this.state.link,
+            location: this.state.location,
+            fromTime: this.state.fromDate,
+            toTime: this.state.toDate,
+            image: this.state.imageFile,
+        };
+
+        this.setState({isSending: true});
+        console.log(news);
+        EventService.updateEvent(news, (isError, data) => {
+            console.log(data);
+            if (isError) {
+                this.setState({isError: true, isSending: false, confirmDialogOpen: false});
+            } else {
+                this.setState({isSending: false});
+                this.props.history.push(URLS.events);
+            }
+        });
+
     };
 
 
@@ -213,13 +246,32 @@ class CreateNews extends Component {
                             lat: e.location.coordinate.coordinates[0],
                             lng: e.location.coordinate.coordinates[1]
                         },
-                        fromDate: e.fromTime.slice(0, 16),
-                        toDate: e.toTime.slice(0, 16),
-                        image: [e.images[0].fileURL],
+                        currentLocation: {
+                            lat: e.location.coordinate.coordinates[0],
+                            lng: e.location.coordinate.coordinates[1]
+                        },
                     });
+                    if (e.fromTime !== null && e.toTime !== null) {
+                        await this.setState({
+                            fromDate: e.fromTime.slice(0, 16),
+                            toDate: e.toTime.slice(0, 16),
+                        });
+                    }
+                    if (e.images[0]) {
+                        await this.setState({
+                            image: [e.images[0].fileURL],
+                        });
+                    }
                     console.log(e);
                     this.setState({isLoading: false, editExisting: true});
                 }
+            });
+        }
+        else {
+            // Ask for current location
+            GeoService.getGeoLocation((e) => {
+                console.log(e);
+                this.setState({currentLocation: {lat: e.coords.latitude, lng: e.coords.longitude}})
             });
         }
     };
@@ -272,6 +324,7 @@ class CreateNews extends Component {
                                   description={'Velg hvor hendelsen foregår.'}/>
                             <div className={classes.mapRight}>
                                 <MapStep
+                                    editExisting={this.state.editExisting}
                                     defaultLocation={this.state.currentLocation}
                                     selectedLocation={this.state.location}
                                     location={this.state.location === null ? this.state.currentLocation : this.state.location}

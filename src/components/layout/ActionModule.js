@@ -14,7 +14,7 @@ import InterestGroupService from '../../api/services/InterestGroupService'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+//import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 
 // Icons
@@ -24,6 +24,7 @@ import NotificationsOff from '@material-ui/icons/NotificationsOff';
 import Assignment from '@material-ui/icons/Assignment';
 import Sms from '@material-ui/icons/Sms';
 import Edit from '@material-ui/icons/Edit';
+import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 
 // Project components
 import DeleteDialog from './DeleteDialog';
@@ -32,7 +33,6 @@ import StatusDialog from './StatusDialog';
 import statusLabels from '../../utils/warningUtils';
 import ContractDialog from './ContractDialog';
 import SubscribeDialog from "./SubscribeDialog";
-import URLS from "../../URLS";
 import CategoryService from "../../api/services/CategoryService";
 import WarningService from "../../api/services/WarningService";
 
@@ -72,7 +72,7 @@ class ActionModule extends Component {
 
     handleDeleteStatus = value => {
         this.handleNewStatus(value);
-        this.goTo(URLS.home);
+        //this.goTo(URLS.home);
     };
 
     goTo = (page) => {

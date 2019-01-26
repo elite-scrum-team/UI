@@ -36,20 +36,19 @@ const styles = makeStyles({
 
 const MapStep = (props) => {
     // State
-    const [selectedLocation, setSelectedLocation] = useState(!props.selectedLocation ? {lat: 0, lng: 0} : {lat: props.selectedLocation.lat, lng: props.selectedLocation.lng});
+    const [selectedLocation, setSelectedLocation] = useState(!props.selectedLocation ? props.defaultLocation : {lat: props.selectedLocation.lat, lng: props.selectedLocation.lng});
 
     // Styling
     const classes = styles();
 
     useEffect(() => {
-        setSelectedLocation(props.selectedLocation || {lat: 0, lng: 0});
-     }, [props.selectedLocation]);
+        setSelectedLocation(props.defaultLocation);
+     }, [props.defaultLocation]);
 
     const onMapClick = (event) => {
         console.log(event);
         const locationObject = event.latLng;
         console.log(locationObject);
-        setSelectedLocation({lat: locationObject.lat(), lng: locationObject.lng()});
         const data = {lat: locationObject.lat(), lng: locationObject.lng() };
         props.mapMarkerCallback(data);
     };
@@ -64,8 +63,8 @@ const MapStep = (props) => {
                 <div className={classes.mapContainer}>
                     <Map
                         clickable={onMapClick}
-                        defaultCenter={props.selectedLocation ? props.selectedLocation : props.defaultLocation}
-                        defaultSelectedLocation={props.selectedLocation}
+                        defaultCenter={ selectedLocation }
+                        defaultSelectedLocation={selectedLocation}
                         zoom={14}
                     />
                 </div>

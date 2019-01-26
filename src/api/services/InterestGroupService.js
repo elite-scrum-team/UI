@@ -1,22 +1,36 @@
-import API from "../api";
+import API from '../api';
 
-// and all the methods will return a promise
+/**
+ * @module
+ * InterestGroupService - about subscription of a warning
+ */
 export default class InterestGroupService {
-
-    static subscribe = (warningId ,callback) => {
-        const response = API.subscribeToAWarning(warningId).response();
-        return response.then(async data => {
-            !callback || callback(response.isError, data);
-            return data;
-        });
-    };
-
-    static unsubscribe = (warningId ,callback) => {
-        const response = API.unSubscribeToAWarning(warningId).response();
-        return response.then(async data => {
-            !callback || callback(response.isError, data);
-            return data;
-        });
-    };
-
+  /**
+   * Subscribe the update of a specific warning
+   * @function
+   * @param {string} warningId - The warning's id
+   * @param {Function} callback - Provides isError and data as arguments
+   * @return A promise :D
+   */
+  static subscribe = (warningId, callback) => {
+    const response = API.subscribeToAWarning(warningId).response();
+    return response.then(async data => {
+      !callback || callback(response.isError, data);
+      return data;
+    });
+  };
+  /**
+   * Cancel the subscription of the warning
+   * @function
+   * @param {string} warningId - The warning's id
+   * @param {Function} callback - Provides isError and data as arguments
+   * @return A promise :D
+   */
+  static unsubscribe = (warningId, callback) => {
+    const response = API.unSubscribeToAWarning(warningId).response();
+    return response.then(async data => {
+      !callback || callback(response.isError, data);
+      return data;
+    });
+  };
 }

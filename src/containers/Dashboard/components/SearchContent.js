@@ -22,11 +22,22 @@ const styles = makeStyles({
         '@media only screen and (min-width: 601px)': {
             width:450,
             maxWidth: 450,
-            overflow: 'hidden',
+            overflowX: 'hidden',
         },
         '@media only screen and (max-width: 600px)': {
             width: '100%'
         },
+    },
+    description: {
+        //width: 350,
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 35,
+        paddingRight: 35,
+        textAlign: 'center',
+        color: 'grey',
+        fontStyle: 'italic',
+
     },
     loginButton: {
         display: 'block',
@@ -51,7 +62,7 @@ const SearchContent = props => {
             props.onSectionChange(val);
         }
         setSection(val);
-    }
+    };
 
     // Go to login
     const goTo = page => {
@@ -60,7 +71,21 @@ const SearchContent = props => {
 
     return (
         <div className={classes.root}>
-            <StatusTabs value={section} onChange={handleSectionChange}/>  
+            <StatusTabs value={section} onChange={handleSectionChange}/>
+            {props.municipalityEmployee &&
+                <div className={classes.description}>
+                    {section === 0 ? 'Her finner du nye varsler i din kommune som må godkjennes før vanlige brukere kan se dem.' : null}
+                    {section === 1 ? 'Her finner du varsler som er publisert for offentligheten, men som ikke er ordnet enda.' : null}
+                    {section === 2 ? 'Her finner du varsler hvor problemet er løst, samt varsler som er markert som useriøse eller duplikater.' : null}
+                </div>
+            }
+            {!props.municipalityEmployee &&
+            <div className={classes.description}>
+                {section === 0 ? 'Her finner du nye varsler i din kommune som er tildelt din gruppe.' : null}
+                {section === 1 ? 'Her finner du varsler tildelt din gruppe som er publisert for offentligheten, men som ikke er ordnet enda.' : null}
+                {section === 2 ? 'Her finner du varsler tildelt din gruppe hvor problemet er løst, samt varsler som er markert som useriøse eller duplikater.' : null}
+            </div>
+            }
             {props.isLoading ?
                 <CircularProgress className={classes.progress}/> :
                 <WarningList mountWarningCallback={(e) => props.mountWarningCallback(e)} items={props.items}

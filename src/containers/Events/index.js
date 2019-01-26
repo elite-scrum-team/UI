@@ -128,8 +128,9 @@ class Events extends Component {
         events: [],
         isEmployee: false,
         userData: null,
+        userMunicipalityEmployee: null,
         detail: null
-    }
+    };
 
     toggleEmployeeOptions = async () => {
         this.setState({userData: await AuthService.getUserData()});
@@ -183,10 +184,9 @@ class Events extends Component {
         }
     };
 
-
     goTo = (page) => {
         this.props.history.push(page);
-    }
+    };
 
     render() {
         const {classes} = this.props;
@@ -229,7 +229,8 @@ class Events extends Component {
                                                 title={value.title}
                                                 image={value.images && value.images.length > 0 ? value.images[0] : null}
                                                 description={value.description}
-                                                date={value.createdAt}
+                                                fromTime={value.fromTime}
+                                                toTime={value.toTime}
                                                 municipality={value.municipality}
                                                 city={value.city}
                                                 street={value.street}
@@ -238,28 +239,34 @@ class Events extends Component {
                                         ))}
                                     </div>
                                     :
-                                    <Typography variant='h6' align='center'>Ingen nyheter å vise</Typography>
+                                    <Typography variant='h6' align='center'>Ingen arrangementer å vise</Typography>
                             }
                         </div>
                     </Hidden>
 
                     <Fragment>
                         <Hidden implementation='js' smDown>
-                            <Sidebar goTo={(page) => this.goTo(page)} open={this.state.detail !== null} event={this.state.detail}
+                            <Sidebar goTo={(page) => this.goTo(page)}
+                                     open={this.state.detail !== null}
+                                     event={this.state.detail}
+                                     userData={this.state.userData}
                                      close={this.onItemClick(null)}/>
                         </Hidden>
                         {this.state.detail && <Hidden implementation='js' mdUp>
-                            <DetailCard event={this.state.detail} close={this.onItemClick(null)}/>
+                            <DetailCard goTo={(page) => this.goTo(page)}
+                                        event={this.state.detail}
+                                        userData={this.state.userData}
+                                        close={this.onItemClick(null)}/>
                         </Hidden>}
+                        <div hidden={!this.state.isEmployee} className={classes.employeeTools}>
+                            <Button variant="contained" size={'large'} color='secondary'
+                                    className={classes.registerButton}
+                                    onClick={() => this.goTo(URLS.createnews)}>
+                                Registrer arrangement
+                            </Button>
+                        </div>
                     </Fragment>
 
-                </div>
-                <div hidden={!this.state.isEmployee} className={classes.employeeTools}>
-                    <Button variant="contained" size={'large'} color='secondary'
-                            className={classes.registerButton}
-                            onClick={() => this.goTo(URLS.createnews)}>
-                        Registrer nyhet
-                    </Button>
                 </div>
 
             </Navigation>

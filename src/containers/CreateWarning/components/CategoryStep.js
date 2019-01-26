@@ -36,6 +36,9 @@ const styles = makeStyles({
       padding: '0px 50px 20px 50px',
       //margin: 40,
     },
+    paper: {
+        margin: 12,
+    }
 });
 
 
@@ -68,7 +71,12 @@ const CategoryStep = (props) => {
             </Button>
             <Dialog onClose={handleClose}
                     aria-labelledby='customized-dialog-title'
-                    open={open}>
+                    open={open}
+                    PaperProps={{
+                        classes: {
+                            root: classes.paper,
+                        },
+                    }}>
                 <div className={classes.titleWrapper}>
                     <Typography className={classes.title} variant='h6'>Velg en kategori</Typography>
                 </div>
