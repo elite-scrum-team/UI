@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/index.css';
 import './assets/css/spacing.css';
+import './utils/flatmap.js';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import moment from 'moment';
 require('moment/locale/nb.js');
+
 
 // Required for setting up environment variables
 require('dotenv').config();
