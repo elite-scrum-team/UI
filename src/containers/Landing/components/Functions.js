@@ -24,6 +24,7 @@ const styles = makeStyles({
         maxWidth: 700,
     },
     input: {
+        margin: 'auto',
         width: '80vw',
         maxWidth: 700,
     },
@@ -93,7 +94,7 @@ const Functions = (props) => {
             </div>
         </div>
     )
-}
+};
 
 Functions.propTypes = {
     searchByLocation: PropTypes.func.isRequired,
@@ -101,6 +102,6 @@ Functions.propTypes = {
     goTo: PropTypes.func.isRequired,
 
     municipalities: PropTypes.array,
-}
+};
 
 export default (Functions);

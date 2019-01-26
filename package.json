@@ -47,7 +47,10 @@
     "create-docs": "jsdoc src/api/services"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "no-extend-native": 0
+    }
   },
   "jest": {
     "collectCoverageFrom": [
